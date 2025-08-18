@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreGrid</title>
+    <meta name="description" content="CoreGrid - a strategy game where you build and defend your base against waves of enemies">
+    <meta name="keywords" content="grid, game, management, resource, online game, strategy game">
+    <meta name="author" content="A_I_X">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+    <title>CoreGrid</title>
+    <style>
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ui-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #1e1e1e;
+    border: 1px solid #2e2e2e;
+    border-radius: 10px;
+    position: relative;
+    z-index: 100;
+}
+
+.resources {
+    display: flex;
+    gap: 20px;
+}
+
+.resource {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    color: #cfcfcf;
+}
+
+.controls-folder {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.folder {
+    background: #1c1c1c;
+    border-radius: 8px;
+    border: 1px solid #2e2e2e;
+    max-width: 200px;
+    position: relative;
+    flex-direction: column;
+    z-index: 999;
+    user-select: none;
+}
+
+.folder-title {
+    padding: 10px;
+    background: #2a2a2a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid #3a3a3a;
+    color: #ddd;
+}
+
+.folder-title:hover {
+    background: #3a3a3a;
+}
+
+.folder-content {
+    display: none;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 10px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #222;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid #333;
+    width: max-content;
+    z-index: 999;
+    color: #eee;
+}
+
+.folder.open .folder-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #3a3a3a;
+    border-radius: 5px;
+    background: #262626;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+}
+
+.btn span:first-child {
+    font-size: 32px;
+}
+
+.btn:hover {
+    background: #333;
+    border-color: #555;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(25, 20px);
+    grid-template-rows: repeat(25, 20px);
+    gap: 1px;
+    background: #1e1e1e;
+    border: 1px solid #2e2e2e;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-cell {
+    width: 20px;
+    height: 20px;
+    background: #121212;
+    border: 1px solid #2e2e2e;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #ccc;
+    border-radius: 5px;
+}
+
+.grid-cell:hover {
+    background: #222;
+    border-color: #555;
+}
+
+.grid-cell.selected {
+    box-shadow: 0 0 8px #FFD700;
+    border-color: #FFD700;
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.grid-cell.valid-move {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4caf50;
+    cursor: pointer;
+}
+
+.grid-cell.valid-attack {
+    background: rgba(244, 67, 54, 0.3);
+    border-color: #f44336;
+    cursor: crosshair;
+}
+
+.grid-cell.valid-attack:hover {
+    background: rgba(244, 67, 54, 0.5);
+}
+
+.grid-cell .object-sprite {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    border-radius: 2px;
+}
+
+/* Object Styles */
+.grid-cell.player .object-sprite {
+    background: #4caf50;
+    color: white;
+    box-shadow: 0 0 6px #4caf50;
+}
+
+.grid-cell.wall .object-sprite {
+    background: #795548;
+    color: #bcaaa4;
+}
+
+.grid-cell.tech .object-sprite {
+    background: #2196f3;
+    color: white;
+}
+
+.grid-cell.army .object-sprite {
+    background: #ff9800;
+    color: white;
+}
+
+.grid-cell.enemy .object-sprite {
+    background: #f44336;
+    color: white;
+}
+
+.info-panel {
+    margin-top: 20px;
+    padding: 15px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    border: 1px solid #2e2e2e;
+    text-align: left;
+    color: #ddd;
+}
+
+.turn-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: #222;
+    border-radius: 5px;
+    border: 1px solid #2e2e2e;
+    text-align: center;
+    color: #ccc;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        
+        <div class="ui-panel">
+            <div class="resources">
+                <div class="resource">
+                    <span>🔩</span>
+                    <span id="metal-count">100</span> Metal
+                </div>
+                <div class="resource">
+                    <span>🪙</span>
+                    <span id="coin-count">50</span> Coins
+                </div>
+                <div class="resource">
+                    <span>🥇</span>
+                    <span id="gold-count">25</span> Gold
+                </div>
+            </div>
+            
+            <div class="controls-folder">
+                <div class="folder" data-folder>
+                    <div class="folder-title">🧱 Walls</div>
+                    <div class="folder-content">
+                        <button class="btn" id="place-wall"><span>🧱</span>Wall (10M)</button>
+                        <button class="btn" id="place-steel-wall"><span>🛡️</span>Steel (20M)</button>
+                        <button class="btn" id="place-fortress"><span>🏰</span>Fortress (25G)</button>
+                    </div>
+                </div>
+            
+                <div class="folder" data-folder>
+                    <div class="folder-title">⚙️ Tech</div>
+                    <div class="folder-content">
+                        <button class="btn" id="place-tech"><span>⛏️</span>Miner (20M)</button>
+                        <button class="btn" id="place-gold-miner"><span>⚱️</span>Gold (25M)</button>
+                        <button class="btn" id="place-coin-maker"><span>🏦</span>Bank (30M)</button>
+                        <button class="btn" id="place-turret"><span>🔫</span>Turret (40M)</button>
+                        <button class="btn" id="place-bomb"><span>💣</span>Bomb (10G)</button>
+                    </div>
+                </div>
+            
+                <div class="folder" data-folder>
+                    <div class="folder-title">⚔️ Army</div>
+                    <div class="folder-content">
+                        <button class="btn" id="place-scout"><span>🔍</span>Scout (15C)</button>
+                        <button class="btn" id="place-knight"><span>♞</span>Knight (25C)</button>
+                        <button class="btn" id="place-archer"><span>🏹</span>Archer (20C)</button>
+                        <button class="btn" id="place-tank"><span>🛡️</span>Tank (50C)</button>
+                        <button class="btn" id="place-barrack"><span>🏟️</span>Barrack (50C)</button>
+                    </div>
+                </div>
+            
+                <div class="folder">
+
+                    <div class="folder-content">
+                        <button class="btn" id="clear-selection">❌ Clear</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="game-grid" id="game-grid"></div>
+
+        <div class="turn-info" id="turn-info">
+            Turn: <span id="turn-count">1</span> | Click an army unit to select it, then click a highlighted square to move
+        </div>
+
+        <div class="info-panel">
+            <p><strong>Combat:</strong> Move your army units into enemy squares to attack! Different units have different movement ranges and attacks.</p>
+            <p><strong>Defense:</strong> Use walls and fortresses to protect your units and resources.</p>
+            <p><strong>Resources:</strong> Place miner buildings to generate resources.</p>
+            <p><strong>Waves:</strong> Defend against waves of different enemies.</p>
+        </div>
+    </div>
+
+    <script>
+
+    document.querySelectorAll('[data-folder] .folder-title').forEach(title => {
+        title.addEventListener('click', () => {
+            const folder = title.closest('.folder');
+            folder.classList.toggle('open');
+        });
+    });
+
+        // Game Configuration
+        const GRID_SIZE = 25;
+        const PLAYER_START = { x: Math.floor(GRID_SIZE / 2), y: Math.floor(GRID_SIZE / 2) };
+
+        // Sprite emojis/symbols
+        const SPRITES = {
+            player: '👤',
+            wall: {
+                stone: '🧱',
+                steel: '🛡️',
+                fortress: '🏰'
+            },
+            tech: {
+                miner: '⛏️',
+                goldminer: '⚱️',
+                coinmaker: '🏦',
+                turret: '🔫',
+                bomb: '💣'
+            },
+            army: {
+                scout: '🔍',
+                knight: '♞',
+                archer: '🏹',
+                tank: '🛡️',
+                barrack: '🏟️'
+            },
+            enemy: {
+                basic: '👹',
+                fast: '🐆',
+                tank: '🐢',
+                ranged: '🏹',
+                healer: '🩹'
+            }
+        };
+
+        // Game State
+        let gameState = {
+            resources: { metal: 100, coins: 50, gold: 25 },
+            turn: 1,
+            selectedUnit: null,
+            placementMode: null,
+            grid: Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null)),
+            objects: new Map(),
+            wave: 1,
+            waveBreakTurns: 0,
+            inWaveBreak: false
+        };
+
+        // Object Classes - Easily Extensible Base Classes
+        class GameObject {
+            constructor(x, y, type, subtype) {
+                this.x = x;
+                this.y = y;
+                this.type = type; // 'wall', 'tech', 'army', 'enemy'
+                this.subtype = subtype;
+                this.id = `${type}_${x}_${y}_${Date.now()}`;
+            }
+
+            getSprite() {
+                return SPRITES[this.type][this.subtype] || '❓';
+            }
+
+            canInteractWith(other) {
+                return false; // Override in subclasses
+            }
+
+            onTurn() {
+                // Override in subclasses for per-turn actions
+            }
+        }
+
+        // Wall Types
+        class Wall extends GameObject {
+            constructor(x, y, subtype = 'stone') {
+                super(x, y, 'wall', subtype);
+                this.maxHealth = subtype === 'steel' ? 5 : subtype === 'fortress' ? 10 : 2;
+                this.health = this.maxHealth;
+                this.cost = { 
+                    metal: subtype === 'steel' ? 20 : 0, 
+                    coins: 0,
+                    gold: subtype === 'fortress' ? 25 : 0
+                };
+            }
+
+            takeDamage(damage = 1) {
+                this.health -= damage;
+                return this.health <= 0;
+            }
+        }
+
+        // Tech Types
+        class Tech extends GameObject {
+            constructor(x, y, subtype = 'miner') {
+                super(x, y, 'tech', subtype);
+                this.cost = { 
+                    metal: subtype === 'goldminer' ? 25 : subtype === 'coinmaker' ? 30 : subtype === 'turret' ? 40 : subtype === 'bomb' ? 0 : 20, 
+                    coins: 0,
+                    gold: subtype === 'bomb' ? 10 : 0
+                };
+                this.range = subtype === 'turret' ? 3 : 0;
+                if (subtype === 'turret') {
+                    this.shotsLeft = 8;
+                }
+            }
+
+            onTurn() {
+                if (this.subtype === 'miner') {
+                    gameState.resources.metal += 5;
+                } else if (this.subtype === 'goldminer') {
+                    gameState.resources.gold += 1;
+                } else if (this.subtype === 'coinmaker') {
+                    gameState.resources.coins += 5;
+                } else if (this.subtype === 'turret') {
+                    const didShoot = this.attackNearbyEnemies();
+                    if (this.shotsLeft !== undefined && didShoot) {
+                        this.shotsLeft--;
+                        if (this.shotsLeft <= 0) {
+                            // Remove turret from grid and objects
+                            gameState.grid[this.y][this.x] = null;
+                            gameState.objects.delete(this.id);
+                            return;
+                        }
+                    }
+                } else if (this.subtype === 'bomb') {
+                    // Bomb explodes if any enemy within 2 block radius
+                    let exploded = false;
+                    for (let dy = -2; dy <= 2 && !exploded; dy++) {
+                        for (let dx = -2; dx <= 2 && !exploded; dx++) {
+                            const x = this.x + dx;
+                            const y = this.y + dy;
+                            if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+                                const target = gameState.grid[y][x];
+                                if (target && target.type === 'enemy') {
+                                    // Explode!
+                                    exploded = true;
+                                }
+                            }
+                        }
+                    }
+                    if (exploded) {
+                        // Remove all enemies in 2 block radius
+                        for (let dy = -2; dy <= 2; dy++) {
+                            for (let dx = -2; dx <= 2; dx++) {
+                                const x = this.x + dx;
+                                const y = this.y + dy;
+                                if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+                                    const target = gameState.grid[y][x];
+                                    if (target && target.type === 'enemy') {
+                                        gameState.grid[y][x] = null;
+                                        gameState.objects.delete(target.id);
+                                    }
+                                }
+                            }
+                        }
+                        // Remove the bomb itself
+                        gameState.grid[this.y][this.x] = null;
+                        gameState.objects.delete(this.id);
+                        return;
+                    }
+                }
+            }
+
+            attackNearbyEnemies() {
+                const enemies = [];
+                for (let dy = -this.range; dy <= this.range; dy++) {
+                    for (let dx = -this.range; dx <= this.range; dx++) {
+                        // Chebyshev distance (for 5 in all directions)
+                        if (Math.max(Math.abs(dx), Math.abs(dy)) > this.range) continue;
+                        const x = this.x + dx;
+                        const y = this.y + dy;
+                        if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+                            const target = gameState.grid[y][x];
+                            if (target && target.type === 'enemy') {
+                                enemies.push(target);
+                            }
+                        }
+                    }
+                }
+                // Turret can shoot over walls, so ignore any obstacles
+                if (enemies.length > 0) {
+                    const target = enemies[0]; // Attack first enemy found
+                    gameState.grid[target.y][target.x] = null;
+                    gameState.objects.delete(target.id);
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        // Army Types
+        class Army extends GameObject {
+            constructor(x, y, subtype = 'scout') {
+                super(x, y, 'army', subtype);
+                if (subtype === 'barrack') {
+                    this.cost = { metal: 0, coins: 0, gold: 40 };
+                    this.spawnCounter = 0;
+                } else {
+                    this.cost = { 
+                        metal: 0, 
+                        coins: subtype === 'knight' ? 25 : subtype === 'archer' ? 20 : subtype === 'tank' ? 50 : 15,
+                        gold: 0
+                    };
+                }
+                this.owner = 'player';
+                this.range = subtype === 'archer' ? 3 : 1;
+                this.health = subtype === 'tank' ? 8 : 1;
+                this.maxHealth = this.health;
+            }
+
+            onTurn() {
+                if (this.subtype === 'barrack') {
+                    this.spawnCounter = (this.spawnCounter || 0) + 1;
+                    if (this.spawnCounter >= 2) {
+                        this.spawnCounter = 0;
+                        const leftX = this.x - 1;
+                        const y = this.y;
+                        if (leftX >= 0 && gameState.grid[y][leftX] === null) {
+                            const scout = new Army(leftX, y, 'scout');
+                            gameState.grid[y][leftX] = scout;
+                            gameState.objects.set(scout.id, scout);
+                        }
+                    }
+                }
+            }
+
+            getValidMoves() {
+                const moves = [];
+                const attacks = [];
+                let directions, maxDistance;
+
+                if (this.subtype === 'knight') {
+                    directions = [[-1,-1], [-1,1], [1,-1], [1,1]]; // Diagonal only
+                    maxDistance = 5;
+                } else if (this.subtype === 'archer') {
+                    directions = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]];
+                    maxDistance = 1; // Archers move 1 but attack at range
+                } else if (this.subtype === 'tank') {
+                    directions = [[-1,0], [1,0], [0,-1], [0,1]]; // Only cardinal directions
+                    maxDistance = 1;
+                } else { // scout
+                    directions = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]];
+                    maxDistance = 1;
+                }
+
+                // Movement calculation
+                directions.forEach(([dx, dy]) => {
+                    for (let i = 1; i <= maxDistance; i++) {
+                        const newX = this.x + dx * i;
+                        const newY = this.y + dy * i;
+
+                        if (newX < 0 || newX >= GRID_SIZE || newY < 0 || newY >= GRID_SIZE) break;
+                        
+                        const target = gameState.grid[newY][newX];
+                        
+                        if (target === null) {
+                            moves.push({ x: newX, y: newY });
+                        } else if (target.type === 'enemy') {
+                            attacks.push({ x: newX, y: newY });
+                            break;
+                        } else {
+                            break;
+                        }
+                    }
+                });
+
+                // Special attack range for archers
+                if (this.subtype === 'archer') {
+                    const allDirections = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]];
+                    allDirections.forEach(([dx, dy]) => {
+                        for (let i = 1; i <= this.range; i++) {
+                            const newX = this.x + dx * i;
+                            const newY = this.y + dy * i;
+
+                            if (newX < 0 || newX >= GRID_SIZE || newY < 0 || newY >= GRID_SIZE) break;
+                            
+                            const target = gameState.grid[newY][newX];
+                            
+                            if (target && target.type === 'enemy') {
+                                attacks.push({ x: newX, y: newY });
+                            }
+                        }
+                    });
+                }
+
+                return { moves, attacks };
+            }
+
+            takeDamage(damage = 1) {
+                this.health -= damage;
+                return this.health <= 0;
+            }
+
+            moveTo(x, y) {
+                gameState.grid[this.y][this.x] = null;
+                gameState.grid[y][x] = this;
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        // Enemy Types (easily extensible)
+        class Enemy extends GameObject {
+            constructor(x, y, subtype = 'basic') {
+                super(x, y, 'enemy', subtype);
+                this.subtype = subtype;
+                this.health = subtype === 'tank' ? 100 : subtype === 'fast' ? 30 : subtype === 'ranged' ? 40 : subtype === 'healer' ? 25 : 50;
+                this.owner = 'enemy';
+                this.hasDodged = false; // for fast enemy dodge mechanic
+            }
+
+            getSprite() {
+                return SPRITES.enemy[this.subtype] || '👹';
+            }
+
+            getValidAttacks() {
+                const attacks = [];
+                const directions = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]];
+                
+                directions.forEach(([dx, dy]) => {
+                    const newX = this.x + dx;
+                    const newY = this.y + dy;
+                    
+                    if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE) {
+                        const target = gameState.grid[newY][newX];
+                        if (target && (target.type === 'army' && target.owner === 'player' || target.type === 'wall')) {
+                            attacks.push({ x: newX, y: newY, target });
+                        }
+                    }
+                });
+                
+                return attacks;
+            }
+
+            onTurn() {
+                // First check if we can attack the player directly
+                const playerPos = findPlayer();
+                if (playerPos) {
+                    const dx = Math.abs(playerPos.x - this.x);
+                    const dy = Math.abs(playerPos.y - this.y);
+                    
+                    // If adjacent to player, game over
+                    if (dx <= 1 && dy <= 1) {
+                        gameOver();
+                        return;
+                    }
+                }
+                
+                // Then check for other attacks
+                const attacks = this.getValidAttacks();
+                if (attacks.length > 0) {
+                    // Prioritize army units over walls
+                    const armyTargets = attacks.filter(a => a.target.type === 'army');
+                    const wallTargets = attacks.filter(a => a.target.type === 'wall');
+                    
+                    const target = armyTargets.length > 0 ? armyTargets[0] : wallTargets[0];
+                    this.attackTarget(target.target);
+                    return;
+                }
+
+                // If no attacks available, move towards player
+                const playerPosition = findPlayer();
+                if (playerPosition) {
+                    const dx = Math.sign(playerPosition.x - this.x);
+                    const dy = Math.sign(playerPosition.y - this.y);
+                    const newX = this.x + (Math.random() < 0.7 ? dx : (Math.random() < 0.5 ? -1 : 1));
+                    const newY = this.y + (Math.random() < 0.7 ? dy : (Math.random() < 0.5 ? -1 : 1));
+
+                    if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE && 
+                        gameState.grid[newY][newX] === null) {
+                        gameState.grid[this.y][this.x] = null;
+                        gameState.grid[newY][newX] = this;
+                        this.x = newX;
+                        this.y = newY;
+                    }
+                }
+            }
+
+            attackTarget(target) {
+                if (target.type === 'army') {
+                    this.attackUnit(target);
+                } else if (target.type === 'wall') {
+                    this.attackWall(target);
+                }
+            }
+
+            attackWall(wall) {
+                const isDestroyed = wall.takeDamage(1);
+                if (isDestroyed) {
+                    gameState.grid[wall.y][wall.x] = null;
+                    gameState.objects.delete(wall.id);
+                }
+            }
+
+            attackUnit(unit) {
+                const isDestroyed = unit.takeDamage(1);
+                if (isDestroyed) {
+                    gameState.grid[unit.y][unit.x] = null;
+                    gameState.objects.delete(unit.id);
+                }
+
+                // Clear selection if the attacked unit was selected
+                if (gameState.selectedUnit && gameState.selectedUnit.id === unit.id) {
+                    gameState.selectedUnit = null;
+                }
+            }
+        }
+
+        // Initialize Game
+        function initGame() {
+            createGrid();
+            gameState.grid[PLAYER_START.y][PLAYER_START.x] = 'player';
+            gameState.wave = 1;
+            gameState.inWaveBreak = false;
+            gameState.waveBreakTurns = 0;
+            // Add some initial enemies
+            spawnEnemy(5, 5);
+            spawnEnemy(20, 20);
+            spawnEnemy(3, 22);
+            
+            updateDisplay();
+        }
+
+        function createGrid() {
+            const gridElement = document.getElementById('game-grid');
+            gridElement.innerHTML = '';
+
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    cell.addEventListener('click', () => handleCellClick(x, y));
+                    gridElement.appendChild(cell);
+                }
+            }
+        }
+
+        function handleCellClick(x, y) {
+            const cell = gameState.grid[y][x];
+
+            if (gameState.placementMode) {
+                if (cell === null) {
+                    const [type, subtype] = gameState.placementMode.split('-');
+                    placeObject(x, y, type, subtype);
+                    if (!gameState.inWaveBreak) {
+                        processEnemyTurn(); // Enemies move after placing
+                    } else {
+                        updateDisplay();
+                    }
+                }
+                return;
+            }
+
+            // If clicking on a player army unit, select it
+            if (cell && cell.type === 'army' && cell.owner === 'player') {
+                clearSelection();
+                gameState.selectedUnit = cell;
+                highlightValidMoves(cell);
+                updateDisplay();
+                return;
+            }
+
+            // If we have a selected unit and clicked on a valid move or attack
+            if (gameState.selectedUnit) {
+                const { moves, attacks } = gameState.selectedUnit.getValidMoves();
+                const isValidMove = moves.some(move => move.x === x && move.y === y);
+                const isValidAttack = attacks.some(attack => attack.x === x && attack.y === y);
+                
+                if (isValidMove && cell === null) {
+                    gameState.selectedUnit.moveTo(x, y);
+                    clearSelection();
+                    updateDisplay();
+                    processEnemyTurn(); // Enemies move after player moves
+                } else if (isValidAttack && cell && cell.type === 'enemy') {
+                    // Attack the enemy
+                    attackEnemy(cell);
+                    clearSelection();
+                    updateDisplay();
+                    processEnemyTurn(); // Enemies move after attack
+                } else {
+                    // If clicked somewhere invalid, clear selection
+                    clearSelection();
+                    updateDisplay();
+                }
+            }
+        }
+
+        function placeObject(x, y, type, subtype = null) {
+            let obj;
+            let cost;
+
+            switch(type) {
+                case 'wall':
+                    obj = new Wall(x, y, subtype || 'stone');
+                    cost = obj.cost;
+                    break;
+                case 'tech':
+                    obj = new Tech(x, y, subtype || 'miner');
+                    cost = obj.cost;
+                    break;
+                case 'army':
+                    obj = new Army(x, y, subtype || 'scout');
+                    cost = obj.cost;
+                    break;
+                case 'barrack':
+                    obj = new Barrack(x, y);
+                    cost = obj.cost;
+                    break;
+                default:
+                    return;
+            }
+
+            if (gameState.resources.metal >= cost.metal && gameState.resources.coins >= cost.coins && gameState.resources.gold >= cost.gold) {
+                gameState.resources.metal -= cost.metal;
+                gameState.resources.coins -= cost.coins;
+                gameState.resources.gold -= cost.gold;
+                gameState.grid[y][x] = obj;
+                gameState.objects.set(obj.id, obj);
+                gameState.placementMode = null;
+                
+                // Process tech buildings for resource generation
+                processTechBuildings();
+                updateDisplay();
+            }
+        }
+
+        function spawnEnemy(x, y, subtype = null) {
+            if (gameState.grid[y] && gameState.grid[y][x] === null) {
+                // If no specific subtype is provided, randomly select one
+                if (!subtype) {
+                    const enemyTypes = [
+                        { type: 'basic', weight: 5 },
+                        { type: 'fast', weight: 3 },
+                        { type: 'tank', weight: 2 },
+                        { type: 'ranged', weight: 3 },
+                        { type: 'healer', weight: 2 }
+                    ];
+                    
+                    // Calculate total weight
+                    const totalWeight = enemyTypes.reduce((sum, type) => sum + type.weight, 0);
+                    let random = Math.random() * totalWeight;
+                    
+                    // Select enemy type based on weight
+                    for (const enemyType of enemyTypes) {
+                        random -= enemyType.weight;
+                        if (random <= 0) {
+                            subtype = enemyType.type;
+                            break;
+                        }
+                    }
+                }
+                
+                const enemy = new Enemy(x, y, subtype || 'basic');
+                gameState.grid[y][x] = enemy;
+                gameState.objects.set(enemy.id, enemy);
+            }
+        }
+
+        function clearSelection() {
+            gameState.selectedUnit = null;
+            document.querySelectorAll('.grid-cell').forEach(cell => {
+                cell.classList.remove('selected', 'valid-move', 'valid-attack');
+            });
+        }
+
+        function attackEnemy(enemy) {
+            // Remove enemy from grid and objects
+            gameState.grid[enemy.y][enemy.x] = null;
+            gameState.objects.delete(enemy.id);
+            
+            // Award resources for killing enemy
+            gameState.resources.coins += 5;
+        }
+        
+        function gameOver() {
+            alert('Game Over! The enemies have reached your main block!');
+            // Reset the game
+            gameState = {
+                resources: { metal: 100, coins: 50, gold: 25 },
+                turn: 1,
+                selectedUnit: null,
+                placementMode: null,
+                grid: Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null)),
+                objects: new Map()
+            };
+            initGame();
+        }
+
+        function highlightValidMoves(unit) {
+            const { moves, attacks } = unit.getValidMoves();
+            
+            moves.forEach(move => {
+                const cell = document.querySelector(`[data-x="${move.x}"][data-y="${move.y}"]`);
+                if (cell) {
+                    cell.classList.add('valid-move');
+                }
+            });
+
+            attacks.forEach(attack => {
+                const cell = document.querySelector(`[data-x="${attack.x}"][data-y="${attack.y}"]`);
+                if (cell) {
+                    cell.classList.add('valid-attack');
+                }
+            });
+
+            const unitCell = document.querySelector(`[data-x="${unit.x}"][data-y="${unit.y}"]`);
+            if (unitCell) {
+                unitCell.classList.add('selected');
+            }
+        }
+
+        function spawnNextWave() {
+            gameState.wave++;
+            // Spawn more enemies each wave (scaling up)
+            let numEnemies = 3 + gameState.wave * 2;
+            for (let i = 0; i < numEnemies; i++) {
+                // Random spawn location, not on player
+                let x, y;
+                do {
+                    x = Math.floor(Math.random() * GRID_SIZE);
+                    y = Math.floor(Math.random() * GRID_SIZE);
+                } while (gameState.grid[y][x] !== null || (x === PLAYER_START.x && y === PLAYER_START.y));
+                spawnEnemy(x, y);
+            }
+            updateDisplay();
+        }
+
+        function showWaveBreakMessage() {
+            let turnInfo = document.getElementById('turn-info');
+            turnInfo.innerHTML = `Wave Break: <b>${gameState.waveBreakTurns}</b> turns left before next wave!`;
+        }
+
+        function processEnemyTurn() {
+    // Army buildings (barracks) act at the start of each enemy turn
+    processArmyTurn();
+    // Tech buildings (including turrets) act at the start of each enemy turn
+    processTechBuildings();
+            // Wave break logic
+            if (gameState.inWaveBreak) {
+                gameState.waveBreakTurns--;
+                if (gameState.waveBreakTurns <= 0) {
+                    gameState.inWaveBreak = false;
+                    spawnNextWave();
+                } else {
+                    showWaveBreakMessage();
+                }
+                gameState.turn++;
+                updateDisplay();
+                return;
+            }
+
+            // Move all enemies
+            const enemies = [];
+            gameState.objects.forEach(obj => {
+                if (obj.type === 'enemy') {
+                    enemies.push(obj);
+                }
+            });
+
+            if (enemies.length === 0) {
+                // Start wave break
+                gameState.inWaveBreak = true;
+                gameState.waveBreakTurns = 10;
+                showWaveBreakMessage();
+                gameState.turn++;
+                updateDisplay();
+                return;
+            }
+
+            enemies.forEach(enemy => {
+                enemy.onTurn();
+            });
+
+            gameState.turn++;
+            updateDisplay();
+        }
+
+        function processArmyTurn() {
+            gameState.objects.forEach(obj => {
+                if (obj.type === 'army' && obj.onTurn) {
+                    obj.onTurn();
+                }
+            });
+        }
+
+        function processTechBuildings() {
+            gameState.objects.forEach(obj => {
+                if (obj.type === 'tech' && obj.onTurn) {
+                    obj.onTurn();
+                }
+            });
+        }
+
+        function updateDisplay() {
+            // Update resource display
+            document.getElementById('metal-count').textContent = gameState.resources.metal;
+            document.getElementById('coin-count').textContent = gameState.resources.coins;
+            document.getElementById('gold-count').textContent = gameState.resources.gold;
+            document.getElementById('turn-count').textContent = gameState.turn;
+
+            // Show wave/wave break info
+            let turnInfo = document.getElementById('turn-info');
+            if (gameState.inWaveBreak) {
+                turnInfo.innerHTML = `Wave Break: <b>${gameState.waveBreakTurns}</b> turns left before next wave!`;
+            } else {
+                turnInfo.innerHTML = `Turn: <span id="turn-count">${gameState.turn}</span> | Wave: <b>${gameState.wave}</b> | Click an army unit to select it, then click a highlighted square to move`;
+            }
+
+            // Update grid display
+            document.querySelectorAll('.grid-cell').forEach(cell => {
+                const x = parseInt(cell.dataset.x);
+                const y = parseInt(cell.dataset.y);
+                const obj = gameState.grid[y][x];
+
+                cell.className = 'grid-cell';
+                cell.innerHTML = '';
+
+                if (obj === 'player') {
+                    cell.classList.add('player');
+                    const sprite = document.createElement('div');
+                    sprite.className = 'object-sprite';
+                    sprite.textContent = SPRITES.player;
+                    cell.appendChild(sprite);
+                } else if (obj && obj.type) {
+                    cell.classList.add(obj.type);
+                    
+                    const sprite = document.createElement('div');
+                    sprite.className = 'object-sprite';
+                    sprite.textContent = obj.getSprite();
+
+                    // Show health for damaged enemies as well
+                    if ((obj.type === 'enemy' && obj.health < 50) || 
+                        (obj.type === 'wall' && obj.health < obj.maxHealth) || 
+                        (obj.type === 'army' && obj.health < obj.maxHealth)) {
+                        sprite.title = `Health: ${obj.health}/${obj.maxHealth || 50} (${obj.subtype})`;
+                        sprite.style.filter = 'brightness(0.7)';
+                    } else {
+                        sprite.title = obj.subtype;
+                    }
+
+                    cell.appendChild(sprite);
+                }
+
+                // Maintain selection and valid move highlighting
+                if (gameState.selectedUnit && 
+                    gameState.selectedUnit.x === x && 
+                    gameState.selectedUnit.y === y) {
+                    cell.classList.add('selected');
+                }
+            });
+
+            // Re-highlight valid moves and attacks if unit is selected
+            if (gameState.selectedUnit) {
+                const { moves, attacks } = gameState.selectedUnit.getValidMoves();
+                
+                moves.forEach(move => {
+                    const cell = document.querySelector(`[data-x="${move.x}"][data-y="${move.y}"]`);
+                    if (cell && gameState.grid[move.y][move.x] === null) {
+                        cell.classList.add('valid-move');
+                    }
+                });
+
+                attacks.forEach(attack => {
+                    const cell = document.querySelector(`[data-x="${attack.x}"][data-y="${attack.y}"]`);
+                    if (cell && gameState.grid[attack.y][attack.x] && gameState.grid[attack.y][attack.x].type === 'enemy') {
+                        cell.classList.add('valid-attack');
+                    }
+                });
+            }
+
+            // Update button states
+            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+            if (gameState.placementMode) {
+                const modeMap = {
+            'wall': 'place-wall',
+            'wall-steel': 'place-steel-wall', 
+            'tech': 'place-tech',
+            'tech-goldminer': 'place-gold-miner',
+            'tech-coinmaker': 'place-coin-maker',
+            'tech-turret': 'place-turret',
+            'tech-bomb': 'place-bomb',
+            'army-scout': 'place-scout',
+            'army-knight': 'place-knight',
+            'army-archer': 'place-archer',
+            'army-tank': 'place-tank',
+            'army-barrack': 'place-barrack',
+            'wall-fortress': 'place-fortress'
+        };
+                const buttonId = modeMap[gameState.placementMode];
+                if (buttonId) {
+                    const button = document.getElementById(buttonId);
+                    if (button) button.classList.add('active');
+                }
+            }
+        }
+
+        function findPlayer() {
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    if (gameState.grid[y][x] === 'player') {
+                        return { x, y };
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Event Listeners
+        const buttons = [
+            { id: 'place-wall', mode: 'wall' },
+            { id: 'place-steel-wall', mode: 'wall-steel' },
+            { id: 'place-tech', mode: 'tech' },
+            { id: 'place-gold-miner', mode: 'tech-goldminer' },
+            { id: 'place-coin-maker', mode: 'tech-coinmaker' },
+            { id: 'place-turret', mode: 'tech-turret' },
+            { id: 'place-bomb', mode: 'tech-bomb' },
+            { id: 'place-scout', mode: 'army-scout' },
+            { id: 'place-knight', mode: 'army-knight' },
+            { id: 'place-archer', mode: 'army-archer' },
+            { id: 'place-tank', mode: 'army-tank' },
+            { id: 'place-barrack', mode: 'army-barrack' },
+            { id: 'place-fortress', mode: 'wall-fortress' }
+        ];
+
+        buttons.forEach(({ id, mode }) => {
+            document.getElementById(id).addEventListener('click', () => {
+                gameState.placementMode = gameState.placementMode === mode ? null : mode;
+                clearSelection();
+                updateDisplay();
+            });
+        });
+
+        document.getElementById('clear-selection').addEventListener('click', () => {
+            gameState.placementMode = null;
+            clearSelection();
+            updateDisplay();
+        });
+
+        // Start the game
+        initGame();
+    </script>
+</body>
+</html>
