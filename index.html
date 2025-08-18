@@ -138,13 +138,14 @@ body {
 
 .game-grid {
     display: grid;
-    grid-template-columns: repeat(25, 20px);
-    grid-template-rows: repeat(25, 20px);
-    gap: 1px;
+    grid-template-columns: repeat(25, 26px);
+    grid-template-rows: repeat(25, 26px);
+    gap: 2px;
     background: #1e1e1e;
     border: 1px solid #2e2e2e;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 15px;
+    border-radius: 15px;
+    height: 700px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
@@ -153,10 +154,10 @@ body {
 }
 
 .grid-cell {
-    width: 20px;
-    height: 20px;
-    background: #121212;
-    border: 1px solid #2e2e2e;
+    width: 26px;
+    height: 26px;
+    background: #2f811b;
+    border: 1px solid #398d24;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
@@ -169,8 +170,8 @@ body {
 }
 
 .grid-cell:hover {
-    background: #222;
-    border-color: #555;
+    background: #296a19;
+    border-color: #297416;
 }
 
 .grid-cell.selected {
@@ -196,8 +197,8 @@ body {
 }
 
 .grid-cell .object-sprite {
-    width: 16px;
-    height: 16px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -205,31 +206,15 @@ body {
     border-radius: 2px;
 }
 
-.grid-cell.player .object-sprite {
-    background: #4caf50;
-    color: white;
-    box-shadow: 0 0 6px #4caf50;
+/* Ensure sprite images fit inside the cell without overflow */
+.grid-cell .object-sprite img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
 }
 
-.grid-cell.wall .object-sprite {
-    background: #795548;
-    color: #bcaaa4;
-}
-
-.grid-cell.tech .object-sprite {
-    background: #2196f3;
-    color: white;
-}
-
-.grid-cell.army .object-sprite {
-    background: #ff9800;
-    color: white;
-}
-
-.grid-cell.enemy .object-sprite {
-    background: #f44336;
-    color: white;
-}
 
 .info-panel {
     margin-top: 20px;
@@ -301,7 +286,7 @@ body {
                         <button class="btn" id="place-knight"><span>♞</span>Knight (25C)</button>
                         <button class="btn" id="place-archer"><span>🏹</span>Archer (20C)</button>
                         <button class="btn" id="place-tank"><span>🛡️</span>Tank (50C)</button>
-                        <button class="btn" id="place-barrack"><span>🏟️</span>Barrack (50C)</button>
+                        <button class="btn" id="place-barrack"><span>🏟️</span>Barrack (50G)</button>
                     </div>
                 </div>
             
@@ -342,34 +327,34 @@ body {
         const GRID_SIZE = 25;
         const PLAYER_START = { x: Math.floor(GRID_SIZE / 2), y: Math.floor(GRID_SIZE / 2) };
 
-        // Sprite emojis/symbols
+        // Sprite images
         const SPRITES = {
-            player: '👤',
+            player: 'sprites/spawn.png',
             wall: {
-                stone: '🧱',
-                steel: '🛡️',
-                fortress: '🏰'
+                stone: 'sprites/wall.png',
+                steel: 'sprites/iron.png',
+                fortress: 'sprites/tower.png'
             },
             tech: {
-                miner: '⛏️',
-                goldminer: '⚱️',
-                coinmaker: '🏦',
-                turret: '🔫',
-                bomb: '💣'
+                miner: 'sprites/iron.png',
+                goldminer: 'sprites/gold.png',
+                coinmaker: 'sprites/bank.png',
+                turret: 'sprites/turret.png',
+                bomb: 'sprites/bracket.png'
             },
             army: {
-                scout: '🔍',
-                knight: '♞',
-                archer: '🏹',
-                tank: '🛡️',
-                barrack: '🏟️'
+                scout: 'sprites/spawn.png',
+                knight: 'sprites/tower.png',
+                archer: 'sprites/turret.png',
+                tank: 'sprites/iron.png',
+                barrack: 'sprites/tower.png'
             },
             enemy: {
-                basic: '👹',
-                fast: '🐆',
-                tank: '🐢',
-                ranged: '🏹',
-                healer: '🩹'
+                basic: 'sprites/defaultbad.png',
+                fast: 'sprites/defaultbad.png',
+                tank: 'sprites/defaultbad.png',
+                ranged: 'sprites/defaultbad.png',
+                healer: 'sprites/defaultbad.png'
             }
         };
 
@@ -397,7 +382,7 @@ body {
             }
 
             getSprite() {
-                return SPRITES[this.type][this.subtype] || '❓';
+                return SPRITES[this.type][this.subtype] || 'sprites/defaultbad.png';
             }
 
             canInteractWith(other) {
@@ -649,7 +634,7 @@ body {
             }
 
             getSprite() {
-                return SPRITES.enemy[this.subtype] || '👹';
+                return SPRITES.enemy[this.subtype] || 'sprites/defaultbad.png';
             }
 
             getValidAttacks() {
@@ -1043,14 +1028,20 @@ body {
                     cell.classList.add('player');
                     const sprite = document.createElement('div');
                     sprite.className = 'object-sprite';
-                    sprite.textContent = SPRITES.player;
+                    const img = document.createElement('img');
+                    img.src = SPRITES.player;
+                    img.alt = 'player';
+                    sprite.appendChild(img);
                     cell.appendChild(sprite);
                 } else if (obj && obj.type) {
                     cell.classList.add(obj.type);
                     
                     const sprite = document.createElement('div');
                     sprite.className = 'object-sprite';
-                    sprite.textContent = obj.getSprite();
+                    const img = document.createElement('img');
+                    img.src = obj.getSprite();
+                    img.alt = obj.subtype;
+                    sprite.appendChild(img);
 
                     // Show health for damaged enemies as well
                     if ((obj.type === 'enemy' && obj.health < 50) || 
