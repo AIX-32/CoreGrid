@@ -205,7 +205,6 @@ body {
     border-radius: 2px;
 }
 
-/* Object Styles */
 .grid-cell.player .object-sprite {
     background: #4caf50;
     color: white;
@@ -973,23 +972,10 @@ body {
         }
 
         function processEnemyTurn() {
-    // Army buildings (barracks) act at the start of each enemy turn
-    processArmyTurn();
-    // Tech buildings (including turrets) act at the start of each enemy turn
-    processTechBuildings();
-            // Wave break logic
-            if (gameState.inWaveBreak) {
-                gameState.waveBreakTurns--;
-                if (gameState.waveBreakTurns <= 0) {
-                    gameState.inWaveBreak = false;
-                    spawnNextWave();
-                } else {
-                    showWaveBreakMessage();
-                }
-                gameState.turn++;
-                updateDisplay();
-                return;
-            }
+            // Army buildings (barracks) act at the start of each enemy turn
+            processArmyTurn();
+            // Tech buildings (including turrets) act at the start of each enemy turn
+            processTechBuildings();
 
             // Move all enemies
             const enemies = [];
@@ -1000,18 +986,14 @@ body {
             });
 
             if (enemies.length === 0) {
-                // Start wave break
-                gameState.inWaveBreak = true;
-                gameState.waveBreakTurns = 10;
-                showWaveBreakMessage();
-                gameState.turn++;
-                updateDisplay();
-                return;
+                // Immediately spawn next wave
+                spawnNextWave();
+            } else {
+                // Process enemy turns
+                enemies.forEach(enemy => {
+                    enemy.onTurn();
+                });
             }
-
-            enemies.forEach(enemy => {
-                enemy.onTurn();
-            });
 
             gameState.turn++;
             updateDisplay();
