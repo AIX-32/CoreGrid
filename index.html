@@ -145,8 +145,8 @@ body {
 
 .game-grid {
     display: grid;
-    grid-template-columns: repeat(25, 26px);
-    grid-template-rows: repeat(25, 26px);
+    grid-template-columns: repeat(21, 32px);
+    grid-template-rows: repeat(21, 32px);
     gap: 4px;
     background: #1e1e1e;
     border: 1px solid #2e2e2e;
@@ -161,8 +161,8 @@ body {
 }
 
 .grid-cell {
-    width: 26px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     background: #2f811b;
     border: 1px solid #398d24;
     cursor: pointer;
@@ -177,11 +177,14 @@ body {
 }
 
 .grid-cell:hover {
-    background: #296a19;
-    border-color: #297416;
-    border-bottom: 20px solid #297416;
+    background: #3ea326;               
+    border: 1px solid #4cb72f;       
+    border-bottom: 20px solid #2b6b18 !important;  
     transform: translateY(-10px);
+    border-radius: 5px;
+    z-index: 2;
 }
+
 
 .grid-cell.selected {
     box-shadow: 0 0 8px #FFD700;
@@ -362,7 +365,7 @@ img{
     });
 
         // Game Configuration
-        const GRID_SIZE = 25;
+        const GRID_SIZE = 21;
         const PLAYER_START = { x: Math.floor(GRID_SIZE / 2), y: Math.floor(GRID_SIZE / 2) };
 
         // Sprite images
@@ -1059,15 +1062,31 @@ img{
             gameState.wave++;
             // Spawn more enemies each wave (scaling up)
             let numEnemies = 3 + gameState.wave * 2;
-            for (let i = 0; i < numEnemies; i++) {
-                // Random spawn location, not on player
-                let x, y;
-                do {
-                    x = Math.floor(Math.random() * GRID_SIZE);
-                    y = Math.floor(Math.random() * GRID_SIZE);
-                } while (gameState.grid[y][x] !== null || (x === PLAYER_START.x && y === PLAYER_START.y));
+            
+            // Create a list of all possible empty cells
+            const emptyCells = [];
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    // Skip player start position and occupied cells
+                    if (gameState.grid[y][x] === null && !(x === PLAYER_START.x && y === PLAYER_START.y)) {
+                        emptyCells.push({x, y});
+                    }
+                }
+            }
+            
+            // Shuffle the empty cells for random spawning
+            for (let i = emptyCells.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [emptyCells[i], emptyCells[j]] = [emptyCells[j], emptyCells[i]];
+            }
+            
+            // Spawn enemies in random empty cells
+            const enemiesToSpawn = Math.min(numEnemies, emptyCells.length);
+            for (let i = 0; i < enemiesToSpawn; i++) {
+                const {x, y} = emptyCells[i];
                 spawnEnemy(x, y);
             }
+            
             updateDisplay();
         }
 
@@ -1283,5 +1302,10 @@ img{
         // Start the game
         initGame();
     </script>
+    <script src="main.js"></script>
+    <script src="enemies.js"></script>
+    <script src="tech.js"></script>
+    <script src="Army.js"></script>
+    
 </body>
 </html>
