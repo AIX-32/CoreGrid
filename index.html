@@ -248,8 +248,8 @@ body {
         <div class="ui-panel">
             <div class="resources">
                 <div class="resource">
-                    <span>🔩</span>
-                    <span id="metal-count">100</span> Metal
+                    <span>🛠️</span>
+                    <span id="Steel-count">100</span> Steel
                 </div>
                 <div class="resource">
                     <span>🪙</span>
@@ -265,8 +265,8 @@ body {
                 <div class="folder" data-folder>
                     <div class="folder-title">🧱 Walls</div>
                     <div class="folder-content">
-                        <button class="btn" id="place-wall"><span>🧱</span>Wall (10M)</button>
-                        <button class="btn" id="place-steel-wall"><span>🛡️</span>Steel (20M)</button>
+                        <button class="btn" id="place-wall"><span>🧱</span>Wall (10S)</button>
+                        <button class="btn" id="place-steel-wall"><span>🛡️</span>Steel (20S)</button>
                         <button class="btn" id="place-fortress"><span>🏰</span>Fortress (25G)</button>
                     </div>
                 </div>
@@ -274,10 +274,10 @@ body {
                 <div class="folder" data-folder>
                     <div class="folder-title">⚙️ Tech</div>
                     <div class="folder-content">
-                        <button class="btn" id="place-tech"><span>⛏️</span>Miner (20M)</button>
-                        <button class="btn" id="place-gold-miner"><span>⚱️</span>Gold (25M)</button>
-                        <button class="btn" id="place-coin-maker"><span>🏦</span>Bank (30M)</button>
-                        <button class="btn" id="place-turret"><span>🔫</span>Turret (40M)</button>
+                        <button class="btn" id="place-tech"><span>⛏️</span>Miner (20S)</button>
+                        <button class="btn" id="place-gold-miner"><span>⚱️</span>Gold (25S)</button>
+                        <button class="btn" id="place-coin-maker"><span>🏦</span>Bank (30S)</button>
+                        <button class="btn" id="place-turret"><span>🔫</span>Turret (40S)</button>
                         <button class="btn" id="place-bomb"><span>💣</span>Bomb (10G)</button>
                     </div>
                 </div>
@@ -348,8 +348,8 @@ body {
             army: {
                 scout: 'sprites/spawn.png',
                 knight: 'sprites/tower.png',
-                archer: 'sprites/turret.png',
-                tank: 'sprites/iron.png',
+                archer: 'sprites/Archer.png',
+                tank: 'sprites/Tank.png',
                 barrack: 'sprites/bracket.png'
             },
             enemy: {
@@ -363,7 +363,7 @@ body {
 
         // Game State
         let gameState = {
-            resources: { metal: 100, coins: 50, gold: 25 },
+            resources: { Steel: 100, coins: 50, gold: 25 },
             turn: 1,
             selectedUnit: null,
             placementMode: null,
@@ -404,7 +404,7 @@ body {
                 this.maxHealth = subtype === 'steel' ? 5 : subtype === 'fortress' ? 10 : 2;
                 this.health = this.maxHealth;
                 this.cost = { 
-                    metal: subtype === 'steel' ? 20 : 0, 
+                    Steel: subtype === 'steel' ? 20 : 0, 
                     coins: 0,
                     gold: subtype === 'fortress' ? 25 : 0
                 };
@@ -421,7 +421,7 @@ body {
             constructor(x, y, subtype = 'miner') {
                 super(x, y, 'tech', subtype);
                 this.cost = { 
-                    metal: subtype === 'goldminer' ? 25 : subtype === 'coinmaker' ? 30 : subtype === 'turret' ? 40 : subtype === 'bomb' ? 0 : 20, 
+                    Steel: subtype === 'goldminer' ? 25 : subtype === 'coinmaker' ? 30 : subtype === 'turret' ? 40 : subtype === 'bomb' ? 0 : 20, 
                     coins: 0,
                     gold: subtype === 'bomb' ? 10 : 0
                 };
@@ -433,7 +433,7 @@ body {
 
             onTurn() {
                 if (this.subtype === 'miner') {
-                    gameState.resources.metal += 5;
+                    gameState.resources.Steel += 5;
                 } else if (this.subtype === 'goldminer') {
                     gameState.resources.gold += 1;
                 } else if (this.subtype === 'coinmaker') {
@@ -520,11 +520,11 @@ body {
             constructor(x, y, subtype = 'scout') {
                 super(x, y, 'army', subtype);
                 if (subtype === 'barrack') {
-                    this.cost = { metal: 0, coins: 0, gold: 40 };
+                    this.cost = { Steel: 0, coins: 0, gold: 40 };
                     this.spawnCounter = 0;
                 } else {
                     this.cost = { 
-                        metal: 0, 
+                        Steel: 0, 
                         coins: subtype === 'knight' ? 25 : subtype === 'archer' ? 20 : subtype === 'tank' ? 50 : 15,
                         gold: 0
                     };
@@ -839,8 +839,8 @@ body {
                     return;
             }
 
-            if (gameState.resources.metal >= cost.metal && gameState.resources.coins >= cost.coins && gameState.resources.gold >= cost.gold) {
-                gameState.resources.metal -= cost.metal;
+            if (gameState.resources.Steel >= cost.Steel && gameState.resources.coins >= cost.coins && gameState.resources.gold >= cost.gold) {
+                gameState.resources.Steel -= cost.Steel;
                 gameState.resources.coins -= cost.coins;
                 gameState.resources.gold -= cost.gold;
                 gameState.grid[y][x] = obj;
@@ -905,7 +905,7 @@ body {
             alert('Game Over! The enemies have reached your main block!');
             // Reset the game
             gameState = {
-                resources: { metal: 100, coins: 50, gold: 25 },
+                resources: { Steel: 100, coins: 50, gold: 25 },
                 turn: 1,
                 selectedUnit: null,
                 placementMode: null,
@@ -1005,7 +1005,7 @@ body {
 
         function updateDisplay() {
             // Update resource display
-            document.getElementById('metal-count').textContent = gameState.resources.metal;
+            document.getElementById('Steel-count').textContent = gameState.resources.Steel;
             document.getElementById('coin-count').textContent = gameState.resources.coins;
             document.getElementById('gold-count').textContent = gameState.resources.gold;
             document.getElementById('turn-count').textContent = gameState.turn;
