@@ -266,6 +266,10 @@ img{
   height: 26px;
 }
 
+.lowcol {
+    color: #858585;
+}
+
 
     </style>
 </head>
@@ -290,37 +294,37 @@ img{
             
             <div class="controls-folder">
                 <div class="folder" data-folder>
-                    <div class="folder-title"><div class="icon-text"><img src="/sprites/wall.png"></img> Walls</div></div>
+                    <div class="folder-title"><div class="icon-text"><img src="./sprites/wall.png"></img> Walls</div></div>
                     <div class="folder-content">
-                        <button class="btn" id="place-wall"><div><img src="/sprites/wall.png"></img></div>Wall (10S)</button>
-                        <button class="btn" id="place-steel-wall"><div><img src="/sprites/wallsteel.png"></img></div>Steel (20S)</button>
-                        <button class="btn" id="place-spike"><div><img src="/sprites/spike.png"></img></div>Spike (15S)</button>
-                        <button class="btn" id="place-fortress"><div><img src="/sprites/spawn.png"></img></div>Fortress (25G)</button>
+                        <button class="btn" id="place-wall"><div><img src="./sprites/wall.png"></img></div>Wall <span class="lowcol">10S</span></button>
+                        <button class="btn" id="place-steel-wall"><div><img src="./sprites/wallsteel.png"></img></div>Steel <span class="lowcol">20S</span></button>
+                        <button class="btn" id="place-spike"><div><img src="./sprites/spike.png"></img></div>Spike <span class="lowcol">15S</span></button>
+                        <button class="btn" id="place-fortress"><div><img src="./sprites/spawn.png"></img></div>Fortress <span class="lowcol">25G</span></button>
                     </div>
                 </div>
             
                 <div class="folder" data-folder>
-                    <div class="folder-title"><div class="icon-text"><img src="/sprites/turret.png"></img> Tech</div></div>
+                    <div class="folder-title"><div class="icon-text"><img src="./sprites/turret.png"></img> Tech</div></div>
                     <div class="folder-content">
-                        <button class="btn" id="place-tech"><div><img src="/sprites/iron.png"></img></div>Miner (20S)</button>
-                        <button class="btn" id="place-gold-miner"><div><img src="/sprites/gold.png"></img></div>Gold (25S)</button>
-                        <button class="btn" id="place-coin-maker"><div><img src="/sprites/bank.png"></img></div>Bank (30S)</button>
-                        <button class="btn" id="place-turret"><div><img src="/sprites/turret.png"></img></div>Turret (40S)</button>
-                        <button class="btn" id="place-bomb"><div><img src="/sprites/bomb.png"></img></div>Bomb (10G)</button>
-                        <button class="btn" id="place-supply"><div><img src="/sprites/supply.gif"></img></div>Supply Drop (35G)</button>
-                        <button class="btn" id="place-campfire"><div><img src="/sprites/campfire.gif"></img></div>Campfire (30S)</button>
+                        <button class="btn" id="place-tech"><div><img src="./sprites/iron.png"></img></div>Steel mine <span class="lowcol">20S</span></button>
+                        <button class="btn" id="place-gold-miner"><div><img src="./sprites/gold.png"></img></div>Gold mine <span class="lowcol">25S</span></button>
+                        <button class="btn" id="place-coin-maker"><div><img src="./sprites/bank.png"></img></div>Bank <span class="lowcol">30S</span></button>
+                        <button class="btn" id="place-turret"><div><img src="./sprites/turret.png"></img></div>Turret <span class="lowcol">40S</span></button>
+                        <button class="btn" id="place-bomb"><div><img src="./sprites/bomb.png"></img></div>Bomb <span class="lowcol">10G</span></button>
+                        <button class="btn" id="place-supply"><div><img src="./sprites/supply.gif"></img></div>Supply Drop <span class="lowcol">35G</span></button>
+                        <button class="btn" id="place-campfire"><div><img src="./sprites/campfire.gif"></img></div>Campfire <span class="lowcol">30S</span></button>
                     </div>
                 </div>
             
                 <div class="folder" data-folder>
-                    <div class="folder-title"><div class="icon-text"><img src="/sprites/Tank.png"></img> Army</div></div>
+                    <div class="folder-title"><div class="icon-text"><img src="./sprites/Tank.png"></img> Army</div></div>
                     <div class="folder-content">
-                        <button class="btn" id="place-scout"><div><img src="/sprites/soldier.png"></img></div>Soldier (15C)</button>
-                        <button class="btn" id="place-knight"><div><img src="/sprites/knight.png"></img></div>Knight (25C)</button>
-                        <button class="btn" id="place-archer"><div><img src="/sprites/archer.png"></img></div>Archer (20C)</button>
-                        <button class="btn" id="place-tank"><div><img src="/sprites/tank.png"></img></div>Tank (50C)</button>
-                        <button class="btn" id="place-king"><div><img src="/sprites/king.png"></img></div>King (500G)</button>
-                        <button class="btn" id="place-barrack"><div><img src="/sprites/barrack.png"></img></div>Barrack (50G)</button>
+                        <button class="btn" id="place-scout"><div><img src="./sprites/soldier.png"></img></div>Soldier <span class="lowcol">15C</span></button>
+                        <button class="btn" id="place-knight"><div><img src="./sprites/knight.png"></img></div>Knight <span class="lowcol">25C</span></button>
+                        <button class="btn" id="place-archer"><div><img src="./sprites/archer.png"></img></div>Archer <span class="lowcol">20C</span></button>
+                        <button class="btn" id="place-tank"><div><img src="./sprites/tank.png"></img></div>Tank <span class="lowcol">50C</span></button>
+                        <button class="btn" id="place-king"><div><img src="./sprites/king.png"></img></div>King <span class="lowcol">500G</span></button>
+                        <button class="btn" id="place-barrack"><div><img src="./sprites/barrack.png"></img></div>Barrack <span class="lowcol">50G</span></button>
                     </div>
                 </div>
             
@@ -397,7 +401,7 @@ img{
 
         // Game State
         let gameState = {
-            resources: { Steel: 100, coins: 350, gold: 525 },
+            resources: { Steel: 100, coins: 50, gold: 25 },
             turn: 1,
             selectedUnit: null,
             placementMode: null,
