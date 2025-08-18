@@ -63,11 +63,17 @@ body {
     background: #1c1c1c;
     border-radius: 8px;
     border: 1px solid #2e2e2e;
-    max-width: 200px;
+    min-width: 120px;
     position: relative;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     z-index: 999;
     user-select: none;
+}
+
+.folder:last-child {
+    display: none;
 }
 
 .folder-title {
@@ -93,7 +99,7 @@ body {
     top: 100%;
     left: 0;
     background: #222;
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 15px 15px;
     border: 1px solid #333;
     width: max-content;
     z-index: 999;
@@ -106,7 +112,7 @@ body {
 }
 
 .btn {
-    width: 80px;
+    width: 100px;
     height: 80px;
     border: 1px solid #3a3a3a;
     border-radius: 5px;
@@ -127,6 +133,7 @@ body {
 .btn span:first-child {
     font-size: 32px;
 }
+
 
 .btn:hover {
     background: #333;
@@ -159,7 +166,7 @@ body {
     background: #2f811b;
     border: 1px solid #398d24;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.5s ease;
     position: relative;
     display: flex;
     align-items: center;
@@ -172,6 +179,8 @@ body {
 .grid-cell:hover {
     background: #296a19;
     border-color: #297416;
+    border-bottom: 20px solid #297416;
+    transform: translateY(-10px);
 }
 
 .grid-cell.selected {
@@ -227,19 +236,37 @@ body {
 }
 
 .turn-info {
-    margin-top: 10px;
     padding: 10px;
     background: #222;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #2e2e2e;
     text-align: center;
     color: #ccc;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 /*hidescroll bar*/
 ::-webkit-scrollbar {
     display: none;
 }
+img{
+    width: 26px;
+    height: 26px;
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+  gap: 6px; 
+}
+
+.icon-text img {
+  width: 26px;
+  height: 26px;
+}
+
+
     </style>
 </head>
 <body>
@@ -248,48 +275,48 @@ body {
         <div class="ui-panel">
             <div class="resources">
                 <div class="resource">
-                    <span>🛠️</span>
+                    <img src="/sprites/ironin.png"></img>
                     <span id="Steel-count">100</span> Steel
                 </div>
                 <div class="resource">
-                    <span>🪙</span>
+                    <img src="/sprites/coin.png"></img>
                     <span id="coin-count">50</span> Coins
                 </div>
                 <div class="resource">
-                    <span>🥇</span>
+                    <img src="/sprites/goldin.png"></img>
                     <span id="gold-count">25</span> Gold
                 </div>
             </div>
             
             <div class="controls-folder">
                 <div class="folder" data-folder>
-                    <div class="folder-title">🧱 Walls</div>
+                    <div class="folder-title"><div class="icon-text"><img src="/sprites/wall.png"></img> Walls</div></div>
                     <div class="folder-content">
-                        <button class="btn" id="place-wall"><span>🧱</span>Wall (10S)</button>
-                        <button class="btn" id="place-steel-wall"><span>🛡️</span>Steel (20S)</button>
-                        <button class="btn" id="place-fortress"><span>🏰</span>Fortress (25G)</button>
+                        <button class="btn" id="place-wall"><div><img src="/sprites/wall.png"></img></div>Wall (10S)</button>
+                        <button class="btn" id="place-steel-wall"><div><img src="/sprites/wallsteel.png"></img></div>Steel (20S)</button>
+                        <button class="btn" id="place-fortress"><div><img src="/sprites/spawn.png"></img></div>Fortress (25G)</button>
                     </div>
                 </div>
             
                 <div class="folder" data-folder>
-                    <div class="folder-title">⚙️ Tech</div>
+                    <div class="folder-title"><div class="icon-text"><img src="/sprites/turret.png"></img> Tech</div></div>
                     <div class="folder-content">
-                        <button class="btn" id="place-tech"><span>⛏️</span>Miner (20S)</button>
-                        <button class="btn" id="place-gold-miner"><span>⚱️</span>Gold (25S)</button>
-                        <button class="btn" id="place-coin-maker"><span>🏦</span>Bank (30S)</button>
-                        <button class="btn" id="place-turret"><span>🔫</span>Turret (40S)</button>
-                        <button class="btn" id="place-bomb"><span>💣</span>Bomb (10G)</button>
+                        <button class="btn" id="place-tech"><div><img src="/sprites/iron.png"></img></div>Miner (20S)</button>
+                        <button class="btn" id="place-gold-miner"><div><img src="/sprites/gold.png"></img></div>Gold (25S)</button>
+                        <button class="btn" id="place-coin-maker"><div><img src="/sprites/bank.png"></img></div>Bank (30S)</button>
+                        <button class="btn" id="place-turret"><div><img src="/sprites/turret.png"></img></div>Turret (40S)</button>
+                        <button class="btn" id="place-bomb"><div><img src="/sprites/bomb.png"></img></div>Bomb (10G)</button>
                     </div>
                 </div>
             
                 <div class="folder" data-folder>
-                    <div class="folder-title">⚔️ Army</div>
+                    <div class="folder-title"><div class="icon-text"><img src="/sprites/Tank.png"></img> Army</div></div>
                     <div class="folder-content">
-                        <button class="btn" id="place-scout"><span>🔍</span>Scout (15C)</button>
-                        <button class="btn" id="place-knight"><span>♞</span>Knight (25C)</button>
-                        <button class="btn" id="place-archer"><span>🏹</span>Archer (20C)</button>
-                        <button class="btn" id="place-tank"><span>🛡️</span>Tank (50C)</button>
-                        <button class="btn" id="place-barrack"><span>🏟️</span>Barrack (50G)</button>
+                        <button class="btn" id="place-scout"><div><img src="/sprites/soldier.png"></img></div>Soldier (15C)</button>
+                        <button class="btn" id="place-knight"><div><img src="/sprites/knight.png"></img></div>Knight (25C)</button>
+                        <button class="btn" id="place-archer"><div><img src="/sprites/archer.png"></img></div>Archer (20C)</button>
+                        <button class="btn" id="place-tank"><div><img src="/sprites/tank.png"></img></div>Tank (50C)</button>
+                        <button class="btn" id="place-barrack"><div><img src="/sprites/barrack.png"></img></div>Barrack (50G)</button>
                     </div>
                 </div>
             
