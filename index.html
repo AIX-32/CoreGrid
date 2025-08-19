@@ -544,6 +544,8 @@ img{
                     this.health = 3;
                 } else if (subtype === 'spike') {
                     this.health = 3;
+                } else if (subtype === 'fortress') {
+                    this.health = 5; // Fortress has more health
                 } else {
                     this.health = 1; // Basic wall
                     this.subtype = 'stone'; // Ensure subtype is 'stone' for sprite lookup
@@ -944,23 +946,48 @@ img{
             }
 
             attackWall(wall) {
-                const isDestroyed = wall.takeDamage(1, this);
-                if (isDestroyed) {
+                // Deal damage to the wall based on its type
+                const damage = 1; // Base damage
+                const isDestroyed = wall.takeDamage(damage, this);
+                
+                // Update wall appearance based on remaining health
+                if (wall.health <= 0) {
                     gameState.grid[wall.y][wall.x] = null;
                     gameState.objects.delete(wall.id);
+                } else {
+                    // Update the wall's appearance to show damage
+                    const wallCell = document.querySelector(`[data-x="${wall.x}"][data-y="${wall.y}"]`);
+                    if (wallCell) {
+                        const sprite = wallCell.querySelector('.object-sprite');
+                        if (sprite) {
+                            // Make the wall appear more damaged as health decreases
+                            const healthPercent = (wall.health / (wall.maxHealth || 1)) * 100;
+                            sprite.style.opacity = 0.3 + (0.7 * (healthPercent / 100));
+                            sprite.style.filter = `brightness(${0.5 + (0.5 * (healthPercent / 100))})`;
+                        }
+                    }
                 }
             }
 
             attackUnit(unit) {
-                const isDestroyed = unit.takeDamage(1);
-                if (isDestroyed) {
+                // For tech buildings, destroy them in one hit regardless of health
+                if (unit.type === 'tech') {
                     gameState.grid[unit.y][unit.x] = null;
                     gameState.objects.delete(unit.id);
+                } else {
+                    // For other units, use normal damage system
+                    const damage = 1; // Base damage
+                    const isDestroyed = unit.takeDamage(damage);
+                    
+                    if (isDestroyed) {
+                        gameState.grid[unit.y][unit.x] = null;
+                        gameState.objects.delete(unit.id);
+                    }
                 }
 
                 // Clear selection if the attacked unit was selected
                 if (gameState.selectedUnit && gameState.selectedUnit.id === unit.id) {
-                    gameState.selectedUnit = null;
+                    clearSelection();
                 }
             }
         }
