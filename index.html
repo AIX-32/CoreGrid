@@ -353,6 +353,7 @@ img{
                         <button class="btn" id="place-knight"><div><img src="./sprites/knight.png"></img></div>Knight <span class="lowcol">25C</span></button>
                         <button class="btn" id="place-archer"><div><img src="./sprites/Archer.png"></img></div>Archer <span class="lowcol">20C</span></button>
                         <button class="btn" id="place-tank"><div><img src="./sprites/Tank.png"></img></div>Tank <span class="lowcol">50C</span></button>
+                        <button class="btn" id="place-siege-tower"><div><img src="./sprites/siegetower.png"></img></div>Siege Tower <span class="lowcol">275C</span></button>
                         <button class="btn" id="place-king"><div><img src="./sprites/king.png"></img></div>King <span class="lowcol">500G</span></button>
                         <button class="btn" id="place-barrack"><div><img src="./sprites/barrack.png"></img></div>Barrack <span class="lowcol">50G</span></button>
                     </div>
@@ -486,7 +487,8 @@ img{
                 archer: './sprites/Archer.png',
                 tank: './sprites/Tank.png',
                 king: './sprites/king.png',
-                barrack: './sprites/barrack.png'
+                barrack: './sprites/barrack.png',
+                siegetower: './sprites/siegetower.png'
             },
             enemy: {
                 basic: './sprites/defaultbad.png',
@@ -742,13 +744,13 @@ img{
                 } else {
                     this.cost = { 
                         Steel: 0, 
-                        coins: subtype === 'knight' ? 25 : subtype === 'archer' ? 20 : subtype === 'tank' ? 50 : 15,
+                        coins: subtype === 'knight' ? 25 : subtype === 'archer' ? 20 : subtype === 'tank' ? 50 : subtype === 'siegetower' ? 275 : 15,
                         gold: 0
                     };
                 }
                 this.owner = 'player';
-                this.range = subtype === 'archer' ? 3 : subtype === 'king' ? 2 : 1;
-                this.health = subtype === 'tank' ? 8 : subtype === 'king' ? 25 : 1;
+                this.range = subtype === 'archer' || subtype === 'siegetower' ? 4 : subtype === 'king' ? 2 : 1;
+                this.health = subtype === 'tank' ? 5 : subtype === 'king' ? 25 : 1;
                 this.maxHealth = this.health;
             }
 
@@ -812,8 +814,8 @@ img{
                     }
                 });
 
-                // Special attack range for archers
-                if (this.subtype === 'archer') {
+                // Special attack range for archers and siege towers
+                if (this.subtype === 'archer' || this.subtype === 'siegetower') {
                     const allDirections = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]];
                     allDirections.forEach(([dx, dy]) => {
                         for (let i = 1; i <= this.range; i++) {
@@ -1421,6 +1423,7 @@ img{
             { id: 'place-knight', mode: 'army-knight' },
             { id: 'place-archer', mode: 'army-archer' },
             { id: 'place-tank', mode: 'army-tank' },
+            { id: 'place-siege-tower', mode: 'army-siegetower' },
             { id: 'place-king', mode: 'army-king' },
             { id: 'place-barrack', mode: 'army-barrack' },
             { id: 'place-fortress', mode: 'wall-fortress' },
