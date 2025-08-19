@@ -13,6 +13,22 @@
     <title>CoreGrid</title>
 
     <style>
+    /* Save/Load Buttons */
+    .save-load-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 0 15px;
+    }
+    
+    .save-load-buttons .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+    
+    #load-game {
+        display: none;
+    }
 body {
     margin: 0;
     padding: 20px;
@@ -291,7 +307,7 @@ img{
     <div class="game-container">
         
         <div class="ui-panel">
-            <div class="resources">
+            <div class="resources" style="flex-grow: 1;">
                 <div class="resource">
                     <img src="./sprites/ironin.png"></img>
                     <span id="Steel-count">100</span> Steel
@@ -367,6 +383,73 @@ img{
     </div>
 
     <script>
+    // Save/Load System
+    function saveGame() {
+        const gameState = {
+            gridState: document.getElementById('game-grid').innerHTML,
+            steel: document.getElementById('Steel-count').textContent,
+            coins: document.getElementById('coin-count').textContent,
+            gold: document.getElementById('gold-count').textContent,
+            turn: document.getElementById('turn-count').textContent
+        };
+        
+        const blob = new Blob([JSON.stringify(gameState, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `coregrid_save_${new Date().toISOString().slice(0, 10)}.coregrid`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('Game saved successfully!');
+    }
+    
+    function loadGame(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const gameState = JSON.parse(e.target.result);
+                
+                // Clear the current game state
+                document.getElementById('game-grid').innerHTML = gameState.gridState;
+                document.getElementById('Steel-count').textContent = gameState.steel;
+                document.getElementById('coin-count').textContent = gameState.coins;
+                document.getElementById('gold-count').textContent = gameState.gold;
+                document.getElementById('turn-count').textContent = gameState.turn;
+                
+                // Reattach event listeners to the grid cells
+                document.querySelectorAll('.grid-cell').forEach(cell => {
+                    const x = parseInt(cell.getAttribute('data-x'));
+                    const y = parseInt(cell.getAttribute('data-y'));
+                    cell.addEventListener('click', () => handleCellClick(x, y));
+                });
+                
+                alert('Game loaded successfully!');
+            } catch (error) {
+                alert('Error loading game: Invalid save file');
+                console.error('Error loading game:', error);
+            }
+        };
+        reader.readAsText(file);
+    }
+    
+    // Add event listeners for save/load buttons
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('save-game').addEventListener('click', saveGame);
+        document.getElementById('load-game').addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                loadGame(e.target.files[0]);
+            }
+        });
+        document.getElementById('load-game-btn').addEventListener('click', () => {
+            document.getElementById('load-game').click();
+        });
+    });
+    
+    // Existing code
 
     document.querySelectorAll('[data-folder] .folder-title').forEach(title => {
         title.addEventListener('click', () => {
@@ -796,41 +879,54 @@ img{
             }
 
             onTurn() {
-                // First check if we can attack the player directly
-                const playerPos = findPlayer();
-                if (playerPos) {
-                    const dx = Math.abs(playerPos.x - this.x);
-                    const dy = Math.abs(playerPos.y - this.y);
+                // Always target the player's spawn point (center of the grid)
+                const targetX = Math.floor(GRID_SIZE / 2);
+                const targetY = Math.floor(GRID_SIZE / 2);
+                
+                // Check if we're at the spawn point
+                if (this.x === targetX && this.y === targetY) {
+                    gameOver();
+                    return;
+                }
+                
+                // Check for attacks in adjacent cells
+                const attacks = this.getValidAttacks();
+                if (attacks.length > 0) {
+                    // Attack anything in the way - prioritize player units, then walls, then anything else
+                    const unitTargets = attacks.filter(a => a.target.type === 'army' && a.target.owner === 'player');
+                    const wallTargets = attacks.filter(a => a.target.type === 'wall');
+                    const otherTargets = attacks.filter(a => a.target.type !== 'army' && a.target.type !== 'wall');
                     
-                    // If adjacent to player, game over
-                    if (dx <= 1 && dy <= 1) {
-                        gameOver();
+                    const target = unitTargets[0] || wallTargets[0] || otherTargets[0];
+                    if (target) {
+                        this.attackTarget(target.target);
                         return;
                     }
                 }
+
+                // Move towards the spawn point
+                let dx = Math.sign(targetX - this.x);
+                let dy = Math.sign(targetY - this.y);
                 
-                // Then check for other attacks
-                const attacks = this.getValidAttacks();
-                if (attacks.length > 0) {
-                    // Prioritize army units over walls
-                    const armyTargets = attacks.filter(a => a.target.type === 'army');
-                    const wallTargets = attacks.filter(a => a.target.type === 'wall');
+                // Try to move in the primary direction first
+                let newX = this.x + dx;
+                let newY = this.y;
+                
+                // If we can't move in primary X direction, try Y direction
+                if (newX < 0 || newX >= GRID_SIZE || (gameState.grid[newY][newX] !== null && gameState.grid[newY][newX] !== 'player')) {
+                    newX = this.x;
+                    newY = this.y + dy;
                     
-                    const target = armyTargets.length > 0 ? armyTargets[0] : wallTargets[0];
-                    this.attackTarget(target.target);
-                    return;
+                    // If we can't move in primary Y direction either, try diagonal
+                    if (newY < 0 || newY >= GRID_SIZE || (gameState.grid[newY][newX] !== null && gameState.grid[newY][newX] !== 'player')) {
+                        newX = this.x + dx;
+                    }
                 }
-
-                // If no attacks available, move towards player
-                const playerPosition = findPlayer();
-                if (playerPosition) {
-                    const dx = Math.sign(playerPosition.x - this.x);
-                    const dy = Math.sign(playerPosition.y - this.y);
-                    const newX = this.x + (Math.random() < 0.7 ? dx : (Math.random() < 0.5 ? -1 : 1));
-                    const newY = this.y + (Math.random() < 0.7 ? dy : (Math.random() < 0.5 ? -1 : 1));
-
-                    if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE && 
-                        gameState.grid[newY][newX] === null) {
+                
+                // Check if the target cell is valid
+                if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE) {
+                    // If the target cell is empty or contains the player, move there
+                    if (gameState.grid[newY][newX] === null || gameState.grid[newY][newX] === 'player') {
                         gameState.grid[this.y][this.x] = null;
                         gameState.grid[newY][newX] = this;
                         this.x = newX;
@@ -902,17 +998,21 @@ img{
 
         function handleCellClick(x, y) {
             const cell = gameState.grid[y][x];
+            let actionTaken = false;
 
             if (gameState.placementMode) {
                 if (cell === null) {
                     const [type, subtype] = gameState.placementMode.split('-');
                     const placed = placeObject(x, y, type, subtype);
-                    if (placed && !gameState.inWaveBreak) {
-                        processEnemyTurn(); // Enemies move after placing
+                    if (placed) {
+                        actionTaken = true;
                     }
                 }
                 // Don't clear placement mode, allowing multiple placements
                 updateDisplay();
+                if (actionTaken && !gameState.inWaveBreak) {
+                    processEnemyTurn(); // Enemies move after placing
+                }
                 return;
             }
 
@@ -933,19 +1033,19 @@ img{
                 
                 if (isValidMove && cell === null) {
                     gameState.selectedUnit.moveTo(x, y);
-                    clearSelection();
-                    updateDisplay();
-                    processEnemyTurn(); // Enemies move after player moves
+                    actionTaken = true;
                 } else if (isValidAttack && cell && cell.type === 'enemy') {
                     // Attack the enemy
                     attackEnemy(cell);
-                    clearSelection();
-                    updateDisplay();
-                    processEnemyTurn(); // Enemies move after attack
+                    actionTaken = true;
                 } else {
                     // If clicked somewhere invalid, clear selection
                     clearSelection();
-                    updateDisplay();
+                }
+                clearSelection();
+                updateDisplay();
+                if (actionTaken && !gameState.inWaveBreak) {
+                    processEnemyTurn(); // Enemies move after any valid action
                 }
             }
         }
@@ -1115,6 +1215,18 @@ img{
         function showWaveBreakMessage() {
             let turnInfo = document.getElementById('turn-info');
             turnInfo.innerHTML = `Wave Break: <b>${gameState.waveBreakTurns}</b> turns left before next wave!`;
+        }
+
+        function findPlayer() {
+            // Find the player's position in the grid
+            for (let y = 0; y < gameState.grid.length; y++) {
+                for (let x = 0; x < gameState.grid[y].length; x++) {
+                    if (gameState.grid[y][x] === 'player') {
+                        return { x, y };
+                    }
+                }
+            }
+            return null; // Player not found (shouldn't happen in normal gameplay)
         }
 
         function processEnemyTurn() {
