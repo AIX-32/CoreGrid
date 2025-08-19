@@ -22,6 +22,13 @@ body {
     min-height: 100vh;
 }
 
+* {
+  user-select: none;
+  -webkit-user-select: none; 
+  -ms-user-select: none;   
+}
+
+
 .game-container {
     max-width: 800px;
     margin: 0 auto;
@@ -374,35 +381,36 @@ img{
 
         // Sprite images
         const SPRITES = {
-            player: 'sprites/spawn.png',
+            player: './sprites/spawn.png',
             wall: {
-                stone: 'sprites/wall.png',
-                steel: 'sprites/wallsteel.png',
-                fortress: 'sprites/spawn.png'
+                stone: './sprites/wall.png',
+                steel: './sprites/wallsteel.png',
+                spike: './sprites/spike.png',
+                fortress: './sprites/spawn.png'
             },
             tech: {
-                miner: 'sprites/iron.png',
-                goldminer: 'sprites/gold.png',
-                coinmaker: 'sprites/bank.png',
-                turret: 'sprites/turret.png',
-                bomb: 'sprites/bomb.png',
-                supply: 'sprites/supply.gif',
-                campfire: 'sprites/campfire.gif'
+                miner: './sprites/iron.png',
+                goldminer: './sprites/gold.png',
+                coinmaker: './sprites/bank.png',
+                turret: './sprites/turret.png',
+                bomb: './sprites/bomb.png',
+                supply: './sprites/supply.gif',
+                campfire: './sprites/campfire.gif'
             },
             army: {
-                scout: 'sprites/soldier.png',
-                knight: 'sprites/knight.png',
-                archer: 'sprites/Archer.png',
-                tank: 'sprites/Tank.png',
-                king: 'sprites/king.png',
-                barrack: 'sprites/barrack.png'
+                scout: './sprites/soldier.png',
+                knight: './sprites/knight.png',
+                archer: './sprites/Archer.png',
+                tank: './sprites/Tank.png',
+                king: './sprites/king.png',
+                barrack: './sprites/barrack.png'
             },
             enemy: {
-                basic: 'sprites/defaultbad.png',
-                fast: 'sprites/badfast.png',
-                tank: 'sprites/badheavy.png',
-                ranged: 'sprites/badarcher.png',
-                healer: 'sprites/badhealer.png' 
+                basic: './sprites/defaultbad.png',
+                fast: './sprites/badfast.png',
+                tank: './sprites/badheavy.png',
+                ranged: './sprites/badarcher.png',
+                healer: './sprites/badhealer.png' 
             }
         };
 
@@ -430,7 +438,8 @@ img{
             }
 
             getSprite() {
-                return SPRITES[this.type][this.subtype] || 'sprites/defaultbad.png';
+                const sprite = SPRITES[this.type]?.[this.subtype];
+                return sprite && sprite.trim() ? sprite : 'sprites/missing.png';
             }
 
             canInteractWith(other) {
@@ -445,13 +454,16 @@ img{
         // Wall Types
         class Wall extends GameObject {
             constructor(x, y, subtype = 'basic') {
-                super(x, y, 'wall', subtype);
+                // Map 'basic' subtype to 'stone' for sprite lookup
+                const spriteSubtype = subtype === 'basic' ? 'stone' : subtype;
+                super(x, y, 'wall', spriteSubtype);
                 if (subtype === 'steel') {
                     this.health = 3;
                 } else if (subtype === 'spike') {
                     this.health = 3;
                 } else {
                     this.health = 1; // Basic wall
+                    this.subtype = 'stone'; // Ensure subtype is 'stone' for sprite lookup
                 }
                 this.maxHealth = this.health;
                 this.blocksMovement = true;
@@ -894,13 +906,13 @@ img{
             if (gameState.placementMode) {
                 if (cell === null) {
                     const [type, subtype] = gameState.placementMode.split('-');
-                    placeObject(x, y, type, subtype);
-                    if (!gameState.inWaveBreak) {
+                    const placed = placeObject(x, y, type, subtype);
+                    if (placed && !gameState.inWaveBreak) {
                         processEnemyTurn(); // Enemies move after placing
-                    } else {
-                        updateDisplay();
                     }
                 }
+                // Don't clear placement mode, allowing multiple placements
+                updateDisplay();
                 return;
             }
 
@@ -941,6 +953,7 @@ img{
         function placeObject(x, y, type, subtype = null) {
             let obj;
             let cost;
+            let success = false;
 
             switch(type) {
                 case 'wall':
@@ -960,21 +973,26 @@ img{
                     cost = obj.cost;
                     break;
                 default:
-                    return;
+                    return false;
             }
 
-            if (gameState.resources.Steel >= cost.Steel && gameState.resources.coins >= cost.coins && gameState.resources.gold >= cost.gold) {
-                gameState.resources.Steel -= cost.Steel;
-                gameState.resources.coins -= cost.coins;
-                gameState.resources.gold -= cost.gold;
-                gameState.grid[y][x] = obj;
-                gameState.objects.set(obj.id, obj);
-                gameState.placementMode = null;
-                
-                // Process tech buildings for resource generation
-                processTechBuildings();
-                updateDisplay();
+            // Check if player has enough resources
+            if (gameState.resources.Steel < cost.Steel || gameState.resources.coins < cost.coins || gameState.resources.gold < cost.gold) {
+                console.log('Not enough resources!');
+                return false;
             }
+
+            gameState.resources.Steel -= cost.Steel;
+            gameState.resources.coins -= cost.coins;
+            gameState.resources.gold -= cost.gold;
+            gameState.grid[y][x] = obj;
+            gameState.objects.set(obj.id, obj);
+            success = true;
+
+            // Process tech buildings for resource generation
+            processTechBuildings();
+            updateDisplay();
+            return success;
         }
 
         function spawnEnemy(x, y, subtype = null) {
@@ -1229,45 +1247,26 @@ img{
             // Update button states
             document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
             if (gameState.placementMode) {
-                const modeMap = {
-                    'wall': 'place-wall',
-                    'wall-steel': 'place-steel-wall', 
-                    'wall-spike': 'place-spike',
-                    'tech': 'place-tech',
-                    'tech-goldminer': 'place-gold-miner',
-                    'tech-coinmaker': 'place-coin-maker',
-                    'tech-turret': 'place-turret',
-                    'tech-bomb': 'place-bomb',
-                    'tech-supply': 'place-supply',
-                    'tech-campfire': 'place-campfire',
-                    'army-scout': 'place-scout',
-                    'army-knight': 'place-knight',
-                    'army-archer': 'place-archer',
-                    'army-tank': 'place-tank',
-                    'army-king': 'place-king',
-                    'army-barrack': 'place-barrack',
-                    'wall-fortress': 'place-fortress'
-                };
-                const buttonId = modeMap[gameState.placementMode];
-                if (buttonId) {
-                    const button = document.getElementById(buttonId);
-                    if (button) button.classList.add('active');
+                const activeButton = buttons.find(b => b.mode === gameState.placementMode);
+                if (activeButton) {
+                    document.getElementById(activeButton.id)?.classList.add('active');
                 }
             }
         }
 
-        function findPlayer() {
-            for (let y = 0; y < GRID_SIZE; y++) {
-                for (let x = 0; x < GRID_SIZE; x++) {
-                    if (gameState.grid[y][x] === 'player') {
-                        return { x, y };
-                    }
+        function updateButtonStates() {
+            // Remove active class from all buttons
+            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to the currently selected button
+            if (gameState.placementMode) {
+                const activeButton = buttons.find(b => b.mode === gameState.placementMode);
+                if (activeButton) {
+                    document.getElementById(activeButton.id)?.classList.add('active');
                 }
             }
-            return null;
         }
 
-        // Event Listeners
         const buttons = [
             { id: 'place-wall', mode: 'wall' },
             { id: 'place-steel-wall', mode: 'wall-steel' },
@@ -1289,10 +1288,25 @@ img{
             { id: 'clear-selection', mode: 'clear' }
         ];
 
+        // Add active class to style the active button
+        const style = document.createElement('style');
+        style.textContent = `
+.btn.active {
+    background: #3a2f1a;
+    border-color: #d4af37;
+    color: #fff3c2;
+    box-shadow: 0 0 6px #d4af3799;
+}
+
+        `;
+        document.head.appendChild(style);
+
         buttons.forEach(({ id, mode }) => {
-            document.getElementById(id).addEventListener('click', () => {
+            const button = document.getElementById(id);
+            button.addEventListener('click', (e) => {
+                // Toggle placement mode
                 gameState.placementMode = gameState.placementMode === mode ? null : mode;
-                clearSelection();
+                updateButtonStates();
                 updateDisplay();
             });
         });
@@ -1300,6 +1314,7 @@ img{
         document.getElementById('clear-selection').addEventListener('click', () => {
             gameState.placementMode = null;
             clearSelection();
+            updateButtonStates();
             updateDisplay();
         });
 
