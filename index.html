@@ -607,9 +607,21 @@ img{
                           subtype === 'supply' ? 35 : 0
                 };
                 this.range = subtype === 'turret' ? 3 : 0;
+                this.health = 2; // Tech buildings have 2 health by default
+                this.maxHealth = 2;
                 if (subtype === 'turret') {
                     this.shotsLeft = 8;
                 }
+            }
+            takeDamage(damage = 1, attacker = null) {
+                this.health -= damage;
+                if (this.health <= 0) {
+                    // Remove the tech building from the grid and objects
+                    gameState.grid[this.y][this.x] = null;
+                    gameState.objects.delete(this.id);
+                    return true; // Indicates the tech building was destroyed
+                }
+                return false; // Tech building still has health
             }
 
             onTurn() {
@@ -873,7 +885,11 @@ img{
                     
                     if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE) {
                         const target = gameState.grid[newY][newX];
-                        if (target && (target.type === 'army' && target.owner === 'player' || target.type === 'wall')) {
+                        if (target && (
+                            (target.type === 'army' && target.owner === 'player') || 
+                            target.type === 'wall' || 
+                            target.type === 'tech'
+                        )) {
                             attacks.push({ x: newX, y: newY, target });
                         }
                     }
@@ -942,7 +958,7 @@ img{
             attackTarget(target) {
                 if (target.type === 'army') {
                     this.attackUnit(target);
-                } else if (target.type === 'wall') {
+                } else if (target.type === 'wall' || target.type === 'tech') {
                     this.attackWall(target);
                 }
             }
