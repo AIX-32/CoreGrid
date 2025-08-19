@@ -61,8 +61,8 @@ body {
 
 .folder {
     background: #1c1c1c;
-    border-radius: 8px;
-    border: 1px solid #2e2e2e;
+    border-radius: 10px;
+    border: 2px solid #3b3b3b;
     min-width: 120px;
     position: relative;
     flex-direction: column;
@@ -82,8 +82,9 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s ease;
-    border-bottom: 1px solid #3a3a3a;
     color: #ddd;
+    border-radius: 10px;
+    border: 2px solid #3b3b3b;
 }
 
 .folder-title:hover {
@@ -145,9 +146,9 @@ body {
 
 .game-grid {
     display: grid;
-    grid-template-columns: repeat(21, 32px);
-    grid-template-rows: repeat(21, 32px);
-    gap: 4px;
+    grid-template-columns: repeat(15, 42px);
+    grid-template-rows: repeat(15, 42px);
+    gap: 6px;
     background: #1e1e1e;
     border: 1px solid #2e2e2e;
     padding: 15px;
@@ -161,8 +162,8 @@ body {
 }
 
 .grid-cell {
-    width: 32px;
-    height: 32px;
+    width: 42px;
+    height: 42px;
     background: #2f811b;
     border: 1px solid #398d24;
     cursor: pointer;
@@ -220,8 +221,8 @@ body {
 
 /* Ensure sprite images fit inside the cell without overflow */
 .grid-cell .object-sprite img {
-    width: 90%;
-    height: 90%;
+    width: 120%;
+    height: 120%;
     object-fit: contain;
     image-rendering: pixelated;
     display: block;
@@ -365,7 +366,7 @@ img{
     });
 
         // Game Configuration
-        const GRID_SIZE = 21;
+        const GRID_SIZE = 15;
         const PLAYER_START = { x: Math.floor(GRID_SIZE / 2), y: Math.floor(GRID_SIZE / 2) };
 
         // Sprite images
