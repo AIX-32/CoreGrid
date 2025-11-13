@@ -1093,7 +1093,11 @@
                         }
                     }
                 } else if (target.type === 'wall') {
-                    target.takeDamage(1);
+                    const isDestroyed = target.takeDamage(1);
+                    if (isDestroyed) {
+                        gameState.grid[target.y][target.x] = null;
+                        gameState.objects.delete(target.id);
+                    }
                 }
             }
 
