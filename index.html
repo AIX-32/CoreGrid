@@ -521,6 +521,9 @@
                         <button class="btn" id="place-turret">
                             <img src="./sprites/turret.png" alt="Turret"> Turret <span class="lowcol">40S</span>
                         </button>
+                        <button class="btn" id="place-gold-turret">
+                            <img src="./sprites/goldturret.png" alt="Gold Turret"> Gold Turret <span class="lowcol">200G</span>
+                        </button>
                         <button class="btn" id="place-bomb">
                             <img src="./sprites/bomb.png" alt="Bomb"> Bomb <span class="lowcol">10G</span>
                         </button>
@@ -625,6 +628,7 @@
                     goldminer: './sprites/gold.png',
                     coinmaker: './sprites/bank.png',
                     turret: './sprites/turret.png',
+                    goldturret: './sprites/goldturret.png',
                     bomb: './sprites/bomb.png',
                     supply: './sprites/supply.gif',
                     campfire: './sprites/campfire.gif'
@@ -751,6 +755,9 @@
                 if (subtype === 'turret') {
                     this.shotsLeft = 8;
                     this.range = 3;
+                } else if (subtype === 'goldturret') {
+                    this.shotsLeft = 10;
+                    this.range = 3;
                 }
             }
 
@@ -760,6 +767,7 @@
                     goldminer: { Steel: 25 },
                     coinmaker: { Steel: 30 },
                     turret: { Steel: 40 },
+                    goldturret: { gold: 200 },
                     bomb: { gold: 10 },
                     supply: { gold: 35 },
                     campfire: { Steel: 30 }
@@ -784,6 +792,7 @@
                         this.handleSupplyDrop();
                         break;
                     case 'turret':
+                    case 'goldturret':
                         this.attackNearbyEnemies();
                         break;
                     case 'bomb':
@@ -1566,6 +1575,7 @@
             { id: 'place-gold-miner', mode: 'tech-goldminer', cost: { Steel: 25 } },
             { id: 'place-coin-maker', mode: 'tech-coinmaker', cost: { Steel: 30 } },
             { id: 'place-turret', mode: 'tech-turret', cost: { Steel: 40 } },
+            { id: 'place-gold-turret', mode: 'tech-goldturret', cost: { gold: 15 } },
             { id: 'place-bomb', mode: 'tech-bomb', cost: { gold: 10 } },
             { id: 'place-supply', mode: 'tech-supply', cost: { gold: 35 } },
             { id: 'place-campfire', mode: 'tech-campfire', cost: { Steel: 30 } },
@@ -1705,7 +1715,7 @@
                             subtype: obj.subtype,
                             health: obj.health,
                             maxHealth: obj.maxHealth,
-                            ...(obj.type === 'tech' && obj.subtype === 'turret' ? { shotsLeft: obj.shotsLeft } : {}),
+                            ...(obj.type === 'tech' && (obj.subtype === 'turret' || obj.subtype === 'goldturret') ? { shotsLeft: obj.shotsLeft } : {}),
                             ...(obj.type === 'army' && obj.subtype === 'barrack' ? { spawnCounter: obj.spawnCounter } : {})
                         });
                     } else {
@@ -1748,7 +1758,7 @@
                         obj.health = objData.health;
                         obj.maxHealth = objData.maxHealth;
 
-                        if (objData.type === 'tech' && objData.subtype === 'turret' && objData.shotsLeft) {
+                        if (objData.type === 'tech' && (objData.subtype === 'turret' || objData.subtype === 'goldturret') && objData.shotsLeft) {
                             obj.shotsLeft = objData.shotsLeft;
                         }
 
@@ -1767,6 +1777,33 @@
             console.log("Debug: Manually triggering next wave");
             spawnNextWave();
         }
+
+        let cheatSequence = [];
+        const targetSequence = ['i', 'l', 'f'];
+        
+        document.addEventListener('keydown', (event) => {
+            cheatSequence.push(event.key.toLowerCase());
+            
+            if (cheatSequence.length > 3) {
+                cheatSequence.shift();
+            }
+            
+            if (cheatSequence.length === 3 && 
+                cheatSequence[0] === targetSequence[0] &&
+                cheatSequence[1] === targetSequence[1] &&
+                cheatSequence[2] === targetSequence[2]) {
+                
+                gameState.resources.Steel += 7000;
+                gameState.resources.coins += 7000;
+                gameState.resources.gold += 7000;
+                
+                updateDisplay();
+                
+                showNotification('Cheat activated! +7000 Steel, Coins, and Gold', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
+                
+                cheatSequence = [];
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', initGame);
     </script>
