@@ -644,6 +644,12 @@
             }
 
             reset() {
+                // Clear any wave break timeout when resetting the game
+                if (window.waveBreakTimeout) {
+                    clearTimeout(window.waveBreakTimeout);
+                    window.waveBreakTimeout = null;
+                }
+                
                 this.resources = { ...CONFIG.INITIAL_RESOURCES };
                 this.turn = 1;
                 this.selectedUnit = null;
@@ -682,6 +688,7 @@
                         if (obj && obj.type === 'enemy') count++;
                     }
                 }
+                console.log(`countEnemies: calculated ${count}, previous value was ${this.enemiesRemaining}`);
                 this.enemiesRemaining = count;
                 return count;
             }
@@ -1110,6 +1117,12 @@
         const gameState = new GameState();
 
         function initGame() {
+            // Clear any wave break timeout when initializing the game
+            if (window.waveBreakTimeout) {
+                clearTimeout(window.waveBreakTimeout);
+                window.waveBreakTimeout = null;
+            }
+            
             createGrid();
             gameState.grid[CONFIG.PLAYER_START.y][CONFIG.PLAYER_START.x] = 'player';
 
@@ -1117,6 +1130,9 @@
             spawnEnemy(10, 2);
             spawnEnemy(2, 10);
 
+            console.log(`Initial enemies spawned, count: ${gameState.enemiesRemaining}`);
+            gameState.countEnemies();
+            console.log(`After countEnemies, enemies remaining: ${gameState.enemiesRemaining}`);
             updateDisplay();
             setupEventListeners();
         }
@@ -1150,7 +1166,7 @@
                     }
                 }
                 updateDisplay();
-                if (actionTaken && !gameState.inWaveBreak) {
+                if (actionTaken) {
                     processEnemyTurn();
                 }
                 return;
@@ -1181,7 +1197,7 @@
 
                 clearSelection();
                 updateDisplay();
-                if (actionTaken && !gameState.inWaveBreak) {
+                if (actionTaken) {
                     processEnemyTurn();
                 }
             }
@@ -1243,6 +1259,7 @@
         }
 
         function spawnEnemy(x, y, subtype = null) {
+            console.log(`spawnEnemy called with x=${x}, y=${y}`);
             if (gameState.grid[y] && gameState.grid[y][x] === null) {
                 if (!subtype) {
                     const enemyTypes = [
@@ -1268,7 +1285,10 @@
                 const enemy = new Enemy(x, y, subtype || 'basic');
                 gameState.grid[y][x] = enemy;
                 gameState.objects.set(enemy.id, enemy);
-                gameState.enemiesRemaining++;
+                gameState.enemiesRemaining++; // ADD THIS LINE
+                console.log(`Enemy spawned, enemies remaining: ${gameState.enemiesRemaining}`);
+            } else {
+                console.log(`Failed to spawn enemy at ${x},${y} - cell not empty or out of bounds`);
             }
         }
 
@@ -1282,7 +1302,8 @@
         function attackEnemy(enemy) {
             gameState.grid[enemy.y][enemy.x] = null;
             gameState.objects.delete(enemy.id);
-            gameState.enemiesRemaining--;
+            gameState.enemiesRemaining--; // ADD THIS LINE
+            console.log(`Enemy attacked, enemies remaining: ${gameState.enemiesRemaining}`);
 
             gameState.addResources({ coins: 5 });
         }
@@ -1320,31 +1341,49 @@
         }
 
         function spawnNextWave() {
+            console.log("spawnNextWave called");
+            // Clear any wave break timeout when starting a new wave
+            if (window.waveBreakTimeout) {
+                clearTimeout(window.waveBreakTimeout);
+                window.waveBreakTimeout = null;
+            }
             gameState.wave++;
+            console.log(`Wave incremented to ${gameState.wave}`);
             gameState.inWaveBreak = false;
+            console.log("Wave break reset to false");
 
             let numEnemies = 3 + gameState.wave * 2;
 
             const emptyCells = [];
-            for (let y = 0; y < CONFIG.GRID_SIZE; y++) {
-                for (let x = 0; x < CONFIG.GRID_SIZE; x++) {
-                    if (gameState.grid[y][x] === null && !(x === CONFIG.PLAYER_START.x && y === CONFIG.PLAYER_START.y)) {
+            for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
+                for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
+                    // Skip player start position
+                    if (x === CONFIG.PLAYER_START.x && y === CONFIG.PLAYER_START.y) continue;
+                    
+                    // Only consider truly empty cells
+                    if (gameState.grid[y][x] === null) {
                         emptyCells.push({ x, y });
                     }
                 }
             }
 
+            // Shuffle empty cells to get random positions
             for (let i = emptyCells.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [emptyCells[i], emptyCells[j]] = [emptyCells[j], emptyCells[i]];
             }
 
             const enemiesToSpawn = Math.min(numEnemies, emptyCells.length);
+            
+            // Debug logging
+            console.log(`Spawning wave ${gameState.wave}: ${enemiesToSpawn} enemies`);
+            
             for (let i = 0; i < enemiesToSpawn; i++) {
                 const { x, y } = emptyCells[i];
                 spawnEnemy(x, y);
             }
 
+            gameState.countEnemies();
             showNotification(`Wave ${gameState.wave} incoming!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
             updateDisplay();
         }
@@ -1375,17 +1414,32 @@
 
             gameState.turn++;
             gameState.countEnemies();
-
+            
+            // Debug: Check if wave break should start
+            console.log(`Enemies remaining: ${gameState.enemiesRemaining}, In wave break: ${gameState.inWaveBreak}`);
+            
             if (gameState.enemiesRemaining === 0 && !gameState.inWaveBreak) {
+                console.log("Condition met: enemiesRemaining is 0 and not in wave break");
+                console.log("Starting wave break");
                 gameState.inWaveBreak = true;
                 gameState.waveBreakTurns = CONFIG.WAVE_BREAK_TURNS;
                 showNotification(`Wave ${gameState.wave} complete! Prepare for the next wave.`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
             }
 
             if (gameState.inWaveBreak) {
+                console.log(`Wave break turns remaining: ${gameState.waveBreakTurns}`);
                 gameState.waveBreakTurns--;
+                console.log(`Decremented wave break turns: ${gameState.waveBreakTurns}`);
                 if (gameState.waveBreakTurns <= 0) {
+                    console.log("Spawning next wave");
                     spawnNextWave();
+                } else {
+                    // Automatically process the next turn during wave break
+                    // Clear any existing timeout to prevent multiple timeouts
+                    if (window.waveBreakTimeout) {
+                        clearTimeout(window.waveBreakTimeout);
+                    }
+                    window.waveBreakTimeout = setTimeout(processEnemyTurn, 1000);
                 }
             }
 
@@ -1524,6 +1578,14 @@
                 });
             });
 
+            // Add debug button (temporary)
+            const debugBtn = document.createElement('button');
+            debugBtn.textContent = 'DEBUG: Next Wave';
+            debugBtn.className = 'control-btn warning';
+            debugBtn.style.marginLeft = '10px';
+            debugBtn.addEventListener('click', debugNextWave);
+            document.querySelector('.controls').appendChild(debugBtn);
+
             document.addEventListener('click', () => {
                 document.querySelectorAll('.folder.open').forEach(folder => {
                     folder.classList.remove('open');
@@ -1634,9 +1696,9 @@
 
         function serializeGrid() {
             const gridData = [];
-            for (let y = 0; y < CONFIG.GRID_SIZE; y++) {
+            for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                 const row = [];
-                for (let x = 0; x < CONFIG.GRID_SIZE; x++) {
+                for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
                     const obj = gameState.grid[y][x];
                     if (obj === 'player') {
                         row.push('player');
@@ -1659,11 +1721,11 @@
         }
 
         function deserializeGrid(gridData) {
-            gameState.grid = Array(CONFIG.GRID_SIZE).fill().map(() => Array(CONFIG.GRID_SIZE).fill(null));
+            gameState.grid = Array(CONFIG.GRID_SIZE_Y).fill().map(() => Array(CONFIG.GRID_SIZE_X).fill(null));
             gameState.objects.clear();
 
-            for (let y = 0; y < CONFIG.GRID_SIZE; y++) {
-                for (let x = 0; x < CONFIG.GRID_SIZE; x++) {
+            for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
+                for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
                     const objData = gridData[y][x];
                     if (objData === 'player') {
                         gameState.grid[y][x] = 'player';
@@ -1702,6 +1764,11 @@
                     }
                 }
             }
+        }
+
+        function debugNextWave() {
+            console.log("Debug: Manually triggering next wave");
+            spawnNextWave();
         }
 
         document.addEventListener('DOMContentLoaded', initGame);
