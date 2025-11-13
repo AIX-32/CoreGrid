@@ -813,7 +813,7 @@
             position: absolute;
             width: 6px;
             height: 6px;
-            border-radius: 50%;
+            border-radius: 0; /* Changed from 50% to 0 for cubes */
             pointer-events: none;
             opacity: 0;
         }
@@ -2188,7 +2188,18 @@
             }
         }
 
+        // Reduced frequency resource collection effect
+        let lastResourceEffectTime = 0;
+        const RESOURCE_EFFECT_COOLDOWN = 2000; // 2 seconds cooldown
+
         function createResourceCollectionEffect(x, y, resourceType) {
+            // Limit frequency of resource effects
+            const now = Date.now();
+            if (now - lastResourceEffectTime < RESOURCE_EFFECT_COOLDOWN) {
+                return;
+            }
+            lastResourceEffectTime = now;
+
             const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
             if (cell) {
                 const rect = cell.getBoundingClientRect();
@@ -2203,7 +2214,7 @@
                     default: color = '#66d9ff';
                 }
                 
-                createParticleEffect(centerX, centerY, color, 10);
+                createParticleEffect(centerX, centerY, color, 5); // Reduced particle count
             }
         }
 
