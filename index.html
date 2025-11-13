@@ -22,9 +22,9 @@
             --text-secondary: #a0a0a0;
             --accent-primary: #4caf50;
             --accent-secondary: #d4af37;
-            --danger: #f44336;
-            --success: #4caf50;
-            --warning: #ff9800;
+            --danger: #dd7e77;
+            --success: #7a977b;
+            --warning: #ceab77;
             --cell-size: 42px;
             --grid-gap: 6px;
             --border-radius: 10px;
@@ -63,8 +63,7 @@
         .game-title {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: var(--accent-secondary);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            color: var(--success);
         }
 
         .game-subtitle {
@@ -190,10 +189,6 @@
             font-size: 12px;
             text-align: center;
             padding: 5px;
-        }
-
-        .btn span:first-child {
-            font-size: 32px;
         }
 
         .btn:hover {
@@ -366,6 +361,22 @@
             margin-top: 20px;
         }
 
+        .floating-sidebar {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 13px;
+            background: rgba(37, 37, 37, 0.9);
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
         .control-btn {
             padding: 10px 20px;
             background: var(--bg-tertiary);
@@ -454,10 +465,7 @@
 
 <body>
     <div class="game-container">
-        <div class="game-header">
-            <h1 class="game-title">CoreGrid</h1>
-            <p class="game-subtitle">Build, Defend, and Conquer</p>
-        </div>
+        <!-- Game title and subtitle moved to sidebar -->
 
         <div class="ui-panel">
             <div class="resources">
@@ -564,7 +572,7 @@
 
         <div class="game-info">
             <div class="turn-info">
-                <h3>Turn Information</h3>
+                <h3>Information</h3>
                 <p>Turn: <span id="turn-count">1</span></p>
                 <p id="turn-instructions"></p>
             </div>
@@ -584,10 +592,12 @@
             <p><strong>Waves:</strong> Defend against waves of different enemies.</p>
         </div>
 
-        <div class="controls">
-            <button class="control-btn primary" id="save-game">Save Game</button>
+        <div class="floating-sidebar">
+            <h1 class="game-title">CoreGrid</h1>
+            <p class="game-subtitle">Build, Defend, and Conquer</p>
+            <button class="control-btn" id="save-game">Save Game</button>
             <button class="control-btn" id="load-game">Load Game</button>
-            <button class="control-btn warning" id="restart-game">Restart Game</button>
+            <button class="control-btn" id="restart-game">Restart Game</button>
         </div>
     </div>
 
@@ -649,7 +659,7 @@
                     clearTimeout(window.waveBreakTimeout);
                     window.waveBreakTimeout = null;
                 }
-                
+
                 this.resources = { ...CONFIG.INITIAL_RESOURCES };
                 this.turn = 1;
                 this.selectedUnit = null;
@@ -1122,7 +1132,7 @@
                 clearTimeout(window.waveBreakTimeout);
                 window.waveBreakTimeout = null;
             }
-            
+
             createGrid();
             gameState.grid[CONFIG.PLAYER_START.y][CONFIG.PLAYER_START.x] = 'player';
 
@@ -1359,7 +1369,7 @@
                 for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
                     // Skip player start position
                     if (x === CONFIG.PLAYER_START.x && y === CONFIG.PLAYER_START.y) continue;
-                    
+
                     // Only consider truly empty cells
                     if (gameState.grid[y][x] === null) {
                         emptyCells.push({ x, y });
@@ -1374,10 +1384,10 @@
             }
 
             const enemiesToSpawn = Math.min(numEnemies, emptyCells.length);
-            
+
             // Debug logging
             console.log(`Spawning wave ${gameState.wave}: ${enemiesToSpawn} enemies`);
-            
+
             for (let i = 0; i < enemiesToSpawn; i++) {
                 const { x, y } = emptyCells[i];
                 spawnEnemy(x, y);
@@ -1414,10 +1424,10 @@
 
             gameState.turn++;
             gameState.countEnemies();
-            
+
             // Debug: Check if wave break should start
             console.log(`Enemies remaining: ${gameState.enemiesRemaining}, In wave break: ${gameState.inWaveBreak}`);
-            
+
             if (gameState.enemiesRemaining === 0 && !gameState.inWaveBreak) {
                 console.log("Condition met: enemiesRemaining is 0 and not in wave break");
                 console.log("Starting wave break");
@@ -1434,8 +1444,7 @@
                     console.log("Spawning next wave");
                     spawnNextWave();
                 } else {
-                    // Automatically process the next turn during wave break
-                    // Clear any existing timeout to prevent multiple timeouts
+
                     if (window.waveBreakTimeout) {
                         clearTimeout(window.waveBreakTimeout);
                     }
@@ -1578,19 +1587,7 @@
                 });
             });
 
-            // Add debug button (temporary)
-            const debugBtn = document.createElement('button');
-            debugBtn.textContent = 'DEBUG: Next Wave';
-            debugBtn.className = 'control-btn warning';
-            debugBtn.style.marginLeft = '10px';
-            debugBtn.addEventListener('click', debugNextWave);
-            document.querySelector('.controls').appendChild(debugBtn);
 
-            document.addEventListener('click', () => {
-                document.querySelectorAll('.folder.open').forEach(folder => {
-                    folder.classList.remove('open');
-                });
-            });
 
             BUTTONS.forEach(({ id, mode, cost }) => {
                 const button = document.getElementById(id);
