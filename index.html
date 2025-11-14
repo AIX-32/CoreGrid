@@ -1668,6 +1668,9 @@
                 this.turn = 1;
                 this.selectedUnit = null;
                 this.placementMode = null;
+
+                this.cameraOffset = { x: 0, y: 0 };
+                this.worldObjects = new Map();
                 this.grid = Array(CONFIG.GRID_SIZE_Y).fill().map(() => Array(CONFIG.GRID_SIZE_X).fill(null));
                 this.objects = new Map();
                 this.wave = 1;
@@ -1744,12 +1747,9 @@
 
             countEnemies() {
                 let count = 0;
-                for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
-                    for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
-                        const obj = this.grid[y][x];
-                        if (obj && obj.type === 'enemy') count++;
-                    }
-                }
+                this.worldObjects.forEach(obj => {
+                    if (obj.type === 'enemy') count++;
+                });
                 console.log(`countEnemies: calculated ${count}, previous value was ${this.enemiesRemaining}`);
                 this.enemiesRemaining = count;
                 return count;
@@ -1858,10 +1858,14 @@
                 let count = 0;
                 for (let dy = -1; dy <= 1; dy++) {
                     for (let dx = -1; dx <= 1; dx++) {
-                        const x = this.x + dx;
-                        const y = this.y + dy;
-                        if (x >= 0 && x < CONFIG.GRID_SIZE_X && y >= 0 && y < CONFIG.GRID_SIZE_Y) {
-                            const obj = gameState.grid[y][x];
+                        const worldX = this.x + dx;
+                        const worldY = this.y + dy;
+
+                        const gridX = worldX - gameState.cameraOffset.x;
+                        const gridY = worldY - gameState.cameraOffset.y;
+
+                        if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                            const obj = gameState.grid[gridY][gridX];
                             if (obj && obj.type === 'tech' && obj.subtype === 'campfire') {
                                 count++;
                             }
@@ -1888,17 +1892,33 @@
                 for (let dy = -this.range; dy <= this.range; dy++) {
                     for (let dx = -this.range; dx <= this.range; dx++) {
                         if (Math.max(Math.abs(dx), Math.abs(dy)) > this.range) continue;
-                        const x = this.x + dx;
-                        const y = this.y + dy;
-                        if (x >= 0 && x < CONFIG.GRID_SIZE_X && y >= 0 && y < CONFIG.GRID_SIZE_Y) {
-                            const target = gameState.grid[y][x];
+                        const worldX = this.x + dx;
+                        const worldY = this.y + dy;
+
+                        const gridX = worldX - gameState.cameraOffset.x;
+                        const gridY = worldY - gameState.cameraOffset.y;
+
+                        if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                            const target = gameState.grid[gridY][gridX];
                             if (target && target.type === 'enemy') {
-                                gameState.grid[y][x] = null;
+                                if (gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y &&
+                                    gridX >= 0 && gridX < CONFIG.GRID_SIZE_X) {
+                                    gameState.grid[gridY][gridX] = null;
+                                }
+
                                 gameState.objects.delete(target.id);
+                                gameState.worldObjects.delete(target.id);
                                 this.shotsLeft--;
                                 if (this.shotsLeft <= 0) {
-                                    gameState.grid[this.y][this.x] = null;
+                                    const selfGridX = this.x - gameState.cameraOffset.x;
+                                    const selfGridY = this.y - gameState.cameraOffset.y;
+                                    if (selfGridY >= 0 && selfGridY < CONFIG.GRID_SIZE_Y &&
+                                        selfGridX >= 0 && selfGridX < CONFIG.GRID_SIZE_X) {
+                                        gameState.grid[selfGridY][selfGridX] = null;
+                                    }
+
                                     gameState.objects.delete(this.id);
+                                    gameState.worldObjects.delete(this.id);
                                 }
                                 return true;
                             }
@@ -1911,26 +1931,47 @@
             handleBomb() {
                 for (let dy = -2; dy <= 2; dy++) {
                     for (let dx = -2; dx <= 2; dx++) {
-                        const x = this.x + dx;
-                        const y = this.y + dy;
-                        if (x >= 0 && x < CONFIG.GRID_SIZE_X && y >= 0 && y < CONFIG.GRID_SIZE_Y) {
-                            const target = gameState.grid[y][x];
+                        const worldX = this.x + dx;
+                        const worldY = this.y + dy;
+
+                        const gridX = worldX - gameState.cameraOffset.x;
+                        const gridY = worldY - gameState.cameraOffset.y;
+
+                        if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                            const target = gameState.grid[gridY][gridX];
                             if (target && target.type === 'enemy') {
                                 for (let dy2 = -2; dy2 <= 2; dy2++) {
                                     for (let dx2 = -2; dx2 <= 2; dx2++) {
-                                        const x2 = this.x + dx2;
-                                        const y2 = this.y + dy2;
-                                        if (x2 >= 0 && x2 < CONFIG.GRID_SIZE_X && y2 >= 0 && y2 < CONFIG.GRID_SIZE_Y) {
-                                            const target2 = gameState.grid[y2][x2];
+                                        const worldX2 = this.x + dx2;
+                                        const worldY2 = this.y + dy2;
+
+                                        const gridX2 = worldX2 - gameState.cameraOffset.x;
+                                        const gridY2 = worldY2 - gameState.cameraOffset.y;
+
+                                        if (gridX2 >= 0 && gridX2 < CONFIG.GRID_SIZE_X && gridY2 >= 0 && gridY2 < CONFIG.GRID_SIZE_Y) {
+                                            const target2 = gameState.grid[gridY2][gridX2];
                                             if (target2 && target2.type === 'enemy') {
-                                                gameState.grid[y2][x2] = null;
+                                                if (gridY2 >= 0 && gridY2 < CONFIG.GRID_SIZE_Y &&
+                                                    gridX2 >= 0 && gridX2 < CONFIG.GRID_SIZE_X) {
+                                                    gameState.grid[gridY2][gridX2] = null;
+                                                }
+
                                                 gameState.objects.delete(target2.id);
+                                                gameState.worldObjects.delete(target2.id);
                                             }
                                         }
                                     }
                                 }
-                                gameState.grid[this.y][this.x] = null;
+
+                                const selfGridX = this.x - gameState.cameraOffset.x;
+                                const selfGridY = this.y - gameState.cameraOffset.y;
+                                if (selfGridY >= 0 && selfGridY < CONFIG.GRID_SIZE_Y &&
+                                    selfGridX >= 0 && selfGridX < CONFIG.GRID_SIZE_X) {
+                                    gameState.grid[selfGridY][selfGridX] = null;
+                                }
+
                                 gameState.objects.delete(this.id);
+                                gameState.worldObjects.delete(this.id);
                                 return;
                             }
                         }
@@ -2008,16 +2049,19 @@
 
                 directions.forEach(([dx, dy]) => {
                     for (let i = 1; i <= this.movement; i++) {
-                        const x = this.x + dx * i;
-                        const y = this.y + dy * i;
+                        const worldX = this.x + dx * i;
+                        const worldY = this.y + dy * i;
 
-                        if (x < 0 || x >= CONFIG.GRID_SIZE_X || y < 0 || y >= CONFIG.GRID_SIZE_Y) break;
+                        const gridX = worldX - gameState.cameraOffset.x;
+                        const gridY = worldY - gameState.cameraOffset.y;
 
-                        const target = gameState.grid[y][x];
+                        if (gridX < 0 || gridX >= CONFIG.GRID_SIZE_X || gridY < 0 || gridY >= CONFIG.GRID_SIZE_Y) break;
+
+                        const target = gameState.grid[gridY][gridX];
                         if (target === null) {
-                            moves.push({ x, y });
+                            moves.push({ x: worldX, y: worldY });
                         } else if (target.type === 'enemy') {
-                            attacks.push({ x, y });
+                            attacks.push({ x: worldX, y: worldY });
                             break;
                         } else {
                             break;
@@ -2029,14 +2073,17 @@
                     const allDirections = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]];
                     allDirections.forEach(([dx, dy]) => {
                         for (let i = 1; i <= this.range; i++) {
-                            const x = this.x + dx * i;
-                            const y = this.y + dy * i;
+                            const worldX = this.x + dx * i;
+                            const worldY = this.y + dy * i;
 
-                            if (x < 0 || x >= CONFIG.GRID_SIZE_X || y < 0 || y >= CONFIG.GRID_SIZE_Y) break;
+                            const gridX = worldX - gameState.cameraOffset.x;
+                            const gridY = worldY - gameState.cameraOffset.y;
 
-                            const target = gameState.grid[y][x];
+                            if (gridX < 0 || gridX >= CONFIG.GRID_SIZE_X || gridY < 0 || gridY >= CONFIG.GRID_SIZE_Y) break;
+
+                            const target = gameState.grid[gridY][gridX];
                             if (target && target.type === 'enemy') {
-                                attacks.push({ x, y });
+                                attacks.push({ x: worldX, y: worldY });
                             }
                         }
                     });
@@ -2050,23 +2097,46 @@
                     this.spawnCounter = (this.spawnCounter || 0) + 1;
                     if (this.spawnCounter >= 2) {
                         this.spawnCounter = 0;
-                        const x = this.x - 1;
-                        const y = this.y;
-                        if (x >= 0 && gameState.grid[y][x] === null) {
-                            const scout = new Army(x, y, 'scout');
-                            gameState.grid[y][x] = scout;
-                            gameState.objects.set(scout.id, scout);
-                            showNotification('Barrack spawned a Soldier!', x, y);
+                        const worldX = this.x - 1;
+                        const worldY = this.y;
+
+                        const gridX = worldX - gameState.cameraOffset.x;
+                        const gridY = worldY - gameState.cameraOffset.y;
+
+                        if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y && gameState.grid[gridY][gridX] === null) {
+                            const scout = new Army(worldX, worldY, 'scout');
+                            addObjectToWorld(scout);
+                            showNotification('Barrack spawned a Soldier!', gridX, gridY);
                         }
                     }
                 }
             }
 
             moveTo(x, y) {
-                gameState.grid[this.y][this.x] = null;
-                gameState.grid[y][x] = this;
+                const oldX = this.x;
+                const oldY = this.y;
+
                 this.x = x;
                 this.y = y;
+
+                gameState.worldObjects.set(this.id, this);
+
+                const oldGridX = oldX - gameState.cameraOffset.x;
+                const oldGridY = oldY - gameState.cameraOffset.y;
+                if (oldGridX >= 0 && oldGridX < CONFIG.GRID_SIZE_X &&
+                    oldGridY >= 0 && oldGridY < CONFIG.GRID_SIZE_Y) {
+                    gameState.grid[oldGridY][oldGridX] = null;
+                }
+
+                const gridX = x - gameState.cameraOffset.x;
+                const gridY = y - gameState.cameraOffset.y;
+
+                if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                    gameState.grid[gridY][gridX] = this;
+                    gameState.objects.set(this.id, this);
+                } else {
+                    gameState.objects.delete(this.id);
+                }
             }
 
             takeDamage(damage = 1) {
@@ -2093,7 +2163,13 @@
             }
 
             onTurn() {
-                if (this.x === CONFIG.PLAYER_START.x && this.y === CONFIG.PLAYER_START.y) {
+                const playerGridX = CONFIG.PLAYER_START.x - gameState.cameraOffset.x;
+                const playerGridY = CONFIG.PLAYER_START.y - gameState.cameraOffset.y;
+
+                const playerWorldX = CONFIG.PLAYER_START.x;
+                const playerWorldY = CONFIG.PLAYER_START.y;
+
+                if (this.x === playerWorldX && this.y === playerWorldY) {
                     gameOver();
                     return;
                 }
@@ -2113,18 +2189,36 @@
                 const directions = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]];
 
                 directions.forEach(([dx, dy]) => {
-                    const x = this.x + dx;
-                    const y = this.y + dy;
+                    const worldX = this.x + dx;
+                    const worldY = this.y + dy;
 
-                    if (x >= 0 && x < CONFIG.GRID_SIZE_X && y >= 0 && y < CONFIG.GRID_SIZE_Y) {
-                        const target = gameState.grid[y][x];
-                        if (target && (
-                            (target.type === 'army' && target.owner === 'player') ||
-                            target.type === 'wall' ||
-                            target.type === 'tech'
-                        )) {
-                            attacks.push({ x, y, target });
+                    const gridX = worldX - gameState.cameraOffset.x;
+                    const gridY = worldY - gameState.cameraOffset.y;
+
+                    let target = null;
+
+                    if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                        target = gameState.grid[gridY][gridX];
+                    } else {
+                        for (const [id, obj] of gameState.worldObjects) {
+                            if (obj.x === worldX && obj.y === worldY) {
+                                target = obj;
+                                break;
+                            }
                         }
+
+                        if (worldX === CONFIG.PLAYER_START.x && worldY === CONFIG.PLAYER_START.y) {
+                            target = 'player';
+                        }
+                    }
+
+                    if (target && (
+                        (target.type === 'army' && target.owner === 'player') ||
+                        target.type === 'wall' ||
+                        target.type === 'tech' ||
+                        target === 'player'
+                    )) {
+                        attacks.push({ x: worldX, y: worldY, target });
                     }
                 });
 
@@ -2132,32 +2226,45 @@
             }
 
             moveTowardsPlayer() {
-                const targetX = CONFIG.PLAYER_START.x;
-                const targetY = CONFIG.PLAYER_START.y;
+                const playerGridX = CONFIG.PLAYER_START.x - gameState.cameraOffset.x;
+                const playerGridY = CONFIG.PLAYER_START.y - gameState.cameraOffset.y;
 
-                let dx = Math.sign(targetX - this.x);
-                let dy = Math.sign(targetY - this.y);
+                const playerWorldX = CONFIG.PLAYER_START.x;
+                const playerWorldY = CONFIG.PLAYER_START.y;
+
+                let dx = Math.sign(playerWorldX - this.x);
+                let dy = Math.sign(playerWorldY - this.y);
 
                 let newX = this.x + dx;
-                let newY = this.y;
+                let newY = this.y + dy;
 
-                if (newX < 0 || newX >= CONFIG.GRID_SIZE_X ||
-                    (gameState.grid[newY][newX] !== null && gameState.grid[newY][newX] !== 'player')) {
-                    newX = this.x;
-                    newY = this.y + dy;
+                let newGridX = newX - gameState.cameraOffset.x;
+                let newGridY = newY - gameState.cameraOffset.y;
 
-                    if (newY < 0 || newY >= CONFIG.GRID_SIZE_Y ||
-                        (gameState.grid[newY][newX] !== null && gameState.grid[newY][newX] !== 'player')) {
-                        newX = this.x + dx;
-                    }
+                let canMove = true;
+                if (newGridX >= 0 && newGridX < CONFIG.GRID_SIZE_X &&
+                    newGridY >= 0 && newGridY < CONFIG.GRID_SIZE_Y) {
+                    canMove = gameState.grid[newGridY][newGridX] === null;
                 }
 
-                if (newX >= 0 && newX < CONFIG.GRID_SIZE_X && newY >= 0 && newY < CONFIG.GRID_SIZE_Y &&
-                    (gameState.grid[newY][newX] === null || gameState.grid[newY][newX] === 'player')) {
-                    gameState.grid[this.y][this.x] = null;
-                    gameState.grid[newY][newX] = this;
+                if (canMove) {
+                    const oldGridX = this.x - gameState.cameraOffset.x;
+                    const oldGridY = this.y - gameState.cameraOffset.y;
+                    if (oldGridY >= 0 && oldGridY < CONFIG.GRID_SIZE_Y &&
+                        oldGridX >= 0 && oldGridX < CONFIG.GRID_SIZE_X) {
+                        gameState.grid[oldGridY][oldGridX] = null;
+                    }
+
                     this.x = newX;
                     this.y = newY;
+
+                    if (newGridX >= 0 && newGridX < CONFIG.GRID_SIZE_X &&
+                        newGridY >= 0 && newGridY < CONFIG.GRID_SIZE_Y) {
+                        gameState.grid[newGridY][newGridX] = this;
+                    }
+
+                    gameState.worldObjects.set(this.id, this);
+                    gameState.objects.set(this.id, this);
                 }
             }
 
@@ -2165,8 +2272,15 @@
                 if (target.type === 'army' || target.type === 'tech') {
                     const isDestroyed = target.takeDamage(1);
                     if (isDestroyed) {
-                        gameState.grid[target.y][target.x] = null;
+                        if (target.y >= gameState.cameraOffset.y && target.y < gameState.cameraOffset.y + CONFIG.GRID_SIZE_Y &&
+                            target.x >= gameState.cameraOffset.x && target.x < gameState.cameraOffset.x + CONFIG.GRID_SIZE_X) {
+                            const gridY = target.y - gameState.cameraOffset.y;
+                            const gridX = target.x - gameState.cameraOffset.x;
+                            gameState.grid[gridY][gridX] = null;
+                        }
+
                         gameState.objects.delete(target.id);
+                        gameState.worldObjects.delete(target.id);
 
                         if (gameState.selectedUnit && gameState.selectedUnit.id === target.id) {
                             clearSelection();
@@ -2175,9 +2289,18 @@
                 } else if (target.type === 'wall') {
                     const isDestroyed = target.takeDamage(1);
                     if (isDestroyed) {
-                        gameState.grid[target.y][target.x] = null;
+                        if (target.y >= gameState.cameraOffset.y && target.y < gameState.cameraOffset.y + CONFIG.GRID_SIZE_Y &&
+                            target.x >= gameState.cameraOffset.x && target.x < gameState.cameraOffset.x + CONFIG.GRID_SIZE_X) {
+                            const gridY = target.y - gameState.cameraOffset.y;
+                            const gridX = target.x - gameState.cameraOffset.x;
+                            gameState.grid[gridY][gridX] = null;
+                        }
+
                         gameState.objects.delete(target.id);
+                        gameState.worldObjects.delete(target.id);
                     }
+                } else if (target === 'player') {
+                    gameOver();
                 }
             }
 
@@ -2196,7 +2319,19 @@
             }
 
             createGrid();
-            gameState.grid[CONFIG.PLAYER_START.y][CONFIG.PLAYER_START.x] = 'player';
+
+            gameState.cameraOffset.x = Math.floor(CONFIG.GRID_SIZE_X / 2) - CONFIG.PLAYER_START.x;
+            gameState.cameraOffset.y = Math.floor(CONFIG.GRID_SIZE_Y / 2) - CONFIG.PLAYER_START.y;
+
+            const playerWorldX = CONFIG.PLAYER_START.x;
+            const playerWorldY = CONFIG.PLAYER_START.y;
+            const playerGridX = playerWorldX - gameState.cameraOffset.x;
+            const playerGridY = playerWorldY - gameState.cameraOffset.y;
+
+            if (playerGridX >= 0 && playerGridX < CONFIG.GRID_SIZE_X &&
+                playerGridY >= 0 && playerGridY < CONFIG.GRID_SIZE_Y) {
+                gameState.grid[playerGridY][playerGridX] = 'player';
+            }
 
             spawnEnemy(5, 5);
             spawnEnemy(10, 2);
@@ -2228,6 +2363,9 @@
         }
 
         function handleCellClick(x, y) {
+            const worldX = x + gameState.cameraOffset.x;
+            const worldY = y + gameState.cameraOffset.y;
+
             const cell = gameState.grid[y][x];
             let actionTaken = false;
 
@@ -2256,11 +2394,12 @@
 
             if (gameState.selectedUnit) {
                 const { moves, attacks } = gameState.selectedUnit.getValidMoves();
-                const isValidMove = moves.some(move => move.x === x && move.y === y);
-                const isValidAttack = attacks.some(attack => attack.x === x && attack.y === y);
+
+                const isValidMove = moves.some(move => move.x === worldX && move.y === worldY);
+                const isValidAttack = attacks.some(attack => attack.x === worldX && attack.y === worldY);
 
                 if (isValidMove && cell === null) {
-                    gameState.selectedUnit.moveTo(x, y);
+                    gameState.selectedUnit.moveTo(worldX, worldY);
                     actionTaken = true;
                 } else if (isValidAttack && cell && cell.type === 'enemy') {
                     attackEnemy(cell);
@@ -2286,20 +2425,23 @@
         }
 
         function placeObject(x, y, type, subtype = null) {
+            const worldX = x + gameState.cameraOffset.x;
+            const worldY = y + gameState.cameraOffset.y;
+
             let obj;
             let cost;
 
             switch (type) {
                 case 'wall':
-                    obj = new Wall(x, y, subtype || 'stone');
+                    obj = new Wall(worldX, worldY, subtype || 'stone');
                     cost = getWallCost(subtype);
                     break;
                 case 'tech':
-                    obj = new Tech(x, y, subtype || 'miner');
+                    obj = new Tech(worldX, worldY, subtype || 'miner');
                     cost = obj.cost;
                     break;
                 case 'army':
-                    obj = new Army(x, y, subtype || 'scout');
+                    obj = new Army(worldX, worldY, subtype || 'scout');
                     cost = obj.cost;
                     break;
                 default:
@@ -2312,8 +2454,7 @@
             }
 
             gameState.spendResources(cost);
-            gameState.grid[y][x] = obj;
-            gameState.objects.set(obj.id, obj);
+            addObjectToWorld(obj);
 
             if (type === 'tech') {
                 obj.onTurn();
@@ -2335,7 +2476,10 @@
 
         function spawnEnemy(x, y, subtype = null) {
             console.log(`spawnEnemy called with x=${x}, y=${y}`);
-            if (gameState.grid[y] && gameState.grid[y][x] === null) {
+            const worldX = x + gameState.cameraOffset.x;
+            const worldY = y + gameState.cameraOffset.y;
+
+            if (y >= 0 && y < CONFIG.GRID_SIZE_Y && x >= 0 && x < CONFIG.GRID_SIZE_X && gameState.grid[y][x] === null) {
                 if (!subtype) {
                     const enemyTypes = [
                         { type: 'basic', weight: 5 },
@@ -2357,9 +2501,8 @@
                     }
                 }
 
-                const enemy = new Enemy(x, y, subtype || 'basic');
-                gameState.grid[y][x] = enemy;
-                gameState.objects.set(enemy.id, enemy);
+                const enemy = new Enemy(worldX, worldY, subtype || 'basic');
+                addObjectToWorld(enemy);
                 gameState.enemiesRemaining++;
                 console.log(`Enemy spawned, enemies remaining: ${gameState.enemiesRemaining}`);
             } else {
@@ -2375,8 +2518,16 @@
         }
 
         function attackEnemy(enemy) {
-            gameState.grid[enemy.y][enemy.x] = null;
+            const gridX = enemy.x - gameState.cameraOffset.x;
+            const gridY = enemy.y - gameState.cameraOffset.y;
+
+            if (gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y &&
+                gridX >= 0 && gridX < CONFIG.GRID_SIZE_X) {
+                gameState.grid[gridY][gridX] = null;
+            }
+
             gameState.objects.delete(enemy.id);
+            gameState.worldObjects.delete(enemy.id);
             gameState.enemiesRemaining--;
             console.log(`Enemy attacked, enemies remaining: ${gameState.enemiesRemaining}`);
 
@@ -2397,22 +2548,40 @@
             const { moves, attacks } = unit.getValidMoves();
 
             moves.forEach(move => {
-                const cell = document.querySelector(`[data-x="${move.x}"][data-y="${move.y}"]`);
-                if (cell) {
-                    cell.classList.add('valid-move');
+                const gridX = move.x - gameState.cameraOffset.x;
+                const gridY = move.y - gameState.cameraOffset.y;
+
+                if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X &&
+                    gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                    const cell = document.querySelector(`[data-x="${gridX}"][data-y="${gridY}"]`);
+                    if (cell) {
+                        cell.classList.add('valid-move');
+                    }
                 }
             });
 
             attacks.forEach(attack => {
-                const cell = document.querySelector(`[data-x="${attack.x}"][data-y="${attack.y}"]`);
-                if (cell) {
-                    cell.classList.add('valid-attack');
+                const gridX = attack.x - gameState.cameraOffset.x;
+                const gridY = attack.y - gameState.cameraOffset.y;
+
+                if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X &&
+                    gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                    const cell = document.querySelector(`[data-x="${gridX}"][data-y="${gridY}"]`);
+                    if (cell) {
+                        cell.classList.add('valid-attack');
+                    }
                 }
             });
 
-            const unitCell = document.querySelector(`[data-x="${unit.x}"][data-y="${unit.y}"]`);
-            if (unitCell) {
-                unitCell.classList.add('selected');
+            const unitGridX = unit.x - gameState.cameraOffset.x;
+            const unitGridY = unit.y - gameState.cameraOffset.y;
+
+            if (unitGridX >= 0 && unitGridX < CONFIG.GRID_SIZE_X &&
+                unitGridY >= 0 && unitGridY < CONFIG.GRID_SIZE_Y) {
+                const unitCell = document.querySelector(`[data-x="${unitGridX}"][data-y="${unitGridY}"]`);
+                if (unitCell) {
+                    unitCell.classList.add('selected');
+                }
             }
         }
 
@@ -2432,7 +2601,10 @@
             const emptyCells = [];
             for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                 for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
-                    if (x === CONFIG.PLAYER_START.x && y === CONFIG.PLAYER_START.y) continue;
+                    const playerGridX = CONFIG.PLAYER_START.x - gameState.cameraOffset.x;
+                    const playerGridY = CONFIG.PLAYER_START.y - gameState.cameraOffset.y;
+
+                    if (x === playerGridX && y === playerGridY) continue;
 
                     if (gameState.grid[y][x] === null) {
                         emptyCells.push({ x, y });
@@ -2573,8 +2745,8 @@
                 }
 
                 if (gameState.selectedUnit &&
-                    gameState.selectedUnit.x === x &&
-                    gameState.selectedUnit.y === y) {
+                    gameState.selectedUnit.x === (x + gameState.cameraOffset.x) &&
+                    gameState.selectedUnit.y === (y + gameState.cameraOffset.y)) {
                     cell.classList.add('selected');
                 }
             });
@@ -3577,6 +3749,75 @@
                         gameState.objects.set(obj.id, obj);
                     }
                 }
+            }
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+                return;
+            }
+
+            event.preventDefault();
+
+            switch (event.key) {
+                case 'ArrowUp':
+                    moveCamera(0, -1);
+                    break;
+                case 'ArrowDown':
+                    moveCamera(0, 1);
+                    break;
+                case 'ArrowLeft':
+                    moveCamera(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    moveCamera(1, 0);
+                    break;
+            }
+
+            updateDisplay();
+        });
+
+        function moveCamera(dx, dy) {
+            gameState.cameraOffset.x += dx;
+            gameState.cameraOffset.y += dy;
+
+            updateGridFromWorldObjects();
+        }
+
+        function updateGridFromWorldObjects() {
+            gameState.grid = Array(CONFIG.GRID_SIZE_Y).fill().map(() => Array(CONFIG.GRID_SIZE_X).fill(null));
+
+            gameState.worldObjects.forEach(obj => {
+                const gridX = obj.x - gameState.cameraOffset.x;
+                const gridY = obj.y - gameState.cameraOffset.y;
+
+                if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X &&
+                    gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                    gameState.grid[gridY][gridX] = obj;
+                }
+            });
+
+            const playerWorldX = CONFIG.PLAYER_START.x;
+            const playerWorldY = CONFIG.PLAYER_START.y;
+            const playerGridX = playerWorldX - gameState.cameraOffset.x;
+            const playerGridY = playerWorldY - gameState.cameraOffset.y;
+
+            if (playerGridX >= 0 && playerGridX < CONFIG.GRID_SIZE_X &&
+                playerGridY >= 0 && playerGridY < CONFIG.GRID_SIZE_Y) {
+                gameState.grid[playerGridY][playerGridX] = 'player';
+            }
+        }
+
+        function addObjectToWorld(obj) {
+            gameState.worldObjects.set(obj.id, obj);
+
+            const gridX = obj.x - gameState.cameraOffset.x;
+            const gridY = obj.y - gameState.cameraOffset.y;
+
+            if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X &&
+                gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                gameState.objects.set(obj.id, obj);
+                gameState.grid[gridY][gridX] = obj;
             }
         }
 
