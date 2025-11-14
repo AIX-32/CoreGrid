@@ -224,6 +224,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -299,7 +300,6 @@
             font-weight: bold;
             color: #aaa;
         }
-
 
         .btn {
             width: 100px;
@@ -464,6 +464,27 @@
         .btn.disabled:hover {
             transform: none;
             background: var(--bg-tertiary);
+        }
+
+        .btn.researched {
+            background-color: #7a977b;
+            border-color: #5a775b;
+        }
+
+        .btn.researched:hover {
+            background-color: #8aac8b;
+            border-color: #6a8c6b;
+        }
+
+        .btn.available {
+            background-color: #66d9ff;
+            border-color: #46b9df;
+            color: #111;
+        }
+
+        .btn.available:hover {
+            background-color: #76e9ff;
+            border-color: #56c9ef;
         }
 
         .game-grid-container {
@@ -711,12 +732,10 @@
             }
         }
 
-
         .lowcol {
             color: #858585;
         }
 
-        /* Card styles from design.html */
         .card {
             background: #353535;
             border: 2px solid #7a7a7a;
@@ -813,7 +832,7 @@
             position: absolute;
             width: 6px;
             height: 6px;
-            border-radius: 0; /* Changed from 50% to 0 for cubes */
+            border-radius: 0;
             pointer-events: none;
             opacity: 0;
         }
@@ -823,6 +842,7 @@
             pointer-events: none;
             z-index: 999;
         }
+
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
@@ -831,12 +851,268 @@
         .folder-buttons .btn {
             position: relative;
         }
+
+        .tech-tree-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #353535;
+            border: 3px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 1000px;
+            height: 80vh;
+            z-index: 2000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tech-tree-header {
+            padding: 15px 20px;
+            background: #3a3a3a;
+            border-bottom: 2px solid #7a7a7a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+
+        .tech-tree-header h2 {
+            margin: 0;
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+        }
+
+        .tech-tree-close {
+            background: none;
+            border: none;
+            color: #ddd;
+            cursor: pointer;
+            font-size: 24px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+        }
+
+        .tech-tree-close:hover {
+            background: #ff5555;
+        }
+
+        .tech-tree-content {
+            padding: 25px;
+            overflow: auto;
+            flex-grow: 1;
+            position: relative;
+            background: #2b2b2b;
+            min-height: 700px;
+            background-image:
+                radial-gradient(circle at 10px 10px, rgba(100, 100, 100, 0.1) 1px, transparent 0);
+            background-size: 30px 30px;
+        }
+
+        .tech-tree-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1999;
+            display: none;
+        }
+
+        .tech-node {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border: 2px solid #7a7a7a;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            text-align: center;
+            z-index: 10;
+            font-size: 12px;
+            overflow: hidden;
+        }
+
+        .tech-node::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #7a7a7a;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .tech-node:hover {
+            transform: translateY(-5px) scale(1.15);
+            z-index: 20;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: var(--accent-primary);
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+        }
+
+        .tech-node.researched {
+            background: linear-gradient(145deg, #7a977b, #6a876b);
+            border-color: #5a775b;
+        }
+
+        .tech-node.researched::before {
+            background: #5a775b;
+        }
+
+        .tech-node.available {
+            background: linear-gradient(145deg, #66d9ff, #56c9ef);
+            border-color: #46b9df;
+            color: #111;
+        }
+
+        .tech-node.available::before {
+            background: #46b9df;
+        }
+
+        .tech-node.available:hover {
+            background: linear-gradient(145deg, #76e9ff, #66d9ff);
+            border-color: #56c9ef;
+        }
+
+        .tech-node.locked {
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+            border-color: #555;
+            opacity: 1;
+            cursor: not-allowed;
+        }
+
+        .tech-node.locked::before {
+            background: #555;
+        }
+
+        .tech-node.locked:hover {
+            transform: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: #555;
+        }
+
+        .tech-tooltip {
+            position: absolute;
+            background: #66d9ff;
+            outline: 3px solid #64d1f5;
+            color: #111;
+            padding: 8px 12px;
+            border-radius: 4px 24px 24px 24px;
+            font-size: 13px;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(0, 0);
+        }
+
+        .tech-node-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 50%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .tech-node-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .tech-node-name {
+            display: none;
+        }
+
+        .tech-node-cost {
+            display: none;
+        }
+
+        .tech-node-status {
+            display: none;
+        }
+
+        .tech-node.researched .tech-node-status {
+            background: #5a775b;
+            color: #e0ffe0;
+        }
+
+        .tech-node.available .tech-node-status {
+            background: #46b9df;
+            color: #111;
+        }
+
+        .tech-node.locked .tech-node-status {
+            background: #666;
+            color: #bbb;
+        }
+
+        .tech-connection {
+            position: absolute;
+            background: #7a7a7a;
+            transform-origin: 0 0;
+            z-index: 5;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            height: 4px;
+        }
+
+        .tech-connection.researched {
+            background: #5a775b;
+            box-shadow: 0 0 5px #5a775b;
+        }
+
+        .tech-connection.locked {
+            background: #555;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .tech-node {
+                width: 90px;
+                height: 90px;
+                padding: 8px;
+            }
+
+            .tech-tree-popup {
+                width: 95%;
+                height: 85vh;
+            }
+
+            .tech-node-icon {
+                width: 40px;
+                height: 40px;
+                padding: 6px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="game-container">
-        <!-- Game title and subtitle moved to sidebar -->
 
         <div class="ui-panel">
             <div class="resources">
@@ -865,7 +1141,8 @@
                             <button class="folder-close">×</button>
                         </div>
                         <div class="folder-buttons">
-                            <button class="btn" id="place-wall" data-info="Wall,Basic defensive structure to block enemy movement,Health: 1">
+                            <button class="btn" id="place-wall"
+                                data-info="Wall,Basic defensive structure to block enemy movement,Health: 1">
                                 <div class="btn-left">
                                     <img src="./sprites/wall.png" alt="Wall">
                                     <span>Wall</span>
@@ -875,7 +1152,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-steel-wall" data-info="Steel Wall,Stronger wall with increased durability,Health: 3">
+                            <button class="btn" id="place-steel-wall"
+                                data-info="Steel Wall,Stronger wall with increased durability,Health: 3,Requires: Advanced Defense">
                                 <div class="btn-left">
                                     <img src="./sprites/wallsteel.png" alt="Steel Wall">
                                     <span>Steel</span>
@@ -885,7 +1163,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-spike" data-info="Spike,Damages enemies that walk over it,Health: 3">
+                            <button class="btn" id="place-spike"
+                                data-info="Spike,Damages enemies that walk over it,Health: 3,Requires: Spike Traps">
                                 <div class="btn-left">
                                     <img src="./sprites/spike.png" alt="Spike">
                                     <span>Spike</span>
@@ -895,7 +1174,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-fortress" data-info="Fortress,Your main base that must be protected,Health: 5">
+                            <button class="btn" id="place-fortress"
+                                data-info="Fortress,Your main base that must be protected,Health: 5,Requires: Fortress">
                                 <div class="btn-left">
                                     <img src="./sprites/spawn.png" alt="Fortress">
                                     <span>Fortress</span>
@@ -919,7 +1199,8 @@
                             <button class="folder-close">×</button>
                         </div>
                         <div class="folder-buttons">
-                            <button class="btn" id="place-tech" data-info="Steel Mine,Generates 5 steel per turn,Health: 2">
+                            <button class="btn" id="place-tech"
+                                data-info="Steel Mine,Generates 5 steel per turn,Health: 2,Requires: Fortress">
                                 <div class="btn-left">
                                     <img src="./sprites/iron.png" alt="Steel Mine">
                                     <span>Steel Mine</span>
@@ -929,7 +1210,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-gold-miner" data-info="Gold Mine,Generates 1 gold per turn,Health: 2">
+                            <button class="btn" id="place-gold-miner"
+                                data-info="Gold Mine,Generates 1 gold per turn,Health: 2,Requires: Advanced Mining">
                                 <div class="btn-left">
                                     <img src="./sprites/gold.png" alt="Gold Mine">
                                     <span>Gold Mine</span>
@@ -939,7 +1221,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-coin-maker" data-info="Bank,Generates 5 coins per turn,Health: 2">
+                            <button class="btn" id="place-coin-maker"
+                                data-info="Bank,Generates 5 coins per turn,Health: 2,Requires: Advanced Mining">
                                 <div class="btn-left">
                                     <img src="./sprites/bank.png" alt="Bank">
                                     <span>Bank</span>
@@ -949,7 +1232,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-turret" data-info="Turret,Attacks enemies within range 3,Health: 2,Shots: 8">
+                            <button class="btn" id="place-turret"
+                                data-info="Turret,Attacks enemies within range 3,Health: 2,Shots: 8,Requires: Fortress">
                                 <div class="btn-left">
                                     <img src="./sprites/turret.png" alt="Turret">
                                     <span>Turret</span>
@@ -959,7 +1243,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-gold-turret" data-info="Gold Turret,Powerful turret with range 3,Health: 2,Shots: 10">
+                            <button class="btn" id="place-gold-turret"
+                                data-info="Gold Turret,Powerful turret with range 3,Health: 2,Shots: 10,Requires: Fortified Defense">
                                 <div class="btn-left">
                                     <img src="./sprites/goldturret.png" alt="Gold Turret">
                                     <span>Gold Turret</span>
@@ -969,7 +1254,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-bomb" data-info="Bomb,Explodes when enemy approaches damaging area,Health: 1">
+                            <button class="btn" id="place-bomb"
+                                data-info="Bomb,Explodes when enemy approaches damaging area,Health: 1,Requires: Spike Traps">
                                 <div class="btn-left">
                                     <img src="./sprites/bomb.png" alt="Bomb">
                                     <span>Bomb</span>
@@ -979,7 +1265,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-supply" data-info="Supply Drop,Randomly generates resources,Health: 1">
+                            <button class="btn" id="place-supply"
+                                data-info="Supply Drop,Randomly generates resources,Health: 1,Requires: Supply Systems">
                                 <div class="btn-left">
                                     <img src="./sprites/supply.gif" alt="Supply Drop">
                                     <span>Supply Drop</span>
@@ -989,7 +1276,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-campfire" data-info="Campfire,Boosts nearby resource buildings by 50%,Health: 1">
+                            <button class="btn" id="place-campfire"
+                                data-info="Campfire,Boosts nearby resource buildings by 50%,Health: 1,Requires: Resource Management">
                                 <div class="btn-left">
                                     <img src="./sprites/campfire.gif" alt="Campfire">
                                     <span>Campfire</span>
@@ -1013,7 +1301,8 @@
                             <button class="folder-close">×</button>
                         </div>
                         <div class="folder-buttons">
-                            <button class="btn" id="place-scout" data-info="Soldier,Basic unit with balanced stats,Health: 1,Range: 1,Movement: 1">
+                            <button class="btn" id="place-scout"
+                                data-info="Soldier,Basic unit with balanced stats,Health: 1,Range: 1,Movement: 1,Requires: Fortress">
                                 <div class="btn-left">
                                     <img src="./sprites/soldier.png" alt="Soldier">
                                     <span>Soldier</span>
@@ -1023,7 +1312,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-knight" data-info="Knight,Fast-moving unit with high mobility,Health: 1,Range: 1,Movement: 5">
+                            <button class="btn" id="place-knight"
+                                data-info="Knight,Fast-moving unit with high mobility,Health: 1,Range: 1,Movement: 5,Requires: Basic Army">
                                 <div class="btn-left">
                                     <img src="./sprites/knight.png" alt="Knight">
                                     <span>Knight</span>
@@ -1033,7 +1323,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-archer" data-info="Archer,Ranged unit that can attack from a distance,Health: 1,Range: 4,Movement: 1">
+                            <button class="btn" id="place-archer"
+                                data-info="Archer,Ranged unit that can attack from a distance,Health: 1,Range: 4,Movement: 1,Requires: Basic Army">
                                 <div class="btn-left">
                                     <img src="./sprites/Archer.png" alt="Archer">
                                     <span>Archer</span>
@@ -1043,7 +1334,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-tank" data-info="Tank,Heavy unit with high health,Health: 5,Range: 1,Movement: 1">
+                            <button class="btn" id="place-tank"
+                                data-info="Tank,Heavy unit with high health,Health: 5,Range: 1,Movement: 1,Requires: Elite Units">
                                 <div class="btn-left">
                                     <img src="./sprites/Tank.png" alt="Tank">
                                     <span>Tank</span>
@@ -1053,7 +1345,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-siege-tower" data-info="Siege Tower,Powerful siege unit with long range,Health: 1,Range: 4,Movement: 1">
+                            <button class="btn" id="place-siege-tower"
+                                data-info="Siege Tower,Powerful siege unit with long range,Health: 1,Range: 4,Movement: 1,Requires: Siege Weapons">
                                 <div class="btn-left">
                                     <img src="./sprites/siegetower.png" alt="Siege Tower">
                                     <span>Siege Tower</span>
@@ -1063,7 +1356,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-king" data-info="King,Command unit that boosts nearby army,Health: 25,Range: 2,Movement: 2">
+                            <button class="btn" id="place-king"
+                                data-info="King,Command unit that boosts nearby army,Health: 25,Range: 2,Movement: 2,Requires: Elite Units">
                                 <div class="btn-left">
                                     <img src="./sprites/king.png" alt="King">
                                     <span>King</span>
@@ -1073,7 +1367,8 @@
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
-                            <button class="btn" id="place-barrack" data-info="Barrack,Automatically spawns soldier units,Health: 2">
+                            <button class="btn" id="place-barrack"
+                                data-info="Barrack,Automatically spawns soldier units,Health: 2,Requires: Advanced Army">
                                 <div class="btn-left">
                                     <img src="./sprites/barrack.png" alt="Barrack">
                                     <span>Barrack</span>
@@ -1088,6 +1383,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="tech-tree-popup" id="tech-tree-popup">
+            <div class="tech-tree-header">
+                <h2>Tech Tree</h2>
+                <button class="tech-tree-close" id="tech-tree-close">×</button>
+            </div>
+            <div class="tech-tree-content" id="tech-tree-content">
+            </div>
+        </div>
+
+        <div class="tech-tree-overlay" id="tech-tree-overlay"></div>
 
         <div class="game-grid-container">
             <div class="game-grid" id="game-grid"></div>
@@ -1121,9 +1427,20 @@
             <button class="control-btn" id="save-game">Save Game</button>
             <button class="control-btn" id="load-game">Load Game</button>
             <button class="control-btn" id="restart-game">Restart Game</button>
+            <button class="control-btn" id="tech-tree-button">Research</button>
         </div>
     </div>
 
+    <div class="tech-tree-popup" id="tech-tree-popup">
+        <div class="tech-tree-header">
+            <h2>Tech Tree</h2>
+            <button class="tech-tree-close" id="tech-tree-close">×</button>
+        </div>
+        <div class="tech-tree-content" id="tech-tree-content">
+        </div>
+    </div>
+
+    <div class="tech-tree-overlay" id="tech-tree-overlay"></div>
     <script>
         const CONFIG = {
             GRID_SIZE_X: 25,
@@ -1134,6 +1451,170 @@
                 Steel: 100,
                 coins: 50,
                 gold: 25
+            },
+            TECH_TREE: {
+                'fortress': {
+                    name: 'Fortress',
+                    description: 'Your main base that must be protected',
+                    cost: { Steel: 0 },
+                    tier: 0,
+                    prerequisites: [],
+                    unlocks: ['basic_defense', 'basic_army'],
+                    icon: 'spawn.png'
+                },
+                'basic_defense': {
+                    name: 'Basic Defense',
+                    description: 'Unlock Steel Wall',
+                    cost: { Steel: 50 },
+                    tier: 1,
+                    prerequisites: ['fortress'],
+                    unlocks: ['advanced_defense'],
+                    icon: 'wall.png'
+                },
+                'basic_army': {
+                    name: 'Basic Army',
+                    description: 'Unlock Soldier unit',
+                    cost: { coins: 50 },
+                    tier: 1,
+                    prerequisites: ['fortress'],
+                    unlocks: ['advanced_army'],
+                    icon: 'soldier.png'
+                },
+                'advanced_defense': {
+                    name: 'Advanced Defense',
+                    description: 'Unlock Steel Wall',
+                    cost: { Steel: 100, coins: 50 },
+                    tier: 2,
+                    prerequisites: ['basic_defense'],
+                    unlocks: ['fortified_defense'],
+                    icon: 'wallsteel.png'
+                },
+                'spike_traps': {
+                    name: 'Spike Traps',
+                    description: 'Unlock Spike',
+                    cost: { Steel: 75 },
+                    tier: 2,
+                    prerequisites: ['basic_defense'],
+                    unlocks: ['bomb_tech'],
+                    icon: 'spike.png'
+                },
+                'bomb_tech': {
+                    name: 'Bomb Tech',
+                    description: 'Unlock Bomb',
+                    cost: { gold: 10 },
+                    tier: 3,
+                    prerequisites: ['spike_traps'],
+                    unlocks: [],
+                    icon: 'bomb.png'
+                },
+                'advanced_army': {
+                    name: 'Advanced Army',
+                    description: 'Unlock Knight unit',
+                    cost: { coins: 100, gold: 10 },
+                    tier: 2,
+                    prerequisites: ['basic_army'],
+                    unlocks: ['elite_units', 'barrack_tech'],
+                    icon: 'knight.png'
+                },
+                'ranged_units': {
+                    name: 'Ranged Units',
+                    description: 'Unlock Archer unit',
+                    cost: { coins: 75 },
+                    tier: 2,
+                    prerequisites: ['basic_army'],
+                    unlocks: ['siege_weapons'],
+                    icon: 'Archer.png'
+                },
+                'siege_weapons': {
+                    name: 'Siege Weapons',
+                    description: 'Unlock Siege Tower unit',
+                    cost: { coins: 125 },
+                    tier: 2,
+                    prerequisites: ['ranged_units'],
+                    unlocks: [],
+                    icon: 'siegetower.png'
+                },
+                'advanced_mining': {
+                    name: 'Advanced Mining',
+                    description: 'Unlock Gold Mine',
+                    cost: { Steel: 125, gold: 10 },
+                    tier: 2,
+                    prerequisites: ['fortress'],
+                    unlocks: ['premium_mining', 'supply_systems'],
+                    icon: 'gold.png'
+                },
+                'supply_systems': {
+                    name: 'Supply Systems',
+                    description: 'Unlock Supply Drop',
+                    cost: { gold: 25 },
+                    tier: 3,
+                    prerequisites: ['advanced_mining'],
+                    unlocks: ['campfire_tech'],
+                    icon: 'supply.gif'
+                },
+                'basic_turret': {
+                    name: 'Basic Turret',
+                    description: 'Unlock Turret',
+                    cost: { Steel: 150 },
+                    tier: 2,
+                    prerequisites: ['basic_defense'],
+                    unlocks: ['fortified_defense'],
+                    icon: 'turret.png'
+                },
+                'fortified_defense': {
+                    name: 'Fortified Defense',
+                    description: 'Unlock Gold Turret',
+                    cost: { Steel: 200, gold: 25 },
+                    tier: 3,
+                    prerequisites: ['advanced_defense', 'basic_turret', 'bomb_tech'],
+                    unlocks: [],
+                    icon: 'goldturret.png'
+                },
+                'elite_units': {
+                    name: 'Elite Units',
+                    description: 'Unlock Tank unit',
+                    cost: { coins: 300, gold: 50 },
+                    tier: 3,
+                    prerequisites: ['advanced_army'],
+                    unlocks: ['command_units'],
+                    icon: 'Tank.png'
+                },
+                'command_units': {
+                    name: 'Command Units',
+                    description: 'Unlock King unit',
+                    cost: { gold: 100 },
+                    tier: 3,
+                    prerequisites: ['elite_units'],
+                    unlocks: [],
+                    icon: 'king.png'
+                },
+                'barrack_tech': {
+                    name: 'Barrack Tech',
+                    description: 'Unlock Barrack unit',
+                    cost: { gold: 50 },
+                    tier: 3,
+                    prerequisites: ['advanced_army'],
+                    unlocks: [],
+                    icon: 'barrack.png'
+                },
+                'premium_mining': {
+                    name: 'Premium Mining',
+                    description: 'Unlock Bank',
+                    cost: { Steel: 250, gold: 50 },
+                    tier: 3,
+                    prerequisites: ['advanced_mining'],
+                    unlocks: [],
+                    icon: 'bank.png'
+                },
+                'campfire_tech': {
+                    name: 'Campfire Tech',
+                    description: 'Unlock Campfire',
+                    cost: { Steel: 30 },
+                    tier: 3,
+                    prerequisites: ['supply_systems'],
+                    unlocks: [],
+                    icon: 'campfire.gif'
+                },
             },
             SPRITES: {
                 player: './sprites/spawn.png',
@@ -1178,7 +1659,6 @@
             }
 
             reset() {
-                // Clear any wave break timeout when resetting the game
                 if (window.waveBreakTimeout) {
                     clearTimeout(window.waveBreakTimeout);
                     window.waveBreakTimeout = null;
@@ -1194,6 +1674,9 @@
                 this.waveBreakTurns = 0;
                 this.inWaveBreak = false;
                 this.enemiesRemaining = 0;
+                this.researchedTechs = new Set();
+                this.availableTechs = new Set();
+                this.updateAvailableTechs();
             }
 
             canAfford(cost) {
@@ -1212,6 +1695,51 @@
                 if (resources.Steel) this.resources.Steel += resources.Steel;
                 if (resources.coins) this.resources.coins += resources.coins;
                 if (resources.gold) this.resources.gold += resources.gold;
+            }
+
+            isTechResearched(techId) {
+                return this.researchedTechs.has(techId);
+            }
+
+            canResearchTech(techId) {
+                const tech = CONFIG.TECH_TREE[techId];
+                if (!tech) return false;
+                if (this.isTechResearched(techId)) return false;
+
+                return tech.prerequisites.every(prereq => this.isTechResearched(prereq)) &&
+                    this.canAfford(tech.cost);
+            }
+
+            researchTech(techId) {
+                if (!this.canResearchTech(techId)) return false;
+
+                const tech = CONFIG.TECH_TREE[techId];
+                this.spendResources(tech.cost);
+                this.researchedTechs.add(techId);
+                this.updateAvailableTechs();
+                return true;
+            }
+
+            updateAvailableTechs() {
+                this.availableTechs.clear();
+                for (const techId in CONFIG.TECH_TREE) {
+                    const tech = CONFIG.TECH_TREE[techId];
+                    if (!this.isTechResearched(techId) &&
+                        tech.prerequisites.every(prereq => this.isTechResearched(prereq))) {
+                        this.availableTechs.add(techId);
+                    }
+                }
+            }
+
+            getResourceMultiplier() {
+                let multiplier = 1.0;
+                if (this.isTechResearched('advanced_mining')) {
+                    multiplier += 0.25;
+                }
+                if (this.isTechResearched('premium_mining')) {
+                    multiplier += 0.5;
+                }
+                return multiplier;
             }
 
             countEnemies() {
@@ -1296,20 +1824,22 @@
             }
 
             onTurn() {
+                const multiplier = gameState.getResourceMultiplier();
+
                 const campfireBonus = 1 + (0.5 * this.getNearbyCampfires());
 
                 switch (this.subtype) {
                     case 'miner':
-                        gameState.addResources({ Steel: Math.floor(5 * campfireBonus) });
-                        createResourceCollectionEffect(this.x, this.y, 'Steel'); // Add particle effect
+                        gameState.addResources({ Steel: Math.floor(5 * campfireBonus * multiplier) });
+                        createResourceCollectionEffect(this.x, this.y, 'Steel');
                         break;
                     case 'goldminer':
-                        gameState.addResources({ gold: Math.ceil(1 * campfireBonus) });
-                        createResourceCollectionEffect(this.x, this.y, 'gold'); // Add particle effect
+                        gameState.addResources({ gold: Math.ceil(1 * campfireBonus * multiplier) });
+                        createResourceCollectionEffect(this.x, this.y, 'gold');
                         break;
                     case 'coinmaker':
-                        gameState.addResources({ coins: Math.floor(5 * campfireBonus) });
-                        createResourceCollectionEffect(this.x, this.y, 'coins'); // Add particle effect
+                        gameState.addResources({ coins: Math.floor(5 * campfireBonus * multiplier) });
+                        createResourceCollectionEffect(this.x, this.y, 'coins');
                         break;
                     case 'supply':
                         this.handleSupplyDrop();
@@ -1348,7 +1878,7 @@
                     const amount = 5 + Math.floor(Math.random() * 6);
                     gameState.addResources({ [resource]: amount });
                     showNotification(`+${amount} ${resource} from Supply Drop!`, this.x, this.y);
-                    createResourceCollectionEffect(this.x, this.y, resource); // Add particle effect
+                    createResourceCollectionEffect(this.x, this.y, resource);
                 }
             }
 
@@ -1616,7 +2146,7 @@
                     newX = this.x;
                     newY = this.y + dy;
 
-                    if (newY <0 || newY >= CONFIG.GRID_SIZE_Y ||
+                    if (newY < 0 || newY >= CONFIG.GRID_SIZE_Y ||
                         (gameState.grid[newY][newX] !== null && gameState.grid[newY][newX] !== 'player')) {
                         newX = this.x + dx;
                     }
@@ -1660,7 +2190,6 @@
         const gameState = new GameState();
 
         function initGame() {
-            // Clear any wave break timeout when initializing the game
             if (window.waveBreakTimeout) {
                 clearTimeout(window.waveBreakTimeout);
                 window.waveBreakTimeout = null;
@@ -1678,6 +2207,8 @@
             console.log(`After countEnemies, enemies remaining: ${gameState.enemiesRemaining}`);
             updateDisplay();
             setupEventListeners();
+
+            setInterval(updateButtonStates, 2000);
         }
 
         function createGrid() {
@@ -1789,7 +2320,7 @@
             }
 
             showNotification(`${subtype || type} placed!`, x, y, 'success');
-            createPlacementEffect(x, y); // Add particle effect
+            createPlacementEffect(x, y);
             return true;
         }
 
@@ -1829,7 +2360,7 @@
                 const enemy = new Enemy(x, y, subtype || 'basic');
                 gameState.grid[y][x] = enemy;
                 gameState.objects.set(enemy.id, enemy);
-                gameState.enemiesRemaining++; // ADD THIS LINE
+                gameState.enemiesRemaining++;
                 console.log(`Enemy spawned, enemies remaining: ${gameState.enemiesRemaining}`);
             } else {
                 console.log(`Failed to spawn enemy at ${x},${y} - cell not empty or out of bounds`);
@@ -1846,11 +2377,11 @@
         function attackEnemy(enemy) {
             gameState.grid[enemy.y][enemy.x] = null;
             gameState.objects.delete(enemy.id);
-            gameState.enemiesRemaining--; // ADD THIS LINE
+            gameState.enemiesRemaining--;
             console.log(`Enemy attacked, enemies remaining: ${gameState.enemiesRemaining}`);
 
             gameState.addResources({ coins: 5 });
-            createEnemyDefeatEffect(enemy.x, enemy.y); // Add particle effect
+            createEnemyDefeatEffect(enemy.x, enemy.y);
         }
 
         function gameOver() {
@@ -1887,7 +2418,6 @@
 
         function spawnNextWave() {
             console.log("spawnNextWave called");
-            // Clear any wave break timeout when starting a new wave
             if (window.waveBreakTimeout) {
                 clearTimeout(window.waveBreakTimeout);
                 window.waveBreakTimeout = null;
@@ -1902,17 +2432,14 @@
             const emptyCells = [];
             for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                 for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
-                    // Skip player start position
                     if (x === CONFIG.PLAYER_START.x && y === CONFIG.PLAYER_START.y) continue;
 
-                    // Only consider truly empty cells
                     if (gameState.grid[y][x] === null) {
                         emptyCells.push({ x, y });
                     }
                 }
             }
 
-            // Shuffle empty cells to get random positions
             for (let i = emptyCells.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [emptyCells[i], emptyCells[j]] = [emptyCells[j], emptyCells[i]];
@@ -1920,7 +2447,6 @@
 
             const enemiesToSpawn = Math.min(numEnemies, emptyCells.length);
 
-            // Debug logging
             console.log(`Spawning wave ${gameState.wave}: ${enemiesToSpawn} enemies`);
 
             for (let i = 0; i < enemiesToSpawn; i++) {
@@ -1960,7 +2486,6 @@
             gameState.turn++;
             gameState.countEnemies();
 
-            // Debug: Check if wave break should start
             console.log(`Enemies remaining: ${gameState.enemiesRemaining}, In wave break: ${gameState.inWaveBreak}`);
 
             if (gameState.enemiesRemaining === 0 && !gameState.inWaveBreak) {
@@ -2059,6 +2584,101 @@
             }
 
             updateButtonStates();
+            updateTechTreeDisplay();
+        }
+
+        function updateTechTreeDisplay() {
+            const techTreeButtons = document.getElementById('tech-tree-buttons');
+            if (!techTreeButtons) return;
+
+            techTreeButtons.innerHTML = '';
+
+            for (const techId in CONFIG.TECH_TREE) {
+                const tech = CONFIG.TECH_TREE[techId];
+                const button = document.createElement('button');
+                button.className = 'btn';
+                button.dataset.techId = techId;
+
+                if (gameState.isTechResearched(techId)) {
+                    button.classList.add('researched');
+                } else if (gameState.availableTechs.has(techId)) {
+                    button.classList.add('available');
+                } else {
+                    button.classList.add('disabled');
+                }
+
+                const btnLeft = document.createElement('div');
+                btnLeft.className = 'btn-left';
+
+                const img = document.createElement('img');
+                img.src = './sprites/research.png';
+                img.alt = tech.name;
+                btnLeft.appendChild(img);
+
+                const span = document.createElement('span');
+                span.textContent = tech.name;
+                btnLeft.appendChild(span);
+
+                const btnRight = document.createElement('div');
+                btnRight.className = 'btn-right';
+
+                const costContainer = document.createElement('div');
+                costContainer.className = 'btn-right';
+
+                if (tech.cost.Steel) {
+                    const steelCost = document.createElement('div');
+                    steelCost.className = 'lowcol';
+                    steelCost.innerHTML = `<img src="./sprites/ironin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.Steel}`;
+                    costContainer.appendChild(steelCost);
+                }
+                if (tech.cost.coins) {
+                    const coinCost = document.createElement('div');
+                    coinCost.className = 'lowcol';
+                    coinCost.innerHTML = `<img src="./sprites/coin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.coins}`;
+                    costContainer.appendChild(coinCost);
+                }
+                if (tech.cost.gold) {
+                    const goldCost = document.createElement('div');
+                    goldCost.className = 'lowcol';
+                    goldCost.innerHTML = `<img src="./sprites/goldin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.gold}`;
+                    costContainer.appendChild(goldCost);
+                }
+
+                btnRight.appendChild(costContainer);
+
+                const infoIcon = document.createElement('div');
+                infoIcon.className = 'info-icon';
+                infoIcon.textContent = 'i';
+
+                button.appendChild(btnLeft);
+                button.appendChild(btnRight);
+                button.appendChild(infoIcon);
+
+                button.addEventListener('click', () => {
+                    if (gameState.isTechResearched(techId)) {
+                        showNotification(`${tech.name} already researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y);
+                    } else if (gameState.canResearchTech(techId)) {
+                        if (gameState.researchTech(techId)) {
+                            showNotification(`${tech.name} researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
+                            updateDisplay();
+                        }
+                    } else {
+                        showNotification(`Cannot research ${tech.name} yet!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
+                    }
+                });
+
+                const prereqText = tech.prerequisites.length > 0 ?
+                    `Prerequisites: ${tech.prerequisites.map(id => CONFIG.TECH_TREE[id].name).join(', ')}` :
+                    'No prerequisites';
+                button.dataset.info = `${tech.name},${tech.description},${prereqText}`;
+
+                infoIcon.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    showInfoPopup(button);
+                });
+
+                techTreeButtons.appendChild(button);
+            }
         }
 
         function updateButtonStates() {
@@ -2078,11 +2698,60 @@
                 } else {
                     btn.classList.add('disabled');
                 }
+
+                const mode = btn.dataset.mode;
+                if (mode && isBuildingRestricted(mode)) {
+                    btn.classList.add('disabled');
+                    if (!btn.dataset.originalTitle) {
+                        btn.dataset.originalTitle = btn.title || '';
+                        btn.title = 'Research required: ' + getResearchRequirementName(mode);
+                    }
+                } else if (btn.dataset.originalTitle !== undefined) {
+                    btn.title = btn.dataset.originalTitle;
+                    delete btn.dataset.originalTitle;
+                }
             });
         }
 
+        function getResearchRequirementName(mode) {
+            const buildingRequirements = {
+                'wall-steel': 'Advanced Defense',
+                'wall-spike': 'Spike Traps',
+                'wall-fortress': 'Fortress',
+                'tech-goldturret': 'Fortified Defense',
+                'tech-turret': 'Basic Turret',
+                'tech-bomb': 'Bomb Tech',
+                'tech-supply': 'Supply Systems',
+                'tech-goldminer': 'Advanced Mining',
+                'tech-coinmaker': 'Premium Mining',
+                'tech-campfire': 'Campfire Tech',
+                'army-tank': 'Elite Units',
+                'army-siegetower': 'Siege Weapons',
+                'army-king': 'Command Units',
+                'army-barrack': 'Barrack Tech',
+                'army-archer': 'Ranged Units',
+                'army-knight': 'Advanced Army'
+            };
+
+            if (buildingRequirements[mode]) {
+                return buildingRequirements[mode];
+            }
+
+            if (mode === 'wall') {
+                return 'Fortress';
+            }
+            if (mode === 'army-scout') {
+                return 'None';
+            }
+
+            if (mode === 'tech') {
+                return 'None';
+            }
+
+            return 'Unknown Research';
+        }
+
         function showNotification(message, x, y, type) {
-            // Create notification container if it doesn't exist
             let container = document.querySelector('.notification-container');
             if (!container) {
                 container = document.createElement('div');
@@ -2093,11 +2762,9 @@
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.textContent = message;
-            
-            // Add to the top of the container (so newest appears at top)
+
             container.insertBefore(notification, container.firstChild);
-            
-            // Remove notification after 3 seconds
+
             setTimeout(() => {
                 notification.style.animation = 'fadeOut 0.3s ease forwards';
                 setTimeout(() => {
@@ -2108,7 +2775,6 @@
             }, 3000);
         }
 
-        // Particle effect system
         function createParticleEffect(x, y, color, count = 15) {
             const effectContainer = document.createElement('div');
             effectContainer.className = 'particle-effect';
@@ -2122,18 +2788,15 @@
                 particle.style.backgroundColor = color;
                 effectContainer.appendChild(particle);
 
-                // Random direction and speed
                 const angle = Math.random() * Math.PI * 2;
                 const speed = 1 + Math.random() * 3;
                 const vx = Math.cos(angle) * speed;
                 const vy = Math.sin(angle) * speed;
 
-                // Random size
                 const size = 2 + Math.random() * 4;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
 
-                // Animate particle
                 let posX = 0;
                 let posY = 0;
                 let opacity = 1;
@@ -2158,7 +2821,6 @@
                 animate();
             }
 
-            // Remove container after particles are done
             setTimeout(() => {
                 if (effectContainer.parentNode) {
                     effectContainer.parentNode.removeChild(effectContainer);
@@ -2166,7 +2828,6 @@
             }, 1000);
         }
 
-        // Function to create placement effect
         function createPlacementEffect(x, y) {
             const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
             if (cell) {
@@ -2177,7 +2838,6 @@
             }
         }
 
-        // Function to create enemy defeat effect
         function createEnemyDefeatEffect(x, y) {
             const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
             if (cell) {
@@ -2188,12 +2848,10 @@
             }
         }
 
-        // Reduced frequency resource collection effect
         let lastResourceEffectTime = 0;
-        const RESOURCE_EFFECT_COOLDOWN = 2000; // 2 seconds cooldown
+        const RESOURCE_EFFECT_COOLDOWN = 2000;
 
         function createResourceCollectionEffect(x, y, resourceType) {
-            // Limit frequency of resource effects
             const now = Date.now();
             if (now - lastResourceEffectTime < RESOURCE_EFFECT_COOLDOWN) {
                 return;
@@ -2205,7 +2863,7 @@
                 const rect = cell.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
-                
+
                 let color;
                 switch (resourceType) {
                     case 'Steel': color = '#aaaaaa'; break;
@@ -2213,8 +2871,8 @@
                     case 'gold': color = '#ffcc00'; break;
                     default: color = '#66d9ff';
                 }
-                
-                createParticleEffect(centerX, centerY, color, 5); // Reduced particle count
+
+                createParticleEffect(centerX, centerY, color, 5);
             }
         }
 
@@ -2227,7 +2885,7 @@
             { id: 'place-gold-miner', mode: 'tech-goldminer', cost: { Steel: 25 } },
             { id: 'place-coin-maker', mode: 'tech-coinmaker', cost: { Steel: 30 } },
             { id: 'place-turret', mode: 'tech-turret', cost: { Steel: 40 } },
-            { id: 'place-gold-turret', mode: 'tech-goldturret', cost: { gold: 15 } },
+            { id: 'place-gold-turret', mode: 'tech-goldturret', cost: { gold: 200 } },
             { id: 'place-bomb', mode: 'tech-bomb', cost: { gold: 10 } },
             { id: 'place-supply', mode: 'tech-supply', cost: { gold: 35 } },
             { id: 'place-campfire', mode: 'tech-campfire', cost: { Steel: 30 } },
@@ -2241,46 +2899,67 @@
         ];
 
         function setupEventListeners() {
-            // Make folders draggable
             makeFoldersDraggable();
 
-            document.querySelectorAll('[data-folder] .folder-title').forEach(function(title) {
-                title.addEventListener('click', function(e) {
+            document.querySelectorAll('[data-folder] .folder-title').forEach(function (title) {
+                title.addEventListener('click', function (e) {
                     e.stopPropagation();
                     const folder = title.closest('.folder');
                     const folderContent = folder.querySelector('.folder-content');
-                    
-                    // Toggle current folder
+
                     const isOpening = !folder.classList.contains('open');
                     folder.classList.toggle('open');
-                    
-                    // Position the folder content near the title if it's opening
+
                     if (isOpening) {
                         const rect = title.getBoundingClientRect();
                         folderContent.style.left = rect.left + 'px';
                         folderContent.style.top = (rect.bottom + 5) + 'px';
+                        updateButtonStates();
                     }
                 });
             });
 
-            // Handle close buttons
-            document.querySelectorAll('.folder-close').forEach(function(button) {
-                button.addEventListener('click', function(e) {
+            const techTreeButton = document.getElementById('tech-tree-button');
+            const techTreePopup = document.getElementById('tech-tree-popup');
+            const techTreeOverlay = document.getElementById('tech-tree-overlay');
+            const techTreeClose = document.getElementById('tech-tree-close');
+
+            if (techTreeButton && techTreePopup && techTreeOverlay && techTreeClose) {
+                techTreeButton.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    techTreePopup.style.display = 'flex';
+                    techTreeOverlay.style.display = 'block';
+                    renderTechTree();
+                    makeTechTreeDraggable();
+                });
+
+                techTreeClose.addEventListener('click', function () {
+                    techTreePopup.style.display = 'none';
+                    techTreeOverlay.style.display = 'none';
+                });
+
+                techTreeOverlay.addEventListener('click', function () {
+                    techTreePopup.style.display = 'none';
+                    techTreeOverlay.style.display = 'none';
+                });
+            }
+
+            document.querySelectorAll('.folder-close').forEach(function (button) {
+                button.addEventListener('click', function (e) {
                     e.stopPropagation();
                     const folder = button.closest('.folder');
                     folder.classList.remove('open');
                 });
             });
 
-            // Handle info icons
-            document.querySelectorAll('.info-icon').forEach(function(icon) {
-                icon.addEventListener('click', function(e) {
+            document.querySelectorAll('.info-icon').forEach(function (icon) {
+                icon.addEventListener('click', function (e) {
                     e.stopPropagation();
                     showInfoPopup(this.closest('.btn'));
                 });
             });
 
-            BUTTONS.forEach(function(buttonData) {
+            BUTTONS.forEach(function (buttonData) {
                 const id = buttonData.id;
                 const mode = buttonData.mode;
                 const cost = buttonData.cost;
@@ -2288,8 +2967,12 @@
                 if (button) {
                     button.dataset.mode = mode;
                     button.dataset.cost = JSON.stringify(cost);
-                    button.addEventListener('click', function(e) {
+                    button.addEventListener('click', function (e) {
                         e.stopPropagation();
+                        if (isBuildingRestricted(mode)) {
+                            showNotification('You need to research the required technology first!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
+                            return;
+                        }
                         gameState.placementMode = gameState.placementMode === mode ? null : mode;
                         updateButtonStates();
                         updateDisplay();
@@ -2298,13 +2981,12 @@
             });
 
             document.getElementById('save-game').addEventListener('click', saveGame);
-            document.getElementById('load-game').addEventListener('click', function() {
+            document.getElementById('load-game').addEventListener('click', function () {
                 document.getElementById('load-file').click();
             });
             document.getElementById('restart-game').addEventListener('click', restartGame);
 
-            // Close popups when clicking outside
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!e.target.closest('.info-popup') && !e.target.closest('.info-icon')) {
                     closeInfoPopup();
                 }
@@ -2315,7 +2997,7 @@
             fileInput.id = 'load-file';
             fileInput.accept = '.coregrid';
             fileInput.style.display = 'none';
-            fileInput.addEventListener('change', function(e) {
+            fileInput.addEventListener('change', function (e) {
                 if (e.target.files.length > 0) {
                     loadGame(e.target.files[0]);
                 }
@@ -2323,34 +3005,302 @@
             document.body.appendChild(fileInput);
         }
 
+        function isBuildingRestricted(mode) {
+            const buildingRequirements = {
+                'wall-steel': 'advanced_defense',
+                'wall-spike': 'spike_traps',
+                'wall-fortress': 'fortress',
+
+                'tech-goldturret': 'fortified_defense',
+                'tech-turret': 'basic_turret',
+                'tech-bomb': 'bomb_tech',
+                'tech-supply': 'supply_systems',
+                'tech-campfire': 'campfire_tech',
+                'tech-goldminer': 'advanced_mining',
+                'tech-coinmaker': 'premium_mining',
+
+                'army-tank': 'elite_units',
+                'army-siegetower': 'siege_weapons',
+                'army-king': 'command_units',
+                'army-barrack': 'barrack_tech',
+                'army-archer': 'ranged_units',
+                'army-knight': 'advanced_army'
+            };
+
+            const requiredTech = buildingRequirements[mode];
+            if (requiredTech) {
+                return !gameState.isTechResearched(requiredTech);
+            }
+            if (mode === 'wall') {
+                return !gameState.isTechResearched('fortress');
+            }
+            if (mode === 'army-scout') {
+                return false;
+            }
+            if (mode === 'tech') {
+                return false;
+            }
+            return false;
+        }
+
+        function getResearchRequirementName(mode) {
+            const buildingRequirements = {
+                'wall-steel': 'Advanced Defense',
+                'wall-spike': 'Spike Traps',
+                'wall-fortress': 'Fortress',
+                'tech-goldturret': 'Fortified Defense',
+                'tech-turret': 'Basic Turret',
+                'tech-bomb': 'Bomb Tech',
+                'tech-supply': 'Supply Systems',
+                'tech-goldminer': 'Advanced Mining',
+                'tech-coinmaker': 'Premium Mining',
+                'tech-campfire': 'Campfire Tech',
+                'army-tank': 'Elite Units',
+                'army-siegetower': 'Siege Weapons',
+                'army-king': 'Command Units',
+                'army-barrack': 'Barrack Tech',
+                'army-archer': 'Ranged Units',
+                'army-knight': 'Advanced Army'
+            };
+
+            if (buildingRequirements[mode]) {
+                return buildingRequirements[mode];
+            }
+
+            if (mode === 'wall') {
+                return 'Fortress';
+            }
+            if (mode === 'army-scout') {
+                return 'None';
+            }
+
+            if (mode === 'tech') {
+                return 'None';
+            }
+
+            return 'Unknown Research';
+        }
+
+        function renderTechTree() {
+            const techTreeContent = document.getElementById('tech-tree-content');
+            if (!techTreeContent) return;
+
+            techTreeContent.innerHTML = '';
+
+            const nodePositions = {
+                'fortress': { x: 400, y: 30 },
+                'basic_defense': { x: 200, y: 180 },
+                'basic_army': { x: 600, y: 180 },
+                'advanced_mining': { x: 750, y: 180 },
+                'advanced_defense': { x: 100, y: 320 },
+                'spike_traps': { x: 200, y: 320 },
+                'basic_turret': { x: 300, y: 320 },
+                'advanced_army': { x: 500, y: 320 },
+                'ranged_units': { x: 600, y: 320 },
+                'premium_mining': { x: 850, y: 320 },
+                'supply_systems': { x: 750, y: 320 },
+                'siege_weapons': { x: 600, y: 460 },
+                'elite_units': { x: 500, y: 460 },
+                'command_units': { x: 400, y: 460 },
+                'barrack_tech': { x: 500, y: 560 },
+                'bomb_tech': { x: 200, y: 460 },
+                'campfire_tech': { x: 750, y: 460 },
+                'fortified_defense': { x: 200, y: 600 }
+            };
+
+            for (const techId in CONFIG.TECH_TREE) {
+                const tech = CONFIG.TECH_TREE[techId];
+                const fromPos = nodePositions[techId];
+
+                if (fromPos && tech.prerequisites) {
+                    tech.prerequisites.forEach(prereqId => {
+                        const toPos = nodePositions[prereqId];
+                        if (toPos) {
+                            const isResearched = gameState.isTechResearched(techId) && gameState.isTechResearched(prereqId);
+                            const isLocked = !gameState.isTechResearched(techId) && !gameState.isTechResearched(prereqId) &&
+                                !gameState.availableTechs.has(techId) && !gameState.availableTechs.has(prereqId);
+                            createConnectionLine(techTreeContent, fromPos, toPos, isResearched, isLocked);
+                        }
+                    });
+                }
+            }
+
+            for (const techId in CONFIG.TECH_TREE) {
+                const tech = CONFIG.TECH_TREE[techId];
+                const pos = nodePositions[techId];
+
+                if (pos) {
+                    createTechNode(techTreeContent, techId, tech, pos);
+                }
+            }
+        }
+
+        function createConnectionLine(container, fromPos, toPos, isResearched, isLocked) {
+            const line = document.createElement('div');
+            line.className = 'tech-connection';
+            if (isResearched) {
+                line.classList.add('researched');
+            } else if (isLocked) {
+                line.classList.add('locked');
+            }
+
+            const dx = toPos.x - fromPos.x;
+            const dy = toPos.y - fromPos.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+            line.style.width = distance + 'px';
+            line.style.height = '4px';
+            line.style.left = (fromPos.x + 50) + 'px';
+            line.style.top = (fromPos.y + 50) + 'px';
+            line.style.transform = `rotate(${angle}deg)`;
+
+            line.style.transition = 'all 0.3s ease';
+
+            container.appendChild(line);
+        }
+
+        function createTechNode(container, techId, tech, pos) {
+            const nodeDiv = document.createElement('div');
+            nodeDiv.className = 'tech-node';
+            nodeDiv.dataset.techId = techId;
+            nodeDiv.style.left = pos.x + 'px';
+            nodeDiv.style.top = pos.y + 'px';
+
+            let costHtml = '';
+            if (tech.cost.Steel || tech.cost.coins || tech.cost.gold) {
+                costHtml = '<br/><span style="font-size: 11px; color: #aaa;">Cost: ';
+                const costs = [];
+                if (tech.cost.Steel) costs.push(`<img src="./sprites/ironin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.Steel}`);
+                if (tech.cost.coins) costs.push(`<img src="./sprites/coin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.coins}`);
+                if (tech.cost.gold) costs.push(`<img src="./sprites/goldin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.gold}`);
+                costHtml += costs.join(' ');
+                costHtml += '</span>';
+            }
+            nodeDiv.dataset.tooltip = `${tech.name}: ${tech.description}${costHtml}`;
+            let tooltipTimeout;
+            nodeDiv.addEventListener('mouseenter', function (e) {
+                tooltipTimeout = setTimeout(() => {
+                    showTooltip(e.target, e.target.dataset.tooltip);
+                }, 100);
+            });
+            nodeDiv.addEventListener('mousemove', function (e) {
+                if (!window.tooltipUpdateThrottle) {
+                    window.tooltipUpdateThrottle = true;
+                    updateTooltipPosition(e);
+                    setTimeout(() => {
+                        window.tooltipUpdateThrottle = false;
+                    }, 8);
+                }
+            });
+            nodeDiv.addEventListener('mouseleave', function () {
+                clearTimeout(tooltipTimeout);
+                hideTooltip();
+            });
+
+            if (gameState.isTechResearched(techId)) {
+                nodeDiv.classList.add('researched');
+            } else if (gameState.availableTechs.has(techId)) {
+                nodeDiv.classList.add('available');
+            } else {
+                nodeDiv.classList.add('locked');
+            }
+
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'tech-node-icon';
+            const img = document.createElement('img');
+            img.src = `./sprites/${tech.icon || 'research.png'}`;
+            img.alt = tech.name;
+            iconDiv.appendChild(img);
+
+            nodeDiv.appendChild(iconDiv);
+
+            if (!gameState.isTechResearched(techId) && gameState.availableTechs.has(techId)) {
+                nodeDiv.addEventListener('click', function () {
+                    if (gameState.researchTech(techId)) {
+                        showNotification(`${tech.name} researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
+                        renderTechTree();
+                        updateDisplay();
+                    }
+                });
+            }
+
+            container.appendChild(nodeDiv);
+        }
+
+        function makeTechTreeDraggable() {
+            const popup = document.getElementById('tech-tree-popup');
+            const header = document.querySelector('.tech-tree-header');
+
+            if (!popup || !header) return;
+
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            header.addEventListener('mousedown', dragStart);
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('mousemove', drag);
+
+            function dragStart(e) {
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+
+                isDragging = true;
+                header.style.cursor = 'grabbing';
+            }
+
+            function dragEnd() {
+                initialX = currentX;
+                initialY = currentY;
+
+                isDragging = false;
+                header.style.cursor = 'move';
+            }
+
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+
+                    xOffset = currentX;
+                    yOffset = currentY;
+
+                    popup.style.transform = `translate(${currentX}px, ${currentY}px)`;
+                }
+            }
+        }
+
         function showInfoPopup(button) {
             const infoData = button.dataset.info.split(',');
             const title = infoData[0];
             const description = infoData[1];
             const stats = infoData.slice(2);
-            
-            // Create overlay
+
             let overlay = document.querySelector('.info-popup-overlay');
             if (!overlay) {
                 overlay = document.createElement('div');
                 overlay.className = 'info-popup-overlay';
                 document.body.appendChild(overlay);
             }
-            
-            // Create popup
+
             let popup = document.querySelector('.info-popup');
             if (!popup) {
                 popup = document.createElement('div');
                 popup.className = 'info-popup';
                 document.body.appendChild(popup);
             }
-            
-            // Build popup content
+
             let statsHtml = '';
-            stats.forEach(function(stat) {
+            stats.forEach(function (stat) {
                 statsHtml += '<div class="info-popup-stat">' + stat + '</div>';
             });
-            
+
             popup.innerHTML = `
                 <div class="info-popup-header">
                     <div class="info-popup-title">${title}</div>
@@ -2363,11 +3313,9 @@
                     </div>
                 </div>
             `;
-            
-            // Add close event
+
             popup.querySelector('.info-popup-close').addEventListener('click', closeInfoPopup);
-            
-            // Show popup and overlay
+
             overlay.style.display = 'block';
             popup.style.display = 'block';
         }
@@ -2375,16 +3323,76 @@
         function closeInfoPopup() {
             const overlay = document.querySelector('.info-popup-overlay');
             const popup = document.querySelector('.info-popup');
-            
+
             if (overlay) overlay.style.display = 'none';
             if (popup) popup.style.display = 'none';
         }
 
+        function showTooltip(element, text) {
+            hideTooltip();
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tech-tooltip';
+            tooltip.innerHTML = text;
+            tooltip.id = 'tech-tree-tooltip';
+
+            tooltip.style.opacity = '0';
+
+            document.querySelector('.tech-tree-content').appendChild(tooltip);
+
+            setTimeout(() => {
+                if (tooltip.parentNode) {
+                    tooltip.style.opacity = '1';
+                }
+            }, 50);
+        }
+
+        function updateTooltipPosition(e) {
+            const tooltip = document.getElementById('tech-tree-tooltip');
+            if (!tooltip) return;
+
+            const techTreeContent = document.querySelector('.tech-tree-content');
+            const techTreeRect = techTreeContent.getBoundingClientRect();
+
+            let left = e.clientX - techTreeRect.left + 10;
+            let top = e.clientY - techTreeRect.top + 10;
+
+            if (tooltip.offsetWidth) {
+                if (left + tooltip.offsetWidth > techTreeRect.width - 10) {
+                    left = techTreeRect.width - tooltip.offsetWidth - 10;
+                }
+                if (top + tooltip.offsetHeight > techTreeRect.height - 10) {
+                    top = techTreeRect.height - tooltip.offsetHeight - 10;
+                }
+                if (left < 10) {
+                    left = 10;
+                }
+                if (top < 10) {
+                    top = 10;
+                }
+            }
+
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+        }
+
+        function hideTooltip() {
+            const tooltip = document.getElementById('tech-tree-tooltip');
+            if (tooltip) {
+                tooltip.style.opacity = '0';
+                setTimeout(() => {
+                    if (tooltip.parentNode) {
+                        tooltip.parentNode.removeChild(tooltip);
+                    }
+                }, 200);
+            }
+        }
+
         function makeFoldersDraggable() {
-            document.querySelectorAll('.folder-content').forEach(function(folderContent) {
+            document.querySelectorAll('.folder-content').forEach(function (folderContent) {
                 const header = folderContent.querySelector('.folder-header');
                 if (!header) return;
-                
+
                 let isDragging = false;
                 let currentX;
                 let currentY;
@@ -2398,11 +3406,11 @@
                 document.addEventListener('mousemove', drag);
 
                 function dragStart(e) {
-                    if (e.target.closest('.folder-close')) return; // Don't drag when clicking close button
-                    
+                    if (e.target.closest('.folder-close')) return;
+
                     initialX = e.clientX - xOffset;
                     initialY = e.clientY - yOffset;
-                    
+
                     isDragging = true;
                     header.style.cursor = 'grabbing';
                 }
@@ -2410,7 +3418,7 @@
                 function dragEnd() {
                     initialX = currentX;
                     initialY = currentY;
-                    
+
                     isDragging = false;
                     header.style.cursor = 'move';
                 }
@@ -2420,10 +3428,10 @@
                         e.preventDefault();
                         currentX = e.clientX - initialX;
                         currentY = e.clientY - initialY;
-                        
+
                         xOffset = currentX;
                         yOffset = currentY;
-                        
+
                         setTranslate(currentX, currentY, folderContent);
                     }
                 }
@@ -2449,6 +3457,7 @@
                 waveBreakTurns: gameState.waveBreakTurns,
                 inWaveBreak: gameState.inWaveBreak,
                 enemiesRemaining: gameState.enemiesRemaining,
+                researchedTechs: Array.from(gameState.researchedTechs),
                 grid: serializeGrid()
             };
 
@@ -2482,6 +3491,9 @@
                     gameState.waveBreakTurns = gameData.waveBreakTurns || 0;
                     gameState.inWaveBreak = gameData.inWaveBreak || false;
                     gameState.enemiesRemaining = gameData.enemiesRemaining || 0;
+
+                    gameState.researchedTechs = new Set(gameData.researchedTechs || []);
+                    gameState.updateAvailableTechs();
 
                     deserializeGrid(gameData.grid);
 
@@ -2575,27 +3587,27 @@
 
         let cheatSequence = [];
         const targetSequence = ['i', 'l', 'f'];
-        
+
         document.addEventListener('keydown', (event) => {
             cheatSequence.push(event.key.toLowerCase());
-            
+
             if (cheatSequence.length > 3) {
                 cheatSequence.shift();
             }
-            
-            if (cheatSequence.length === 3 && 
+
+            if (cheatSequence.length === 3 &&
                 cheatSequence[0] === targetSequence[0] &&
                 cheatSequence[1] === targetSequence[1] &&
                 cheatSequence[2] === targetSequence[2]) {
-                
+
                 gameState.resources.Steel += 7000;
                 gameState.resources.coins += 7000;
                 gameState.resources.gold += 7000;
-                
+
                 updateDisplay();
-                
+
                 showNotification('Cheat activated! +7000 Steel, Coins, and Gold', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
-                
+
                 cheatSequence = [];
             }
         });
