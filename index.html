@@ -83,6 +83,7 @@
             border: 2px solid #7a7a7a;
             border-radius: var(--border-radius);
             box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         .resources {
@@ -800,7 +801,7 @@
         .tooltip .tooltiptext {
             visibility: hidden;
             width: 200px;
-            background-color: #333;
+            background-color: #111111;
             color: #fff;
             text-align: left;
             border-radius: 4px;
@@ -814,7 +815,6 @@
             transition: opacity 0.3s;
             font-size: 11px;
             line-height: 1.4;
-            border: 1px solid #7a7a7a;
         }
 
         .tooltip .tooltiptext::after {
@@ -825,7 +825,7 @@
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: #333 transparent transparent transparent;
+            border-color: #303030 transparent transparent transparent;
         }
 
         .particle {
@@ -932,7 +932,7 @@
             width: 90px;
             height: 90px;
             border: 2px solid #7a7a7a;
-            border-radius: 50%;
+            border-radius: var(--border-radius);
             background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
             color: #ddd;
             cursor: pointer;
@@ -1031,8 +1031,8 @@
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.25);
-            border-radius: 50%;
             padding: 10px;
+            border-radius: var(--border-radius);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
@@ -1089,25 +1089,6 @@
             background: #555;
             opacity: 0.6;
         }
-
-        @media (max-width: 768px) {
-            .tech-node {
-                width: 90px;
-                height: 90px;
-                padding: 8px;
-            }
-
-            .tech-tree-popup {
-                width: 95%;
-                height: 85vh;
-            }
-
-            .tech-node-icon {
-                width: 40px;
-                height: 40px;
-                padding: 6px;
-            }
-        }
     </style>
 </head>
 
@@ -1118,15 +1099,19 @@
             <div class="resources">
                 <div class="resource">
                     <img src="./sprites/ironin.png" alt="Steel">
-                    <span id="steel-count">100</span> Steel
+                    <span id="steel-count">100</span>
                 </div>
                 <div class="resource">
                     <img src="./sprites/coin.png" alt="Coins">
-                    <span id="coin-count">50</span> Coins
+                    <span id="coin-count">50</span>
                 </div>
                 <div class="resource">
                     <img src="./sprites/goldin.png" alt="Gold">
-                    <span id="gold-count">25</span> Gold
+                    <span id="gold-count">25</span>
+                </div>
+                <div class="resource">
+                    <img src="./sprites/Oil.png" alt="Oil">
+                    <span id="oil-count">0</span>
                 </div>
             </div>
 
@@ -1273,6 +1258,17 @@
                                 </div>
                                 <div class="btn-right">
                                     <span class="lowcol">35G</span>
+                                </div>
+                                <div class="info-icon">i</div>
+                            </button>
+                            <button class="btn" id="place-oil-rig"
+                                data-info="Oil Rig,Generates 1 oil per turn,Health: 2,Requires: Oil Rig Tech">
+                                <div class="btn-left">
+                                    <img src="./sprites/oilrig.png" alt="Oil Rig">
+                                    <span>Oil Rig</span>
+                                </div>
+                                <div class="btn-right">
+                                    <span class="lowcol">35S</span>
                                 </div>
                                 <div class="info-icon">i</div>
                             </button>
@@ -1431,16 +1427,6 @@
         </div>
     </div>
 
-    <div class="tech-tree-popup" id="tech-tree-popup">
-        <div class="tech-tree-header">
-            <h2>Tech Tree</h2>
-            <button class="tech-tree-close" id="tech-tree-close">×</button>
-        </div>
-        <div class="tech-tree-content" id="tech-tree-content">
-        </div>
-    </div>
-
-    <div class="tech-tree-overlay" id="tech-tree-overlay"></div>
     <script>
         const CONFIG = {
             GRID_SIZE_X: 25,
@@ -1450,7 +1436,8 @@
             INITIAL_RESOURCES: {
                 Steel: 100,
                 coins: 50,
-                gold: 25
+                gold: 25,
+                oil: 0
             },
             TECH_TREE: {
                 'fortress': {
@@ -1465,7 +1452,7 @@
                 'basic_defense': {
                     name: 'Basic Defense',
                     description: 'Unlock Steel Wall',
-                    cost: { Steel: 50 },
+                    cost: { Steel: 75 },
                     tier: 1,
                     prerequisites: ['fortress'],
                     unlocks: ['advanced_defense'],
@@ -1474,7 +1461,7 @@
                 'basic_army': {
                     name: 'Basic Army',
                     description: 'Unlock Soldier unit',
-                    cost: { coins: 50 },
+                    cost: { coins: 75 },
                     tier: 1,
                     prerequisites: ['fortress'],
                     unlocks: ['advanced_army'],
@@ -1483,7 +1470,7 @@
                 'advanced_defense': {
                     name: 'Advanced Defense',
                     description: 'Unlock Steel Wall',
-                    cost: { Steel: 100, coins: 50 },
+                    cost: { Steel: 150, coins: 75 },
                     tier: 2,
                     prerequisites: ['basic_defense'],
                     unlocks: ['fortified_defense'],
@@ -1492,7 +1479,7 @@
                 'spike_traps': {
                     name: 'Spike Traps',
                     description: 'Unlock Spike',
-                    cost: { Steel: 75 },
+                    cost: { Steel: 100 },
                     tier: 2,
                     prerequisites: ['basic_defense'],
                     unlocks: ['bomb_tech'],
@@ -1501,7 +1488,7 @@
                 'bomb_tech': {
                     name: 'Bomb Tech',
                     description: 'Unlock Bomb',
-                    cost: { gold: 10 },
+                    cost: { gold: 20 },
                     tier: 3,
                     prerequisites: ['spike_traps'],
                     unlocks: [],
@@ -1510,7 +1497,7 @@
                 'advanced_army': {
                     name: 'Advanced Army',
                     description: 'Unlock Knight unit',
-                    cost: { coins: 100, gold: 10 },
+                    cost: { coins: 150, gold: 20 },
                     tier: 2,
                     prerequisites: ['basic_army'],
                     unlocks: ['elite_units', 'barrack_tech'],
@@ -1519,7 +1506,7 @@
                 'ranged_units': {
                     name: 'Ranged Units',
                     description: 'Unlock Archer unit',
-                    cost: { coins: 75 },
+                    cost: { coins: 125 },
                     tier: 2,
                     prerequisites: ['basic_army'],
                     unlocks: ['siege_weapons'],
@@ -1528,7 +1515,7 @@
                 'siege_weapons': {
                     name: 'Siege Weapons',
                     description: 'Unlock Siege Tower unit',
-                    cost: { coins: 125 },
+                    cost: { coins: 200 },
                     tier: 2,
                     prerequisites: ['ranged_units'],
                     unlocks: [],
@@ -1537,7 +1524,7 @@
                 'advanced_mining': {
                     name: 'Advanced Mining',
                     description: 'Unlock Gold Mine',
-                    cost: { Steel: 125, gold: 10 },
+                    cost: { Steel: 200 },
                     tier: 2,
                     prerequisites: ['fortress'],
                     unlocks: ['premium_mining', 'supply_systems'],
@@ -1546,7 +1533,7 @@
                 'supply_systems': {
                     name: 'Supply Systems',
                     description: 'Unlock Supply Drop',
-                    cost: { gold: 25 },
+                    cost: { gold: 250, Steel: 250 },
                     tier: 3,
                     prerequisites: ['advanced_mining'],
                     unlocks: ['campfire_tech'],
@@ -1555,7 +1542,7 @@
                 'basic_turret': {
                     name: 'Basic Turret',
                     description: 'Unlock Turret',
-                    cost: { Steel: 150 },
+                    cost: { Steel: 200 },
                     tier: 2,
                     prerequisites: ['basic_defense'],
                     unlocks: ['fortified_defense'],
@@ -1564,7 +1551,7 @@
                 'fortified_defense': {
                     name: 'Fortified Defense',
                     description: 'Unlock Gold Turret',
-                    cost: { Steel: 200, gold: 25 },
+                    cost: { Steel: 200, gold: 500 },
                     tier: 3,
                     prerequisites: ['advanced_defense', 'basic_turret', 'bomb_tech'],
                     unlocks: [],
@@ -1573,7 +1560,7 @@
                 'elite_units': {
                     name: 'Elite Units',
                     description: 'Unlock Tank unit',
-                    cost: { coins: 300, gold: 50 },
+                    cost: { coins: 400, gold: 75 },
                     tier: 3,
                     prerequisites: ['advanced_army'],
                     unlocks: ['command_units'],
@@ -1582,7 +1569,7 @@
                 'command_units': {
                     name: 'Command Units',
                     description: 'Unlock King unit',
-                    cost: { gold: 100 },
+                    cost: { gold: 1000 },
                     tier: 3,
                     prerequisites: ['elite_units'],
                     unlocks: [],
@@ -1591,7 +1578,7 @@
                 'barrack_tech': {
                     name: 'Barrack Tech',
                     description: 'Unlock Barrack unit',
-                    cost: { gold: 50 },
+                    cost: { gold: 275 },
                     tier: 3,
                     prerequisites: ['advanced_army'],
                     unlocks: [],
@@ -1600,7 +1587,7 @@
                 'premium_mining': {
                     name: 'Premium Mining',
                     description: 'Unlock Bank',
-                    cost: { Steel: 250, gold: 50 },
+                    cost: { Steel: 350, gold: 75 },
                     tier: 3,
                     prerequisites: ['advanced_mining'],
                     unlocks: [],
@@ -1609,11 +1596,20 @@
                 'campfire_tech': {
                     name: 'Campfire Tech',
                     description: 'Unlock Campfire',
-                    cost: { Steel: 30 },
+                    cost: { Steel: 50 },
                     tier: 3,
                     prerequisites: ['supply_systems'],
-                    unlocks: [],
+                    unlocks: ['oil_rig_tech'],
                     icon: 'campfire.gif'
+                },
+                'oil_rig_tech': {
+                    name: 'Oil Rig Tech',
+                    description: 'Unlock Oil Rig',
+                    cost: { Steel: 60 },
+                    tier: 3,
+                    prerequisites: ['campfire_tech'],
+                    unlocks: [],
+                    icon: 'oilrig.png'
                 },
             },
             SPRITES: {
@@ -1628,6 +1624,7 @@
                     miner: './sprites/iron.png',
                     goldminer: './sprites/gold.png',
                     coinmaker: './sprites/bank.png',
+                    oilrig: './sprites/oilrig.png',
                     turret: './sprites/turret.png',
                     goldturret: './sprites/goldturret.png',
                     bomb: './sprites/bomb.png',
@@ -1685,19 +1682,22 @@
             canAfford(cost) {
                 return this.resources.Steel >= (cost.Steel || 0) &&
                     this.resources.coins >= (cost.coins || 0) &&
-                    this.resources.gold >= (cost.gold || 0);
+                    this.resources.gold >= (cost.gold || 0) &&
+                    this.resources.oil >= (cost.oil || 0);
             }
 
             spendResources(cost) {
                 if (cost.Steel) this.resources.Steel -= cost.Steel;
                 if (cost.coins) this.resources.coins -= cost.coins;
                 if (cost.gold) this.resources.gold -= cost.gold;
+                if (cost.oil) this.resources.oil -= cost.oil;
             }
 
             addResources(resources) {
                 if (resources.Steel) this.resources.Steel += resources.Steel;
                 if (resources.coins) this.resources.coins += resources.coins;
                 if (resources.gold) this.resources.gold += resources.gold;
+                if (resources.oil) this.resources.oil += resources.oil;
             }
 
             isTechResearched(techId) {
@@ -1814,6 +1814,7 @@
                     miner: { Steel: 20 },
                     goldminer: { Steel: 25 },
                     coinmaker: { Steel: 30 },
+                    oilrig: { Steel: 35 },
                     turret: { Steel: 40 },
                     goldturret: { gold: 200 },
                     bomb: { gold: 10 },
@@ -1840,6 +1841,10 @@
                     case 'coinmaker':
                         gameState.addResources({ coins: Math.floor(5 * campfireBonus * multiplier) });
                         createResourceCollectionEffect(this.x, this.y, 'coins');
+                        break;
+                    case 'oilrig':
+                        gameState.addResources({ oil: Math.ceil(1 * campfireBonus * multiplier) });
+                        createResourceCollectionEffect(this.x, this.y, 'oil');
                         break;
                     case 'supply':
                         this.handleSupplyDrop();
@@ -2320,6 +2325,10 @@
 
             createGrid();
 
+            if (typeof gameState.cameraOffset === 'undefined') {
+                gameState.cameraOffset = { x: 0, y: 0 };
+            }
+
             gameState.cameraOffset.x = Math.floor(CONFIG.GRID_SIZE_X / 2) - CONFIG.PLAYER_START.x;
             gameState.cameraOffset.y = Math.floor(CONFIG.GRID_SIZE_Y / 2) - CONFIG.PLAYER_START.y;
 
@@ -2333,6 +2342,10 @@
                 gameState.grid[playerGridY][playerGridX] = 'player';
             }
 
+            if (typeof gameState.enemiesRemaining === 'undefined') {
+                gameState.enemiesRemaining = 0;
+            }
+
             spawnEnemy(5, 5);
             spawnEnemy(10, 2);
             spawnEnemy(2, 10);
@@ -2343,11 +2356,19 @@
             updateDisplay();
             setupEventListeners();
 
-            setInterval(updateButtonStates, 2000);
+            if (window.buttonStateInterval) {
+                clearInterval(window.buttonStateInterval);
+            }
+            window.buttonStateInterval = setInterval(updateButtonStates, 2000);
         }
 
         function createGrid() {
             const gridElement = document.getElementById('game-grid');
+            if (!gridElement) {
+                console.error('Game grid element not found');
+                return;
+            }
+
             gridElement.innerHTML = '';
 
             for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
@@ -2356,10 +2377,26 @@
                     cell.className = 'grid-cell';
                     cell.dataset.x = x;
                     cell.dataset.y = y;
-                    cell.addEventListener('click', () => handleCellClick(x, y));
+
+                    cell.addEventListener('click', (function (x, y) {
+                        return function () {
+                            handleCellClick(x, y);
+                        };
+                    })(x, y));
+
                     gridElement.appendChild(cell);
                 }
             }
+        }
+
+        function reattachGridCellListeners() {
+            document.querySelectorAll('.grid-cell').forEach(cell => {
+                const x = parseInt(cell.dataset.x);
+                const y = parseInt(cell.dataset.y);
+                const newCell = cell.cloneNode(true);
+                cell.parentNode.replaceChild(newCell, cell);
+                newCell.addEventListener('click', () => handleCellClick(x, y));
+            });
         }
 
         function handleCellClick(x, y) {
@@ -2428,6 +2465,20 @@
             const worldX = x + gameState.cameraOffset.x;
             const worldY = y + gameState.cameraOffset.y;
 
+            if (type === 'tech' && subtype === 'oilrig') {
+                if (isAdjacentToCampfire(x, y)) {
+                    showNotification('Oil rigs cannot be placed beside campfires!', x, y, 'warning');
+                    return false;
+                }
+            }
+
+            if (type === 'tech' && subtype === 'campfire') {
+                if (isAdjacentToOilRig(x, y)) {
+                    showNotification('Campfires cannot be placed beside oil rigs!', x, y, 'warning');
+                    return false;
+                }
+            }
+
             let obj;
             let cost;
 
@@ -2463,6 +2514,44 @@
             showNotification(`${subtype || type} placed!`, x, y, 'success');
             createPlacementEffect(x, y);
             return true;
+        }
+
+        function isAdjacentToCampfire(x, y) {
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    if (dx === 0 && dy === 0) continue;
+
+                    const checkX = x + dx;
+                    const checkY = y + dy;
+
+                    if (checkX >= 0 && checkX < CONFIG.GRID_SIZE_X && checkY >= 0 && checkY < CONFIG.GRID_SIZE_Y) {
+                        const obj = gameState.grid[checkY][checkX];
+                        if (obj && obj.type === 'tech' && obj.subtype === 'campfire') {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        function isAdjacentToOilRig(x, y) {
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    if (dx === 0 && dy === 0) continue;
+
+                    const checkX = x + dx;
+                    const checkY = y + dy;
+
+                    if (checkX >= 0 && checkX < CONFIG.GRID_SIZE_X && checkY >= 0 && checkY < CONFIG.GRID_SIZE_Y) {
+                        const obj = gameState.grid[checkY][checkX];
+                        if (obj && obj.type === 'tech' && obj.subtype === 'oilrig') {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         function getWallCost(subtype) {
@@ -2691,6 +2780,7 @@
             document.getElementById('steel-count').textContent = gameState.resources.Steel;
             document.getElementById('coin-count').textContent = gameState.resources.coins;
             document.getElementById('gold-count').textContent = gameState.resources.gold;
+            document.getElementById('oil-count').textContent = gameState.resources.oil;
 
             document.getElementById('turn-count').textContent = gameState.turn;
             document.getElementById('wave-count').textContent = gameState.wave;
@@ -2754,6 +2844,8 @@
             if (gameState.selectedUnit) {
                 highlightValidMoves(gameState.selectedUnit);
             }
+
+            reattachGridCellListeners();
 
             updateButtonStates();
             updateTechTreeDisplay();
@@ -2853,8 +2945,14 @@
             }
         }
 
+        function updateTechTreeDisplay() {
+            return;
+        }
+
         function updateButtonStates() {
-            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
 
             if (gameState.placementMode) {
                 const activeButton = document.querySelector(`[data-mode="${gameState.placementMode}"]`);
@@ -2864,23 +2962,27 @@
             }
 
             document.querySelectorAll('.btn[data-cost]').forEach(btn => {
-                const cost = JSON.parse(btn.dataset.cost);
-                if (gameState.canAfford(cost)) {
-                    btn.classList.remove('disabled');
-                } else {
-                    btn.classList.add('disabled');
-                }
-
-                const mode = btn.dataset.mode;
-                if (mode && isBuildingRestricted(mode)) {
-                    btn.classList.add('disabled');
-                    if (!btn.dataset.originalTitle) {
-                        btn.dataset.originalTitle = btn.title || '';
-                        btn.title = 'Research required: ' + getResearchRequirementName(mode);
+                try {
+                    const cost = JSON.parse(btn.dataset.cost);
+                    if (gameState.canAfford(cost)) {
+                        btn.classList.remove('disabled');
+                    } else {
+                        btn.classList.add('disabled');
                     }
-                } else if (btn.dataset.originalTitle !== undefined) {
-                    btn.title = btn.dataset.originalTitle;
-                    delete btn.dataset.originalTitle;
+
+                    const mode = btn.dataset.mode;
+                    if (mode && isBuildingRestricted(mode)) {
+                        btn.classList.add('disabled');
+                        if (!btn.dataset.originalTitle) {
+                            btn.dataset.originalTitle = btn.title || '';
+                            btn.title = 'Research required: ' + getResearchRequirementName(mode);
+                        }
+                    } else if (btn.dataset.originalTitle !== undefined) {
+                        btn.title = btn.dataset.originalTitle;
+                        delete btn.dataset.originalTitle;
+                    }
+                } catch (e) {
+                    console.warn('Error parsing cost for button:', btn, e);
                 }
             });
         }
@@ -2895,6 +2997,7 @@
                 'tech-bomb': 'Bomb Tech',
                 'tech-supply': 'Supply Systems',
                 'tech-goldminer': 'Advanced Mining',
+                'tech-oilrig': 'Oil Rig Tech',
                 'tech-coinmaker': 'Premium Mining',
                 'tech-campfire': 'Campfire Tech',
                 'army-tank': 'Elite Units',
@@ -3056,6 +3159,7 @@
             { id: 'place-tech', mode: 'tech', cost: { Steel: 20 } },
             { id: 'place-gold-miner', mode: 'tech-goldminer', cost: { Steel: 25 } },
             { id: 'place-coin-maker', mode: 'tech-coinmaker', cost: { Steel: 30 } },
+            { id: 'place-oil-rig', mode: 'tech-oilrig', cost: { Steel: 35 } },
             { id: 'place-turret', mode: 'tech-turret', cost: { Steel: 40 } },
             { id: 'place-gold-turret', mode: 'tech-goldturret', cost: { gold: 200 } },
             { id: 'place-bomb', mode: 'tech-bomb', cost: { gold: 10 } },
@@ -3074,107 +3178,158 @@
             makeFoldersDraggable();
 
             document.querySelectorAll('[data-folder] .folder-title').forEach(function (title) {
-                title.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    const folder = title.closest('.folder');
-                    const folderContent = folder.querySelector('.folder-content');
+                const clone = title.cloneNode(true);
+                title.parentNode.replaceChild(clone, title);
 
-                    const isOpening = !folder.classList.contains('open');
+                clone.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const folder = clone.closest('.folder');
                     folder.classList.toggle('open');
 
-                    if (isOpening) {
-                        const rect = title.getBoundingClientRect();
-                        folderContent.style.left = rect.left + 'px';
-                        folderContent.style.top = (rect.bottom + 5) + 'px';
-                        updateButtonStates();
+                    if (folder.classList.contains('open')) {
+                        const rect = clone.getBoundingClientRect();
+                        const folderContent = folder.querySelector('.folder-content');
+                        if (folderContent) {
+                            folderContent.style.left = rect.left + 'px';
+                            folderContent.style.top = (rect.bottom + 5) + 'px';
+                        }
                     }
                 });
             });
 
             const techTreeButton = document.getElementById('tech-tree-button');
-            const techTreePopup = document.getElementById('tech-tree-popup');
-            const techTreeOverlay = document.getElementById('tech-tree-overlay');
-            const techTreeClose = document.getElementById('tech-tree-close');
+            if (techTreeButton) {
+                const clone = techTreeButton.cloneNode(true);
+                techTreeButton.parentNode.replaceChild(clone, techTreeButton);
 
-            if (techTreeButton && techTreePopup && techTreeOverlay && techTreeClose) {
-                techTreeButton.addEventListener('click', function (e) {
+                clone.addEventListener('click', function (e) {
                     e.stopPropagation();
-                    techTreePopup.style.display = 'flex';
-                    techTreeOverlay.style.display = 'block';
+                    const popup = document.getElementById('tech-tree-popup');
+                    const overlay = document.getElementById('tech-tree-overlay');
+                    if (popup) popup.style.display = 'flex';
+                    if (overlay) overlay.style.display = 'block';
                     renderTechTree();
                     makeTechTreeDraggable();
                 });
+            }
 
-                techTreeClose.addEventListener('click', function () {
-                    techTreePopup.style.display = 'none';
-                    techTreeOverlay.style.display = 'none';
+            const techTreeClose = document.getElementById('tech-tree-close');
+            if (techTreeClose) {
+                const clone = techTreeClose.cloneNode(true);
+                techTreeClose.parentNode.replaceChild(clone, techTreeClose);
+
+                clone.addEventListener('click', function () {
+                    const popup = document.getElementById('tech-tree-popup');
+                    const overlay = document.getElementById('tech-tree-overlay');
+                    if (popup) popup.style.display = 'none';
+                    if (overlay) overlay.style.display = 'none';
                 });
+            }
 
-                techTreeOverlay.addEventListener('click', function () {
-                    techTreePopup.style.display = 'none';
-                    techTreeOverlay.style.display = 'none';
+            const techTreeOverlay = document.getElementById('tech-tree-overlay');
+            if (techTreeOverlay) {
+                const clone = techTreeOverlay.cloneNode(true);
+                techTreeOverlay.parentNode.replaceChild(clone, techTreeOverlay);
+
+                clone.addEventListener('click', function () {
+                    const popup = document.getElementById('tech-tree-popup');
+                    const overlay = document.getElementById('tech-tree-overlay');
+                    if (popup) popup.style.display = 'none';
+                    if (overlay) overlay.style.display = 'none';
                 });
             }
 
             document.querySelectorAll('.folder-close').forEach(function (button) {
-                button.addEventListener('click', function (e) {
+                const clone = button.cloneNode(true);
+                button.parentNode.replaceChild(clone, button);
+
+                clone.addEventListener('click', function (e) {
                     e.stopPropagation();
-                    const folder = button.closest('.folder');
+                    const folder = clone.closest('.folder');
                     folder.classList.remove('open');
                 });
             });
 
             document.querySelectorAll('.info-icon').forEach(function (icon) {
-                icon.addEventListener('click', function (e) {
+                const clone = icon.cloneNode(true);
+                icon.parentNode.replaceChild(clone, icon);
+
+                clone.addEventListener('click', function (e) {
                     e.stopPropagation();
-                    showInfoPopup(this.closest('.btn'));
+                    showInfoPopup(clone.closest('.btn'));
                 });
             });
 
             BUTTONS.forEach(function (buttonData) {
-                const id = buttonData.id;
-                const mode = buttonData.mode;
-                const cost = buttonData.cost;
-                const button = document.getElementById(id);
+                const button = document.getElementById(buttonData.id);
                 if (button) {
-                    button.dataset.mode = mode;
-                    button.dataset.cost = JSON.stringify(cost);
-                    button.addEventListener('click', function (e) {
+                    const clone = button.cloneNode(true);
+                    button.parentNode.replaceChild(clone, button);
+
+                    clone.dataset.mode = buttonData.mode;
+                    clone.dataset.cost = JSON.stringify(buttonData.cost);
+                    clone.addEventListener('click', function (e) {
                         e.stopPropagation();
-                        if (isBuildingRestricted(mode)) {
+                        if (isBuildingRestricted(buttonData.mode)) {
                             showNotification('You need to research the required technology first!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
                             return;
                         }
-                        gameState.placementMode = gameState.placementMode === mode ? null : mode;
+                        gameState.placementMode = gameState.placementMode === buttonData.mode ? null : buttonData.mode;
                         updateButtonStates();
                         updateDisplay();
                     });
                 }
             });
 
-            document.getElementById('save-game').addEventListener('click', saveGame);
-            document.getElementById('load-game').addEventListener('click', function () {
-                document.getElementById('load-file').click();
-            });
-            document.getElementById('restart-game').addEventListener('click', restartGame);
+            const saveGameButton = document.getElementById('save-game');
+            if (saveGameButton) {
+                const clone = saveGameButton.cloneNode(true);
+                saveGameButton.parentNode.replaceChild(clone, saveGameButton);
+                clone.addEventListener('click', saveGame);
+            }
+
+            const loadGameButton = document.getElementById('load-game');
+            if (loadGameButton) {
+                const clone = loadGameButton.cloneNode(true);
+                loadGameButton.parentNode.replaceChild(clone, loadGameButton);
+                clone.addEventListener('click', function () {
+                    const fileInput = document.getElementById('load-file');
+                    if (fileInput) fileInput.click();
+                });
+            }
+
+            const restartGameButton = document.getElementById('restart-game');
+            if (restartGameButton) {
+                const clone = restartGameButton.cloneNode(true);
+                restartGameButton.parentNode.replaceChild(clone, restartGameButton);
+                clone.addEventListener('click', restartGame);
+            }
 
             document.addEventListener('click', function (e) {
+                if (!e.target.closest('[data-folder]')) {
+                    document.querySelectorAll('.folder.open').forEach(folder => {
+                        folder.classList.remove('open');
+                    });
+                }
+
                 if (!e.target.closest('.info-popup') && !e.target.closest('.info-icon')) {
                     closeInfoPopup();
                 }
             });
 
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.id = 'load-file';
-            fileInput.accept = '.coregrid';
-            fileInput.style.display = 'none';
-            fileInput.addEventListener('change', function (e) {
-                if (e.target.files.length > 0) {
-                    loadGame(e.target.files[0]);
-                }
-            });
-            document.body.appendChild(fileInput);
+            if (!document.getElementById('load-file')) {
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.id = 'load-file';
+                fileInput.accept = '.coregrid';
+                fileInput.style.display = 'none';
+                fileInput.addEventListener('change', function (e) {
+                    if (e.target.files.length > 0) {
+                        loadGame(e.target.files[0]);
+                    }
+                });
+                document.body.appendChild(fileInput);
+            }
         }
 
         function isBuildingRestricted(mode) {
@@ -3189,6 +3344,7 @@
                 'tech-supply': 'supply_systems',
                 'tech-campfire': 'campfire_tech',
                 'tech-goldminer': 'advanced_mining',
+                'tech-oilrig': 'oil_rig_tech',
                 'tech-coinmaker': 'premium_mining',
 
                 'army-tank': 'elite_units',
@@ -3253,9 +3409,16 @@
             return 'Unknown Research';
         }
 
+        function updateTechTreeDisplay() {
+            return;
+        }
+
         function renderTechTree() {
             const techTreeContent = document.getElementById('tech-tree-content');
-            if (!techTreeContent) return;
+            if (!techTreeContent) {
+                console.error('Tech tree content element not found');
+                return;
+            }
 
             techTreeContent.innerHTML = '';
 
@@ -3277,7 +3440,8 @@
                 'barrack_tech': { x: 500, y: 560 },
                 'bomb_tech': { x: 200, y: 460 },
                 'campfire_tech': { x: 750, y: 460 },
-                'fortified_defense': { x: 200, y: 600 }
+                'fortified_defense': { x: 200, y: 600 },
+                'oil_rig_tech': { x: 850, y: 460 }
             };
 
             for (const techId in CONFIG.TECH_TREE) {
@@ -3323,10 +3487,10 @@
 
             line.style.width = distance + 'px';
             line.style.height = '4px';
-            line.style.left = (fromPos.x + 50) + 'px';
-            line.style.top = (fromPos.y + 50) + 'px';
+            line.style.left = (fromPos.x + 45) + 'px';
+            line.style.top = (fromPos.y + 45) + 'px';
             line.style.transform = `rotate(${angle}deg)`;
-
+            line.style.transformOrigin = '0 0';
             line.style.transition = 'all 0.3s ease';
 
             container.appendChild(line);
@@ -3339,37 +3503,6 @@
             nodeDiv.style.left = pos.x + 'px';
             nodeDiv.style.top = pos.y + 'px';
 
-            let costHtml = '';
-            if (tech.cost.Steel || tech.cost.coins || tech.cost.gold) {
-                costHtml = '<br/><span style="font-size: 11px; color: #aaa;">Cost: ';
-                const costs = [];
-                if (tech.cost.Steel) costs.push(`<img src="./sprites/ironin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.Steel}`);
-                if (tech.cost.coins) costs.push(`<img src="./sprites/coin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.coins}`);
-                if (tech.cost.gold) costs.push(`<img src="./sprites/goldin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.gold}`);
-                costHtml += costs.join(' ');
-                costHtml += '</span>';
-            }
-            nodeDiv.dataset.tooltip = `${tech.name}: ${tech.description}${costHtml}`;
-            let tooltipTimeout;
-            nodeDiv.addEventListener('mouseenter', function (e) {
-                tooltipTimeout = setTimeout(() => {
-                    showTooltip(e.target, e.target.dataset.tooltip);
-                }, 100);
-            });
-            nodeDiv.addEventListener('mousemove', function (e) {
-                if (!window.tooltipUpdateThrottle) {
-                    window.tooltipUpdateThrottle = true;
-                    updateTooltipPosition(e);
-                    setTimeout(() => {
-                        window.tooltipUpdateThrottle = false;
-                    }, 8);
-                }
-            });
-            nodeDiv.addEventListener('mouseleave', function () {
-                clearTimeout(tooltipTimeout);
-                hideTooltip();
-            });
-
             if (gameState.isTechResearched(techId)) {
                 nodeDiv.classList.add('researched');
             } else if (gameState.availableTechs.has(techId)) {
@@ -3380,24 +3513,39 @@
 
             const iconDiv = document.createElement('div');
             iconDiv.className = 'tech-node-icon';
-            const img = document.createElement('img');
-            img.src = `./sprites/${tech.icon || 'research.png'}`;
-            img.alt = tech.name;
-            iconDiv.appendChild(img);
 
+            const img = document.createElement('img');
+            const iconPath = `./sprites/${tech.icon || 'research.png'}`;
+            img.src = iconPath;
+            img.alt = tech.name;
+            img.onerror = function () {
+                this.src = './sprites/research.png';
+            };
+            iconDiv.appendChild(img);
             nodeDiv.appendChild(iconDiv);
+
+            let costHtml = '';
+            if (tech.cost.Steel || tech.cost.coins || tech.cost.gold) {
+                const costs = [];
+                if (tech.cost.Steel) costs.push(`${tech.cost.Steel} Steel`);
+                if (tech.cost.coins) costs.push(`${tech.cost.coins} Coins`);
+                if (tech.cost.gold) costs.push(`${tech.cost.gold} Gold`);
+                costHtml = `\nCost: ${costs.join(', ')}`;
+            }
+
+            nodeDiv.title = `${tech.name}\n${tech.description}${costHtml}`;
 
             if (!gameState.isTechResearched(techId) && gameState.availableTechs.has(techId)) {
                 nodeDiv.addEventListener('click', function () {
                     if (gameState.researchTech(techId)) {
                         showNotification(`${tech.name} researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
                         renderTechTree();
-                        updateDisplay();
                     }
                 });
             }
 
             container.appendChild(nodeDiv);
+            return nodeDiv;
         }
 
         function makeTechTreeDraggable() {
