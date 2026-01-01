@@ -2379,7 +2379,8 @@
                     cell.dataset.y = y;
 
                     cell.addEventListener('click', (function (x, y) {
-                        return function () {
+                        return function (e) {
+                            e.stopPropagation();
                             handleCellClick(x, y);
                         };
                     })(x, y));
@@ -2395,7 +2396,10 @@
                 const y = parseInt(cell.dataset.y);
                 const newCell = cell.cloneNode(true);
                 cell.parentNode.replaceChild(newCell, cell);
-                newCell.addEventListener('click', () => handleCellClick(x, y));
+                newCell.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleCellClick(x, y);
+                });
             });
         }
 
@@ -2412,6 +2416,9 @@
                     const placed = placeObject(x, y, type, subtype);
                     if (placed) {
                         actionTaken = true;
+                        // Reset folder open flag after successful placement
+                        window.keepFoldersOpen = false;
+                        console.log('Resetting keepFoldersOpen = false after placement');
                     }
                 }
                 updateDisplay();
@@ -3275,6 +3282,16 @@
                             return;
                         }
                         gameState.placementMode = gameState.placementMode === buttonData.mode ? null : buttonData.mode;
+                        
+                        // Keep folder open when entering placement mode
+                        if (gameState.placementMode === buttonData.mode) {
+                            window.keepFoldersOpen = true;
+                            console.log('Setting keepFoldersOpen = true for mode:', buttonData.mode);
+                        } else {
+                            window.keepFoldersOpen = false;
+                            console.log('Setting keepFoldersOpen = false');
+                        }
+                        
                         updateButtonStates();
                         updateDisplay();
                     });
@@ -3306,10 +3323,18 @@
             }
 
             document.addEventListener('click', function (e) {
-                if (!e.target.closest('[data-folder]')) {
+                console.log('Global click handler - keepFoldersOpen:', window.keepFoldersOpen);
+                console.log('Clicked target:', e.target);
+                console.log('Is folder target:', !!e.target.closest('[data-folder]'));
+                
+                // Don't close folders if we're in placement mode and want to keep them open
+                if (!window.keepFoldersOpen && !e.target.closest('[data-folder]')) {
+                    console.log('Closing folders');
                     document.querySelectorAll('.folder.open').forEach(folder => {
                         folder.classList.remove('open');
                     });
+                } else {
+                    console.log('NOT closing folders - keepFoldersOpen:', window.keepFoldersOpen, 'isFolderTarget:', !!e.target.closest('[data-folder]'));
                 }
 
                 if (!e.target.closest('.info-popup') && !e.target.closest('.info-icon')) {
