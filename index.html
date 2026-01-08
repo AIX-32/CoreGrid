@@ -2092,6 +2092,7 @@
             <button class="control-btn" id="load-game">Load Game</button>
             <button class="control-btn" id="restart-game">Restart Game</button>
             <button class="control-btn" id="tech-tree-button">Research</button>
+            <button class="control-btn" id="discord-button">Discord</button>
         </div>
     </div>
 
@@ -4014,6 +4015,15 @@
                 const clone = restartGameButton.cloneNode(true);
                 restartGameButton.parentNode.replaceChild(clone, restartGameButton);
                 clone.addEventListener('click', restartGame);
+            }
+            
+            const discordButton = document.getElementById('discord-button');
+            if (discordButton) {
+                const clone = discordButton.cloneNode(true);
+                discordButton.parentNode.replaceChild(clone, discordButton);
+                clone.addEventListener('click', function() {
+                    window.open('https://discord.gg/ZnTBHb9mJF', '_blank');
+                });
             }
 
             document.addEventListener('click', function (e) {
