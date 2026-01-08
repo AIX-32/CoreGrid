@@ -126,6 +126,10 @@
             display: inline-block;
         }
 
+        .folder:not(.open) .folder-content {
+            display: none !important;
+        }
+
         .folder-title {
             padding: 10px 12px;
             background: #353535;
@@ -914,6 +918,72 @@
             background-image:
                 radial-gradient(circle at 10px 10px, rgba(100, 100, 100, 0.1) 1px, transparent 0);
             background-size: 30px 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tech-tree-main {
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .tech-info-panel {
+            background: #353535;
+            border: 2px solid #7a7a7a;
+            padding: 15px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 30;
+            border-radius: var(--border-radius);
+        }
+        
+        .tech-info-panel.hidden {
+            opacity: 0.6;
+        }
+        
+        .tech-info-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--accent-primary);
+            margin-bottom: 8px;
+        }
+        
+        .tech-info-description {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+            max-width: 80%;
+        }
+        
+        .tech-info-cost {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .tech-cost-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .tech-cost-steel { color: #aaa; }
+        .tech-cost-coins { color: #d4af37; }
+        .tech-cost-gold { color: #ffcc00; }
+        .tech-cost-oil { color: #8B4513; }
+        
+        .tech-info-default {
+            color: #888;
+            font-style: italic;
         }
 
         .tech-tree-overlay {
@@ -1088,6 +1158,447 @@
         .tech-connection.locked {
             background: #555;
             opacity: 0.6;
+        }
+
+        /* Building Information Window */
+        .building-info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #353535;
+            border: 3px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            width: 400px;
+            max-width: 90vw;
+            height: auto;
+            max-height: 80vh;
+            z-index: 2000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .building-info-header {
+            padding: 15px 20px;
+            background: #3a3a3a;
+            border-bottom: 2px solid #7a7a7a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .building-info-header h2 {
+            margin: 0;
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+        }
+
+        .building-info-close {
+            background: none;
+            border: none;
+            color: #ddd;
+            cursor: pointer;
+            font-size: 24px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+        }
+
+        .building-info-close:hover {
+            background: #ff5555;
+        }
+
+        .building-info-content {
+            padding: 25px;
+            overflow-y: auto;
+            flex-grow: 1;
+            background: #2b2b2b;
+        }
+
+        .building-icon-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .building-icon {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .building-description {
+            margin-bottom: 25px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .module-slots-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .modules-locked-message {
+            text-align: center;
+            padding: 20px;
+            background: #3a3a3a;
+            border: 2px dashed #7a7a7a;
+            border-radius: var(--border-radius);
+            color: #aaa;
+            font-style: italic;
+        }
+        
+        .modules-locked-message strong {
+            color: var(--warning);
+            font-style: normal;
+        }
+
+        .module-slot {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #3a3a3a;
+            border: 1px solid #7a7a7a;
+            border-radius: var(--border-radius);
+        }
+
+        .module-slot-label {
+            font-weight: bold;
+            min-width: 80px;
+        }
+
+        .module-select {
+            flex-grow: 1;
+            padding: 8px;
+            background: #353535;
+            border: 1px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            color: #ddd;
+        }
+
+        .equip-btn, .unequip-btn {
+            padding: 8px 12px;
+            border: 1px solid #7a7a7a;
+            background-color: #353535;
+            color: #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .equip-btn:hover {
+            background-color: var(--accent-primary);
+            color: #111;
+            border-color: var(--accent-secondary);
+        }
+
+        .unequip-btn:hover {
+            background-color: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+
+        .building-info-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1999;
+            display: none;
+        }
+        
+        .module-slots-header {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .module-slots-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .module-slots {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .module-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px;
+            border-radius: var(--border-radius);
+            border: 2px solid #7a7a7a;
+            background: #3a3a3a;
+            position: relative;
+        }
+        
+        .module-slot:hover {
+            background: #4a4a4a;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+        
+        .module-slot.equipped {
+            background: #4a5a4a;
+            border-color: #66d9ff;
+        }
+        
+        .module-slot-inner {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #5a5a5a;
+            border-radius: var(--border-radius);
+            background: #2d2d2d;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-slot.equipped .module-slot-inner {
+            background: #3d3d3d;
+            border-color: #66d9ff;
+        }
+        
+        .module-slot-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .module-slot-icon img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+        
+        .module-slot-empty .module-slot-icon {
+            display: none;
+        }
+        
+        .module-slot-tier {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #7a7a7a;
+        }
+        
+        .module-slot-label {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        
+        /* Module Selection Popup */
+        .module-selection-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #353535;
+            border: 3px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            width: 350px;
+            max-width: 90vw;
+            max-height: 80vh;
+            z-index: 2001;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: popupFadeIn 0.3s ease;
+        }
+        
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+        .module-selection-header {
+            padding: 15px 20px;
+            background: #3a3a3a;
+            border-bottom: 2px solid #7a7a7a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .module-selection-header span {
+            color: var(--accent-primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .module-close-btn {
+            background: none;
+            border: none;
+            color: #ddd;
+            cursor: pointer;
+            font-size: 24px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+        }
+        
+        .module-close-btn:hover {
+            background: #ff5555;
+        }
+        
+        .module-options {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .module-options::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .module-options::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+        
+        .module-options::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        
+        .module-options::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+        
+        .module-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #3a3a3a;
+            border: 2px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .module-option:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-secondary);
+            color: #111;
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .module-option.unaffordable {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .module-option.unaffordable:hover {
+            background: #3a3a3a;
+            border-color: #7a7a7a;
+            color: #ddd;
+            transform: none;
+        }
+        
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px;
+        }
+        
+        .module-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+        
+        .module-info {
+            flex-grow: 1;
+        }
+        
+        .module-name {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .module-cost {
+            font-size: 14px;
+            color: #ceab77;
+            font-weight: bold;
+        }
+        
+        .module-cost[data-resource="iron"]::before {
+            content: "IRON ";
+            color: #aaa;
+            font-weight: normal;
+        }
+        
+        .module-selection-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: none;
         }
     </style>
 </head>
@@ -1386,10 +1897,115 @@
                 <button class="tech-tree-close" id="tech-tree-close">×</button>
             </div>
             <div class="tech-tree-content" id="tech-tree-content">
+                <div class="tech-tree-main" id="tech-tree-main"></div>
+                <div class="tech-info-panel" id="tech-info-panel">
+                    <div class="tech-info-default">Hover over a technology to see details</div>
+                </div>
             </div>
         </div>
 
         <div class="tech-tree-overlay" id="tech-tree-overlay"></div>
+
+        <!-- Building Information Window -->
+        <div class="building-info-popup" id="building-info-popup">
+            <div class="building-info-header">
+                <div class="building-info-title" id="building-info-title">Building Name</div>
+                <button class="building-info-close" id="building-info-close">×</button>
+            </div>
+            <div class="building-info-content">
+                <div class="building-icon-container">
+                    <img class="building-icon" id="building-icon" src="./sprites/turret.png" alt="Building Icon">
+                </div>
+                <div class="building-description" id="building-description">Building description goes here.</div>
+                <div class="module-slots-container">
+                    <div class="module-slots-header">
+                        <span class="module-slots-title">Modules</span>
+                    </div>
+                    <div class="module-slots">
+                        <div class="module-slot" id="module-slot-1" data-slot="1">
+                            <div class="module-slot-inner">
+                                <div class="module-slot-icon"></div>
+                                <div class="module-slot-tier"></div>
+                            </div>
+                            <div class="module-slot-label">Slot 1</div>
+                        </div>
+                        <div class="module-slot" id="module-slot-2" data-slot="2">
+                            <div class="module-slot-inner">
+                                <div class="module-slot-icon"></div>
+                                <div class="module-slot-tier"></div>
+                            </div>
+                            <div class="module-slot-label">Slot 2</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Module Selection Popup -->
+                <div class="module-selection-popup" id="module-selection-popup">
+                    <div class="module-selection-header">
+                        <span>Select Module</span>
+                        <button class="module-close-btn" id="module-close-btn">×</button>
+                    </div>
+                    <div class="module-options">
+                        <div class="module-option" data-module="speed" data-tier="1">
+                            <div class="module-icon">
+                                <img src="./sprites/speedmod.png" alt="Speed Module">
+                            </div>
+                            <div class="module-info">
+                                <div class="module-name">Speed Module (T1)</div>
+                                <div class="module-cost" data-resource="iron">145</div>
+                            </div>
+                        </div>
+                        <div class="module-option" data-module="speed" data-tier="2">
+                            <div class="module-icon">
+                                <img src="./sprites/speedmod.png" alt="Speed Module">
+                            </div>
+                            <div class="module-info">
+                                <div class="module-name">Speed Module (T2)</div>
+                                <div class="module-cost" data-resource="iron">290</div>
+                            </div>
+                        </div>
+                        <div class="module-option" data-module="speed" data-tier="3">
+                            <div class="module-icon">
+                                <img src="./sprites/speedmod.png" alt="Speed Module">
+                            </div>
+                            <div class="module-info">
+                                <div class="module-name">Speed Module (T3)</div>
+                                <div class="module-cost" data-resource="iron">580</div>
+                            </div>
+                        </div>
+                        <div class="module-option" data-module="defense" data-tier="1">
+                            <div class="module-icon">
+                                <img src="./sprites/defensemod.png" alt="Defense Module">
+                            </div>
+                            <div class="module-info">
+                                <div class="module-name">Defense Module (T1)</div>
+                                <div class="module-cost" data-resource="iron">50</div>
+                            </div>
+                        </div>
+                        <div class="module-option" data-module="defense" data-tier="2">
+                            <div class="module-icon">
+                                <img src="./sprites/defensemod.png" alt="Defense Module">
+                            </div>
+                            <div class="module-info">
+                                <div class="module-name">Defense Module (T2)</div>
+                                <div class="module-cost" data-resource="iron">100</div>
+                            </div>
+                        </div>
+                        <div class="module-option" data-module="defense" data-tier="3">
+                            <div class="module-icon">
+                                <img src="./sprites/defensemod.png" alt="Defense Module">
+                            </div>
+                            <div class="module-info">
+                                <div class="module-name">Defense Module (T3)</div>
+                                <div class="module-cost" data-resource="iron">200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module-selection-overlay" id="module-selection-overlay"></div>
+            </div>
+        </div>
+        <div class="building-info-overlay" id="building-info-overlay"></div>
 
         <div class="game-grid-container">
             <div class="game-grid" id="game-grid"></div>
@@ -1415,6 +2031,7 @@
             <p><strong>Defense:</strong> Use walls and fortresses to protect your units and resources.</p>
             <p><strong>Resources:</strong> Place miner buildings to generate resources.</p>
             <p><strong>Waves:</strong> Defend against waves of different enemies.</p>
+            <p><strong>Modules:</strong> Upgrade your buildings with modules for increased speed and defense. Try clicking on buildings to add modules!</p>
         </div>
 
         <div class="floating-sidebar">
@@ -1438,179 +2055,6 @@
                 coins: 50,
                 gold: 25,
                 oil: 0
-            },
-            TECH_TREE: {
-                'fortress': {
-                    name: 'Fortress',
-                    description: 'Your main base that must be protected',
-                    cost: { Steel: 0 },
-                    tier: 0,
-                    prerequisites: [],
-                    unlocks: ['basic_defense', 'basic_army'],
-                    icon: 'spawn.png'
-                },
-                'basic_defense': {
-                    name: 'Basic Defense',
-                    description: 'Unlock Steel Wall',
-                    cost: { Steel: 75 },
-                    tier: 1,
-                    prerequisites: ['fortress'],
-                    unlocks: ['advanced_defense'],
-                    icon: 'wall.png'
-                },
-                'basic_army': {
-                    name: 'Basic Army',
-                    description: 'Unlock Soldier unit',
-                    cost: { coins: 75 },
-                    tier: 1,
-                    prerequisites: ['fortress'],
-                    unlocks: ['advanced_army'],
-                    icon: 'soldier.png'
-                },
-                'advanced_defense': {
-                    name: 'Advanced Defense',
-                    description: 'Unlock Steel Wall',
-                    cost: { Steel: 150, coins: 75 },
-                    tier: 2,
-                    prerequisites: ['basic_defense'],
-                    unlocks: ['fortified_defense'],
-                    icon: 'wallsteel.png'
-                },
-                'spike_traps': {
-                    name: 'Spike Traps',
-                    description: 'Unlock Spike',
-                    cost: { Steel: 100 },
-                    tier: 2,
-                    prerequisites: ['basic_defense'],
-                    unlocks: ['bomb_tech'],
-                    icon: 'spike.png'
-                },
-                'bomb_tech': {
-                    name: 'Bomb Tech',
-                    description: 'Unlock Bomb',
-                    cost: { gold: 20 },
-                    tier: 3,
-                    prerequisites: ['spike_traps'],
-                    unlocks: [],
-                    icon: 'bomb.png'
-                },
-                'advanced_army': {
-                    name: 'Advanced Army',
-                    description: 'Unlock Knight unit',
-                    cost: { coins: 150, gold: 20 },
-                    tier: 2,
-                    prerequisites: ['basic_army'],
-                    unlocks: ['elite_units', 'barrack_tech'],
-                    icon: 'knight.png'
-                },
-                'ranged_units': {
-                    name: 'Ranged Units',
-                    description: 'Unlock Archer unit',
-                    cost: { coins: 125 },
-                    tier: 2,
-                    prerequisites: ['basic_army'],
-                    unlocks: ['siege_weapons'],
-                    icon: 'Archer.png'
-                },
-                'siege_weapons': {
-                    name: 'Siege Weapons',
-                    description: 'Unlock Siege Tower unit',
-                    cost: { coins: 200 },
-                    tier: 2,
-                    prerequisites: ['ranged_units'],
-                    unlocks: [],
-                    icon: 'siegetower.png'
-                },
-                'advanced_mining': {
-                    name: 'Advanced Mining',
-                    description: 'Unlock Gold Mine',
-                    cost: { Steel: 200 },
-                    tier: 2,
-                    prerequisites: ['fortress'],
-                    unlocks: ['premium_mining', 'supply_systems'],
-                    icon: 'gold.png'
-                },
-                'supply_systems': {
-                    name: 'Supply Systems',
-                    description: 'Unlock Supply Drop',
-                    cost: { gold: 250, Steel: 250 },
-                    tier: 3,
-                    prerequisites: ['advanced_mining'],
-                    unlocks: ['campfire_tech'],
-                    icon: 'supply.gif'
-                },
-                'basic_turret': {
-                    name: 'Basic Turret',
-                    description: 'Unlock Turret',
-                    cost: { Steel: 200 },
-                    tier: 2,
-                    prerequisites: ['basic_defense'],
-                    unlocks: ['fortified_defense'],
-                    icon: 'turret.png'
-                },
-                'fortified_defense': {
-                    name: 'Fortified Defense',
-                    description: 'Unlock Gold Turret',
-                    cost: { Steel: 200, gold: 500 },
-                    tier: 3,
-                    prerequisites: ['advanced_defense', 'basic_turret', 'bomb_tech'],
-                    unlocks: [],
-                    icon: 'goldturret.png'
-                },
-                'elite_units': {
-                    name: 'Elite Units',
-                    description: 'Unlock Tank unit',
-                    cost: { coins: 400, gold: 75 },
-                    tier: 3,
-                    prerequisites: ['advanced_army'],
-                    unlocks: ['command_units'],
-                    icon: 'Tank.png'
-                },
-                'command_units': {
-                    name: 'Command Units',
-                    description: 'Unlock King unit',
-                    cost: { gold: 1000 },
-                    tier: 3,
-                    prerequisites: ['elite_units'],
-                    unlocks: [],
-                    icon: 'king.png'
-                },
-                'barrack_tech': {
-                    name: 'Barrack Tech',
-                    description: 'Unlock Barrack unit',
-                    cost: { gold: 275 },
-                    tier: 3,
-                    prerequisites: ['advanced_army'],
-                    unlocks: [],
-                    icon: 'barrack.png'
-                },
-                'premium_mining': {
-                    name: 'Premium Mining',
-                    description: 'Unlock Bank',
-                    cost: { Steel: 350, gold: 75 },
-                    tier: 3,
-                    prerequisites: ['advanced_mining'],
-                    unlocks: [],
-                    icon: 'bank.png'
-                },
-                'campfire_tech': {
-                    name: 'Campfire Tech',
-                    description: 'Unlock Campfire',
-                    cost: { Steel: 50 },
-                    tier: 3,
-                    prerequisites: ['supply_systems'],
-                    unlocks: ['oil_rig_tech'],
-                    icon: 'campfire.gif'
-                },
-                'oil_rig_tech': {
-                    name: 'Oil Rig Tech',
-                    description: 'Unlock Oil Rig',
-                    cost: { Steel: 60 },
-                    tier: 3,
-                    prerequisites: ['campfire_tech'],
-                    unlocks: [],
-                    icon: 'oilrig.png'
-                },
             },
             SPRITES: {
                 player: './sprites/spawn.png',
@@ -1648,7 +2092,86 @@
                     healer: './sprites/badhealer.png'
                 }
             }
-        };
+        }
+        
+        // Load TECH_TREE and positions from external JSON file
+        CONFIG.TECH_TREE = {};
+        let NODE_POSITIONS = {};
+        
+        // Function to load tech tree and positions from external file
+        async function loadTechTree() {
+            try {
+                // First check if we can fetch the file
+                console.log('Attempting to load tech tree...');
+                
+                const response = await fetch('tech-tree-full.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const text = await response.text();
+                console.log('Raw response text:', text.substring(0, 200));
+                
+                try {
+                    const fullData = JSON.parse(text);
+                    
+                    // Load tech tree data
+                    CONFIG.TECH_TREE = fullData.tech_tree;
+                    
+                    // Load positions data
+                    NODE_POSITIONS = fullData.positions;
+                    
+                    console.log('Tech tree loaded successfully. Nodes:', Object.keys(CONFIG.TECH_TREE).length);
+                    console.log('Positions loaded:', Object.keys(NODE_POSITIONS).length);
+                    
+                    // Update tech tree display if it's available
+                    if (typeof updateTechTreeDisplay === 'function') {
+                        updateTechTreeDisplay();
+                    }
+                    
+                } catch (parseError) {
+                    console.error('Error parsing JSON:', parseError);
+                    throw new Error('Invalid JSON format in tech tree file');
+                }
+                
+            } catch (error) {
+                console.error('Error loading tech tree:', error);
+                
+                // Fallback: use minimal data to ensure the game works
+                console.log('Using fallback tech tree data');
+                CONFIG.TECH_TREE = {
+                    'fortress': {
+                        name: 'Fortress',
+                        description: 'Your main base that must be protected',
+                        cost: { Steel: 0 },
+                        tier: 0,
+                        prerequisites: [],
+                        unlocks: ['basic_defense', 'basic_army', 'module_research'],
+                        icon: 'spawn.png'
+                    },
+                    'module_research': {
+                        name: 'Module Research',
+                        description: 'Unlocks the ability to research specialized modules',
+                        cost: { Steel: 150, gold: 75 },
+                        tier: 2,
+                        prerequisites: ['fortress'],
+                        unlocks: ['speed_module', 'defense_module'],
+                        icon: 'research.png'
+                    }
+                };
+                
+                NODE_POSITIONS = {
+                    'fortress': { x: 400, y: 30 },
+                    'module_research': { x: 400, y: 120 }
+                };
+                
+                // Initialize the tech tree display
+                if (typeof updateTechTreeDisplay === 'function') {
+                    updateTechTreeDisplay();
+                }
+            }
+        }
+        
 
         class GameState {
             constructor() {
@@ -1676,6 +2199,12 @@
                 this.enemiesRemaining = 0;
                 this.researchedTechs = new Set();
                 this.availableTechs = new Set();
+                
+                // Automatically research 'fortress' at the start since it's the base tech
+                if (CONFIG.TECH_TREE.fortress) {
+                    this.researchedTechs.add('fortress');
+                }
+                
                 this.updateAvailableTechs();
             }
 
@@ -1763,10 +2292,124 @@
                 this.type = type;
                 this.subtype = subtype;
                 this.id = `${type}_${subtype}_${x}_${y}_${Date.now()}`;
+                this.modules = [];
+                this.originalHealth = null;
+                this.originalMaxHealth = null;
+                this.originalRange = null;
+                this.originalShotsLeft = null;
+                this.originalMovement = null;
             }
 
             getSprite() {
                 return CONFIG.SPRITES[this.type]?.[this.subtype] || 'sprites/missing.png';
+            }
+
+            addModule(moduleType) {
+                if (this.modules.length >= 2) return false;
+                if (this.modules.includes(moduleType)) return false;
+                
+                this.modules.push(moduleType);
+                this.applyModuleEffect(moduleType);
+                return true;
+            }
+
+            removeModule(moduleType) {
+                const index = this.modules.indexOf(moduleType);
+                if (index === -1) return false;
+                
+                this.modules.splice(index, 1);
+                this.removeModuleEffect(moduleType);
+                return true;
+            }
+
+            applyModuleEffect(moduleType) {
+                // Extract the base module type if it includes a tier (e.g., 'speed-2' -> 'speed')
+                const baseModuleType = moduleType.includes('-') ? moduleType.split('-')[0] : moduleType;
+                
+                // Determine the tier multiplier (default to 1 if no tier specified)
+                const tier = moduleType.includes('-') ? parseInt(moduleType.split('-')[1]) : 1;
+                const multiplier = tier + 1; // Tier 1 = 2x, Tier 2 = 3x, Tier 3 = 4x
+                
+                if (baseModuleType === 'speed') {
+                    // Apply speed effect with tier-based multiplier
+                    if (this.type === 'army') {
+                        if (this.originalMovement === null) {
+                            this.originalMovement = this.movement;
+                        }
+                        this.movement = this.originalMovement * multiplier;
+                    } else if (this.type === 'tech') {
+                        // For turrets, multiply shots
+                        if (this.subtype === 'turret' || this.subtype === 'goldturret') {
+                            if (this.originalShotsLeft === null) {
+                                this.originalShotsLeft = this.shotsLeft;
+                            }
+                            this.shotsLeft = this.originalShotsLeft * multiplier;
+                        }
+                        // For resource buildings, multiplier would be handled in their onTurn method
+                    }
+                } else if (baseModuleType === 'defense') {
+                    // Apply defense effect with tier-based multiplier
+                    if (this.originalHealth === null) {
+                        this.originalHealth = this.health;
+                        this.originalMaxHealth = this.maxHealth;
+                    }
+                    this.health = this.originalHealth * multiplier;
+                    this.maxHealth = this.originalMaxHealth * multiplier;
+                }
+            }
+
+            removeModuleEffect(moduleType) {
+                // Extract the base module type if it includes a tier (e.g., 'speed-2' -> 'speed')
+                const baseModuleType = moduleType.includes('-') ? moduleType.split('-')[0] : moduleType;
+                
+                // Determine the tier multiplier (default to 1 if no tier specified)
+                const tier = moduleType.includes('-') ? parseInt(moduleType.split('-')[1]) : 1;
+                const multiplier = tier + 1; // Tier 1 = 2x, Tier 2 = 3x, Tier 3 = 4x
+                
+                if (baseModuleType === 'speed') {
+                    if (this.type === 'army') {
+                        if (this.originalMovement !== null) {
+                            // Revert to original movement value
+                            this.movement = this.originalMovement;
+                        }
+                    } else if (this.type === 'tech') {
+                        if (this.subtype === 'turret' || this.subtype === 'goldturret') {
+                            if (this.originalShotsLeft !== null) {
+                                // Revert to original shots value
+                                this.shotsLeft = this.originalShotsLeft;
+                            }
+                        }
+                    }
+                } else if (baseModuleType === 'defense') {
+                    if (this.originalHealth !== null && this.originalMaxHealth !== null) {
+                        // Revert to original health values
+                        this.health = this.originalHealth;
+                        this.maxHealth = this.originalMaxHealth;
+                    }
+                }
+            }
+
+            getModuleBonus() {
+                return {
+                    speed: this.modules.filter(m => m && m.startsWith('speed')).length,
+                    defense: this.modules.filter(m => m && m.startsWith('defense')).length
+                };
+            }
+            
+            getSpeedModuleTiers() {
+                const speedModules = this.modules.filter(m => m && m.startsWith('speed'));
+                return speedModules.map(module => {
+                    const parts = module.split('-');
+                    return parts.length > 1 ? parseInt(parts[1]) : 1;
+                });
+            }
+            
+            getDefenseModuleTiers() {
+                const defenseModules = this.modules.filter(m => m && m.startsWith('defense'));
+                return defenseModules.map(module => {
+                    const parts = module.split('-');
+                    return parts.length > 1 ? parseInt(parts[1]) : 1;
+                });
             }
         }
 
@@ -1828,22 +2471,26 @@
                 const multiplier = gameState.getResourceMultiplier();
 
                 const campfireBonus = 1 + (0.5 * this.getNearbyCampfires());
+                
+                // Calculate module bonus for speed (with tier multipliers)
+                const speedModuleTiers = this.getSpeedModuleTiers();
+                const speedModuleMultiplier = speedModuleTiers.reduce((total, tier) => total + (tier + 1), 1); // Base is 1, each tier adds (tier + 1)
 
                 switch (this.subtype) {
                     case 'miner':
-                        gameState.addResources({ Steel: Math.floor(5 * campfireBonus * multiplier) });
+                        gameState.addResources({ Steel: Math.floor(5 * campfireBonus * multiplier * speedModuleMultiplier) });
                         createResourceCollectionEffect(this.x, this.y, 'Steel');
                         break;
                     case 'goldminer':
-                        gameState.addResources({ gold: Math.ceil(1 * campfireBonus * multiplier) });
+                        gameState.addResources({ gold: Math.ceil(1 * campfireBonus * multiplier * speedModuleMultiplier) });
                         createResourceCollectionEffect(this.x, this.y, 'gold');
                         break;
                     case 'coinmaker':
-                        gameState.addResources({ coins: Math.floor(5 * campfireBonus * multiplier) });
+                        gameState.addResources({ coins: Math.floor(5 * campfireBonus * multiplier * speedModuleMultiplier) });
                         createResourceCollectionEffect(this.x, this.y, 'coins');
                         break;
                     case 'oilrig':
-                        gameState.addResources({ oil: Math.ceil(1 * campfireBonus * multiplier) });
+                        gameState.addResources({ oil: Math.ceil(1 * campfireBonus * multiplier * speedModuleMultiplier) });
                         createResourceCollectionEffect(this.x, this.y, 'oil');
                         break;
                     case 'supply':
@@ -1851,7 +2498,14 @@
                         break;
                     case 'turret':
                     case 'goldturret':
-                        this.attackNearbyEnemies();
+                        // Attack multiple times based on speed module tiers
+                        const speedModuleTiers = this.getSpeedModuleTiers();
+                        const attacksPerTurn = speedModuleTiers.reduce((total, tier) => total + (tier + 1), 1); // Base is 1, each tier adds (tier + 1)
+                        for (let i = 0; i < attacksPerTurn; i++) {
+                            if (this.shotsLeft > 0) {
+                                this.attackNearbyEnemies();
+                            }
+                        }
                         break;
                     case 'bomb':
                         this.handleBomb();
@@ -2317,7 +2971,17 @@
 
         const gameState = new GameState();
 
-        function initGame() {
+        async function initGame() {
+            // Wait for the tech tree to be loaded
+            await loadTechTree();
+            
+            // Now that tech tree is loaded, automatically research fortress
+            if (CONFIG.TECH_TREE.fortress && !gameState.isTechResearched('fortress')) {
+                console.log('Automatically researching Fortress at game start');
+                gameState.researchedTechs.add('fortress');
+                gameState.updateAvailableTechs();
+            }
+            
             if (window.waveBreakTimeout) {
                 clearTimeout(window.waveBreakTimeout);
                 window.waveBreakTimeout = null;
@@ -2425,6 +3089,12 @@
                 if (actionTaken) {
                     processEnemyTurn();
                 }
+                return;
+            }
+
+            // If we clicked on a building/unit, show the building info window
+            if (cell && (cell.type === 'wall' || cell.type === 'tech' || cell.type === 'army')) {
+                showBuildingInfo(cell);
                 return;
             }
 
@@ -2856,104 +3526,22 @@
 
             updateButtonStates();
             updateTechTreeDisplay();
-        }
-
-        function updateTechTreeDisplay() {
-            const techTreeButtons = document.getElementById('tech-tree-buttons');
-            if (!techTreeButtons) return;
-
-            techTreeButtons.innerHTML = '';
-
-            for (const techId in CONFIG.TECH_TREE) {
-                const tech = CONFIG.TECH_TREE[techId];
-                const button = document.createElement('button');
-                button.className = 'btn';
-                button.dataset.techId = techId;
-
-                if (gameState.isTechResearched(techId)) {
-                    button.classList.add('researched');
-                } else if (gameState.availableTechs.has(techId)) {
-                    button.classList.add('available');
-                } else {
-                    button.classList.add('disabled');
-                }
-
-                const btnLeft = document.createElement('div');
-                btnLeft.className = 'btn-left';
-
-                const img = document.createElement('img');
-                img.src = './sprites/research.png';
-                img.alt = tech.name;
-                btnLeft.appendChild(img);
-
-                const span = document.createElement('span');
-                span.textContent = tech.name;
-                btnLeft.appendChild(span);
-
-                const btnRight = document.createElement('div');
-                btnRight.className = 'btn-right';
-
-                const costContainer = document.createElement('div');
-                costContainer.className = 'btn-right';
-
-                if (tech.cost.Steel) {
-                    const steelCost = document.createElement('div');
-                    steelCost.className = 'lowcol';
-                    steelCost.innerHTML = `<img src="./sprites/ironin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.Steel}`;
-                    costContainer.appendChild(steelCost);
-                }
-                if (tech.cost.coins) {
-                    const coinCost = document.createElement('div');
-                    coinCost.className = 'lowcol';
-                    coinCost.innerHTML = `<img src="./sprites/coin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.coins}`;
-                    costContainer.appendChild(coinCost);
-                }
-                if (tech.cost.gold) {
-                    const goldCost = document.createElement('div');
-                    goldCost.className = 'lowcol';
-                    goldCost.innerHTML = `<img src="./sprites/goldin.png" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${tech.cost.gold}`;
-                    costContainer.appendChild(goldCost);
-                }
-
-                btnRight.appendChild(costContainer);
-
-                const infoIcon = document.createElement('div');
-                infoIcon.className = 'info-icon';
-                infoIcon.textContent = 'i';
-
-                button.appendChild(btnLeft);
-                button.appendChild(btnRight);
-                button.appendChild(infoIcon);
-
-                button.addEventListener('click', () => {
-                    if (gameState.isTechResearched(techId)) {
-                        showNotification(`${tech.name} already researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y);
-                    } else if (gameState.canResearchTech(techId)) {
-                        if (gameState.researchTech(techId)) {
-                            showNotification(`${tech.name} researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
-                            updateDisplay();
-                        }
-                    } else {
-                        showNotification(`Cannot research ${tech.name} yet!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
-                    }
-                });
-
-                const prereqText = tech.prerequisites.length > 0 ?
-                    `Prerequisites: ${tech.prerequisites.map(id => CONFIG.TECH_TREE[id].name).join(', ')}` :
-                    'No prerequisites';
-                button.dataset.info = `${tech.name},${tech.description},${prereqText}`;
-
-                infoIcon.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    showInfoPopup(button);
-                });
-
-                techTreeButtons.appendChild(button);
+            
+            // Update module affordability if the popup is open
+            if (document.getElementById('module-selection-popup').style.display === 'flex') {
+                updateModuleAffordability();
             }
         }
 
         function updateTechTreeDisplay() {
-            return;
+            // Update the visual tech tree if it's visible
+            const techTreeContent = document.getElementById('tech-tree-content');
+            if (techTreeContent && techTreeContent.style.display !== 'none') {
+                // Re-render the tech tree to reflect current game state
+                renderTechTree();
+            }
+            // This function is called from updateDisplay() to refresh the tech tree UI
+            // when game state changes (resources, researched techs, etc.)
         }
 
         function updateButtonStates() {
@@ -3200,6 +3788,13 @@
                             folderContent.style.left = rect.left + 'px';
                             folderContent.style.top = (rect.bottom + 5) + 'px';
                         }
+                    } else {
+                        // Clear positioning when folder is closed
+                        const folderContent = folder.querySelector('.folder-content');
+                        if (folderContent) {
+                            folderContent.style.left = '';
+                            folderContent.style.top = '';
+                        }
                     }
                 });
             });
@@ -3211,12 +3806,41 @@
 
                 clone.addEventListener('click', function (e) {
                     e.stopPropagation();
+                    console.log('Tech tree button clicked');
                     const popup = document.getElementById('tech-tree-popup');
                     const overlay = document.getElementById('tech-tree-overlay');
-                    if (popup) popup.style.display = 'flex';
-                    if (overlay) overlay.style.display = 'block';
-                    renderTechTree();
-                    makeTechTreeDraggable();
+                    if (popup && overlay) {
+                        popup.style.display = 'flex';
+                        overlay.style.display = 'block';
+                        renderTechTree();
+                        makeTechTreeDraggable();
+                        console.log('Tech tree popup opened');
+                    } else {
+                        console.error('Tech tree popup or overlay not found');
+                    }
+                }, true); // Use capture phase to ensure it fires
+            }
+            
+            // Add event listener for the new research tree button in the Research folder
+            const openResearchTreeButton = document.getElementById('open-research-tree');
+            if (openResearchTreeButton) {
+                const clone = openResearchTreeButton.cloneNode(true);
+                openResearchTreeButton.parentNode.replaceChild(clone, openResearchTreeButton);
+                
+                clone.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    console.log('Open research tree button clicked');
+                    const popup = document.getElementById('tech-tree-popup');
+                    const overlay = document.getElementById('tech-tree-overlay');
+                    if (popup && overlay) {
+                        popup.style.display = 'flex';
+                        overlay.style.display = 'block';
+                        renderTechTree();
+                        makeTechTreeDraggable();
+                        console.log('Tech tree popup opened from research folder');
+                    } else {
+                        console.error('Tech tree popup or overlay not found');
+                    }
                 });
             }
 
@@ -3355,6 +3979,27 @@
                 });
                 document.body.appendChild(fileInput);
             }
+
+            // Building info window event listeners
+            const buildingInfoClose = document.getElementById('building-info-close');
+            if (buildingInfoClose) {
+                const clone = buildingInfoClose.cloneNode(true);
+                buildingInfoClose.parentNode.replaceChild(clone, buildingInfoClose);
+
+                clone.addEventListener('click', function () {
+                    closeBuildingInfo();
+                });
+            }
+
+            const buildingInfoOverlay = document.getElementById('building-info-overlay');
+            if (buildingInfoOverlay) {
+                const clone = buildingInfoOverlay.cloneNode(true);
+                buildingInfoOverlay.parentNode.replaceChild(clone, buildingInfoOverlay);
+
+                clone.addEventListener('click', function () {
+                    closeBuildingInfo();
+                });
+            }
         }
 
         function isBuildingRestricted(mode) {
@@ -3434,64 +4079,81 @@
             return 'Unknown Research';
         }
 
-        function updateTechTreeDisplay() {
-            return;
+        // Add this function for debugging
+        function debugResearch() {
+            console.log('=== DEBUG RESEARCH INFO ===');
+            console.log('Researched techs:', Array.from(gameState.researchedTechs));
+            console.log('Available techs:', Array.from(gameState.availableTechs));
+            console.log('Tech tree loaded:', Object.keys(CONFIG.TECH_TREE).length > 0);
+            console.log('Current resources:', gameState.resources);
+            
+            // Check some specific techs
+            const testTechs = ['fortress', 'module_research', 'basic_defense'];
+            testTechs.forEach(techId => {
+                const canResearch = gameState.canResearchTech(techId);
+                const isResearched = gameState.isTechResearched(techId);
+                console.log(`${techId}: canResearch=${canResearch}, isResearched=${isResearched}`);
+            });
         }
+        
+        // Call this when needed for debugging
+        // debugResearch();
 
         function renderTechTree() {
             const techTreeContent = document.getElementById('tech-tree-content');
-            if (!techTreeContent) {
-                console.error('Tech tree content element not found');
+            const techTreeMain = document.getElementById('tech-tree-main');
+            const techInfoPanel = document.getElementById('tech-info-panel');
+            
+            if (!techTreeContent || !techTreeMain) {
+                console.error('Tech tree elements not found');
                 return;
             }
 
-            techTreeContent.innerHTML = '';
+            // Clear only the main area, preserve the info panel
+            techTreeMain.innerHTML = '';
+            
+            // Check if we have tech tree data
+            if (!CONFIG.TECH_TREE || Object.keys(CONFIG.TECH_TREE).length === 0) {
+                techTreeMain.innerHTML = `
+                    <div style="text-align: center; padding: 50px;">
+                        <h3>Tech Tree Not Loaded</h3>
+                        <p>Unable to load tech tree data. Please check the console for errors.</p>
+                        <button onclick="loadTechTree().then(() => renderTechTree())" 
+                                style="padding: 10px 20px; margin-top: 20px;">
+                            Reload Tech Tree
+                        </button>
+                    </div>
+                `;
+                return;
+            }
 
-            const nodePositions = {
-                'fortress': { x: 400, y: 30 },
-                'basic_defense': { x: 200, y: 180 },
-                'basic_army': { x: 600, y: 180 },
-                'advanced_mining': { x: 750, y: 180 },
-                'advanced_defense': { x: 100, y: 320 },
-                'spike_traps': { x: 200, y: 320 },
-                'basic_turret': { x: 300, y: 320 },
-                'advanced_army': { x: 500, y: 320 },
-                'ranged_units': { x: 600, y: 320 },
-                'premium_mining': { x: 850, y: 320 },
-                'supply_systems': { x: 750, y: 320 },
-                'siege_weapons': { x: 600, y: 460 },
-                'elite_units': { x: 500, y: 460 },
-                'command_units': { x: 400, y: 460 },
-                'barrack_tech': { x: 500, y: 560 },
-                'bomb_tech': { x: 200, y: 460 },
-                'campfire_tech': { x: 750, y: 460 },
-                'fortified_defense': { x: 200, y: 600 },
-                'oil_rig_tech': { x: 850, y: 460 }
-            };
-
+            // Create connections first (so they appear behind nodes)
             for (const techId in CONFIG.TECH_TREE) {
                 const tech = CONFIG.TECH_TREE[techId];
-                const fromPos = nodePositions[techId];
+                const fromPos = NODE_POSITIONS[techId];
 
                 if (fromPos && tech.prerequisites) {
                     tech.prerequisites.forEach(prereqId => {
-                        const toPos = nodePositions[prereqId];
+                        const toPos = NODE_POSITIONS[prereqId];
                         if (toPos) {
                             const isResearched = gameState.isTechResearched(techId) && gameState.isTechResearched(prereqId);
                             const isLocked = !gameState.isTechResearched(techId) && !gameState.isTechResearched(prereqId) &&
                                 !gameState.availableTechs.has(techId) && !gameState.availableTechs.has(prereqId);
-                            createConnectionLine(techTreeContent, fromPos, toPos, isResearched, isLocked);
+                            createConnectionLine(techTreeMain, fromPos, toPos, isResearched, isLocked);
                         }
                     });
                 }
             }
 
+            // Create nodes
             for (const techId in CONFIG.TECH_TREE) {
                 const tech = CONFIG.TECH_TREE[techId];
-                const pos = nodePositions[techId];
+                const pos = NODE_POSITIONS[techId];
 
                 if (pos) {
-                    createTechNode(techTreeContent, techId, tech, pos);
+                    createTechNode(techTreeMain, techId, tech, pos);
+                } else {
+                    console.warn(`No position found for tech: ${techId}`);
                 }
             }
         }
@@ -3520,6 +4182,55 @@
 
             container.appendChild(line);
         }
+        
+        function updateTechInfoPanel(techId, tech) {
+            const infoPanel = document.getElementById('tech-info-panel');
+            if (!infoPanel) return;
+            
+            // Get tech state
+            let state = 'locked';
+            let stateText = 'LOCKED';
+            if (gameState.isTechResearched(techId)) {
+                state = 'researched';
+                stateText = 'RESEARCHED';
+            } else if (gameState.availableTechs.has(techId)) {
+                state = 'available';
+                stateText = 'AVAILABLE';
+            }
+            
+            // Format cost display
+            let costHtml = '';
+            if (tech.cost) {
+                const costs = [];
+                if (tech.cost.Steel) costs.push(`<span class="tech-cost-item tech-cost-steel">${tech.cost.Steel} STEEL</span>`);
+                if (tech.cost.coins) costs.push(`<span class="tech-cost-item tech-cost-coins">${tech.cost.coins} COINS</span>`);
+                if (tech.cost.gold) costs.push(`<span class="tech-cost-item tech-cost-gold">${tech.cost.gold} GOLD</span>`);
+                if (tech.cost.oil) costs.push(`<span class="tech-cost-item tech-cost-oil">${tech.cost.oil} OIL</span>`);
+                costHtml = costs.join('');
+            }
+            
+            // Update panel content
+            infoPanel.innerHTML = `
+                <div class="tech-info-title">${tech.name}</div>
+                <div class="tech-info-description">${tech.description}</div>
+                <div class="tech-info-cost">${costHtml}</div>
+                <div class="tech-info-status" style="margin-top: 10px; font-weight: bold; color: ${state === 'researched' ? '#7a977b' : state === 'available' ? '#66d9ff' : '#888'}">
+                    ${stateText}
+                </div>
+            `;
+            
+            // Remove hidden class
+            infoPanel.classList.remove('hidden');
+        }
+        
+        function resetTechInfoPanel() {
+            const infoPanel = document.getElementById('tech-info-panel');
+            if (!infoPanel) return;
+            
+            // Show default message
+            infoPanel.innerHTML = '<div class="tech-info-default">Hover over a technology to see details</div>';
+            infoPanel.classList.add('hidden');
+        }
 
         function createTechNode(container, techId, tech, pos) {
             const nodeDiv = document.createElement('div');
@@ -3528,6 +4239,7 @@
             nodeDiv.style.left = pos.x + 'px';
             nodeDiv.style.top = pos.y + 'px';
 
+            // Determine node state
             if (gameState.isTechResearched(techId)) {
                 nodeDiv.classList.add('researched');
             } else if (gameState.availableTechs.has(techId)) {
@@ -3549,25 +4261,33 @@
             iconDiv.appendChild(img);
             nodeDiv.appendChild(iconDiv);
 
-            let costHtml = '';
-            if (tech.cost.Steel || tech.cost.coins || tech.cost.gold) {
-                const costs = [];
-                if (tech.cost.Steel) costs.push(`${tech.cost.Steel} Steel`);
-                if (tech.cost.coins) costs.push(`${tech.cost.coins} Coins`);
-                if (tech.cost.gold) costs.push(`${tech.cost.gold} Gold`);
-                costHtml = `\nCost: ${costs.join(', ')}`;
-            }
-
-            nodeDiv.title = `${tech.name}\n${tech.description}${costHtml}`;
-
+            // Add click handler for researchable nodes
             if (!gameState.isTechResearched(techId) && gameState.availableTechs.has(techId)) {
+                nodeDiv.style.cursor = 'pointer';
                 nodeDiv.addEventListener('click', function () {
+                    console.log(`Attempting to research: ${techId}`);
                     if (gameState.researchTech(techId)) {
                         showNotification(`${tech.name} researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
                         renderTechTree();
+                        updateButtonStates(); // Update building availability
+                    } else {
+                        showNotification(`Cannot research ${tech.name}. Check requirements.`, 
+                            CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
                     }
                 });
             }
+
+            // Add hover event listeners for info panel
+            nodeDiv.addEventListener('mouseenter', function() {
+                updateTechInfoPanel(techId, tech);
+            });
+            
+            nodeDiv.addEventListener('mouseleave', function() {
+                resetTechInfoPanel();
+            });
+
+            // Add hover tooltip
+            nodeDiv.title = `${tech.name}\n${tech.description}`;
 
             container.appendChild(nodeDiv);
             return nodeDiv;
@@ -3671,6 +4391,435 @@
 
             if (overlay) overlay.style.display = 'none';
             if (popup) popup.style.display = 'none';
+        }
+
+        function showBuildingInfo(building) {
+            const buildingInfoPopup = document.getElementById('building-info-popup');
+            const buildingInfoOverlay = document.getElementById('building-info-overlay');
+            
+            // Set building title
+            document.getElementById('building-info-title').textContent = getBuildingName(building);
+            
+            // Set building icon
+            document.getElementById('building-icon').src = building.getSprite();
+            
+            // Set building description
+            document.getElementById('building-description').textContent = getBuildingDescription(building);
+            
+            // Set up module slots (will be hidden if no module research)
+            setupModuleSlots(building);
+            
+            // Show the popup
+            buildingInfoPopup.style.display = 'flex';
+            buildingInfoOverlay.style.display = 'block';
+            
+            // Store reference to the selected building
+            window.currentBuilding = building;
+        }
+        
+        function canBuildingHaveModules(building) {
+            // Walls cannot have modules
+            if (building.type === 'wall') {
+                return false;
+            }
+            
+            // All other building types (tech, army) can have modules
+            return true;
+        }
+        
+        function hasModuleResearch() {
+            // Player needs to research either module_research or both speed_module and defense_module
+            return gameState.isTechResearched('module_research') || 
+                   (gameState.isTechResearched('speed_module') && gameState.isTechResearched('defense_module'));
+        }
+
+        function getBuildingName(building) {
+            switch(building.type) {
+                case 'wall':
+                    switch(building.subtype) {
+                        case 'stone': return 'Wall';
+                        case 'steel': return 'Steel Wall';
+                        case 'spike': return 'Spike';
+                        case 'fortress': return 'Fortress';
+                        default: return building.subtype.charAt(0).toUpperCase() + building.subtype.slice(1);
+                    }
+                case 'tech':
+                    switch(building.subtype) {
+                        case 'miner': return 'Steel Mine';
+                        case 'goldminer': return 'Gold Mine';
+                        case 'coinmaker': return 'Bank';
+                        case 'oilrig': return 'Oil Rig';
+                        case 'turret': return 'Turret';
+                        case 'goldturret': return 'Gold Turret';
+                        case 'bomb': return 'Bomb';
+                        case 'supply': return 'Supply Drop';
+                        case 'campfire': return 'Campfire';
+                        default: return building.subtype.charAt(0).toUpperCase() + building.subtype.slice(1);
+                    }
+                case 'army':
+                    switch(building.subtype) {
+                        case 'scout': return 'Soldier';
+                        case 'knight': return 'Knight';
+                        case 'archer': return 'Archer';
+                        case 'tank': return 'Tank';
+                        case 'siegetower': return 'Siege Tower';
+                        case 'king': return 'King';
+                        case 'barrack': return 'Barrack';
+                        default: return building.subtype.charAt(0).toUpperCase() + building.subtype.slice(1);
+                    }
+                default: return building.subtype ? building.subtype.charAt(0).toUpperCase() + building.subtype.slice(1) : 'Building';
+            }
+        }
+
+        function getBuildingDescription(building) {
+            switch(building.type) {
+                case 'wall':
+                    switch(building.subtype) {
+                        case 'stone': return 'Basic defensive structure to block enemy movement. Health: 1.';
+                        case 'steel': return 'Stronger wall with increased durability. Health: 3.';
+                        case 'spike': return 'Damages enemies that walk over it. Health: 3.';
+                        case 'fortress': return 'Your main base that must be protected. Health: 5.';
+                        default: return 'Wall structure.';
+                    }
+                case 'tech':
+                    switch(building.subtype) {
+                        case 'miner': return 'Generates 5 steel per turn. Health: 2.';
+                        case 'goldminer': return 'Generates 1 gold per turn. Health: 2.';
+                        case 'coinmaker': return 'Generates 5 coins per turn. Health: 2.';
+                        case 'oilrig': return 'Generates 1 oil per turn. Health: 2.';
+                        case 'turret': return 'Attacks enemies within range 3. Health: 2, Shots: 8.';
+                        case 'goldturret': return 'Powerful turret with range 3. Health: 2, Shots: 10.';
+                        case 'bomb': return 'Explodes when enemy approaches damaging area. Health: 1.';
+                        case 'supply': return 'Randomly generates resources. Health: 1.';
+                        case 'campfire': return 'Boosts nearby resource buildings by 50%. Health: 1.';
+                        default: return 'Technology building.';
+                    }
+                case 'army':
+                    switch(building.subtype) {
+                        case 'scout': return 'Basic unit with balanced stats. Health: 1, Range: 1, Movement: 1.';
+                        case 'knight': return 'Fast-moving unit with high mobility. Health: 1, Range: 1, Movement: 5.';
+                        case 'archer': return 'Ranged unit that can attack from a distance. Health: 1, Range: 4, Movement: 1.';
+                        case 'tank': return 'Heavy unit with high health. Health: 5, Range: 1, Movement: 1.';
+                        case 'siegetower': return 'Powerful siege unit with long range. Health: 1, Range: 4, Movement: 1.';
+                        case 'king': return 'Command unit that boosts nearby army. Health: 25, Range: 2, Movement: 2.';
+                        case 'barrack': return 'Automatically spawns soldier units. Health: 2.';
+                        default: return 'Army unit.';
+                    }
+                default: return 'Building structure.';
+            }
+        }
+
+        function setupModuleSlots(building) {
+            const moduleSlotsContainer = document.querySelector('.module-slots-container');
+            
+            // Check if building can have modules and if player has researched module tech
+            if (!canBuildingHaveModules(building) || !hasModuleResearch()) {
+                // Hide module slots and show locked message
+                if (moduleSlotsContainer) {
+                    moduleSlotsContainer.style.display = 'none';
+                    
+                    // Check if locked message already exists
+                    let lockedMessage = moduleSlotsContainer.querySelector('.modules-locked-message');
+                    if (!lockedMessage) {
+                        lockedMessage = document.createElement('div');
+                        lockedMessage.className = 'modules-locked-message';
+                        lockedMessage.innerHTML = '<strong>🔒 Modules Locked</strong><br>Research <em>Module Research</em> in the Tech Tree to unlock modules for this building.';
+                        moduleSlotsContainer.parentNode.insertBefore(lockedMessage, moduleSlotsContainer.nextSibling);
+                    }
+                    lockedMessage.style.display = 'block';
+                }
+                return;
+            }
+            
+            // Show module slots and hide locked message
+            if (moduleSlotsContainer) {
+                moduleSlotsContainer.style.display = 'flex';
+                
+                // Hide locked message if it exists
+                const lockedMessage = moduleSlotsContainer.parentNode.querySelector('.modules-locked-message');
+                if (lockedMessage) {
+                    lockedMessage.style.display = 'none';
+                }
+            }
+            
+            // Set up module slot 1
+            const moduleSlot1 = document.getElementById('module-slot-1');
+            
+            // Set up module slot 2
+            const moduleSlot2 = document.getElementById('module-slot-2');
+            
+            // Clear any previous event listeners by cloning elements
+            const newModuleSlot1 = moduleSlot1.cloneNode(true);
+            const newModuleSlot2 = moduleSlot2.cloneNode(true);
+            moduleSlot1.parentNode.replaceChild(newModuleSlot1, moduleSlot1);
+            moduleSlot2.parentNode.replaceChild(newModuleSlot2, moduleSlot2);
+            
+            // Update module slot displays
+            updateModuleSlotDisplay(building, 1);
+            updateModuleSlotDisplay(building, 2);
+            
+            // Set up event listeners for module slots
+            newModuleSlot1.addEventListener('click', () => showModuleSelectionPopup(building, 1));
+            newModuleSlot2.addEventListener('click', () => showModuleSelectionPopup(building, 2));
+            
+            // Set up event listeners for module selection popup
+            setupModuleSelectionPopup(building);
+        }
+
+        function updateModuleSlotDisplay(building, slotNumber) {
+            const slotElement = document.getElementById(`module-slot-${slotNumber}`);
+            const iconElement = slotElement.querySelector('.module-slot-icon');
+            const tierElement = slotElement.querySelector('.module-slot-tier');
+            
+            // Reset classes
+            slotElement.classList.remove('equipped', 'empty');
+            
+            if (building.modules && building.modules.length >= slotNumber && building.modules[slotNumber - 1]) {
+                const module = building.modules[slotNumber - 1];
+                const moduleInfo = module.split('-'); // Format: type-tier (e.g., speed-2)
+                const type = moduleInfo[0];
+                const tier = moduleInfo[1] || '1'; // Default to tier 1 if not specified
+                
+                // Add equipped class
+                slotElement.classList.add('equipped');
+                
+                // Set icon based on module type
+                if (type === 'speed') {
+                    iconElement.innerHTML = '<img src="./sprites/speedmod.png" alt="Speed Module">';
+                } else if (type === 'defense') {
+                    iconElement.innerHTML = '<img src="./sprites/defensemod.png" alt="Defense Module">';
+                }
+                
+                // Set tier indicator
+                tierElement.textContent = tier;
+                
+                // Show tier indicator
+                tierElement.style.display = 'flex';
+            } else {
+                // No module equipped
+                slotElement.classList.add('empty');
+                iconElement.innerHTML = '';
+                tierElement.style.display = 'none';
+            }
+        }
+        
+        function showModuleSelectionPopup(building, slotNumber) {
+            const popup = document.getElementById('module-selection-popup');
+            const overlay = document.getElementById('module-selection-overlay');
+            
+            // Store the current building and slot number
+            window.currentBuilding = building;
+            window.currentSlot = slotNumber;
+            
+            // Update affordability for each module option
+            updateModuleAffordability();
+            
+            // Show the popup
+            popup.style.display = 'flex';
+            overlay.style.display = 'block';
+        }
+        
+        function setupModuleSelectionPopup(building) {
+            // Close button
+            const closeBtn = document.getElementById('module-close-btn');
+            const overlay = document.getElementById('module-selection-overlay');
+            
+            if (closeBtn) {
+                closeBtn.onclick = closeModuleSelectionPopup;
+            }
+            
+            if (overlay) {
+                overlay.onclick = closeModuleSelectionPopup;
+            }
+            
+            // Check if player has researched module tech
+            const hasSpeedModuleTech = gameState.isTechResearched('speed_module') || gameState.isTechResearched('module_research');
+            const hasDefenseModuleTech = gameState.isTechResearched('defense_module') || gameState.isTechResearched('module_research');
+            
+            // Update visibility of module options
+            document.querySelectorAll('.module-option').forEach(option => {
+                const moduleType = option.dataset.module;
+                
+                if ((moduleType === 'speed' && !hasSpeedModuleTech) || 
+                    (moduleType === 'defense' && !hasDefenseModuleTech)) {
+                    option.style.display = 'none';
+                } else {
+                    option.style.display = 'flex';
+                }
+            });
+            
+            // Module option click handlers
+            document.querySelectorAll('.module-option').forEach(option => {
+                option.onclick = function() {
+                    if (this.classList.contains('unaffordable')) {
+                        showNotification('Not enough resources!', building.x, building.y, 'warning');
+                        return;
+                    }
+                    
+                    const moduleType = this.dataset.module;
+                    const moduleTier = this.dataset.tier;
+                    
+                    if (window.currentBuilding && window.currentSlot) {
+                        equipModule(window.currentBuilding, window.currentSlot, moduleType, moduleTier);
+                    }
+                    
+                    closeModuleSelectionPopup();
+                };
+            });
+        }
+        
+        function closeModuleSelectionPopup() {
+            const popup = document.getElementById('module-selection-popup');
+            const overlay = document.getElementById('module-selection-overlay');
+            
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+            
+            // Reset all module options to visible
+            document.querySelectorAll('.module-option').forEach(option => {
+                option.style.display = 'flex';
+            });
+            
+            // Clear references
+            window.currentBuilding = null;
+            window.currentSlot = null;
+        }
+        
+        function updateModuleAffordability() {
+            const options = document.querySelectorAll('.module-option');
+            
+            options.forEach(option => {
+                // Check if the option is visible first
+                if (window.getComputedStyle(option).display === 'none') {
+                    return;
+                }
+                
+                const cost = parseInt(option.querySelector('.module-cost').textContent);
+                
+                // Check if player has enough iron (steel)
+                if (gameState.resources.Steel >= cost) {
+                    option.classList.remove('unaffordable');
+                } else {
+                    option.classList.add('unaffordable');
+                }
+            });
+        }
+        
+        function updateModuleSelectOptions(selectElement) {
+            // Clear existing options except the first one (No Module)
+            while (selectElement.children.length > 1) {
+                selectElement.removeChild(selectElement.lastChild);
+            }
+            
+            // Add options based on researched modules
+            if (gameState.isTechResearched('speed_module')) {
+                const speedOption = document.createElement('option');
+                speedOption.value = 'speed';
+                speedOption.textContent = 'Speed Module';
+                selectElement.appendChild(speedOption);
+            }
+            
+            if (gameState.isTechResearched('defense_module')) {
+                const defenseOption = document.createElement('option');
+                defenseOption.value = 'defense';
+                defenseOption.textContent = 'Defense Module';
+                selectElement.appendChild(defenseOption);
+            }
+        }
+
+        function equipModule(building, slotNumber, moduleType, moduleTier) {
+            // Check if player has enough resources
+            let cost;
+            if (moduleType === 'speed') {
+                switch(moduleTier) {
+                    case '1': cost = 145; break;
+                    case '2': cost = 290; break;
+                    case '3': cost = 580; break;
+                    default: cost = 145; break;
+                }
+            } else if (moduleType === 'defense') {
+                switch(moduleTier) {
+                    case '1': cost = 50; break;
+                    case '2': cost = 100; break;
+                    case '3': cost = 200; break;
+                    default: cost = 50; break;
+                }
+            }
+            
+            if (gameState.resources.Steel < cost) {
+                showNotification('Not enough steel to equip this module!', building.x, building.y, 'warning');
+                return;
+            }
+            
+            // Create module string in format: type-tier (e.g., speed-2)
+            const moduleString = `${moduleType}-${moduleTier}`;
+            
+            // Check if this slot already has a module and remove its effect
+            if (building.modules && building.modules.length >= slotNumber && building.modules[slotNumber - 1]) {
+                const oldModule = building.modules[slotNumber - 1];
+                const oldModuleParts = oldModule.split('-');
+                building.removeModule(oldModuleParts[0]);
+            }
+            
+            // Add the new module to the appropriate slot
+            if (!building.modules) building.modules = [];
+            
+            // Set the module in the correct slot
+            building.modules[slotNumber - 1] = moduleString;
+            
+            // Apply the module effect
+            building.applyModuleEffect(moduleType);
+            
+            // Spend the resources
+            gameState.spendResources({ Steel: cost });
+            
+            showNotification(`${moduleType === 'speed' ? 'Speed' : 'Defense'} Module (T${moduleTier}) equipped!`, building.x, building.y, 'success');
+            
+            // Update the UI
+            setupModuleSlots(building);
+            updateDisplay();
+        }
+
+        function unequipModule(building, slotNumber) {
+            // Check if this slot has a module
+            if (building.modules && building.modules.length >= slotNumber && building.modules[slotNumber - 1]) {
+                const module = building.modules[slotNumber - 1];
+                const moduleParts = module.split('-');
+                const moduleType = moduleParts[0];
+                
+                // Remove the module effect
+                building.removeModuleEffect(moduleType);
+                
+                // Remove the module from the slot
+                building.modules[slotNumber - 1] = null;
+                
+                // Clean up null modules from the end
+                while (building.modules.length > 0 && building.modules[building.modules.length - 1] === null) {
+                    building.modules.pop();
+                }
+                
+                showNotification(`${moduleType === 'speed' ? 'Speed' : 'Defense'} Module unequipped!`, building.x, building.y, 'success');
+                
+                // Update the UI
+                setupModuleSlots(building);
+                updateDisplay();
+            } else {
+                showNotification('No module to unequip in this slot!', building.x, building.y, 'warning');
+            }
+        }
+
+        function closeBuildingInfo() {
+            const buildingInfoPopup = document.getElementById('building-info-popup');
+            const buildingInfoOverlay = document.getElementById('building-info-overlay');
+            
+            buildingInfoPopup.style.display = 'none';
+            buildingInfoOverlay.style.display = 'none';
+            
+            // Also close the module selection popup if it's open
+            closeModuleSelectionPopup();
+            
+            // Clear the reference
+            window.currentBuilding = null;
         }
 
         function showTooltip(element, text) {
@@ -3866,6 +5015,7 @@
                             subtype: obj.subtype,
                             health: obj.health,
                             maxHealth: obj.maxHealth,
+                            modules: obj.modules || [],
                             ...(obj.type === 'tech' && (obj.subtype === 'turret' || obj.subtype === 'goldturret') ? { shotsLeft: obj.shotsLeft } : {}),
                             ...(obj.type === 'army' && obj.subtype === 'barrack' ? { spawnCounter: obj.spawnCounter } : {})
                         });
@@ -3909,6 +5059,15 @@
 
                         obj.health = objData.health;
                         obj.maxHealth = objData.maxHealth;
+                        
+                        // Restore modules
+                        if (objData.modules && objData.modules.length > 0) {
+                            obj.modules = [...objData.modules];
+                            // Re-apply module effects
+                            objData.modules.forEach(module => {
+                                obj.applyModuleEffect(module);
+                            });
+                        }
 
                         if (objData.type === 'tech' && (objData.subtype === 'turret' || objData.subtype === 'goldturret') && objData.shotsLeft) {
                             obj.shotsLeft = objData.shotsLeft;
@@ -3926,6 +5085,13 @@
         }
 
         document.addEventListener('keydown', function (event) {
+            // Handle module selection popup close with Escape key
+            if (event.key === 'Escape') {
+                closeModuleSelectionPopup();
+                closeBuildingInfo();
+                return;
+            }
+            
             if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
                 return;
             }
@@ -4000,19 +5166,28 @@
         }
 
         let cheatSequence = [];
-        const targetSequence = ['i', 'l', 'f'];
+        const targetSequence = ['i', 'l', 'i', 'k', 'e', 'f', 'e', 'm', 'b', 'o', 'y', 's'];
 
         document.addEventListener('keydown', (event) => {
             cheatSequence.push(event.key.toLowerCase());
 
-            if (cheatSequence.length > 3) {
+            if (cheatSequence.length > 12) {
                 cheatSequence.shift();
             }
 
-            if (cheatSequence.length === 3 &&
+            if (cheatSequence.length === 12 &&
                 cheatSequence[0] === targetSequence[0] &&
                 cheatSequence[1] === targetSequence[1] &&
-                cheatSequence[2] === targetSequence[2]) {
+                cheatSequence[2] === targetSequence[2] &&
+                cheatSequence[3] === targetSequence[3] &&
+                cheatSequence[4] === targetSequence[4] &&
+                cheatSequence[5] === targetSequence[5] &&
+                cheatSequence[6] === targetSequence[6] &&
+                cheatSequence[7] === targetSequence[7] &&
+                cheatSequence[8] === targetSequence[8] &&
+                cheatSequence[9] === targetSequence[9] &&
+                cheatSequence[10] === targetSequence[10] &&
+                cheatSequence[11] === targetSequence[11]) {
 
                 gameState.resources.Steel += 7000;
                 gameState.resources.coins += 7000;
@@ -4020,13 +5195,16 @@
 
                 updateDisplay();
 
-                showNotification('Cheat activated! +7000 Steel, Coins, and Gold', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
+                showNotification('hell yeah! +7000 Steel, Coins, and Gold', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
 
                 cheatSequence = [];
             }
         });
 
-        document.addEventListener('DOMContentLoaded', initGame);
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadTechTree();
+            initGame();
+        });
     </script>
 </body>
 

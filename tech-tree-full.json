@@ -1,0 +1,251 @@
+{
+  "positions": {
+    "fortress": { "x": 400, "y": 40 },
+    
+    "module_research": { "x": 150, "y": 160 },
+    "speed_module": { "x": 100, "y": 280 },
+    "advanced_speed_modules": { "x": 100, "y": 400 },
+    
+    "defense_module": { "x": 250, "y": 280 },
+    "advanced_defense_modules": { "x": 250, "y": 400 },
+    
+    "basic_defense": { "x": 500, "y": 160 },
+    "spike_traps": { "x": 400, "y": 280 },
+    "basic_turret": { "x": 600, "y": 280 },
+    "advanced_defense": { "x": 500, "y": 280 },
+    "bomb_tech": { "x": 400, "y": 400 },
+    "fortified_defense": { "x": 500, "y": 520 },
+    
+    "basic_army": { "x": 750, "y": 160 },
+    "advanced_army": { "x": 750, "y": 280 },
+    "ranged_units": { "x": 850, "y": 280 },
+    "elite_units": { "x": 650, "y": 400 },
+    "barrack_tech": { "x": 750, "y": 400 },
+    "siege_weapons": { "x": 850, "y": 400 },
+    "command_units": { "x": 650, "y": 520 },
+    
+    "advanced_mining": { "x": 1000, "y": 160 },
+    "premium_mining": { "x": 950, "y": 280 },
+    "supply_systems": { "x": 1050, "y": 280 },
+    "campfire_tech": { "x": 1050, "y": 400 },
+    "oil_rig_tech": { "x": 1050, "y": 520 }
+  },
+  "tech_tree": {
+    "fortress": {
+      "name": "Fortress",
+      "description": "Your main base that must be protected",
+      "cost": { "Steel": 0 },
+      "tier": 0,
+      "prerequisites": [],
+      "unlocks": ["module_research", "basic_defense", "basic_army", "advanced_mining"],
+      "icon": "spawn.png"
+    },
+    "module_research": {
+      "name": "Module Research",
+      "description": "Unlocks the ability to research specialized modules",
+      "cost": { "Steel": 150, "gold": 75 },
+      "tier": 2,
+      "prerequisites": ["fortress"],
+      "unlocks": ["speed_module", "defense_module"],
+      "icon": "speedmod.png"
+    },
+    "speed_module": {
+      "name": "Speed Module Tech",
+      "description": "Allows placement of speed modules on buildings and units",
+      "cost": { "Steel": 200, "gold": 100 },
+      "tier": 3,
+      "prerequisites": ["module_research"],
+      "unlocks": ["advanced_speed_modules"],
+      "icon": "speedmod.png"
+    },
+    "defense_module": {
+      "name": "Defense Module Tech",
+      "description": "Allows placement of defense modules on buildings and units",
+      "cost": { "Steel": 200, "gold": 100 },
+      "tier": 3,
+      "prerequisites": ["module_research"],
+      "unlocks": ["advanced_defense_modules"],
+      "icon": "defensemod.png"
+    },
+    "advanced_speed_modules": {
+      "name": "Advanced Speed Modules",
+      "description": "Unlocks higher tier speed modules",
+      "cost": { "Steel": 400, "gold": 200 },
+      "tier": 3,
+      "prerequisites": ["speed_module"],
+      "unlocks": [],
+      "icon": "speedmod.png"
+    },
+    "advanced_defense_modules": {
+      "name": "Advanced Defense Modules",
+      "description": "Unlocks higher tier defense modules",
+      "cost": { "Steel": 400, "gold": 200 },
+      "tier": 3,
+      "prerequisites": ["defense_module"],
+      "unlocks": [],
+      "icon": "defensemod.png"
+    },
+    "basic_defense": {
+      "name": "Basic Defense",
+      "description": "Unlock Steel Wall",
+      "cost": { "Steel": 75 },
+      "tier": 1,
+      "prerequisites": ["fortress"],
+      "unlocks": ["advanced_defense", "spike_traps", "basic_turret"],
+      "icon": "wall.png"
+    },
+    "basic_army": {
+      "name": "Basic Army",
+      "description": "Unlock Soldier unit",
+      "cost": { "coins": 75 },
+      "tier": 1,
+      "prerequisites": ["fortress"],
+      "unlocks": ["advanced_army", "ranged_units"],
+      "icon": "soldier.png"
+    },
+    "advanced_defense": {
+      "name": "Advanced Defense",
+      "description": "Unlock Steel Wall",
+      "cost": { "Steel": 150, "coins": 75 },
+      "tier": 2,
+      "prerequisites": ["basic_defense"],
+      "unlocks": ["fortified_defense"],
+      "icon": "wallsteel.png"
+    },
+    "spike_traps": {
+      "name": "Spike Traps",
+      "description": "Unlock Spike",
+      "cost": { "Steel": 100 },
+      "tier": 2,
+      "prerequisites": ["basic_defense"],
+      "unlocks": ["bomb_tech"],
+      "icon": "spike.png"
+    },
+    "bomb_tech": {
+      "name": "Bomb Tech",
+      "description": "Unlock Bomb",
+      "cost": { "gold": 20 },
+      "tier": 3,
+      "prerequisites": ["spike_traps"],
+      "unlocks": ["fortified_defense"],
+      "icon": "bomb.png"
+    },
+    "advanced_army": {
+      "name": "Advanced Army",
+      "description": "Unlock Knight unit",
+      "cost": { "coins": 150, "gold": 20 },
+      "tier": 2,
+      "prerequisites": ["basic_army"],
+      "unlocks": ["elite_units", "barrack_tech"],
+      "icon": "knight.png"
+    },
+    "ranged_units": {
+      "name": "Ranged Units",
+      "description": "Unlock Archer unit",
+      "cost": { "coins": 125 },
+      "tier": 2,
+      "prerequisites": ["basic_army"],
+      "unlocks": ["siege_weapons"],
+      "icon": "Archer.png"
+    },
+    "siege_weapons": {
+      "name": "Siege Weapons",
+      "description": "Unlock Siege Tower unit",
+      "cost": { "coins": 200 },
+      "tier": 2,
+      "prerequisites": ["ranged_units"],
+      "unlocks": [],
+      "icon": "siegetower.png"
+    },
+    "advanced_mining": {
+      "name": "Advanced Mining",
+      "description": "Unlock Gold Mine",
+      "cost": { "Steel": 200 },
+      "tier": 2,
+      "prerequisites": ["fortress"],
+      "unlocks": ["premium_mining", "supply_systems"],
+      "icon": "gold.png"
+    },
+    "supply_systems": {
+      "name": "Supply Systems",
+      "description": "Unlock Supply Drop",
+      "cost": { "gold": 250, "Steel": 250 },
+      "tier": 3,
+      "prerequisites": ["advanced_mining"],
+      "unlocks": ["campfire_tech"],
+      "icon": "supply.gif"
+    },
+    "basic_turret": {
+      "name": "Basic Turret",
+      "description": "Unlock Turret",
+      "cost": { "Steel": 200 },
+      "tier": 2,
+      "prerequisites": ["basic_defense"],
+      "unlocks": ["fortified_defense"],
+      "icon": "turret.png"
+    },
+    "fortified_defense": {
+      "name": "Fortified Defense",
+      "description": "Unlock Gold Turret",
+      "cost": { "Steel": 200, "gold": 500 },
+      "tier": 3,
+      "prerequisites": ["advanced_defense", "basic_turret", "bomb_tech"],
+      "unlocks": [],
+      "icon": "goldturret.png"
+    },
+    "elite_units": {
+      "name": "Elite Units",
+      "description": "Unlock Tank unit",
+      "cost": { "coins": 400, "gold": 75 },
+      "tier": 3,
+      "prerequisites": ["advanced_army"],
+      "unlocks": ["command_units"],
+      "icon": "Tank.png"
+    },
+    "command_units": {
+      "name": "Command Units",
+      "description": "Unlock King unit",
+      "cost": { "gold": 1000 },
+      "tier": 3,
+      "prerequisites": ["elite_units"],
+      "unlocks": [],
+      "icon": "king.png"
+    },
+    "barrack_tech": {
+      "name": "Barrack Tech",
+      "description": "Unlock Barrack unit",
+      "cost": { "gold": 275 },
+      "tier": 3,
+      "prerequisites": ["advanced_army"],
+      "unlocks": [],
+      "icon": "barrack.png"
+    },
+    "premium_mining": {
+      "name": "Premium Mining",
+      "description": "Unlock Bank",
+      "cost": { "Steel": 350, "gold": 75 },
+      "tier": 3,
+      "prerequisites": ["advanced_mining"],
+      "unlocks": [],
+      "icon": "bank.png"
+    },
+    "campfire_tech": {
+      "name": "Campfire Tech",
+      "description": "Unlock Campfire",
+      "cost": { "Steel": 50 },
+      "tier": 3,
+      "prerequisites": ["supply_systems"],
+      "unlocks": ["oil_rig_tech"],
+      "icon": "campfire.gif"
+    },
+    "oil_rig_tech": {
+      "name": "Oil Rig Tech",
+      "description": "Unlock Oil Rig",
+      "cost": { "Steel": 60 },
+      "tier": 3,
+      "prerequisites": ["campfire_tech"],
+      "unlocks": [],
+      "icon": "oilrig.png"
+    }
+  }
+}
