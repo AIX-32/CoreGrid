@@ -907,6 +907,40 @@
         .tech-tree-close:hover {
             background: #ff5555;
         }
+        
+        .tech-tree-resources {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .tech-tree-resources-card {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: #3a3a3a;
+            border: 2px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            padding: 12px 15px;
+            display: flex;
+            gap: 15px;
+            z-index: 25;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tech-tree-resource {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .tech-tree-resource img {
+            width: 20px;
+            height: 20px;
+            image-rendering: pixelated;
+        }
 
         .tech-tree-content {
             padding: 25px;
@@ -1896,6 +1930,24 @@
                 <button class="tech-tree-close" id="tech-tree-close">×</button>
             </div>
             <div class="tech-tree-content" id="tech-tree-content">
+                <div class="tech-tree-resources-card">
+                    <div class="tech-tree-resource">
+                        <img src="./sprites/ironin.png" alt="Steel">
+                        <span id="tech-tree-steel">100</span>
+                    </div>
+                    <div class="tech-tree-resource">
+                        <img src="./sprites/coin.png" alt="Coins">
+                        <span id="tech-tree-coins">50</span>
+                    </div>
+                    <div class="tech-tree-resource">
+                        <img src="./sprites/goldin.png" alt="Gold">
+                        <span id="tech-tree-gold">25</span>
+                    </div>
+                    <div class="tech-tree-resource">
+                        <img src="./sprites/Oil.png" alt="Oil">
+                        <span id="tech-tree-oil">0</span>
+                    </div>
+                </div>
                 <div class="tech-tree-main" id="tech-tree-main"></div>
                 <div class="tech-info-panel" id="tech-info-panel">
                     <div class="tech-info-default">Hover over a technology to see details</div>
@@ -3527,9 +3579,27 @@
             updateButtonStates();
             updateTechTreeDisplay();
             
+            // Update tech tree resources
+            updateTechTreeResources();
+            
             // Update module affordability if the popup is open
             if (document.getElementById('module-selection-popup').style.display === 'flex') {
                 updateModuleAffordability();
+            }
+        }
+        
+        function updateTechTreeResources() {
+            const techTreePopup = document.getElementById('tech-tree-popup');
+            if (techTreePopup && techTreePopup.style.display === 'flex') {
+                const steelElement = document.getElementById('tech-tree-steel');
+                const coinsElement = document.getElementById('tech-tree-coins');
+                const goldElement = document.getElementById('tech-tree-gold');
+                const oilElement = document.getElementById('tech-tree-oil');
+                
+                if (steelElement) steelElement.textContent = gameState.resources.Steel;
+                if (coinsElement) coinsElement.textContent = gameState.resources.coins;
+                if (goldElement) goldElement.textContent = gameState.resources.gold;
+                if (oilElement) oilElement.textContent = gameState.resources.oil;
             }
         }
 
@@ -4270,6 +4340,7 @@
                         showNotification(`${tech.name} researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
                         renderTechTree();
                         updateButtonStates(); // Update building availability
+                        updateDisplay(); // Update resource display immediately
                     } else {
                         showNotification(`Cannot research ${tech.name}. Check requirements.`, 
                             CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
