@@ -1160,7 +1160,6 @@
             opacity: 0.6;
         }
 
-        /* Building Information Window */
         .building-info-popup {
             position: fixed;
             top: 50%;
@@ -3092,17 +3091,18 @@
                 return;
             }
 
-            // If we clicked on a building/unit, show the building info window
-            if (cell && (cell.type === 'wall' || cell.type === 'tech' || cell.type === 'army')) {
-                showBuildingInfo(cell);
-                return;
-            }
-
+            // Handle army units separately - allow movement/selection instead of opening building info
             if (cell && cell.type === 'army') {
                 clearSelection();
                 gameState.selectedUnit = cell;
                 highlightValidMoves(cell);
                 updateDisplay();
+                return;
+            }
+
+            // If we clicked on a building (not army), show the building info window
+            if (cell && (cell.type === 'wall' || cell.type === 'tech')) {
+                showBuildingInfo(cell);
                 return;
             }
 
