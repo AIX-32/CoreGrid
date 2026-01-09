@@ -12,6 +12,7 @@
     "basic_defense": { "x": 500, "y": 160 },
     "spike_traps": { "x": 400, "y": 280 },
     "basic_turret": { "x": 600, "y": 280 },
+    "plasma_cannon_tech": { "x": 700, "y": 400 },
     "advanced_defense": { "x": 500, "y": 280 },
     "bomb_tech": { "x": 400, "y": 400 },
     "fortified_defense": { "x": 500, "y": 520 },
