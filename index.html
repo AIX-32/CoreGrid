@@ -525,9 +525,9 @@
             color: var(--text-secondary);
             padding: 30px;
             font-size: 1rem;
-            background: linear-gradient(145deg, #2a2a2a, #252525);
+            background: var(--bg-tertiary);
             border-radius: 8px;
-            border: 2px dashed #555;
+            border: 2px solid var(--border-color);
             margin: 10px;
         }
 
@@ -4683,7 +4683,7 @@
                             <div class="army-units-container" id="army-units-container">
                                 <div class="no-army-units">
                                     <p>No army units stored</p>
-                                    <p>Use War Gate to send units from grid</p>
+                                    <p>Use the WarGate to send units from a dive.</p>
                                 </div>
                             </div>
                         </div>
@@ -4807,7 +4807,7 @@
 
                                 <div class="zone-footer">
                                     <button class="zone-enter-btn" data-zone="shallow">
-                                        DIVE DEEPER
+                                        DIVE
                                     </button>
                                 </div>
                             </div>
@@ -4849,7 +4849,7 @@
 
                                 <div class="zone-footer">
                                     <button class="zone-enter-btn" data-zone="medium">
-                                        DIVE DEEPER
+                                        DIVE
                                     </button>
                                 </div>
                             </div>
@@ -4891,7 +4891,7 @@
 
                                 <div class="zone-footer">
                                     <button class="zone-enter-btn" data-zone="deep">
-                                        DIVE DEEPER
+                                        DIVE
                                     </button>
                                 </div>
                             </div>
@@ -9657,7 +9657,7 @@
                     unitsContainer.innerHTML = `
                     <div class="no-army-units">
                         <p>No army units stored</p>
-                        <p>Use War Gate to send units from grid</p>
+                        <p>Use the WarGate to send units from a dive.</p>
                     </div>
                 `;
                     return;
