@@ -282,6 +282,116 @@
             font-weight: bold;
             font-size: 1.2rem;
         }
+                
+        /* Death Screen Styles */
+        .death-screen-content {
+            background: linear-gradient(145deg, #2b1a1a, #3a2525);
+            border: 3px solid #8b0000;
+            max-width: 500px;
+            text-align: center;
+        }
+                
+        .death-screen-header {
+            padding: 30px 20px;
+            background: linear-gradient(145deg, #8b0000, #6b0000);
+            border-bottom: 3px solid #5a0000;
+            position: relative;
+        }
+                
+        .death-screen-header h2 {
+            color: #ff6b6b;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+                
+        .skull-icon {
+            font-size: 3rem;
+            margin-top: 15px;
+            animation: pulse 2s infinite;
+        }
+                
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+                
+        .death-screen-body {
+            padding: 30px;
+        }
+                
+        .death-message {
+            margin-bottom: 25px;
+        }
+                
+        .death-message p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+                
+        .death-stats {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+                
+        .death-stat {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #444;
+        }
+                
+        .death-stat:last-child {
+            border-bottom: none;
+        }
+                
+        .death-stat .stat-label {
+            color: #c0c0c0;
+            font-size: 1rem;
+        }
+                
+        .death-stat .stat-value {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+                
+        .death-screen-actions {
+            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+                
+        #death-return-btn {
+            background: #555;
+            border-color: #777;
+            color: #ddd;
+        }
+                
+        #death-return-btn:hover {
+            background: #666;
+            border-color: #888;
+        }
+                
+        #death-retry-btn {
+            background: #8b0000;
+            border-color: #aa0000;
+        }
+                
+        #death-retry-btn:hover {
+            background: #aa0000;
+            border-color: #cc0000;
+            box-shadow: 0 0 15px rgba(170, 0, 0, 0.4);
+        }
         
         .army-box {
             background: #3a3a3a;
@@ -289,10 +399,9 @@
             border-radius: var(--border-radius);
             padding: 20px;
             box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
-            min-height: 150px;
+            min-height: 200px;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
         }
         
         .army-box h2 {
@@ -313,12 +422,16 @@
         }
         
         .army-unit-count {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            background: #2d2d2d;
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid #555;
+            color: var(--accent-primary);
+            font-size: 1rem;
+            background: linear-gradient(145deg, #2d2d2d, #252525);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 2px solid #555;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            min-width: 80px;
+            text-align: center;
         }
         
         .army-units-container {
@@ -333,25 +446,44 @@
         .no-army-units {
             text-align: center;
             color: var(--text-secondary);
-            padding: 20px;
-            font-size: 0.9rem;
+            padding: 30px;
+            font-size: 1rem;
+            background: linear-gradient(145deg, #2a2a2a, #252525);
+            border-radius: 8px;
+            border: 2px dashed #555;
+            margin: 10px;
         }
         
         .no-army-units p {
-            margin: 5px 0;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        .no-army-units p:first-child {
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         
         .army-unit-display {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: #2d2d2d;
-            border: 1px solid #555;
-            border-radius: 4px;
-            margin-bottom: 8px;
+            gap: 15px;
+            padding: 15px;
+            background: linear-gradient(145deg, #2d2d2d, #252525);
+            border: 2px solid #555;
+            border-radius: 8px;
+            margin-bottom: 12px;
             width: 100%;
             box-sizing: border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .army-unit-display:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 217, 255, 0.2);
         }
         
         .army-unit-display:last-child {
@@ -359,53 +491,98 @@
         }
         
         .army-unit-display-icon {
-            width: 32px;
-            height: 32px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #3a3a3a;
-            border-radius: 3px;
-            border: 1px solid #7a7a7a;
+            background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+            border-radius: 8px;
+            border: 2px solid #7a7a7a;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .army-unit-display-icon img {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             image-rendering: pixelated;
         }
         
         .army-unit-display-info {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         
         .army-unit-display-name {
             color: var(--text-primary);
             font-weight: bold;
-            font-size: 1rem;
-            margin-bottom: 2px;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
         
         .army-unit-display-stats {
             display: flex;
-            gap: 12px;
-            font-size: 0.8rem;
+            gap: 15px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
         }
         
         .army-unit-display-stat {
             color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: rgba(45, 45, 45, 0.5);
+            border-radius: 12px;
+            border: 1px solid #444;
         }
         
         .army-unit-display-stat.health {
             color: #7a977b;
+            background: rgba(122, 151, 123, 0.2);
+            border-color: #7a977b;
         }
         
         .army-unit-display-stat.range {
             color: #ceab77;
+            background: rgba(206, 171, 119, 0.2);
+            border-color: #ceab77;
         }
         
         .army-unit-display-stat.movement {
             color: #66d9ff;
+            background: rgba(102, 217, 255, 0.2);
+            border-color: #66d9ff;
+        }
+        
+        /* Army Unit Animation */
+        @keyframes unitCardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .army-unit-display.new-unit {
+            animation: unitCardAppear 0.5s ease-out;
+        }
+        
+        /* Army Box Header Enhancement */
+        .army-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #555;
         }
         
         .homescreen-buttons {
@@ -823,6 +1000,7 @@
         
         .reward-item {
             background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--border-color);
             padding: 8px 15px;
             border-radius: 20px;
             display: flex;
@@ -831,14 +1009,6 @@
             font-weight: bold;
         }
         
-
-        
-        .reward-item.premium-reward {
-            background: rgba(139, 69, 19, 0.5);
-            border: 2px solid #FFD700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
-            animation: glowPulse 2s infinite;
-        }
         
         @keyframes glowPulse {
             0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
@@ -3909,7 +4079,7 @@
                     <div class="homescreen-buttons">
                         <button class="homescreen-button play-button" id="play-game-btn">
                             <img src="./sprites/turret.png" alt="Play">
-                            PLAY
+                            DIVE
                         </button>
                         <button class="homescreen-button" id="load-game-btn">
                             LOAD
@@ -3949,13 +4119,13 @@
                                         <img src="./sprites/wall.png" alt="Shallow">
                                     </div>
                                     <div class="zone-title">
-                                        <h3>SHALLOW ZONE</h3>
+                                        <h3>SHALLOW DIVE</h3>
                                         <span class="zone-risk low">LOW RISK</span>
                                     </div>
                                 </div>
                                 
                                 <div class="zone-content">
-                                    <p class="zone-description">Surface deposits with minimal hostiles. Ideal for beginners and steady resource accumulation.</p>
+                                    <p class="zone-description">Surface deposits with minimal hostiles. Perfect for your first dive and establishing base operations.</p>
                                     
                                     <div class="zone-rewards">
                                         <div class="reward-item">
@@ -3979,7 +4149,7 @@
                                 
                                 <div class="zone-footer">
                                     <button class="zone-enter-btn" data-zone="shallow">
-                                        ENTER ZONE
+                                        DIVE DEEPER
                                     </button>
                                 </div>
                             </div>
@@ -3990,13 +4160,13 @@
                                         <img src="./sprites/turret.png" alt="Medium">
                                     </div>
                                     <div class="zone-title">
-                                        <h3>MEDIUM ZONE</h3>
+                                        <h3>MEDIUM DIVE</h3>
                                         <span class="zone-risk medium">MODERATE RISK</span>
                                     </div>
                                 </div>
                                 
                                 <div class="zone-content">
-                                    <p class="zone-description">Deeper deposits with increased hostile activity. Requires adequate defenses for safe extraction.</p>
+                                    <p class="zone-description">Deeper deposits with increased hostile activity. Requires adequate defenses for successful diving operations.</p>
                                     
                                     <div class="zone-rewards">
                                         <div class="reward-item">
@@ -4020,7 +4190,7 @@
                                 
                                 <div class="zone-footer">
                                     <button class="zone-enter-btn" data-zone="medium">
-                                        ENTER ZONE
+                                        DIVE DEEPER
                                     </button>
                                 </div>
                             </div>
@@ -4031,13 +4201,13 @@
                                         <img src="./sprites/goldturret.png" alt="Deep">
                                     </div>
                                     <div class="zone-title">
-                                        <h3>DEEP ZONE</h3>
+                                        <h3>DEEP DIVE</h3>
                                         <span class="zone-risk high">HIGH RISK</span>
                                     </div>
                                 </div>
                                 
                                 <div class="zone-content">
-                                    <p class="zone-description">Premium resource deposits in dangerous territory. Only for experienced operators with heavy defenses.</p>
+                                    <p class="zone-description">Premium resource deposits in dangerous depths. Only for experienced divers with heavy defenses.</p>
                                     
                                     <div class="zone-rewards">
                                         <div class="reward-item">
@@ -4052,7 +4222,7 @@
                                             <img src="./sprites/goldin.png" alt="Gold">
                                             <span>+250</span>
                                         </div>
-                                        <div class="reward-item oil-reward premium-reward">
+                                        <div class="reward-item">
                                             <img src="./sprites/Oil.png" alt="Oil">
                                             <span>+100</span>
                                         </div>
@@ -4061,7 +4231,7 @@
                                 
                                 <div class="zone-footer">
                                     <button class="zone-enter-btn" data-zone="deep">
-                                        ENTER ZONE
+                                        DIVE DEEPER
                                     </button>
                                 </div>
                             </div>
@@ -4071,14 +4241,48 @@
             </div>
         </div>
         
+        <!-- Death Screen Overlay -->
+        <div id="death-screen" class="modal-overlay">
+            <div class="modal-content death-screen-content">
+                <div class="death-screen-header">
+                    <h2>MISSION FAILED</h2>
+                    <div class="skull-icon">💀</div>
+                </div>
+                <div class="death-screen-body">
+                    <div class="death-message">
+                        <p>Your forces have been overwhelmed...</p>
+                        <p>The enemies have breached your defenses.</p>
+                    </div>
+                    <div class="death-stats">
+                        <div class="death-stat">
+                            <span class="stat-label">Turns Survived:</span>
+                            <span class="stat-value" id="death-turns">0</span>
+                        </div>
+                        <div class="death-stat">
+                            <span class="stat-label">Waves Completed:</span>
+                            <span class="stat-value" id="death-waves">0</span>
+                        </div>
+                        <div class="death-stat">
+                            <span class="stat-label">Resources Lost:</span>
+                            <span class="stat-value" id="death-resources">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="death-screen-actions">
+                    <button class="modal-btn secondary" id="death-return-btn">Return to Base</button>
+                    <button class="modal-btn primary" id="death-retry-btn">Retry Mission</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Active Game Session Interface -->
         <div id="active-zone-view" class="screen-view">
             <!-- Top Navigation Bar -->
             <nav class="game-navbar">
                 <!-- Left Section: Zone Info -->
                 <div class="nav-section nav-current-zone">
-                    <span class="nav-label">CURRENT ZONE:</span>
-                    <span class="nav-value zone-name" id="current-zone-display">SHALLOW ZONE</span>
+                    <span class="nav-label">CURRENT DIVE:</span>
+                    <span class="nav-value zone-name" id="current-zone-display">SHALLOW DIVE</span>
                 </div>
                 
                 <!-- Right Section: Building Controls and Status -->
@@ -6282,22 +6486,37 @@ function getSpriteForMode(mode) {
         }
 
         function gameOver() {
-            if (gameState.gameMode === 'active_zone') {
-                // In extraction mode, player loses session resources
-                showNotification('EXTRACTION FAILED! All session resources lost.', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'danger');
-                setTimeout(() => {
-                    gameState.returnToHomescreen();
-                    showHomescreen(); // Ensure homescreen overlay opens
-                    showNotification('Returned to base with zero resources.', 12, 7, 'warning');
-                }, 2000);
-            } else {
-                // Regular game over - always return to homescreen
-                showNotification('Game Over! The enemies have reached your base!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'danger');
-                setTimeout(() => {
-                    gameState.returnToHomescreen();
-                    showHomescreen(); // Ensure homescreen overlay opens
-                    showNotification('Returned to base. Try again!', 12, 7, 'warning');
-                }, 1500);
+            // Show death screen instead of just notifications
+            showDeathScreen();
+        }
+        
+        function showDeathScreen() {
+            const deathScreen = document.getElementById('death-screen');
+            if (!deathScreen) {
+                console.error('Death screen element not found!');
+                return;
+            }
+            
+            // Update death stats
+            document.getElementById('death-turns').textContent = gameState.turn;
+            document.getElementById('death-waves').textContent = gameState.wave;
+            
+            // Calculate resources lost (session resources)
+            const resourcesLost = Object.values(gameState.sessionResources).reduce((sum, val) => sum + val, 0);
+            document.getElementById('death-resources').textContent = resourcesLost;
+            
+            // Show the death screen
+            deathScreen.classList.add('active');
+            
+            // Track failed mission
+            gameState.totalMissions++; // Increment total missions even for failures
+            updateStatsPanel();
+        }
+        
+        function hideDeathScreen() {
+            const deathScreen = document.getElementById('death-screen');
+            if (deathScreen) {
+                deathScreen.classList.remove('active');
             }
         }
 
@@ -7714,7 +7933,34 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Discord button - opens Discord link
+            // Death screen buttons
+            const deathReturnBtn = document.getElementById('death-return-btn');
+            if (deathReturnBtn) {
+                const clone = deathReturnBtn.cloneNode(true);
+                deathReturnBtn.parentNode.replaceChild(clone, deathReturnBtn);
+                
+                clone.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    hideDeathScreen();
+                    gameState.returnToHomescreen();
+                    showHomescreen();
+                    showNotification('Returned to base. Better luck next time!', 12, 7, 'warning');
+                });
+            }
+            
+            const deathRetryBtn = document.getElementById('death-retry-btn');
+            if (deathRetryBtn) {
+                const clone = deathRetryBtn.cloneNode(true);
+                deathRetryBtn.parentNode.replaceChild(clone, deathRetryBtn);
+                
+                clone.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    hideDeathScreen();
+                    // Restart the same zone with same resources
+                    gameState.enterZone(gameState.currentZone);
+                    showNotification(`Retrying ${gameState.currentZone.toUpperCase()} mission...`, 12, 7, 'info');
+                });
+            }
             const discordBtn = document.getElementById('discord-btn');
             if (discordBtn) {
                 const clone = discordBtn.cloneNode(true);
