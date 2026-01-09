@@ -29,6 +29,7 @@
     "premium_mining": { "x": 950, "y": 280 },
     "supply_systems": { "x": 1050, "y": 280 },
     "campfire_tech": { "x": 1050, "y": 400 },
+    "warpgate_tech": { "x": 1150, "y": 520 },
     "oil_rig_tech": { "x": 1050, "y": 520 }
   },
   "tech_tree": {
@@ -87,8 +88,8 @@
       "icon": "defensemod.png"
     },
     "basic_defense": {
-      "name": "Basic Defense",
-      "description": "Unlock Steel Wall",
+      "name": "Wall",
+      "description": "Unlocks basic defense structures",
       "cost": { "Steel": 75 },
       "tier": 1,
       "prerequisites": ["fortress"],
@@ -96,8 +97,8 @@
       "icon": "wall.png"
     },
     "basic_army": {
-      "name": "Basic Army",
-      "description": "Unlock Soldier unit",
+      "name": "Army",
+      "description": "The first unit of the army",
       "cost": { "coins": 75 },
       "tier": 1,
       "prerequisites": ["fortress"],
@@ -105,8 +106,8 @@
       "icon": "soldier.png"
     },
     "advanced_defense": {
-      "name": "Advanced Defense",
-      "description": "Unlock Steel Wall",
+      "name": "Steel wall",
+      "description": "A more powerful wall",
       "cost": { "Steel": 150, "coins": 75 },
       "tier": 2,
       "prerequisites": ["basic_defense"],
@@ -114,8 +115,8 @@
       "icon": "wallsteel.png"
     },
     "spike_traps": {
-      "name": "Spike Traps",
-      "description": "Unlock Spike",
+      "name": "Spike",
+      "description": "Damages enemies trying to attack it",
       "cost": { "Steel": 100 },
       "tier": 2,
       "prerequisites": ["basic_defense"],
@@ -123,8 +124,8 @@
       "icon": "spike.png"
     },
     "bomb_tech": {
-      "name": "Bomb Tech",
-      "description": "Unlock Bomb",
+      "name": "Bomb",
+      "description": "Explodes on impact dealing damage to enemies.",
       "cost": { "gold": 20 },
       "tier": 3,
       "prerequisites": ["spike_traps"],
@@ -132,8 +133,8 @@
       "icon": "bomb.png"
     },
     "advanced_army": {
-      "name": "Advanced Army",
-      "description": "Unlock Knight unit",
+      "name": "Knight",
+      "description": "Moves and attacks like the chess knight.",
       "cost": { "coins": 150, "gold": 20 },
       "tier": 2,
       "prerequisites": ["basic_army"],
@@ -141,8 +142,8 @@
       "icon": "knight.png"
     },
     "ranged_units": {
-      "name": "Ranged Units",
-      "description": "Unlock Archer unit",
+      "name": "Archer",
+      "description": "A long range unit that shoots in a x pattern.",
       "cost": { "coins": 125 },
       "tier": 2,
       "prerequisites": ["basic_army"],
@@ -150,8 +151,8 @@
       "icon": "Archer.png"
     },
     "siege_weapons": {
-      "name": "Siege Weapons",
-      "description": "Unlock Siege Tower unit",
+      "name": "Siege Tower",
+      "description": "A long range unit that shoots in all directions.",
       "cost": { "coins": 200 },
       "tier": 2,
       "prerequisites": ["ranged_units"],
@@ -159,8 +160,8 @@
       "icon": "siegetower.png"
     },
     "advanced_mining": {
-      "name": "Advanced Mining",
-      "description": "Unlock Gold Mine",
+      "name": "Gold Mine",
+      "description": "Generates gold.",
       "cost": { "Steel": 200 },
       "tier": 2,
       "prerequisites": ["fortress"],
@@ -168,8 +169,8 @@
       "icon": "gold.png"
     },
     "supply_systems": {
-      "name": "Supply Systems",
-      "description": "Unlock Supply Drop",
+      "name": "Supply Drop",
+      "description": "Drops random items every round.",
       "cost": { "gold": 250, "Steel": 250 },
       "tier": 3,
       "prerequisites": ["advanced_mining"],
@@ -178,7 +179,7 @@
     },
     "basic_turret": {
       "name": "Basic Turret",
-      "description": "Unlock Turret",
+      "description": "Automatically attacks enemies in range. ",
       "cost": { "Steel": 200 },
       "tier": 2,
       "prerequisites": ["basic_defense"],
@@ -186,8 +187,8 @@
       "icon": "turret.png"
     },
     "fortified_defense": {
-      "name": "Fortified Defense",
-      "description": "Unlock Gold Turret",
+      "name": "Gold Turret",
+      "description": "A more powerful turret",
       "cost": { "Steel": 200, "gold": 500 },
       "tier": 3,
       "prerequisites": ["advanced_defense", "basic_turret", "bomb_tech"],
@@ -195,8 +196,8 @@
       "icon": "goldturret.png"
     },
     "elite_units": {
-      "name": "Elite Units",
-      "description": "Unlock Tank unit",
+      "name": "Tank",
+      "description": "A slow but powerful unit.",
       "cost": { "coins": 400, "gold": 75 },
       "tier": 3,
       "prerequisites": ["advanced_army"],
@@ -204,8 +205,8 @@
       "icon": "Tank.png"
     },
     "command_units": {
-      "name": "Command Units",
-      "description": "Unlock King unit",
+      "name": "The King",
+      "description": "A very powerful unit.",
       "cost": { "gold": 1000 },
       "tier": 3,
       "prerequisites": ["elite_units"],
@@ -213,8 +214,8 @@
       "icon": "king.png"
     },
     "barrack_tech": {
-      "name": "Barrack Tech",
-      "description": "Unlock Barrack unit",
+      "name": "Barrack",
+      "description": "Spawns units with no cost every 2 rounds.",
       "cost": { "gold": 275 },
       "tier": 3,
       "prerequisites": ["advanced_army"],
@@ -222,8 +223,8 @@
       "icon": "barrack.png"
     },
     "premium_mining": {
-      "name": "Premium Mining",
-      "description": "Unlock Bank",
+      "name": "Bank",
+      "description": "Generates coins.",
       "cost": { "Steel": 350, "gold": 75 },
       "tier": 3,
       "prerequisites": ["advanced_mining"],
@@ -232,15 +233,24 @@
     },
     "campfire_tech": {
       "name": "Campfire Tech",
-      "description": "Unlock Campfire",
+      "description": "The Campfire boosts buildings around it by 40%",
       "cost": { "Steel": 50 },
       "tier": 3,
       "prerequisites": ["supply_systems"],
-      "unlocks": ["oil_rig_tech"],
+      "unlocks": ["oil_rig_tech", "warpgate_tech"],
       "icon": "campfire.gif"
     },
+    "warpgate_tech": {
+      "name": "Wargate",
+      "description": "Teleport deployed armies back to base",
+      "cost": { "Steel": 300, "gold": 200, "oil": 150 },
+      "tier": 3,
+      "prerequisites": ["campfire_tech"],
+      "unlocks": [],
+      "icon": "warpgate.png"
+    },
     "oil_rig_tech": {
-      "name": "Oil Rig Tech",
+      "name": "Oil Rig",
       "description": "Unlock Oil Rig",
       "cost": { "Steel": 60 },
       "tier": 3,

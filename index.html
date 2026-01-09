@@ -3322,6 +3322,50 @@
             z-index: 2000;
             display: none;
         }
+        
+        /* Building Special Actions */
+        .building-special-actions {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #555;
+        }
+        
+        .building-action-btn {
+            width: 100%;
+            padding: 12px;
+            background: #3a3a3a;
+            border: 2px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .building-action-btn:hover {
+            background: #4a4a4a;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px rgba(102, 217, 255, 0.4);
+        }
+        
+        .building-action-btn img {
+            width: 24px;
+            height: 24px;
+            image-rendering: pixelated;
+        }
+        
+        .action-cost {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
     </style>
 </head>
 
@@ -3706,6 +3750,12 @@
                                         <span>Campfire</span>
                                         <span class="cost">30S</span>
                                     </button>
+                                    <button class="dropdown-btn" id="place-warpgate"
+                                        data-info="Warpgate,Teleports deployed armies back to base,Health: 3,Requires: Advanced Army,Uses: 50 oil per teleport">
+                                        <img src="./sprites/warpgate.png" alt="Warpgate">
+                                        <span>Warpgate</span>
+                                        <span class="cost">150S 100G 75O</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -4008,6 +4058,15 @@
                     </div>
                 </div>
                 <div class="module-selection-overlay" id="module-selection-overlay"></div>
+                
+                <!-- Special Actions -->
+                <div class="building-special-actions" id="building-special-actions">
+                    <button class="building-action-btn" id="teleport-army-btn">
+                        <img src="./sprites/warpgate.png" alt="Teleport">
+                        TELEPORT ARMY HOME
+                        <span class="action-cost">50 OIL</span>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="building-info-overlay" id="building-info-overlay"></div>
@@ -4041,7 +4100,8 @@
                     goldturret: './sprites/goldturret.png',
                     bomb: './sprites/bomb.png',
                     supply: './sprites/supply.gif',
-                    campfire: './sprites/campfire.gif'
+                    campfire: './sprites/campfire.gif',
+                    warpgate: './sprites/warpgate.png'
                 },
                 army: {
                     scout: './sprites/soldier.png',
@@ -4244,10 +4304,16 @@
             }
 
             extractResources() {
+                console.log('Extracting resources...');
+                console.log('Session resources before extraction:', this.sessionResources);
+                console.log('Stored resources before extraction:', this.storedResources);
+                
                 // Add session resources to stored resources
                 for (const [resource, amount] of Object.entries(this.sessionResources)) {
                     this.storedResources[resource] = (this.storedResources[resource] || 0) + amount;
                 }
+                
+                console.log('Stored resources after extraction:', this.storedResources);
                 
                 // Return to homescreen
                 this.returnToHomescreen();
@@ -5733,15 +5799,38 @@
             document.getElementById('gold-count').textContent = gameState.resources.gold;
             document.getElementById('oil-count').textContent = gameState.resources.oil;
             
-            // Update stored resources (homescreen view)
-            const storedSteel = document.getElementById('stored-steel-count');
-            if (storedSteel) storedSteel.textContent = gameState.storedResources.Steel;
-            const storedCoin = document.getElementById('stored-coin-count');
-            if (storedCoin) storedCoin.textContent = gameState.storedResources.coins;
-            const storedGold = document.getElementById('stored-gold-count');
-            if (storedGold) storedGold.textContent = gameState.storedResources.gold;
-            const storedOil = document.getElementById('stored-oil-count');
-            if (storedOil) storedOil.textContent = gameState.storedResources.oil;
+            // Update stored resources (homescreen view - vault panel)
+            const vaultStoredSteel = document.getElementById('vault-stored-steel-count');
+            if (vaultStoredSteel) {
+                vaultStoredSteel.textContent = gameState.storedResources.Steel;
+                console.log('Updated vault steel to:', gameState.storedResources.Steel);
+            } else {
+                console.log('vault-stored-steel-count element not found');
+            }
+            
+            const vaultStoredCoin = document.getElementById('vault-stored-coin-count');
+            if (vaultStoredCoin) {
+                vaultStoredCoin.textContent = gameState.storedResources.coins;
+                console.log('Updated vault coins to:', gameState.storedResources.coins);
+            } else {
+                console.log('vault-stored-coin-count element not found');
+            }
+            
+            const vaultStoredGold = document.getElementById('vault-stored-gold-count');
+            if (vaultStoredGold) {
+                vaultStoredGold.textContent = gameState.storedResources.gold;
+                console.log('Updated vault gold to:', gameState.storedResources.gold);
+            } else {
+                console.log('vault-stored-gold-count element not found');
+            }
+            
+            const vaultStoredOil = document.getElementById('vault-stored-oil-count');
+            if (vaultStoredOil) {
+                vaultStoredOil.textContent = gameState.storedResources.oil;
+                console.log('Updated vault oil to:', gameState.storedResources.oil);
+            } else {
+                console.log('vault-stored-oil-count element not found');
+            }
             
             // Update session resources (active zone view)
             const sessionSteel = document.getElementById('session-steel-count');
@@ -6079,7 +6168,8 @@
             { id: 'place-tank', mode: 'army-tank', cost: { coins: 50 } },
             { id: 'place-siege-tower', mode: 'army-siegetower', cost: { coins: 275 } },
             { id: 'place-king', mode: 'army-king', cost: { gold: 500 } },
-            { id: 'place-barrack', mode: 'army-barrack', cost: { gold: 50 } }
+            { id: 'place-barrack', mode: 'army-barrack', cost: { gold: 50 } },
+            { id: 'place-warpgate', mode: 'tech-warpgate', cost: { Steel: 150, gold: 100, oil: 75 } }
         ];
 
         function setupExtractionEventListeners() {
@@ -6758,6 +6848,18 @@
                 });
             }
             
+            // Teleport army button
+            const teleportArmyBtn = document.getElementById('teleport-army-btn');
+            if (teleportArmyBtn) {
+                const clone = teleportArmyBtn.cloneNode(true);
+                teleportArmyBtn.parentNode.replaceChild(clone, teleportArmyBtn);
+                
+                clone.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    teleportArmyHome();
+                });
+            }
+            
             // New Homescreen Button Event Listeners
             
             // Play button - opens zone selection
@@ -6814,6 +6916,7 @@
                 'tech-bomb': 'bomb_tech',
                 'tech-supply': 'supply_systems',
                 'tech-campfire': 'campfire_tech',
+                'tech-warpgate': 'warpgate_tech',
                 'tech-goldminer': 'advanced_mining',
                 'tech-oilrig': 'oil_rig_tech',
                 'tech-coinmaker': 'premium_mining',
@@ -6854,6 +6957,7 @@
                 'tech-goldminer': 'Advanced Mining',
                 'tech-coinmaker': 'Premium Mining',
                 'tech-campfire': 'Campfire Tech',
+                'tech-warpgate': 'Warpgate Technology',
                 'army-tank': 'Elite Units',
                 'army-siegetower': 'Siege Weapons',
                 'army-king': 'Command Units',
@@ -7622,6 +7726,87 @@
             
             // Clear the reference
             window.currentBuilding = null;
+        }
+        
+        function teleportArmyHome() {
+            // Check if we have enough oil
+            if (gameState.resources.oil < 50) {
+                showNotification('Not enough oil! Need 50 oil to teleport armies.', 12, 7, 'warning');
+                return;
+            }
+            
+            // Find all deployed army units
+            const armyUnits = [];
+            for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
+                for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
+                    const cell = gameState.grid[y][x];
+                    if (cell && cell.type === 'army') {
+                        armyUnits.push({
+                            unit: cell,
+                            x: x,
+                            y: y
+                        });
+                    }
+                }
+            }
+            
+            if (armyUnits.length === 0) {
+                showNotification('No deployed armies to teleport!', 12, 7, 'warning');
+                return;
+            }
+            
+            // Spend the oil cost
+            gameState.resources.oil -= 50;
+            
+            // Teleport all armies back to fortress/base
+            const fortressPos = CONFIG.PLAYER_START;
+            let teleportedCount = 0;
+            
+            armyUnits.forEach(({unit, x, y}) => {
+                // Remove unit from current position
+                gameState.grid[y][x] = null;
+                
+                // Place unit at fortress position (if spot is free)
+                if (gameState.grid[fortressPos.y][fortressPos.x] === null) {
+                    unit.x = fortressPos.x + gameState.cameraOffset.x;
+                    unit.y = fortressPos.y + gameState.cameraOffset.y;
+                    gameState.grid[fortressPos.y][fortressPos.x] = unit;
+                    teleportedCount++;
+                } else {
+                    // If fortress spot is occupied, try nearby spots
+                    const nearbySpots = [
+                        {x: fortressPos.x - 1, y: fortressPos.y},
+                        {x: fortressPos.x + 1, y: fortressPos.y},
+                        {x: fortressPos.x, y: fortressPos.y - 1},
+                        {x: fortressPos.x, y: fortressPos.y + 1}
+                    ];
+                    
+                    let placed = false;
+                    for (const spot of nearbySpots) {
+                        if (spot.x >= 0 && spot.x < CONFIG.GRID_SIZE_X && 
+                            spot.y >= 0 && spot.y < CONFIG.GRID_SIZE_Y &&
+                            gameState.grid[spot.y][spot.x] === null) {
+                            unit.x = spot.x + gameState.cameraOffset.x;
+                            unit.y = spot.y + gameState.cameraOffset.y;
+                            gameState.grid[spot.y][spot.x] = unit;
+                            teleportedCount++;
+                            placed = true;
+                            break;
+                        }
+                    }
+                    
+                    // If no spot found, unit is lost
+                    if (!placed) {
+                        // Unit is destroyed/lost
+                    }
+                }
+            });
+            
+            // Close building info and update display
+            closeBuildingInfo();
+            updateDisplay();
+            
+            showNotification(`Teleported ${teleportedCount} armies back to base! (-50 oil)`, 12, 7, 'success');
         }
 
         function showTooltip(element, text) {
