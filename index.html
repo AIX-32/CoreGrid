@@ -890,8 +890,6 @@
             border: 2px solid #7a7a7a;
             border-radius: var(--border-radius);
             min-width: 200px;
-            max-height: 300px;
-            overflow-y: auto;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             display: none;
@@ -935,6 +933,50 @@
             margin-left: auto;
             color: #858585;
             font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80px;
+            cursor: pointer;
+            border-bottom: 1px dotted #858585;
+        }
+        
+        .dropdown-btn span:last-child:hover {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+        
+        /* Full cost popup */
+        .full-cost-popup {
+            position: fixed;
+            background: #222;
+            border: 2px solid var(--accent-primary);
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            z-index: 2000;
+            box-shadow: 0 0 20px rgba(102, 217, 255, 0.4);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .full-cost-popup.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .full-cost-popup::before {
+            content: "COST DETAILS";
+            display: block;
+            color: var(--accent-primary);
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
         .nav-section {
@@ -2234,6 +2276,90 @@
             image-rendering: pixelated;
         }
 
+        /* Placement Preview Tooltip Styles */
+        .placement-preview-tooltip {
+            position: fixed;
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        .preview-tooltip-content {
+            background: rgba(43, 43, 43, 0.95);
+            border: 2px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            min-width: 180px;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preview-icon {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+
+        .preview-icon.error {
+            /* Fallback styling when image fails to load */
+            background: #555;
+            border: 1px solid #777;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #ccc;
+            text-align: center;
+        }
+
+        .preview-title {
+            color: var(--text-primary);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .preview-costs {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .preview-cost-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .preview-cost-item img {
+            width: 16px;
+            height: 16px;
+            image-rendering: pixelated;
+        }
+
+        .preview-cost-placeholder {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        .preview-instruction {
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
@@ -3391,7 +3517,7 @@
                             <div class="vault-header">
                                 <h2>VAULT</h2>
                                 <div class="vault-storage-indicator">
-                                    <span class="vault-storage-label">ASSETS:</span>
+                                    <span class="vault-storage-label">VALUE:</span>
                                     <span class="vault-storage-amount" id="vault-total-storage">175</span>
                                 </div>
                             </div>
@@ -3485,6 +3611,9 @@
                         </button>
                         <button class="homescreen-button" id="load-game-btn">
                             LOAD
+                        </button>
+                        <button class="homescreen-button" id="save-game-btn">
+                            SAVE
                         </button>
                         <button class="homescreen-button discord-button" id="discord-btn">
                             DISCORD
@@ -3752,7 +3881,7 @@
                                     </button>
                                     <button class="dropdown-btn" id="place-warpgate"
                                         data-info="Warpgate,Teleports deployed armies back to base,Health: 3,Requires: Advanced Army,Uses: 50 oil per teleport">
-                                        <img src="./sprites/warpgate.png" alt="Warpgate">
+                                        <img src="./sprites/wargate.png" alt="Warpgate">
                                         <span>Warpgate</span>
                                         <span class="cost">150S 100G 75O</span>
                                     </button>
@@ -4062,7 +4191,7 @@
                 <!-- Special Actions -->
                 <div class="building-special-actions" id="building-special-actions">
                     <button class="building-action-btn" id="teleport-army-btn">
-                        <img src="./sprites/warpgate.png" alt="Teleport">
+                        <img src="./sprites/wargate.png" alt="Teleport">
                         TELEPORT ARMY HOME
                         <span class="action-cost">50 OIL</span>
                     </button>
@@ -4101,7 +4230,7 @@
                     bomb: './sprites/bomb.png',
                     supply: './sprites/supply.gif',
                     campfire: './sprites/campfire.gif',
-                    warpgate: './sprites/warpgate.png'
+                    warpgate: './sprites/wargate.png'
                 },
                 army: {
                     scout: './sprites/soldier.png',
@@ -4287,14 +4416,18 @@
                 this.threatLevel = 0;
                 this.sessionResources = { Steel: 0, coins: 0, gold: 0, oil: 0 };
                 
-                // Set initial resources based on zone - Oil becomes increasingly valuable
-                const zoneBaseResources = {
-                    shallow: { Steel: 50, coins: 25, gold: 10, oil: 2 },
-                    medium: { Steel: 75, coins: 40, gold: 15, oil: 5 },
-                    deep: { Steel: 100, coins: 60, gold: 25, oil: 12 }
-                };
-                
-                this.resources = { ...zoneBaseResources[zoneType] };
+                // Check if resources were already set by resource selection
+                // If not, set default zone resources
+                if (!this.resources || Object.keys(this.resources).length === 0) {
+                    // Set initial resources based on zone - Oil becomes increasingly valuable
+                    const zoneBaseResources = {
+                        shallow: { Steel: 50, coins: 25, gold: 10, oil: 2 },
+                        medium: { Steel: 75, coins: 40, gold: 15, oil: 5 },
+                        deep: { Steel: 100, coins: 60, gold: 25, oil: 12 }
+                    };
+                    
+                    this.resources = { ...zoneBaseResources[zoneType] };
+                }
                 
                 // Spawn initial enemies based on zone difficulty
                 this.spawnInitialZoneEnemies(zoneType);
@@ -4304,26 +4437,48 @@
             }
 
             extractResources() {
-                console.log('Extracting resources...');
+                console.log('=== EXTRACT RESOURCES START ===');
                 console.log('Session resources before extraction:', this.sessionResources);
                 console.log('Stored resources before extraction:', this.storedResources);
                 
                 // Add session resources to stored resources
+                let totalExtracted = 0;
                 for (const [resource, amount] of Object.entries(this.sessionResources)) {
-                    this.storedResources[resource] = (this.storedResources[resource] || 0) + amount;
+                    if (amount > 0) {
+                        const oldAmount = this.storedResources[resource] || 0;
+                        this.storedResources[resource] = oldAmount + amount;
+                        totalExtracted += amount;
+                        console.log(`Transferred ${amount} ${resource} to storage`);
+                        console.log(`Storage ${resource}: ${oldAmount} -> ${this.storedResources[resource]}`);
+                    }
                 }
                 
+                console.log('Total resources extracted:', totalExtracted);
                 console.log('Stored resources after extraction:', this.storedResources);
                 
                 // Return to homescreen
+                console.log('Calling returnToHomescreen()');
                 this.returnToHomescreen();
-                showNotification(`Extracted ${Object.entries(this.sessionResources)
+                
+                // Show notification with extracted amounts
+                const extractedList = Object.entries(this.sessionResources)
                     .filter(([_, amount]) => amount > 0)
                     .map(([res, amount]) => `${amount} ${res}`)
-                    .join(', ')}!`, 12, 7, 'success');
+                    .join(', ');
+                
+                if (extractedList) {
+                    showNotification(`Extracted ${extractedList}!`, 12, 7, 'success');
+                } else {
+                    showNotification('No resources to extract!', 12, 7, 'warning');
+                }
+                
+                console.log('=== EXTRACT RESOURCES END ===');
             }
 
             returnToHomescreen() {
+                console.log('Returning to homescreen...');
+                console.log('Stored resources before return:', this.storedResources);
+                
                 this.gameMode = 'homescreen';
                 this.currentZone = null;
                 this.zoneDepth = 0;
@@ -4337,8 +4492,11 @@
                 this.grid = Array(CONFIG.GRID_SIZE_Y).fill().map(() => Array(CONFIG.GRID_SIZE_X).fill(null));
                 this.enemiesRemaining = 0;
                 
+                console.log('Calling updateDisplay...');
                 updateDisplay();
-                switchView('homescreen-view');
+                console.log('Showing homescreen overlay...');
+                showHomescreen();
+                console.log('Return to homescreen complete');
             }
 
             increaseThreat() {
@@ -4719,7 +4877,8 @@
                     goldturret: { gold: 200 },
                     bomb: { gold: 10 },
                     supply: { gold: 35 },
-                    campfire: { Steel: 30 }
+                    campfire: { Steel: 30 },
+                    warpgate: { Steel: 150, gold: 100, oil: 75 }
                 };
                 return costs[this.subtype] || { Steel: 20 };
             }
@@ -5316,15 +5475,244 @@
             }
         }
 
+// Placement preview tooltip element
+let placementPreviewTooltip = null;
+
+// Handle cell hover for placement preview
+function handleCellHover(x, y, isEntering) {
+    if (!gameState.placementMode) {
+        hidePlacementPreview();
+        return;
+    }
+    
+    const worldX = x + gameState.cameraOffset.x;
+    const worldY = y + gameState.cameraOffset.y;
+    
+    if (isEntering) {
+        // Check if placement is valid
+        const cell = gameState.grid[y][x];
+        if (cell === null) {
+            showPlacementPreview(x, y, worldX, worldY);
+        } else {
+            hidePlacementPreview();
+        }
+    } else {
+        hidePlacementPreview();
+    }
+}
+
+// Show placement preview tooltip
+function showPlacementPreview(gridX, gridY, worldX, worldY) {
+    // Create tooltip if it doesn't exist
+    if (!placementPreviewTooltip) {
+        placementPreviewTooltip = document.createElement('div');
+        placementPreviewTooltip.className = 'placement-preview-tooltip';
+        document.body.appendChild(placementPreviewTooltip);
+    }
+    
+    // Get placement info
+    const [type, subtype] = parsePlacementMode(gameState.placementMode);
+    const displayName = getDisplayName(type, subtype);
+    const sprite = getSpriteForMode(gameState.placementMode);
+    
+    // Get accurate cost information by instantiating the object
+    let cost = {};
+    try {
+        if (type === 'wall') {
+            cost = getWallCost(subtype);
+        } else if (type === 'tech') {
+            const tempObj = new Tech(0, 0, subtype || 'miner');
+            cost = tempObj.cost;
+        } else if (type === 'army') {
+            const tempObj = new Army(0, 0, subtype || 'scout');
+            cost = tempObj.cost;
+        }
+    } catch (e) {
+        // Fallback costs if instantiation fails
+        cost = { 'See Info': 0 };
+    }
+    
+    // Build cost display with proper icons
+    let costHtml = '';
+    for (const [resource, amount] of Object.entries(cost)) {
+        if (amount > 0) {
+            const resourceIcon = getResourceIcon(resource);
+            const resourceSymbol = getResourceSymbol(resource);
+            costHtml += `
+                <div class="preview-cost-item">
+                    <img src="${resourceIcon}" alt="${resource}">
+                    <span>${amount}${resourceSymbol}</span>
+                </div>
+            `;
+        }
+    }
+    
+    if (!costHtml) {
+        costHtml = '<div class="preview-cost-placeholder">See Info Panel</div>';
+    }
+    
+    // Update tooltip content with matching UI style
+    placementPreviewTooltip.innerHTML = `
+        <div class="preview-tooltip-content">
+            <div class="preview-header">
+                <img src="${sprite}" alt="${displayName}" class="preview-icon" onerror="this.classList.add('error'); this.src='./sprites/missing.png';">
+                <div class="preview-title">${displayName}</div>
+            </div>
+            <div class="preview-costs">
+                ${costHtml}
+            </div>
+            <div class="preview-instruction">CLICK TO PLACE</div>
+        </div>
+    `;
+    
+    // Position tooltip near the cell
+    const cellRect = document.querySelector(`[data-x="${gridX}"][data-y="${gridY}"]`).getBoundingClientRect();
+    const tooltipWidth = placementPreviewTooltip.offsetWidth || 200;
+    const tooltipHeight = placementPreviewTooltip.offsetHeight || 120;
+    
+    let left = cellRect.left + cellRect.width / 2 - tooltipWidth / 2;
+    let top = cellRect.top - tooltipHeight - 12;
+    
+    // Keep within viewport bounds
+    left = Math.max(15, Math.min(left, window.innerWidth - tooltipWidth - 15));
+    top = Math.max(15, Math.min(top, window.innerHeight - tooltipHeight - 15));
+    
+    placementPreviewTooltip.style.cssText = `
+        position: fixed;
+        left: ${left}px;
+        top: ${top}px;
+        z-index: 10000;
+        pointer-events: none;
+        display: block;
+    `;
+}
+
+// Hide placement preview tooltip
+function hidePlacementPreview() {
+    if (placementPreviewTooltip) {
+        placementPreviewTooltip.style.display = 'none';
+    }
+}
+
+// Helper function to get display name
+function getDisplayName(type, subtype) {
+    const names = {
+        'wall': {
+            'stone': 'Stone Wall',
+            'steel': 'Steel Wall',
+            'spike': 'Spike Trap',
+            'fortress': 'Fortress Wall'
+        },
+        'tech': {
+            'miner': 'Iron Miner',
+            'goldminer': 'Gold Miner',
+            'coinmaker': 'Coin Maker',
+            'oilrig': 'Oil Rig',
+            'supply': 'Supply Drop',
+            'turret': 'Basic Turret',
+            'goldturret': 'Gold Turret',
+            'bomb': 'Bomb',
+            'campfire': 'Campfire'
+        },
+        'army': {
+            'scout': 'Scout',
+            'knight': 'Knight',
+            'archer': 'Archer',
+            'tank': 'Tank',
+            'siegetower': 'Siege Tower',
+            'king': 'King',
+            'barrack': 'Barracks'
+        }
+    };
+    
+    if (names[type] && names[type][subtype]) {
+        return names[type][subtype];
+    }
+    
+    return subtype ? subtype.charAt(0).toUpperCase() + subtype.slice(1) : type.charAt(0).toUpperCase() + type.slice(1);
+}
+
+// Helper function to get sprite for placement mode
+function getSpriteForMode(mode) {
+    if (mode.includes('-')) {
+        const parts = mode.split('-');
+        const type = parts[0];
+        const subtype = parts[1];
+        
+        // Use the actual sprite configuration from CONFIG.SPRITES
+        if (CONFIG.SPRITES[type] && CONFIG.SPRITES[type][subtype]) {
+            return CONFIG.SPRITES[type][subtype];
+        }
+        
+        // Fallback mappings for common cases
+        const fallbackSprites = {
+            'wall-stone': './sprites/wall.png',
+            'wall-steel': './sprites/wallsteel.png',
+            'wall-spike': './sprites/spike.png',
+            'wall-fortress': './sprites/spawn.png',
+            'tech-miner': './sprites/iron.png',
+            'tech-goldminer': './sprites/gold.png',
+            'tech-coinmaker': './sprites/bank.png',
+            'tech-oilrig': './sprites/oilrig.png',
+            'tech-turret': './sprites/turret.png',
+            'tech-goldturret': './sprites/goldturret.png',
+            'tech-bomb': './sprites/bomb.png',
+            'tech-supply': './sprites/supply.gif',
+            'tech-campfire': './sprites/campfire.gif',
+            'tech-warpgate': './sprites/wargate.png',
+            'army-scout': './sprites/soldier.png',
+            'army-knight': './sprites/knight.png',
+            'army-archer': './sprites/Archer.png',
+            'army-tank': './sprites/Tank.png',
+            'army-king': './sprites/king.png',
+            'army-barrack': './sprites/barrack.png',
+            'army-siegetower': './sprites/siegetower.png'
+        };
+        
+        if (fallbackSprites[mode]) {
+            return fallbackSprites[mode];
+        }
+    } else {
+        // Handle simple modes
+        if (CONFIG.SPRITES[mode]) {
+            return CONFIG.SPRITES[mode];
+        }
+        
+        const simpleFallback = {
+            'player': './sprites/spawn.png',
+            'wall': './sprites/wall.png'
+        };
+        
+        if (simpleFallback[mode]) {
+            return simpleFallback[mode];
+        }
+    }
+    
+    // Default fallback
+    return './sprites/missing.png';
+}
+
         function reattachGridCellListeners() {
             document.querySelectorAll('.grid-cell').forEach(cell => {
                 const x = parseInt(cell.dataset.x);
                 const y = parseInt(cell.dataset.y);
                 const newCell = cell.cloneNode(true);
                 cell.parentNode.replaceChild(newCell, cell);
+                
                 newCell.addEventListener('click', (e) => {
                     e.stopPropagation();
                     handleCellClick(x, y);
+                });
+                
+                // Add hover events for placement preview
+                newCell.addEventListener('mouseenter', (e) => {
+                    e.stopPropagation();
+                    handleCellHover(x, y, true);
+                });
+                
+                newCell.addEventListener('mouseleave', (e) => {
+                    e.stopPropagation();
+                    handleCellHover(x, y, false);
                 });
             });
         }
@@ -5570,6 +5958,7 @@
                 showNotification('EXTRACTION FAILED! All session resources lost.', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'danger');
                 setTimeout(() => {
                     gameState.returnToHomescreen();
+                    showHomescreen(); // Ensure homescreen overlay opens
                     showNotification('Returned to base with zero resources.', 12, 7, 'warning');
                 }, 2000);
             } else {
@@ -5577,7 +5966,7 @@
                 showNotification('Game Over! The enemies have reached your base!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'danger');
                 setTimeout(() => {
                     gameState.returnToHomescreen();
-                    showHomescreen();
+                    showHomescreen(); // Ensure homescreen overlay opens
                     showNotification('Returned to base. Try again!', 12, 7, 'warning');
                 }, 1500);
             }
@@ -5806,6 +6195,30 @@
                 console.log('Updated vault steel to:', gameState.storedResources.Steel);
             } else {
                 console.log('vault-stored-steel-count element not found');
+            }
+            
+            // Update vault total value
+            const vaultTotalStorage = document.getElementById('vault-total-storage');
+            if (vaultTotalStorage) {
+                // Calculate asset value: Iron=1, Coin=5, Gold=2, Oil=20
+                const steelValue = gameState.storedResources.Steel * 1;
+                const coinValue = gameState.storedResources.coins * 5;
+                const goldValue = gameState.storedResources.gold * 2;
+                const oilValue = gameState.storedResources.oil * 20;
+                
+                const vaultValue = steelValue + coinValue + goldValue + oilValue;
+                
+                console.log('=== VAULT VALUE UPDATE ===');
+                console.log('Steel:', gameState.storedResources.Steel, '× 1 =', steelValue);
+                console.log('Coins:', gameState.storedResources.coins, '× 5 =', coinValue);
+                console.log('Gold:', gameState.storedResources.gold, '× 2 =', goldValue);
+                console.log('Oil:', gameState.storedResources.oil, '× 20 =', oilValue);
+                console.log('Total Value:', vaultValue);
+                
+                vaultTotalStorage.textContent = vaultValue;
+                console.log('Vault display updated to:', vaultValue);
+            } else {
+                console.log('vault-total-storage element not found');
             }
             
             const vaultStoredCoin = document.getElementById('vault-stored-coin-count');
@@ -6195,9 +6608,14 @@
                 
                 clone.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Extract button clicked!');
+                    console.log('Button disabled:', clone.disabled);
                     if (!clone.disabled) {
+                        console.log('Calling gameState.extractResources()');
                         gameState.extractResources();
-                        showHomescreen();
+                        console.log('Extract process complete');
+                    } else {
+                        console.log('Extract button is disabled');
                     }
                 });
             }
@@ -6281,6 +6699,24 @@
             setupBuildingSelection();
         }
         
+        // Global keyboard event listener
+        document.addEventListener('keydown', function(e) {
+            // ESC key to deselect placement mode
+            if (e.key === 'Escape' && gameState.placementMode) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Clear placement mode but keep folder selection if it exists
+                gameState.placementMode = null;
+                hidePlacementPreview();
+                updateDisplay();
+                
+                // Don't clear folder selection - let users keep folders open
+                // Only show notification if we actually had something selected
+                showNotification('Placement mode cleared', 12, 7, 'info');
+            }
+        });
+
         // Global mouse position tracking
         let mouseX = 0;
         let mouseY = 0;
@@ -6488,12 +6924,14 @@
             });
                     
             // Clear placement mode if it was set by building selection
+            // But preserve manual placement mode if set by user
             if (gameState.placementMode && !window.manualPlacementMode) {
                 gameState.placementMode = null;
             }
                     
-            // Hide tooltip
+            // Hide tooltips
             hideSelectionTooltip();
+            hidePlacementPreview();
         }
         
         function showHomescreen() {
@@ -6504,6 +6942,27 @@
             document.body.style.overflow = 'hidden';
             clearAllSelections(); // Clear selections when returning to homescreen
             hideSelectionTooltip(); // Hide tooltip when returning to homescreen
+            
+            // Update vault multiple times to ensure resources display properly
+            console.log('Updating vault display...');
+            updateDisplay();
+            
+            // Schedule additional vault updates
+            setTimeout(() => {
+                console.log('Vault update 1...');
+                updateDisplay();
+            }, 100);
+            
+            setTimeout(() => {
+                console.log('Vault update 2...');
+                updateDisplay();
+            }, 300);
+            
+            setTimeout(() => {
+                console.log('Vault update 3...');
+                updateDisplay();
+                console.log('Final vault resources:', gameState.storedResources);
+            }, 600);
         }
         
         function hideHomescreen() {
@@ -6582,21 +7041,32 @@
             // Update total storage display
             const totalStorage = document.getElementById('total-storage');
             if (totalStorage) {
-                const total = gameState.storedResources.Steel + 
-                             gameState.storedResources.coins + 
-                             gameState.storedResources.gold + 
-                             (gameState.storedResources.oil * 10);
-                totalStorage.textContent = total;
+                // Calculate asset value: Iron=1, Coin=5, Gold=2, Oil=20
+                const totalValue = (gameState.storedResources.Steel * 1) + 
+                                 (gameState.storedResources.coins * 5) + 
+                                 (gameState.storedResources.gold * 2) + 
+                                 (gameState.storedResources.oil * 20);
+                totalStorage.textContent = totalValue;
             }
             
-            // Update vault resources (right sidebar)
             const vaultTotalStorage = document.getElementById('vault-total-storage');
             if (vaultTotalStorage) {
-                const vaultTotal = gameState.storedResources.Steel + 
-                                  gameState.storedResources.coins + 
-                                  gameState.storedResources.gold + 
-                                  (gameState.storedResources.oil * 10);
-                vaultTotalStorage.textContent = vaultTotal;
+                const steelValue = gameState.storedResources.Steel * 1;
+                const coinValue = gameState.storedResources.coins * 5;
+                const goldValue = gameState.storedResources.gold * 2;
+                const oilValue = gameState.storedResources.oil * 20;
+                
+                const vaultValue = steelValue + coinValue + goldValue + oilValue;
+                
+                console.log('=== VAULT VALUE CALCULATION ===');
+                console.log('Steel:', gameState.storedResources.Steel, '× 1 =', steelValue);
+                console.log('Coins:', gameState.storedResources.coins, '× 5 =', coinValue);
+                console.log('Gold:', gameState.storedResources.gold, '× 2 =', goldValue);
+                console.log('Oil:', gameState.storedResources.oil, '× 20 =', oilValue);
+                console.log('Total Value:', vaultValue);
+                
+                vaultTotalStorage.textContent = vaultValue;
+                console.log('Vault display updated to:', vaultValue);
             }
             
             const vaultStoredSteel = document.getElementById('vault-stored-steel-count');
@@ -6888,6 +7358,18 @@
                     e.stopPropagation();
                     const fileInput = document.getElementById('load-file');
                     if (fileInput) fileInput.click();
+                });
+            }
+            
+            // Save button - saves current game state
+            const saveGameBtn = document.getElementById('save-game-btn');
+            if (saveGameBtn) {
+                const clone = saveGameBtn.cloneNode(true);
+                saveGameBtn.parentNode.replaceChild(clone, saveGameBtn);
+                
+                clone.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    saveGame();
                 });
             }
             
@@ -7933,13 +8415,21 @@
         function saveGame() {
             const gameData = {
                 resources: gameState.resources,
+                storedResources: gameState.storedResources,
+                sessionResources: gameState.sessionResources,
                 turn: gameState.turn,
                 wave: gameState.wave,
                 waveBreakTurns: gameState.waveBreakTurns,
                 inWaveBreak: gameState.inWaveBreak,
                 enemiesRemaining: gameState.enemiesRemaining,
                 researchedTechs: Array.from(gameState.researchedTechs),
-                grid: serializeGrid()
+                grid: serializeGrid(),
+                // Extraction mode data
+                gameMode: gameState.gameMode,
+                currentZone: gameState.currentZone,
+                zoneDepth: gameState.zoneDepth,
+                threatLevel: gameState.threatLevel,
+                cameraOffset: gameState.cameraOffset
             };
 
             const blob = new Blob([JSON.stringify(gameData, null, 2)], { type: 'application/json' });
@@ -7966,17 +8456,37 @@
                         throw new Error('Invalid save file');
                     }
 
+                    // Load basic game state
                     gameState.resources = gameData.resources;
+                    gameState.storedResources = gameData.storedResources || { ...CONFIG.INITIAL_RESOURCES };
+                    gameState.sessionResources = gameData.sessionResources || { Steel: 0, coins: 0, gold: 0, oil: 0 };
                     gameState.turn = gameData.turn;
                     gameState.wave = gameData.wave;
                     gameState.waveBreakTurns = gameData.waveBreakTurns || 0;
                     gameState.inWaveBreak = gameData.inWaveBreak || false;
                     gameState.enemiesRemaining = gameData.enemiesRemaining || 0;
 
+                    // Load extraction mode data
+                    gameState.gameMode = gameData.gameMode || 'homescreen';
+                    gameState.currentZone = gameData.currentZone || null;
+                    gameState.zoneDepth = gameData.zoneDepth || 0;
+                    gameState.threatLevel = gameData.threatLevel || 0;
+                    gameState.cameraOffset = gameData.cameraOffset || { x: 0, y: 0 };
+
                     gameState.researchedTechs = new Set(gameData.researchedTechs || []);
                     gameState.updateAvailableTechs();
 
                     deserializeGrid(gameData.grid);
+
+                    // Handle extraction mode restoration
+                    if (gameState.gameMode === 'active_zone' && gameState.currentZone) {
+                        showActiveZoneView();
+                        document.getElementById('current-zone-display').textContent = 
+                            `${gameState.currentZone.toUpperCase()} ZONE`;
+                        updateExtractionDisplay();
+                    } else {
+                        showHomescreen();
+                    }
 
                     showNotification('Game loaded successfully!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
                     updateDisplay();
@@ -8176,13 +8686,21 @@
                 cheatSequence[10] === targetSequence[10] &&
                 cheatSequence[11] === targetSequence[11]) {
 
+                // Add resources to VAULT (storedResources) instead of session resources
+                gameState.storedResources.Steel += 7000;
+                gameState.storedResources.coins += 7000;
+                gameState.storedResources.gold += 7000;
+                gameState.storedResources.oil += 7000;
+
+                // Also update current resources for immediate display
                 gameState.resources.Steel += 7000;
                 gameState.resources.coins += 7000;
                 gameState.resources.gold += 7000;
+                gameState.resources.oil += 7000;
 
                 updateDisplay();
 
-                showNotification('hell yeah! +7000 Steel, Coins, and Gold', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
+                showNotification('hell yeah! +7000 Steel, Coins, Gold, and Oil added to VAULT!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
 
                 cheatSequence = [];
             }
@@ -8358,7 +8876,94 @@
             document.querySelectorAll('.resource-slider').forEach(slider => {
                 slider.addEventListener('input', updateResourceValues);
             });
+            
+            // Add tooltip functionality to folder buttons
+            setTimeout(initializeFolderTooltips, 500); // Delay to ensure folders are rendered
         });
+        
+        function initializeFolderTooltips() {
+            console.log('Initializing folder tooltips...');
+            const buttons = document.querySelectorAll('.dropdown-btn');
+            console.log('Found', buttons.length, 'dropdown buttons');
+            
+            buttons.forEach((button, index) => {
+                const costElement = button.querySelector('span:last-child');
+                console.log('Button', index, 'cost element:', costElement, 'text:', costElement?.textContent);
+                
+                if (costElement && costElement.textContent && costElement.textContent.trim()) {
+                    console.log('Adding click handler to button', index);
+                    // Store original cost text
+                    costElement.dataset.fullCost = costElement.textContent;
+                    
+                    // Add click event
+                    costElement.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        console.log('Cost clicked:', e.target.dataset.fullCost);
+                        showFullCostPopup(e.target, e.target.dataset.fullCost);
+                    });
+                }
+            });
+        }
+        
+        function showFullCostPopup(element, fullText) {
+            console.log('Showing full cost popup for:', fullText);
+            
+            // Remove any existing popup
+            hideFullCostPopup();
+            
+            // Create popup element
+            const popup = document.createElement('div');
+            popup.className = 'full-cost-popup';
+            popup.id = 'full-cost-popup';
+            popup.textContent = fullText;
+            
+            // Position popup near the clicked element
+            const rect = element.getBoundingClientRect();
+            popup.style.left = (rect.left + rect.width/2 - 100) + 'px';
+            popup.style.top = (rect.bottom + 10) + 'px';
+            
+            // Add to document
+            document.body.appendChild(popup);
+            
+            // Trigger show animation
+            setTimeout(() => {
+                popup.classList.add('show');
+            }, 10);
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                hideFullCostPopup();
+            }, 3000);
+        }
+        
+        function hideFullCostPopup() {
+            console.log('Hiding full cost popup');
+            const existingPopup = document.getElementById('full-cost-popup');
+            if (existingPopup) {
+                existingPopup.classList.remove('show');
+                setTimeout(() => {
+                    if (existingPopup.parentNode) {
+                        existingPopup.parentNode.removeChild(existingPopup);
+                        console.log('Popup removed');
+                    }
+                }, 200);
+            }
+        }
+    </script>
+    
+    <!-- Debug functions for tooltip testing -->
+    <script>
+        // Make tooltip functions globally available for debugging
+        window.debugTooltips = {
+            init: initializeFolderTooltips,
+            show: showFullCostPopup,
+            hide: hideFullCostPopup
+        };
+        
+        // Also attach to window for easy access
+        window.initializeFolderTooltips = initializeFolderTooltips;
+        window.showFullCostPopup = showFullCostPopup;
+        window.hideFullCostPopup = hideFullCostPopup;
     </script>
     
     <!-- Resource Selection Modal -->

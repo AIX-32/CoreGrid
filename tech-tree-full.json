@@ -247,7 +247,7 @@
       "tier": 3,
       "prerequisites": ["campfire_tech"],
       "unlocks": [],
-      "icon": "warpgate.png"
+      "icon": "wargate.png"
     },
     "oil_rig_tech": {
       "name": "Oil Rig",
