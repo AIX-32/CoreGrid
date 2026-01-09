@@ -12,6 +12,7 @@
         content="grid, game, management, resource, offline game, extraction game, strategy game, tower defense">
     <meta name="author" content="A_I_X">
     <meta name="theme-color" content="#66d9ff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
@@ -892,13 +893,241 @@
             max-width: 800px;
             margin: 0 auto;
         }
-
+                
         .wiki-article-content {
             display: none;
         }
-
+                
         .wiki-article-content.active {
             display: block;
+        }
+                
+        .wiki-search-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #2d2d2d;
+            border: 2px solid #ff6b6b;
+            border-top: none;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .wiki-search-dropdown[style*="block"] {
+            display: block !important;
+        }
+                
+        .search-dropdown-list {
+            padding: 10px;
+        }
+                
+        .search-results-count {
+            color: var(--accent-primary);
+            font-weight: bold;
+            padding: 8px 12px;
+            border-bottom: 1px solid #444;
+            margin-bottom: 10px;
+        }
+                
+        .search-result-item {
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #3a3a3a;
+        }
+                
+        .search-result-item:hover {
+            background: #4a4a4a;
+            border-color: var(--accent-primary);
+            transform: translateX(5px);
+        }
+                
+        .search-result-title {
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+                
+        .search-result-matches {
+            font-size: 0.9em;
+        }
+                
+        .search-match {
+            margin: 5px 0;
+            padding: 5px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+                
+        .match-type {
+            color: var(--accent-secondary);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+                
+        .match-text {
+            color: var(--text-secondary);
+        }
+                
+        .match-text mark {
+            background: var(--accent-primary);
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+                
+        .more-matches {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 0.85em;
+        }
+                
+        .search-no-results {
+            text-align: center;
+            padding: 30px 20px;
+        }
+                
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+                
+        .no-results-text {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+                
+        .no-results-subtext {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .wiki-search-modal-content {
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+        }
+        
+        .wiki-search-modal-body {
+            padding: 20px;
+        }
+        
+        .wiki-search-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+        
+        .wiki-search-bar {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-results-container {
+            flex: 1;
+            overflow-y: auto;
+            background: #2d2d2d;
+            border-radius: var(--border-radius);
+            border: 2px solid #555;
+            padding: 15px;
+        }
+        
+        .search-placeholder {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .search-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .search-instruction {
+            font-size: 1.1rem;
+        }
+        
+        .search-results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .search-result-card {
+            background: #3a3a3a;
+            border: 2px solid #555;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .search-result-card:hover {
+            border-color: var(--accent-primary);
+            background: #4a4a4a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 217, 255, 0.3);
+        }
+        
+        .search-result-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .search-result-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .search-result-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+        }
+        
+        .search-result-match-count {
+            background: var(--accent-primary);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        
+        .search-no-results {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .search-no-results .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .search-no-results .no-results-text {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .search-no-results .no-results-subtext {
+            color: var(--text-secondary);
+            font-size: 1rem;
         }
 
         .wiki-home-content {
@@ -4676,7 +4905,7 @@
             <div class="modal-content death-screen-content">
                 <div class="death-screen-header">
                     <h2>MISSION FAILED</h2>
-                    <div class="skull-icon">💀</div>
+                    <div class="skull-icon"><i class="fas fa-skull"></i></div>
                 </div>
                 <div class="death-screen-body">
                     <div class="death-message">
@@ -4716,7 +4945,6 @@
                         <div class="wiki-search">
                             <input type="text" id="wiki-search-input" placeholder="Search wiki..."
                                 class="wiki-search-input">
-                            <button id="wiki-search-btn" class="wiki-search-btn">🔍</button>
                         </div>
                         <div class="wiki-categories">
                             <div class="wiki-category" data-category="basics">
@@ -4744,7 +4972,6 @@
                                         <h2>Welcome to the CoreGrid Wiki</h2>
                                         <p>Select a category from the sidebar to browse articles, or use the search bar
                                             to find specific topics.</p>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -4883,6 +5110,29 @@
                                             </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="wiki-search-modal" class="modal-overlay">
+            <div class="modal-content wiki-search-modal-content">
+                <div class="modal-header">
+                    <h2>SEARCH WIKI</h2>
+                    <button class="close-btn" onclick="closeSearchModal()">×</button>
+                </div>
+                <div class="wiki-search-modal-body">
+                    <div class="wiki-search-container">
+                        <div class="wiki-search-bar">
+                            <input type="text" id="search-modal-input" placeholder="Search for articles..." class="wiki-search-input">
+                            <button id="search-modal-btn" class="wiki-search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <div id="search-results-container" class="search-results-container">
+                            <div class="search-placeholder">
+                                <div class="search-icon"><i class="fas fa-search"></i></div>
+                                <div class="search-instruction">Type to search through wiki articles</div>
                             </div>
                         </div>
                     </div>
@@ -10203,10 +10453,31 @@
                 const searchBtn = document.getElementById('wiki-search-btn');
 
                 if (searchInput) {
-                    searchInput.addEventListener('input', debounce(wikiSearch, 300));
-                    searchInput.addEventListener('keypress', function (e) {
+                    searchInput.addEventListener('focus', function() {
+                        wikiSearch();
+                    });
+                }
+
+                const searchModalInput = document.getElementById('search-modal-input');
+                const searchModalBtn = document.getElementById('search-modal-btn');
+                
+                if (searchModalInput) {
+                    searchModalInput.addEventListener('input', debounce(function() {
+                        performSearch(this.value.trim());
+                    }, 300));
+                    
+                    searchModalInput.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
-                            wikiSearch();
+                            performSearch(this.value.trim());
+                        }
+                    });
+                }
+                
+                if (searchModalBtn) {
+                    searchModalBtn.addEventListener('click', function() {
+                        const input = document.getElementById('search-modal-input');
+                        if (input) {
+                            performSearch(input.value.trim());
                         }
                     });
                 }
@@ -10285,63 +10556,254 @@
             }
 
             function wikiSearch() {
-                const searchInput = document.getElementById('wiki-search-input');
-                const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+                openSearchModal();
+            }
 
+            function openSearchModal() {
+                const searchModal = document.getElementById('wiki-search-modal');
+                if (searchModal) {
+                    searchModal.classList.add('active');
+                    
+                    const searchInput = document.getElementById('search-modal-input');
+                    if (searchInput) {
+                        searchInput.value = '';
+                        setTimeout(() => searchInput.focus(), 100);
+                    }
+                    
+                    showSearchPlaceholder();
+                }
+            }
+
+            function closeSearchModal() {
+                const searchModal = document.getElementById('wiki-search-modal');
+                if (searchModal) {
+                    searchModal.classList.remove('active');
+                }
+            }
+
+            function performSearch(searchTerm) {
                 if (!searchTerm) {
-                    showWikiHome();
+                    showSearchPlaceholder();
                     return;
                 }
 
-                const contentDisplay = document.getElementById('wiki-content-display');
-                if (!contentDisplay) return;
-
+                const articles = document.querySelectorAll('.wiki-article-content:not(#wiki-home-content)');
                 const results = [];
-                for (const [pageId, pageData] of Object.entries(WIKI_CONTENT)) {
-                    const titleMatch = pageData.title.toLowerCase().includes(searchTerm);
-                    const contentMatch = pageData.content.toLowerCase().includes(searchTerm);
 
-                    if (titleMatch || contentMatch) {
-                        results.push({
-                            id: pageId,
-                            title: pageData.title,
-                            excerpt: getExcerpt(pageData.content, searchTerm)
-                        });
-                    }
-                }
+                articles.forEach(article => {
+                    const articleId = article.id;
+                    const articleElement = article.querySelector('.wiki-article');
+                    
+                    if (!articleElement) return;
 
-                if (results.length > 0) {
-                    let resultsHTML = `
-                    <div class="wiki-search-results">
-                        <h2>Search Results for "${searchTerm}"</h2>
-                        <p>Found ${results.length} article${results.length !== 1 ? 's' : ''}</p>
-                        <div class="search-results-list">
-                `;
+                    const titleElement = articleElement.querySelector('h1');
+                    const title = titleElement ? titleElement.textContent : '';
+                    const titleMatch = title.toLowerCase().includes(searchTerm);
 
-                    results.forEach(result => {
-                        resultsHTML += `
-                        <div class="search-result-item" onclick="showWikiPage('${result.id}')">
-                            <h3>${result.title}</h3>
-                            <p>${result.excerpt}</p>
-                        </div>
-                    `;
+                    const searchableElements = articleElement.querySelectorAll('h2, h3, p, li');
+                    let contentMatches = [];
+                    let excerpts = [];
+                    
+                    searchableElements.forEach(element => {
+                        const text = element.textContent.toLowerCase();
+                        if (text.includes(searchTerm)) {
+                            contentMatches.push({
+                                element: element.tagName,
+                                text: element.textContent.trim()
+                            });
+                            
+                            const excerpt = getContextAroundMatch(element.textContent, searchTerm);
+                            if (!excerpts.includes(excerpt) && excerpts.length < 2) {
+                                excerpts.push(excerpt);
+                            }
+                        }
                     });
 
-                    resultsHTML += `
-                        </div>
-                        <button onclick="showWikiHome()" class="quick-link-btn" style="margin-top: 20px;">🏠 Back to Wiki Home</button>
-                    </div>
-                `;
+                    if (titleMatch || contentMatches.length > 0) {
+                        results.push({
+                            id: articleId,
+                            title: title,
+                            excerpts: excerpts,
+                            matchCount: contentMatches.length
+                        });
+                    }
+                });
 
-                    contentDisplay.innerHTML = resultsHTML;
+                showSearchModalResults(results, searchTerm);
+            }
+
+            function showSearchModalResults(results, searchTerm) {
+                const container = document.getElementById('search-results-container');
+                if (!container) return;
+
+                if (results.length === 0) {
+                    container.innerHTML = `
+                        <div class="search-no-results">
+                            <div class="no-results-icon"><i class="fas fa-search"></i></div>
+                            <div class="no-results-text">No results found for "${searchTerm}"</div>
+                            <div class="no-results-subtext">Try different keywords or browse all articles</div>
+                        </div>
+                    `;
                 } else {
-                    contentDisplay.innerHTML = `
-                    <div class="wiki-search-results">
-                        <h2>No Results Found</h2>
-                        <p>No articles matched your search for "${searchTerm}".</p>
-                        <button onclick="showWikiHome()" class="quick-link-btn">🏠 Return to Wiki Home</button>
-                    </div>
-                `;
+                    let resultsHTML = `<div class="search-results-list">`;
+                    
+                    results.forEach(result => {
+                        const excerptText = result.excerpts.join(' ... ') || 'No preview available';
+                        
+                        resultsHTML += `
+                            <div class="search-result-card" onclick="selectSearchResult('${result.id}')">
+                                <div class="search-result-title">${result.title}</div>
+                                <div class="search-result-excerpt">${excerptText}</div>
+                                <div class="search-result-meta">
+                                    <span>${result.matchCount} match${result.matchCount !== 1 ? 'es' : ''}</span>
+                                    <span class="search-result-match-count">${result.matchCount}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    resultsHTML += `</div>`;
+                    container.innerHTML = resultsHTML;
+                }
+            }
+
+            function showSearchPlaceholder() {
+                const container = document.getElementById('search-results-container');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="search-placeholder">
+                            <div class="search-icon"><i class="fas fa-search"></i></div>
+                            <div class="search-instruction">Type to search through wiki articles</div>
+                        </div>
+                    `;
+                }
+            }
+
+            function selectSearchResult(articleId) {
+                closeSearchModal();
+                
+                closeWikiModal();
+                
+                setTimeout(() => {
+                    openWikiModal();
+                    setTimeout(() => {
+                        showWikiPage(articleId);
+                    }, 100);
+                }, 300);
+            }
+
+            function getContextAroundMatch(text, searchTerm, contextLength = 60) {
+                const lowerText = text.toLowerCase();
+                const searchTermIndex = lowerText.indexOf(searchTerm.toLowerCase());
+                
+                if (searchTermIndex === -1) return text.substring(0, contextLength) + '...';
+                
+                const start = Math.max(0, searchTermIndex - contextLength/2);
+                const end = Math.min(text.length, searchTermIndex + searchTerm.length + contextLength/2);
+                
+                let context = text.substring(start, end);
+                if (start > 0) context = '...' + context;
+                if (end < text.length) context = context + '...';
+                
+                return context;
+            }
+
+            function showSearchResults(results, searchTerm) {
+                console.log("Showing search results:", results.length, "results for:", searchTerm);
+                const dropdown = createSearchDropdown();
+                const dropdownList = dropdown.querySelector('.search-dropdown-list');
+                
+                if (!dropdownList) {
+                    console.error("Dropdown list not found!");
+                    return;
+                }
+                
+                if (results.length === 0) {
+                    dropdownList.innerHTML = `
+                        <div class="search-no-results">
+                            <div class="no-results-icon"><i class="fas fa-search"></i></div>
+                            <div class="no-results-text">No results found for "${searchTerm}"</div>
+                            <div class="no-results-subtext">Try different keywords or browse articles</div>
+                        </div>
+                    `;
+                } else {
+                    let resultsHTML = `<div class="search-results-count">${results.length} result${results.length !== 1 ? 's' : ''} found</div>`;
+                    
+                    results.forEach(result => {
+                        resultsHTML += `
+                            <div class="search-result-item" onclick="showWikiPage('${result.id}'); hideSearchDropdown();">
+                                <div class="search-result-title">${result.title}</div>
+                                <div class="search-result-matches">
+                        `;
+                        
+                        result.matches.forEach(match => {
+                            resultsHTML += `
+                                <div class="search-match">
+                                    <span class="match-type">${getElementTypeLabel(match.element)}:</span>
+                                    <span class="match-text">${highlightSearchTerm(match.context, searchTerm)}</span>
+                                </div>
+                            `;
+                        });
+                        
+                        if (result.matchCount > result.matches.length) {
+                            resultsHTML += `<div class="more-matches">...and ${result.matchCount - result.matches.length} more matches</div>`;
+                        }
+                        
+                        resultsHTML += `</div></div>`;
+                    });
+                    
+                    dropdownList.innerHTML = resultsHTML;
+                }
+                
+                dropdown.style.display = 'block';
+                console.log("Dropdown should now be visible");
+            }
+
+            function getElementTypeLabel(elementType) {
+                const labels = {
+                    'H1': 'Title',
+                    'H2': 'Section',
+                    'H3': 'Subsection',
+                    'P': 'Paragraph',
+                    'LI': 'List Item'
+                };
+                return labels[elementType] || elementType;
+            }
+
+            function highlightSearchTerm(text, searchTerm) {
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                return text.replace(regex, '<mark>$1</mark>');
+            }
+
+            function createSearchDropdown() {
+                let dropdown = document.getElementById('wiki-search-dropdown');
+                
+                if (!dropdown) {
+                    dropdown = document.createElement('div');
+                    dropdown.id = 'wiki-search-dropdown';
+                    dropdown.className = 'wiki-search-dropdown';
+                    dropdown.innerHTML = `
+                        <div class="search-dropdown-list"></div>
+                    `;
+                    
+                    const searchContainer = document.querySelector('.wiki-search');
+                    if (searchContainer) {
+                        searchContainer.parentNode.insertBefore(dropdown, searchContainer.nextSibling);
+                        console.log("Dropdown created and inserted");
+                    } else {
+                        console.error("Search container not found!");
+                    }
+                } else {
+                    console.log("Using existing dropdown");
+                }
+                
+                return dropdown;
+            }
+
+            function hideSearchDropdown() {
+                const dropdown = document.getElementById('wiki-search-dropdown');
+                if (dropdown) {
+                    dropdown.style.display = 'none';
                 }
             }
 
@@ -10378,6 +10840,10 @@
             window.closeWikiModal = closeWikiModal;
             window.showWikiPage = showWikiPage;
             window.wikiSearch = wikiSearch;
+            window.openSearchModal = openSearchModal;
+            window.closeSearchModal = closeSearchModal;
+            window.performSearch = performSearch;
+            window.selectSearchResult = selectSearchResult;
 
         </script>
 
