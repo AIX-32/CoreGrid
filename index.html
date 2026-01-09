@@ -303,6 +303,111 @@
             letter-spacing: 1px;
         }
         
+        .army-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #555;
+        }
+        
+        .army-unit-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: #2d2d2d;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+        
+        .army-units-container {
+            min-height: 100px;
+            overflow-y: auto;
+            max-height: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .no-army-units {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .no-army-units p {
+            margin: 5px 0;
+        }
+        
+        .army-unit-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #2d2d2d;
+            border: 1px solid #555;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .army-unit-display:last-child {
+            margin-bottom: 0;
+        }
+        
+        .army-unit-display-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #3a3a3a;
+            border-radius: 3px;
+            border: 1px solid #7a7a7a;
+        }
+        
+        .army-unit-display-icon img {
+            width: 24px;
+            height: 24px;
+            image-rendering: pixelated;
+        }
+        
+        .army-unit-display-info {
+            flex: 1;
+        }
+        
+        .army-unit-display-name {
+            color: var(--text-primary);
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        
+        .army-unit-display-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+        }
+        
+        .army-unit-display-stat {
+            color: var(--text-secondary);
+        }
+        
+        .army-unit-display-stat.health {
+            color: #7a977b;
+        }
+        
+        .army-unit-display-stat.range {
+            color: #ceab77;
+        }
+        
+        .army-unit-display-stat.movement {
+            color: #66d9ff;
+        }
+        
         .homescreen-buttons {
             display: flex;
             flex-direction: column;
@@ -3492,6 +3597,194 @@
             font-size: 0.9rem;
             margin-left: auto;
         }
+        
+        /* Army Selection Popup Styles */
+        .army-selection-modal {
+            max-width: 800px;
+            width: 90%;
+        }
+        
+        .army-selection-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #3a3a3a;
+            border-radius: var(--border-radius);
+            border: 2px solid #7a7a7a;
+        }
+        
+        .army-selection-info p {
+            margin: 0 0 10px 0;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+        
+        .army-cost-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .army-cost-info span {
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .army-units-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #2d2d2d;
+            border-radius: var(--border-radius);
+        }
+        
+        .army-unit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #3a3a3a;
+            border: 2px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .army-unit-item:hover {
+            border-color: var(--accent-primary);
+            background: #4a4a4a;
+            transform: translateY(-2px);
+        }
+        
+        .army-unit-item.selected {
+            border-color: var(--accent-primary);
+            background: #4a5a4a;
+            box-shadow: 0 0 10px rgba(102, 217, 255, 0.4);
+        }
+        
+        .army-unit-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-primary);
+        }
+        
+        .army-unit-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2d2d2d;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+        
+        .army-unit-icon img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+        
+        .army-unit-info {
+            flex: 1;
+        }
+        
+        .army-unit-name {
+            color: var(--text-primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .army-unit-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+        
+        .army-unit-stat {
+            color: var(--text-secondary);
+        }
+        
+        .army-unit-stat.health {
+            color: #7a977b;
+        }
+        
+        .army-unit-stat.range {
+            color: #ceab77;
+        }
+        
+        .army-unit-stat.movement {
+            color: #66d9ff;
+        }
+        
+        .army-selection-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            border: 2px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            background: #3a3a3a;
+            color: var(--text-primary);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-btn.secondary {
+            background: #555;
+            border-color: #777;
+        }
+        
+        .modal-btn.secondary:hover {
+            background: #666;
+            border-color: #888;
+        }
+        
+        .modal-btn.primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-secondary);
+            color: #111;
+        }
+        
+        .modal-btn.primary:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 5px 15px rgba(102, 217, 255, 0.6);
+        }
+        
+        .modal-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .no-army-message {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .no-army-message p {
+            margin: 10px 0;
+        }
     </style>
 </head>
 
@@ -3566,8 +3859,17 @@
                         </div>
                         
                         <!-- Army Box -->
-                        <div class="army-box">
-                            <h2>ARMY</h2>
+                        <div class="army-box" id="army-box">
+                            <div class="army-box-header">
+                                <h2>ARMY</h2>
+                                <div class="army-unit-count" id="army-unit-count">0 units</div>
+                            </div>
+                            <div class="army-units-container" id="army-units-container">
+                                <div class="no-army-units">
+                                    <p>No army units stored</p>
+                                    <p>Use War Gate to send units from grid</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 
@@ -4199,6 +4501,33 @@
             </div>
         </div>
         <div class="building-info-overlay" id="building-info-overlay"></div>
+        
+        <!-- Army Selection Popup -->
+        <div class="modal-overlay" id="army-selection-popup">
+            <div class="modal-content army-selection-modal">
+                <div class="modal-header">
+                    <h2>SELECT ARMY UNITS</h2>
+                    <button class="close-btn" onclick="closeArmySelection()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="army-selection-info">
+                        <p>Select army units to send to your base:</p>
+                        <div class="army-cost-info">
+                            <span>Cost: 25 Oil per unit</span>
+                        </div>
+                    </div>
+                    
+                    <div class="army-units-list" id="army-units-list">
+                        <!-- Army units will be populated here dynamically -->
+                    </div>
+                    
+                    <div class="army-selection-actions">
+                        <button class="modal-btn secondary" onclick="closeArmySelection()">Cancel</button>
+                        <button class="modal-btn primary" id="send-army-btn">Send Selected Units</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <script>
         const CONFIG = {
@@ -7330,6 +7659,18 @@ function getSpriteForMode(mode) {
                 });
             }
             
+            // Send army button (War Gate army selection)
+            const sendArmyBtn = document.getElementById('send-army-btn');
+            if (sendArmyBtn) {
+                const clone = sendArmyBtn.cloneNode(true);
+                sendArmyBtn.parentNode.replaceChild(clone, sendArmyBtn);
+                
+                clone.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    sendSelectedArmy();
+                });
+            }
+            
             // New Homescreen Button Event Listeners
             
             // Play button - opens zone selection
@@ -7782,6 +8123,12 @@ function getSpriteForMode(mode) {
         }
 
         function showBuildingInfo(building) {
+            // Special handling for War Gate - open army selection instead
+            if (building.type === 'tech' && building.subtype === 'warpgate') {
+                openArmySelection(building);
+                return;
+            }
+            
             const buildingInfoPopup = document.getElementById('building-info-popup');
             const buildingInfoOverlay = document.getElementById('building-info-overlay');
             
@@ -8209,6 +8556,362 @@ function getSpriteForMode(mode) {
             // Clear the reference
             window.currentBuilding = null;
         }
+        
+        // Army Selection Functions
+        
+        function openArmySelection(warpgate) {
+            const popup = document.getElementById('army-selection-popup');
+            if (!popup) return;
+            
+            // Store reference to the War Gate
+            window.currentWarGate = warpgate;
+            
+            // Find all deployable army units
+            populateArmyList();
+            
+            // Show the popup
+            popup.classList.add('active');
+        }
+        
+        function closeArmySelection() {
+            const popup = document.getElementById('army-selection-popup');
+            if (popup) {
+                popup.classList.remove('active');
+            }
+            
+            // Clear references
+            window.currentWarGate = null;
+            window.selectedArmyUnits = [];
+        }
+        
+        function populateArmyList() {
+            const armyListContainer = document.getElementById('army-units-list');
+            if (!armyListContainer) return;
+            
+            // Clear existing content
+            armyListContainer.innerHTML = '';
+            
+            // Find all army units on the grid
+            const armyUnits = [];
+            for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
+                for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
+                    const cell = gameState.grid[y][x];
+                    if (cell && cell.type === 'army' && cell.subtype !== 'barrack') {
+                        armyUnits.push({
+                            unit: cell,
+                            x: x,
+                            y: y,
+                            gridX: x + gameState.cameraOffset.x,
+                            gridY: y + gameState.cameraOffset.y
+                        });
+                    }
+                }
+            }
+            
+            // Display message if no units found
+            if (armyUnits.length === 0) {
+                armyListContainer.innerHTML = `
+                    <div class="no-army-message">
+                        <p>No deployable army units found on the grid.</p>
+                        <p>Deploy some army units first, then use the War Gate to send them to your base.</p>
+                    </div>
+                `;
+                document.getElementById('send-army-btn').disabled = true;
+                return;
+            }
+            
+            // Enable send button
+            document.getElementById('send-army-btn').disabled = false;
+            
+            // Create army unit items
+            armyUnits.forEach(unitData => {
+                const unitItem = createArmyUnitItem(unitData);
+                armyListContainer.appendChild(unitItem);
+            });
+            
+            // Update selected units array
+            window.selectedArmyUnits = [];
+        }
+        
+        function createArmyUnitItem(unitData) {
+            const unit = unitData.unit;
+            
+            const item = document.createElement('div');
+            item.className = 'army-unit-item';
+            item.dataset.unitId = unit.id;
+            item.dataset.gridX = unitData.gridX;
+            item.dataset.gridY = unitData.gridY;
+            
+            // Create checkbox
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'army-unit-checkbox';
+            
+            // Create icon
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'army-unit-icon';
+            const img = document.createElement('img');
+            img.src = unit.getSprite();
+            img.alt = getBuildingName(unit);
+            img.onerror = function() {
+                this.src = './sprites/soldier.png';
+            };
+            iconDiv.appendChild(img);
+            
+            // Create info
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'army-unit-info';
+            
+            const nameSpan = document.createElement('div');
+            nameSpan.className = 'army-unit-name';
+            nameSpan.textContent = getBuildingName(unit);
+            
+            const statsDiv = document.createElement('div');
+            statsDiv.className = 'army-unit-stats';
+            
+            const healthStat = document.createElement('span');
+            healthStat.className = 'army-unit-stat health';
+            healthStat.textContent = `HP: ${unit.health}/${unit.maxHealth}`;
+            
+            const rangeStat = document.createElement('span');
+            rangeStat.className = 'army-unit-stat range';
+            rangeStat.textContent = `Range: ${unit.range}`;
+            
+            const movementStat = document.createElement('span');
+            movementStat.className = 'army-unit-stat movement';
+            movementStat.textContent = `Move: ${unit.movement}`;
+            
+            statsDiv.appendChild(healthStat);
+            statsDiv.appendChild(rangeStat);
+            statsDiv.appendChild(movementStat);
+            
+            infoDiv.appendChild(nameSpan);
+            infoDiv.appendChild(statsDiv);
+            
+            // Add event listener for selection
+            item.addEventListener('click', function(e) {
+                if (e.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                }
+                updateUnitSelection(item, checkbox.checked);
+            });
+            
+            checkbox.addEventListener('change', function() {
+                updateUnitSelection(item, this.checked);
+            });
+            
+            item.appendChild(checkbox);
+            item.appendChild(iconDiv);
+            item.appendChild(infoDiv);
+            
+            return item;
+        }
+        
+        function updateUnitSelection(item, isSelected) {
+            if (isSelected) {
+                item.classList.add('selected');
+                // Add to selected units if not already there
+                const unitId = item.dataset.unitId;
+                if (!window.selectedArmyUnits.includes(unitId)) {
+                    window.selectedArmyUnits.push(unitId);
+                }
+            } else {
+                item.classList.remove('selected');
+                // Remove from selected units
+                const unitId = item.dataset.unitId;
+                window.selectedArmyUnits = window.selectedArmyUnits.filter(id => id !== unitId);
+            }
+        }
+        
+        function sendSelectedArmy() {
+            if (!window.currentWarGate || !window.selectedArmyUnits || window.selectedArmyUnits.length === 0) {
+                showNotification('No units selected!', window.currentWarGate.x, window.currentWarGate.y, 'warning');
+                return;
+            }
+            
+            // Calculate oil cost (25 oil per unit)
+            const oilCost = window.selectedArmyUnits.length * 25;
+            
+            // Check if we have enough oil
+            if (gameState.resources.oil < oilCost) {
+                showNotification(`Not enough oil! Need ${oilCost} oil (${window.selectedArmyUnits.length} units × 25).`, 
+                               window.currentWarGate.x, window.currentWarGate.y, 'warning');
+                return;
+            }
+            
+            // Spend the oil
+            gameState.resources.oil -= oilCost;
+            
+            // Transfer selected units to homescreen army storage
+            const transferredUnits = [];
+            
+            window.selectedArmyUnits.forEach(unitId => {
+                const unit = gameState.objects.get(unitId);
+                if (unit) {
+                    // Add to homescreen army collection
+                    if (!gameState.storedArmyUnits) {
+                        gameState.storedArmyUnits = [];
+                    }
+                    
+                    // Store unit information
+                    gameState.storedArmyUnits.push({
+                        type: unit.type,
+                        subtype: unit.subtype,
+                        health: unit.health,
+                        maxHealth: unit.maxHealth,
+                        range: unit.range,
+                        movement: unit.movement
+                    });
+                    
+                    console.log('Stored army unit:', unit.subtype, 'Total stored:', gameState.storedArmyUnits.length);
+                    
+                    transferredUnits.push(getBuildingName(unit));
+                    
+                    // Remove unit from grid
+                    const gridX = unit.x - gameState.cameraOffset.x;
+                    const gridY = unit.y - gameState.cameraOffset.y;
+                    
+                    if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && 
+                        gridY >= 0 && gridY < CONFIG.GRID_SIZE_Y) {
+                        gameState.grid[gridY][gridX] = null;
+                    }
+                    
+                    gameState.objects.delete(unitId);
+                    gameState.worldObjects.delete(unitId);
+                }
+            });
+            
+            // Close popup and update display
+            closeArmySelection();
+            updateDisplay();
+            
+            // Force update army box display
+            setTimeout(() => {
+                updateArmyBoxDisplay();
+                console.log('Forced army box update. Stored units:', gameState.storedArmyUnits?.length || 0);
+            }, 100);
+            
+            // Show success message
+            const unitNames = transferredUnits.slice(0, 3).join(', ');
+            const extraText = transferredUnits.length > 3 ? ` and ${transferredUnits.length - 3} more` : '';
+            showNotification(`Sent ${unitNames}${extraText} to base! (-${oilCost} oil)`, 
+                           window.currentWarGate.x, window.currentWarGate.y, 'success');
+        }
+        
+        // Initialize army box display on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing army box display');
+            // Small delay to ensure elements are rendered
+            setTimeout(() => {
+                updateArmyBoxDisplay();
+                console.log('Initial army box display updated');
+            }, 500);
+        });
+        
+        function updateArmyBoxDisplay() {
+            const armyBox = document.getElementById('army-box');
+            const unitCount = document.getElementById('army-unit-count');
+            const unitsContainer = document.getElementById('army-units-container');
+            
+            if (!armyBox || !unitCount || !unitsContainer) return;
+            
+            const storedUnits = gameState.storedArmyUnits || [];
+            
+            // Update unit count
+            unitCount.textContent = `${storedUnits.length} units`;
+            
+            // Clear container
+            unitsContainer.innerHTML = '';
+            
+            // Show message if no units
+            if (storedUnits.length === 0) {
+                unitsContainer.innerHTML = `
+                    <div class="no-army-units">
+                        <p>No army units stored</p>
+                        <p>Use War Gate to send units from grid</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Display each unit
+            storedUnits.forEach(unitData => {
+                const unitElement = createArmyUnitDisplay(unitData);
+                unitsContainer.appendChild(unitElement);
+            });
+        }
+        
+        function createArmyUnitDisplay(unitData) {
+            const unitDiv = document.createElement('div');
+            unitDiv.className = 'army-unit-display';
+            
+            // Create icon
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'army-unit-display-icon';
+            const img = document.createElement('img');
+            
+            // Get sprite for unit type
+            const spritePath = getSpriteForArmyType(unitData.subtype);
+            img.src = spritePath;
+            img.alt = unitData.subtype;
+            img.onerror = function() {
+                this.src = './sprites/soldier.png';
+            };
+            
+            iconDiv.appendChild(img);
+            
+            // Create info
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'army-unit-display-info';
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'army-unit-display-name';
+            nameDiv.textContent = getBuildingName({type: 'army', subtype: unitData.subtype});
+            
+            const statsDiv = document.createElement('div');
+            statsDiv.className = 'army-unit-display-stats';
+            
+            const healthStat = document.createElement('span');
+            healthStat.className = 'army-unit-display-stat health';
+            healthStat.textContent = `HP: ${unitData.health}/${unitData.maxHealth}`;
+            
+            const rangeStat = document.createElement('span');
+            rangeStat.className = 'army-unit-display-stat range';
+            rangeStat.textContent = `Range: ${unitData.range}`;
+            
+            const movementStat = document.createElement('span');
+            movementStat.className = 'army-unit-display-stat movement';
+            movementStat.textContent = `Move: ${unitData.movement}`;
+            
+            statsDiv.appendChild(healthStat);
+            statsDiv.appendChild(rangeStat);
+            statsDiv.appendChild(movementStat);
+            
+            infoDiv.appendChild(nameDiv);
+            infoDiv.appendChild(statsDiv);
+            
+            unitDiv.appendChild(iconDiv);
+            unitDiv.appendChild(infoDiv);
+            
+            return unitDiv;
+        }
+        
+        function getSpriteForArmyType(subtype) {
+            const spriteMap = {
+                'scout': './sprites/soldier.png',
+                'knight': './sprites/knight.png',
+                'archer': './sprites/Archer.png',
+                'tank': './sprites/Tank.png',
+                'siegetower': './sprites/siegetower.png',
+                'king': './sprites/king.png',
+                'barrack': './sprites/barrack.png'
+            };
+            
+            return spriteMap[subtype] || './sprites/soldier.png';
+        }
+        
+        function closeBuildingInfo() {}
+            
         
         function teleportArmyHome() {
             // Check if we have enough oil
@@ -8949,10 +9652,6 @@ function getSpriteForMode(mode) {
                 }, 200);
             }
         }
-    </script>
-    
-    <!-- Debug functions for tooltip testing -->
-    <script>
         // Make tooltip functions globally available for debugging
         window.debugTooltips = {
             init: initializeFolderTooltips,
