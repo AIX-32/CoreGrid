@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoreGrid - Strategy Defense Game</title>
+    <title>CoreGrid: Extract.</title>
     <link rel="icon" href="./sprites/tower.png">
     <meta name="description"
-        content="CoreGrid - a strategy game where you build and defend your base against waves of enemies">
-    <meta name="keywords" content="grid, game, management, resource, online game, strategy game">
+        content="an extraction strategy game where you build, loot, and escape before everything goes wrong">
+    <meta name="keywords" content="grid, game, management, resource, offline game, extraction game, strategy game, tower defense">
     <meta name="author" content="A_I_X">
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="#66d9ff">
 
     <style>
         :root {
@@ -29,8 +29,6 @@
             --grid-gap: 6px;
             --border-radius: 4px;
         }
-
-        /* ===== MODAL OVERLAY SYSTEM ===== */
         
         .modal-overlay {
             position: fixed;
@@ -65,7 +63,6 @@
             padding: 25px;
         }
         
-        /* Full Screen Homescreen Layout */
         .homescreen-fullscreen {
             display: flex;
             height: 100vh;
@@ -96,7 +93,6 @@
             border-radius: var(--border-radius);
         }
         
-        /* Vault and Army Section under subtitle */
         .homescreen-vault-army-section {
             display: flex;
             gap: 25px;
@@ -115,7 +111,6 @@
             min-height: auto;
         }
         
-        /* Homescreen Sidebar Panels */
         .homescreen-stats-panel,
         .recent-activity-panel {
             background: #3a3a3a;
@@ -283,7 +278,6 @@
             font-size: 1.2rem;
         }
                 
-        /* Death Screen Styles */
         .death-screen-content {
             background: linear-gradient(145deg, #2b1a1a, #3a2525);
             border: 3px solid #8b0000;
@@ -559,7 +553,6 @@
             border-color: #66d9ff;
         }
         
-        /* Army Unit Animation */
         @keyframes unitCardAppear {
             0% {
                 opacity: 0;
@@ -575,7 +568,6 @@
             animation: unitCardAppear 0.5s ease-out;
         }
         
-        /* Army Box Header Enhancement */
         .army-box-header {
             display: flex;
             justify-content: space-between;
@@ -620,6 +612,7 @@
             background: var(--accent-primary);
             color: #111;
             border-color: var(--accent-secondary);
+            padding: 25px 0px;
         }
         
         .play-button:hover {
@@ -634,7 +627,6 @@
             image-rendering: pixelated;
         }
         
-        /* Zone Selection Modal Styles */
         .zone-selection-modal {
             max-width: 1200px;
             width: 90%;
@@ -695,7 +687,6 @@
 
         
         
-        /* Research Button Styling */
         .research-btn, .research-nav-btn {
             background: var(--bg-tertiary);
             border: 2px solid var(--border-color);
@@ -757,7 +748,7 @@
             z-index: 1000;
         }
         
-        /* ===== HOMESCREEN STYLES ===== */*/
+*/
         
         .homescreen-header {
             text-align: left;
@@ -794,7 +785,6 @@
             font-style: italic;
         }
         
-        /* Panel Styles */
         .panel-header {
             display: flex;
             justify-content: space-between;
@@ -845,7 +835,6 @@
             color: #e0ffe0;
         }
         
-        /* Stored Resources Section */
         .stored-resources-section {
             background: #353535;
             border: 3px solid #7a7a7a;
@@ -902,7 +891,6 @@
             font-weight: bold;
         }
         
-        /* Zones Section */
         .zones-section {
             background: #353535;
             border: 3px solid #7a7a7a;
@@ -1046,7 +1034,6 @@
             box-shadow: 0 5px 15px rgba(102, 217, 255, 0.4);
         }
         
-        /* Homescreen Footer */
         .homescreen-footer {
             display: flex;
             justify-content: space-between;
@@ -1087,7 +1074,6 @@
             image-rendering: pixelated;
         }
         
-        /* ===== ACTIVE GAME INTERFACE ===== */
         
         .game-navbar {
             background: #353535;
@@ -1221,7 +1207,6 @@
             border-bottom-color: var(--accent-primary);
         }
         
-        /* Full cost popup */
         .full-cost-popup {
             position: fixed;
             background: #222;
@@ -1338,7 +1323,6 @@
             animation: pulseDanger 1.5s infinite;
         }
         
-        /* Navbar Divider Styles */
         .nav-divider {
             width: 2px;
             height: 40px;
@@ -1369,7 +1353,6 @@
             opacity: 1;
         }
         
-        /* Tech Tree Completion Banner */
         .tech-tree-completion-banner {
             position: fixed;
             top: 50%;
@@ -2502,7 +2485,6 @@
             z-index: 999;
         }
 
-        /* Selection Tooltip Styles */
         .selection-tooltip {
             position: fixed;
             background: rgba(43, 43, 43, 0.95);
@@ -2551,7 +2533,6 @@
             image-rendering: pixelated;
         }
 
-        /* Placement Preview Tooltip Styles */
         .placement-preview-tooltip {
             position: fixed;
             z-index: 10000;
@@ -2583,7 +2564,6 @@
         }
 
         .preview-icon.error {
-            /* Fallback styling when image fails to load */
             background: #555;
             border: 1px solid #777;
             display: flex;
@@ -2819,7 +2799,6 @@
             display: none;
         }
         
-        /* Resource Selection Modal */
         .resource-selection-modal {
             max-width: 700px;
             width: 90%;
@@ -3547,7 +3526,6 @@
             text-align: center;
         }
         
-        /* Module Selection Popup */
         .module-selection-popup {
             position: fixed;
             top: 50%;
@@ -3724,7 +3702,6 @@
             display: none;
         }
         
-        /* Building Special Actions */
         .building-special-actions {
             margin-top: 20px;
             padding-top: 15px;
@@ -3768,7 +3745,6 @@
             margin-left: auto;
         }
         
-        /* Army Selection Popup Styles */
         .army-selection-modal {
             max-width: 800px;
             width: 90%;
@@ -3955,27 +3931,27 @@
         .no-army-message p {
             margin: 10px 0;
         }
+
+        .attack-btn {
+            padding: 25px 0px;
+        }
     </style>
 </head>
 
 <body>
     <div class="game-container">
         
-        <!-- Homescreen Overlay Modal -->
         <div id="homescreen-overlay" class="modal-overlay active">
             <div class="modal-content homescreen-modal homescreen-fullscreen">
-                <!-- Main Content Area -->
                 <div class="homescreen-main-content">
                     <header class="homescreen-header">
                         <div class="logo-container">
-                            <h1 class="game-title">COREGRID</h1>
+                            <h1 class="game-title">COREGRID </h1>
                             <h2 class="game-subtitle">EXTRACTION PROTOCOL</h2>
                         </div>
                     </header>
                     
-                    <!-- Vault and Army Section -->
                     <div class="homescreen-vault-army-section">
-                        <!-- Vault Panel -->
                         <div class="vault-panel">
                             <div class="vault-header">
                                 <h2>VAULT</h2>
@@ -4028,7 +4004,6 @@
                             </div>
                         </div>
                         
-                        <!-- Army Box -->
                         <div class="army-box" id="army-box">
                             <div class="army-box-header">
                                 <h2>ARMY</h2>
@@ -4045,14 +4020,11 @@
                 
 
                 
-                <!-- Zone Selection Panel -->
 
                 
                 </div>
                 
-                <!-- Right Sidebar -->
                 <div class="homescreen-sidebar">
-                    <!-- Statistics Panel -->
                     <div class="homescreen-stats-panel">
                         <div class="stats-header">
                             <h3>OPERATION STATS</h3>
@@ -4075,11 +4047,13 @@
                     </div>
                 
                     
-                    <!-- Action Buttons -->
                     <div class="homescreen-buttons">
                         <button class="homescreen-button play-button" id="play-game-btn">
                             <img src="./sprites/turret.png" alt="Play">
-                            DIVE
+                            START
+                        </button>
+                        <button class="homescreen-button attack-btn" id="attack-game-btn" onclick="alert('Soon!')">
+                            ATTACK
                         </button>
                         <button class="homescreen-button" id="load-game-btn">
                             LOAD
@@ -4095,7 +4069,6 @@
             </div>
         </div>
         
-        <!-- Zone Selection Popup -->
         <div id="zone-selection-popup" class="modal-overlay">
             <div class="modal-content zone-selection-modal">
                 <div class="modal-header">
@@ -4241,7 +4214,6 @@
             </div>
         </div>
         
-        <!-- Death Screen Overlay -->
         <div id="death-screen" class="modal-overlay">
             <div class="modal-content death-screen-content">
                 <div class="death-screen-header">
@@ -4275,19 +4247,14 @@
             </div>
         </div>
 
-        <!-- Active Game Session Interface -->
         <div id="active-zone-view" class="screen-view">
-            <!-- Top Navigation Bar -->
             <nav class="game-navbar">
-                <!-- Left Section: Zone Info -->
                 <div class="nav-section nav-current-zone">
                     <span class="nav-label">CURRENT DIVE:</span>
                     <span class="nav-value zone-name" id="current-zone-display">SHALLOW DIVE</span>
                 </div>
                 
-                <!-- Right Section: Building Controls and Status -->
                 <div class="nav-section nav-right-group">
-                    <!-- Building Controls -->
                     <div class="folder-bar">
                         <div class="folder-item" data-folder>
                             <div class="folder-trigger">
@@ -4449,7 +4416,6 @@
                         </div>
                     </div>
                     
-                    <!-- Session Resources -->
                     <div class="nav-section nav-session-resources">
                         <span class="nav-label">THIS SESSION:</span>
                         <div class="session-resource-display">
@@ -4468,7 +4434,6 @@
                         </div>
                     </div>
                     
-                    <!-- Controls and Status -->
                     <div class="nav-section nav-controls">
                         <button class="nav-btn research-nav-btn" id="research-nav-btn">
                             <img src="./sprites/research.png" alt="Research">
@@ -4482,9 +4447,7 @@
                 </div>
             </nav>
             
-            <!-- Main Game Area -->
             <main class="game-main-area">
-                <!-- Resource Panel -->
                 <aside class="game-sidebar">
                     <div class="resources-panel">
                         <h3>CURRENT RESOURCES</h3>
@@ -4520,7 +4483,6 @@
                         </div>
                     </div>
                     
-                    <!-- Extraction Controls -->
                     <div class="extraction-controls-panel">
                         <h3>OPERATIONS</h3>
                         <div class="control-buttons">
@@ -4532,13 +4494,11 @@
                     </div>
                 </aside>
                 
-                <!-- Game Grid Container -->
                 <div class="game-content">
                     <div class="game-grid-container">
                         <div class="game-grid" id="game-grid"></div>
                     </div>
                     
-                    <!-- Game Info Panel -->
                     <div class="game-info-panel">
                         <div class="game-stats">
                             <div class="stat-box">
@@ -4596,7 +4556,6 @@
 
         <div class="tech-tree-overlay" id="tech-tree-overlay"></div>
 
-        <!-- Building Information Window -->
         <div class="building-info-popup" id="building-info-popup">
             <div class="building-info-header">
                 <div class="building-info-title" id="building-info-title">Building Name</div>
@@ -4629,7 +4588,6 @@
                     </div>
                 </div>
                 
-                <!-- Module Selection Popup -->
                 <div class="module-selection-popup" id="module-selection-popup">
                     <div class="module-selection-header">
                         <span>Select Module</span>
@@ -4694,7 +4652,6 @@
                 </div>
                 <div class="module-selection-overlay" id="module-selection-overlay"></div>
                 
-                <!-- Special Actions -->
                 <div class="building-special-actions" id="building-special-actions">
                     <button class="building-action-btn" id="teleport-army-btn">
                         <img src="./sprites/wargate.png" alt="Teleport">
@@ -4706,7 +4663,6 @@
         </div>
         <div class="building-info-overlay" id="building-info-overlay"></div>
         
-        <!-- Army Selection Popup -->
         <div class="modal-overlay" id="army-selection-popup">
             <div class="modal-content army-selection-modal">
                 <div class="modal-header">
@@ -4722,7 +4678,6 @@
                     </div>
                     
                     <div class="army-units-list" id="army-units-list">
-                        <!-- Army units will be populated here dynamically -->
                     </div>
                     
                     <div class="army-selection-actions">
@@ -4784,14 +4739,11 @@
             }
         }
         
-        // Load TECH_TREE and positions from external JSON file
         CONFIG.TECH_TREE = {};
         let NODE_POSITIONS = {};
         
-        // Function to load tech tree and positions from external file
         async function loadTechTree() {
             try {
-                // First check if we can fetch the file
                 console.log('Attempting to load tech tree...');
                 
                 const response = await fetch('tech-tree-full.json');
@@ -4805,16 +4757,13 @@
                 try {
                     const fullData = JSON.parse(text);
                     
-                    // Load tech tree data
                     CONFIG.TECH_TREE = fullData.tech_tree;
                     
-                    // Load positions data
                     NODE_POSITIONS = fullData.positions;
                     
                     console.log('Tech tree loaded successfully. Nodes:', Object.keys(CONFIG.TECH_TREE).length);
                     console.log('Positions loaded:', Object.keys(NODE_POSITIONS).length);
                     
-                    // Update tech tree display if it's available
                     if (typeof updateTechTreeDisplay === 'function') {
                         updateTechTreeDisplay();
                     }
@@ -4827,7 +4776,6 @@
             } catch (error) {
                 console.error('Error loading tech tree:', error);
                 
-                // Fallback: use minimal data to ensure the game works
                 console.log('Using fallback tech tree data');
                 CONFIG.TECH_TREE = {
                     'fortress': {
@@ -4855,7 +4803,6 @@
                     'module_research': { x: 400, y: 120 }
                 };
                 
-                // Initialize the tech tree display
                 if (typeof updateTechTreeDisplay === 'function') {
                     updateTechTreeDisplay();
                 }
@@ -4875,17 +4822,17 @@
                 }
 
                 this.resources = { ...CONFIG.INITIAL_RESOURCES };
-                this.storedResources = { ...CONFIG.INITIAL_RESOURCES }; // Permanent storage
-                this.sessionResources = { Steel: 0, coins: 0, gold: 0, oil: 0 }; // This run only
+                this.storedResources = { ...CONFIG.INITIAL_RESOURCES };
+                this.sessionResources = { Steel: 0, coins: 0, gold: 0, oil: 0 };
                 
                 this.turn = 1;
                 this.selectedUnit = null;
                 this.placementMode = null;
                 
-                this.gameMode = 'homescreen'; // 'homescreen' or 'active_zone'
-                this.currentZone = null; // 'shallow', 'medium', 'deep'
-                this.zoneDepth = 0; // How deep we've gone in current zone
-                this.threatLevel = 0; // Enemies spawned based on depth
+                this.gameMode = 'homescreen';
+                this.currentZone = null;
+                this.zoneDepth = 0;
+                this.threatLevel = 0;
                 
                 this.cameraOffset = { x: 0, y: 0 };
                 this.worldObjects = new Map();
@@ -4899,14 +4846,12 @@
                 this.availableTechs = new Set();
                 this.techTreeCompletedRewardGiven = false;
                 
-                // Automatically research 'fortress' at the start since it's the base tech
                 if (CONFIG.TECH_TREE.fortress) {
                     this.researchedTechs.add('fortress');
                 }
                 
                 this.updateAvailableTechs();
                 
-                // Check if tech tree is fully completed (in case fortress is the only tech)
                 this.checkTechTreeCompletion();
             }
 
@@ -4930,7 +4875,6 @@
                 if (resources.gold) this.resources.gold += resources.gold;
                 if (resources.oil) this.resources.oil += resources.oil;
                 
-                // In active zone, also add to session resources
                 if (this.gameMode === 'active_zone') {
                     if (resources.Steel) this.sessionResources.Steel += resources.Steel;
                     if (resources.coins) this.sessionResources.coins += resources.coins;
@@ -4941,7 +4885,6 @@
                 updateDisplay();
             }
 
-            // Extraction-specific methods
             enterZone(zoneType) {
                 this.gameMode = 'active_zone';
                 this.currentZone = zoneType;
@@ -4949,10 +4892,7 @@
                 this.threatLevel = 0;
                 this.sessionResources = { Steel: 0, coins: 0, gold: 0, oil: 0 };
                 
-                // Check if resources were already set by resource selection
-                // If not, set default zone resources
                 if (!this.resources || Object.keys(this.resources).length === 0) {
-                    // Set initial resources based on zone - Oil becomes increasingly valuable
                     const zoneBaseResources = {
                         shallow: { Steel: 50, coins: 25, gold: 10, oil: 2 },
                         medium: { Steel: 75, coins: 40, gold: 15, oil: 5 },
@@ -4962,7 +4902,6 @@
                     this.resources = { ...zoneBaseResources[zoneType] };
                 }
                 
-                // Spawn initial enemies based on zone difficulty
                 this.spawnInitialZoneEnemies(zoneType);
                 
                 updateDisplay();
@@ -4974,7 +4913,6 @@
                 console.log('Session resources before extraction:', this.sessionResources);
                 console.log('Stored resources before extraction:', this.storedResources);
                 
-                // Add session resources to stored resources
                 let totalExtracted = 0;
                 for (const [resource, amount] of Object.entries(this.sessionResources)) {
                     if (amount > 0) {
@@ -4989,11 +4927,9 @@
                 console.log('Total resources extracted:', totalExtracted);
                 console.log('Stored resources after extraction:', this.storedResources);
                 
-                // Return to homescreen
                 console.log('Calling returnToHomescreen()');
                 this.returnToHomescreen();
                 
-                // Show notification with extracted amounts
                 const extractedList = Object.entries(this.sessionResources)
                     .filter(([_, amount]) => amount > 0)
                     .map(([res, amount]) => `${amount} ${res}`)
@@ -5017,9 +4953,8 @@
                 this.zoneDepth = 0;
                 this.threatLevel = 0;
                 this.sessionResources = { Steel: 0, coins: 0, gold: 0, oil: 0 };
-                this.resources = { ...this.storedResources }; // Restore stored resources
+                this.resources = { ...this.storedResources };
                 
-                // Clear the grid
                 this.worldObjects.clear();
                 this.objects.clear();
                 this.grid = Array(CONFIG.GRID_SIZE_Y).fill().map(() => Array(CONFIG.GRID_SIZE_X).fill(null));
@@ -5034,9 +4969,8 @@
 
             increaseThreat() {
                 this.zoneDepth++;
-                this.threatLevel = Math.min(this.zoneDepth, 10); // Cap threat level
+                this.threatLevel = Math.min(this.zoneDepth, 10);
                 
-                // Spawn enemies based on threat level
                 const enemiesToSpawn = Math.floor(this.threatLevel / 2) + 1;
                 spawnWave(enemiesToSpawn);
                 
@@ -5044,7 +4978,6 @@
             }
 
             checkBaseThreat() {
-                // Check if any enemies are within 2 blocks of the core (player position)
                 const playerX = CONFIG.PLAYER_START.x;
                 const playerY = CONFIG.PLAYER_START.y;
                 
@@ -5052,7 +4985,7 @@
                     if (obj.type === 'enemy') {
                         const distance = Math.abs(obj.x - playerX) + Math.abs(obj.y - playerY);
                         if (distance <= 2) {
-                            return true; // Enemy is too close to core
+                            return true;
                         }
                     }
                 }
@@ -5080,7 +5013,6 @@
                 this.researchedTechs.add(techId);
                 this.updateAvailableTechs();
                 
-                // Check if tech tree is now fully completed
                 this.checkTechTreeCompletion();
                 
                 return true;
@@ -5119,13 +5051,11 @@
             }
             
             checkTechTreeCompletion() {
-                // Only check completion if we haven't given the reward yet
                 if (this.techTreeCompletedRewardGiven) return;
                 
                 const totalTechs = Object.keys(CONFIG.TECH_TREE).length;
                 const researchedCount = this.researchedTechs.size;
                 
-                // If all techs are researched, give the completion rewards
                 if (researchedCount === totalTechs && totalTechs > 0) {
                     this.giveTechTreeCompletionRewards();
                     this.techTreeCompletedRewardGiven = true;
@@ -5133,7 +5063,6 @@
             }
             
             giveTechTreeCompletionRewards() {
-                // Massive resource bonuses for completing the tech tree
                 const rewards = {
                     Steel: 1000,
                     coins: 500,
@@ -5143,7 +5072,6 @@
                 
                 this.addResources(rewards);
                 
-                // Show reward notification
                 showNotification(
                     `TECH TREE COMPLETED! Bonus: +${rewards.Steel}S +${rewards.coins}C +${rewards.gold}G +${rewards.oil}O`, 
                     CONFIG.PLAYER_START.x, 
@@ -5151,18 +5079,15 @@
                     'success'
                 );
                 
-                // Create visual reward effects
                 createTechTreeCompletionEffects();
             }
             
             spawnInitialZoneEnemies(zoneType) {
-                // Clear any existing enemies first
                 this.worldObjects.forEach((obj, key) => {
                     if (obj.type === 'enemy') {
                         this.worldObjects.delete(key);
                         this.objects.delete(key);
                         
-                        // Remove from grid
                         const gridX = obj.x - this.cameraOffset.x;
                         const gridY = obj.y - this.cameraOffset.y;
                         if (gridX >= 0 && gridX < CONFIG.GRID_SIZE_X && 
@@ -5172,22 +5097,21 @@
                     }
                 });
                 
-                // Define initial enemy counts and placement strategies by zone
                 const zoneConfigs = {
                     shallow: {
                         count: 3,
-                        minDistance: 5, // Keep enemies relatively far
+                        minDistance: 5,
                         maxDistance: 8
                     },
                     medium: {
                         count: 5,
-                        minDistance: 3, // Mixed distances
+                        minDistance: 3,
                         maxDistance: 7
                     },
                     deep: {
                         count: 8,
-                        minDistance: 3, // Not too close to core (changed from 1)
-                        maxDistance: 6  // Reduced range for better balance
+                        minDistance: 3,
+                        maxDistance: 6
                     }
                 };
                 
@@ -5195,20 +5119,16 @@
                 const playerX = CONFIG.PLAYER_START.x;
                 const playerY = CONFIG.PLAYER_START.y;
                 
-                // Get valid spawn positions based on distance constraints
                 const validPositions = [];
                 for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                     for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
                         const worldX = x + this.cameraOffset.x;
                         const worldY = y + this.cameraOffset.y;
                         
-                        // Skip player position
                         if (worldX === playerX && worldY === playerY) continue;
                         
-                        // Skip occupied cells
                         if (this.grid[y][x] !== null) continue;
                         
-                        // Check distance constraints
                         const distance = Math.abs(worldX - playerX) + Math.abs(worldY - playerY);
                         if (distance >= config.minDistance && distance <= config.maxDistance) {
                             validPositions.push({ x: worldX, y: worldY, gridX: x, gridY: y });
@@ -5216,13 +5136,11 @@
                     }
                 }
                 
-                // Shuffle positions for variety
                 for (let i = validPositions.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [validPositions[i], validPositions[j]] = [validPositions[j], validPositions[i]];
                 }
                 
-                // Spawn enemies
                 const enemiesToSpawn = Math.min(config.count, validPositions.length);
                 for (let i = 0; i < enemiesToSpawn; i++) {
                     const pos = validPositions[i];
@@ -5271,32 +5189,26 @@
             }
 
             applyModuleEffect(moduleType) {
-                // Extract the base module type if it includes a tier (e.g., 'speed-2' -> 'speed')
                 const baseModuleType = moduleType.includes('-') ? moduleType.split('-')[0] : moduleType;
                 
-                // Determine the tier multiplier (default to 1 if no tier specified)
                 const tier = moduleType.includes('-') ? parseInt(moduleType.split('-')[1]) : 1;
-                const multiplier = tier + 1; // Tier 1 = 2x, Tier 2 = 3x, Tier 3 = 4x
+                const multiplier = tier + 1;
                 
                 if (baseModuleType === 'speed') {
-                    // Apply speed effect with tier-based multiplier
                     if (this.type === 'army') {
                         if (this.originalMovement === null) {
                             this.originalMovement = this.movement;
                         }
                         this.movement = this.originalMovement * multiplier;
                     } else if (this.type === 'tech') {
-                        // For turrets, multiply shots
                         if (this.subtype === 'turret' || this.subtype === 'goldturret') {
                             if (this.originalShotsLeft === null) {
                                 this.originalShotsLeft = this.shotsLeft;
                             }
                             this.shotsLeft = this.originalShotsLeft * multiplier;
                         }
-                        // For resource buildings, multiplier would be handled in their onTurn method
                     }
                 } else if (baseModuleType === 'defense') {
-                    // Apply defense effect with tier-based multiplier
                     if (this.originalHealth === null) {
                         this.originalHealth = this.health;
                         this.originalMaxHealth = this.maxHealth;
@@ -5307,30 +5219,25 @@
             }
 
             removeModuleEffect(moduleType) {
-                // Extract the base module type if it includes a tier (e.g., 'speed-2' -> 'speed')
                 const baseModuleType = moduleType.includes('-') ? moduleType.split('-')[0] : moduleType;
                 
-                // Determine the tier multiplier (default to 1 if no tier specified)
                 const tier = moduleType.includes('-') ? parseInt(moduleType.split('-')[1]) : 1;
-                const multiplier = tier + 1; // Tier 1 = 2x, Tier 2 = 3x, Tier 3 = 4x
+                const multiplier = tier + 1;
                 
                 if (baseModuleType === 'speed') {
                     if (this.type === 'army') {
                         if (this.originalMovement !== null) {
-                            // Revert to original movement value
                             this.movement = this.originalMovement;
                         }
                     } else if (this.type === 'tech') {
                         if (this.subtype === 'turret' || this.subtype === 'goldturret') {
                             if (this.originalShotsLeft !== null) {
-                                // Revert to original shots value
                                 this.shotsLeft = this.originalShotsLeft;
                             }
                         }
                     }
                 } else if (baseModuleType === 'defense') {
                     if (this.originalHealth !== null && this.originalMaxHealth !== null) {
-                        // Revert to original health values
                         this.health = this.originalHealth;
                         this.maxHealth = this.originalMaxHealth;
                     }
@@ -5421,9 +5328,8 @@
 
                 const campfireBonus = 1 + (0.5 * this.getNearbyCampfires());
                 
-                // Calculate module bonus for speed (with tier multipliers)
                 const speedModuleTiers = this.getSpeedModuleTiers();
-                const speedModuleMultiplier = speedModuleTiers.reduce((total, tier) => total + (tier + 1), 1); // Base is 1, each tier adds (tier + 1)
+                const speedModuleMultiplier = speedModuleTiers.reduce((total, tier) => total + (tier + 1), 1);
 
                 switch (this.subtype) {
                     case 'miner':
@@ -5447,9 +5353,8 @@
                         break;
                     case 'turret':
                     case 'goldturret':
-                        // Attack multiple times based on speed module tiers
                         const speedModuleTiers = this.getSpeedModuleTiers();
-                        const attacksPerTurn = speedModuleTiers.reduce((total, tier) => total + (tier + 1), 1); // Base is 1, each tier adds (tier + 1)
+                        const attacksPerTurn = speedModuleTiers.reduce((total, tier) => total + (tier + 1), 1);
                         for (let i = 0; i < attacksPerTurn; i++) {
                             if (this.shotsLeft > 0) {
                                 this.attackNearbyEnemies();
@@ -5921,15 +5826,12 @@
         const gameState = new GameState();
 
         async function initGame() {
-            // Wait for the tech tree to be loaded
             await loadTechTree();
             
-            // Now that tech tree is loaded, automatically research fortress
             if (CONFIG.TECH_TREE.fortress && !gameState.isTechResearched('fortress')) {
                 console.log('Automatically researching Fortress at game start');
                 gameState.researchedTechs.add('fortress');
                 gameState.updateAvailableTechs();
-                // Check if tech tree is fully completed (in case fortress is the only tech)
                 gameState.checkTechTreeCompletion();
             }
             
@@ -5971,7 +5873,6 @@
             updateDisplay();
             setupEventListeners();
             
-            // Show homescreen overlay initially
             showHomescreen();
 
             if (window.buttonStateInterval) {
@@ -6008,10 +5909,8 @@
             }
         }
 
-// Placement preview tooltip element
 let placementPreviewTooltip = null;
 
-// Handle cell hover for placement preview
 function handleCellHover(x, y, isEntering) {
     if (!gameState.placementMode) {
         hidePlacementPreview();
@@ -6022,7 +5921,6 @@ function handleCellHover(x, y, isEntering) {
     const worldY = y + gameState.cameraOffset.y;
     
     if (isEntering) {
-        // Check if placement is valid
         const cell = gameState.grid[y][x];
         if (cell === null) {
             showPlacementPreview(x, y, worldX, worldY);
@@ -6034,21 +5932,17 @@ function handleCellHover(x, y, isEntering) {
     }
 }
 
-// Show placement preview tooltip
 function showPlacementPreview(gridX, gridY, worldX, worldY) {
-    // Create tooltip if it doesn't exist
     if (!placementPreviewTooltip) {
         placementPreviewTooltip = document.createElement('div');
         placementPreviewTooltip.className = 'placement-preview-tooltip';
         document.body.appendChild(placementPreviewTooltip);
     }
     
-    // Get placement info
     const [type, subtype] = parsePlacementMode(gameState.placementMode);
     const displayName = getDisplayName(type, subtype);
     const sprite = getSpriteForMode(gameState.placementMode);
     
-    // Get accurate cost information by instantiating the object
     let cost = {};
     try {
         if (type === 'wall') {
@@ -6061,11 +5955,9 @@ function showPlacementPreview(gridX, gridY, worldX, worldY) {
             cost = tempObj.cost;
         }
     } catch (e) {
-        // Fallback costs if instantiation fails
         cost = { 'See Info': 0 };
     }
     
-    // Build cost display with proper icons
     let costHtml = '';
     for (const [resource, amount] of Object.entries(cost)) {
         if (amount > 0) {
@@ -6084,7 +5976,6 @@ function showPlacementPreview(gridX, gridY, worldX, worldY) {
         costHtml = '<div class="preview-cost-placeholder">See Info Panel</div>';
     }
     
-    // Update tooltip content with matching UI style
     placementPreviewTooltip.innerHTML = `
         <div class="preview-tooltip-content">
             <div class="preview-header">
@@ -6098,7 +5989,6 @@ function showPlacementPreview(gridX, gridY, worldX, worldY) {
         </div>
     `;
     
-    // Position tooltip near the cell
     const cellRect = document.querySelector(`[data-x="${gridX}"][data-y="${gridY}"]`).getBoundingClientRect();
     const tooltipWidth = placementPreviewTooltip.offsetWidth || 200;
     const tooltipHeight = placementPreviewTooltip.offsetHeight || 120;
@@ -6106,7 +5996,6 @@ function showPlacementPreview(gridX, gridY, worldX, worldY) {
     let left = cellRect.left + cellRect.width / 2 - tooltipWidth / 2;
     let top = cellRect.top - tooltipHeight - 12;
     
-    // Keep within viewport bounds
     left = Math.max(15, Math.min(left, window.innerWidth - tooltipWidth - 15));
     top = Math.max(15, Math.min(top, window.innerHeight - tooltipHeight - 15));
     
@@ -6120,14 +6009,12 @@ function showPlacementPreview(gridX, gridY, worldX, worldY) {
     `;
 }
 
-// Hide placement preview tooltip
 function hidePlacementPreview() {
     if (placementPreviewTooltip) {
         placementPreviewTooltip.style.display = 'none';
     }
 }
 
-// Helper function to get display name
 function getDisplayName(type, subtype) {
     const names = {
         'wall': {
@@ -6165,19 +6052,16 @@ function getDisplayName(type, subtype) {
     return subtype ? subtype.charAt(0).toUpperCase() + subtype.slice(1) : type.charAt(0).toUpperCase() + type.slice(1);
 }
 
-// Helper function to get sprite for placement mode
 function getSpriteForMode(mode) {
     if (mode.includes('-')) {
         const parts = mode.split('-');
         const type = parts[0];
         const subtype = parts[1];
         
-        // Use the actual sprite configuration from CONFIG.SPRITES
         if (CONFIG.SPRITES[type] && CONFIG.SPRITES[type][subtype]) {
             return CONFIG.SPRITES[type][subtype];
         }
         
-        // Fallback mappings for common cases
         const fallbackSprites = {
             'wall-stone': './sprites/wall.png',
             'wall-steel': './sprites/wallsteel.png',
@@ -6206,7 +6090,6 @@ function getSpriteForMode(mode) {
             return fallbackSprites[mode];
         }
     } else {
-        // Handle simple modes
         if (CONFIG.SPRITES[mode]) {
             return CONFIG.SPRITES[mode];
         }
@@ -6221,7 +6104,6 @@ function getSpriteForMode(mode) {
         }
     }
     
-    // Default fallback
     return './sprites/missing.png';
 }
 
@@ -6237,7 +6119,6 @@ function getSpriteForMode(mode) {
                     handleCellClick(x, y);
                 });
                 
-                // Add hover events for placement preview
                 newCell.addEventListener('mouseenter', (e) => {
                     e.stopPropagation();
                     handleCellHover(x, y, true);
@@ -6263,7 +6144,6 @@ function getSpriteForMode(mode) {
                     const placed = placeObject(x, y, type, subtype);
                     if (placed) {
                         actionTaken = true;
-                        // Reset folder open flag after successful placement
                         window.keepFoldersOpen = false;
                         console.log('Resetting keepFoldersOpen = false after placement');
                     }
@@ -6275,7 +6155,6 @@ function getSpriteForMode(mode) {
                 return;
             }
 
-            // Handle army units separately - allow movement/selection instead of opening building info
             if (cell && cell.type === 'army') {
                 clearSelection();
                 gameState.selectedUnit = cell;
@@ -6284,7 +6163,6 @@ function getSpriteForMode(mode) {
                 return;
             }
 
-            // If we clicked on a building (not army), show the building info window
             if (cell && (cell.type === 'wall' || cell.type === 'tech')) {
                 showBuildingInfo(cell);
                 return;
@@ -6486,7 +6364,6 @@ function getSpriteForMode(mode) {
         }
 
         function gameOver() {
-            // Show death screen instead of just notifications
             showDeathScreen();
         }
         
@@ -6497,19 +6374,15 @@ function getSpriteForMode(mode) {
                 return;
             }
             
-            // Update death stats
             document.getElementById('death-turns').textContent = gameState.turn;
             document.getElementById('death-waves').textContent = gameState.wave;
             
-            // Calculate resources lost (session resources)
             const resourcesLost = Object.values(gameState.sessionResources).reduce((sum, val) => sum + val, 0);
             document.getElementById('death-resources').textContent = resourcesLost;
             
-            // Show the death screen
             deathScreen.classList.add('active');
             
-            // Track failed mission
-            gameState.totalMissions++; // Increment total missions even for failures
+            gameState.totalMissions++;
             updateStatsPanel();
         }
         
@@ -6572,20 +6445,18 @@ function getSpriteForMode(mode) {
             gameState.inWaveBreak = false;
             console.log("Wave break reset to false");
 
-            // Base enemy count with zone difficulty scaling - harder first wave
             let baseEnemies = 5 + gameState.wave * 3;
             let zoneMultiplier = 1;
             
-            // Apply zone difficulty multiplier - increased difficulty
             switch(gameState.currentZone) {
                 case 'shallow':
-                    zoneMultiplier = 1.2; // Slightly harder (20% more)
+                    zoneMultiplier = 1.2;
                     break;
                 case 'medium':
-                    zoneMultiplier = 1.8; // Much harder (80% more)
+                    zoneMultiplier = 1.8;
                     break;
                 case 'deep':
-                    zoneMultiplier = 2.5; // Significantly harder (150% more)
+                    zoneMultiplier = 2.5;
                     break;
                 default:
                     zoneMultiplier = 1.2;
@@ -6593,15 +6464,13 @@ function getSpriteForMode(mode) {
             
             let numEnemies = Math.floor(baseEnemies * zoneMultiplier);
 
-            // Get empty cells with zone-specific priority
             const emptyCells = [];
-            const priorityCells = []; // Cells closer to player (for harder zones)
-            const distantCells = [];  // Cells farther from player (for easier zones)
+            const priorityCells = [];
+            const distantCells = [];
             
             const playerGridX = CONFIG.PLAYER_START.x - gameState.cameraOffset.x;
             const playerGridY = CONFIG.PLAYER_START.y - gameState.cameraOffset.y;
             
-            // Calculate distances and categorize cells
             for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                 for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
                     if (x === playerGridX && y === playerGridY) continue;
@@ -6609,7 +6478,6 @@ function getSpriteForMode(mode) {
                     if (gameState.grid[y][x] === null) {
                         const distance = Math.abs(x - playerGridX) + Math.abs(y - playerGridY);
                         
-                        // Categorize based on distance
                         if (distance <= 3) {
                             priorityCells.push({ x, y, distance });
                         } else if (distance <= 6) {
@@ -6621,26 +6489,19 @@ function getSpriteForMode(mode) {
                 }
             }
             
-            // Sort by distance for priority cells (closest first)
             priorityCells.sort((a, b) => a.distance - b.distance);
-            // Sort by distance for distant cells (farthest first) 
             distantCells.sort((a, b) => b.distance - a.distance);
             
-            // Zone-specific cell selection strategy
             let selectedCells = [];
             
             switch(gameState.currentZone) {
                 case 'shallow':
-                    // Easier zone: prefer distant cells, some middle cells
                     selectedCells = [...distantCells, ...emptyCells.slice(0, Math.floor(emptyCells.length * 0.3)), ...priorityCells.slice(0, 2)];
                     break;
                 case 'medium':
-                    // Medium difficulty: balanced mix
                     selectedCells = [...emptyCells, ...priorityCells.slice(0, Math.floor(priorityCells.length * 0.5)), ...distantCells.slice(0, Math.floor(distantCells.length * 0.3))];
                     break;
                 case 'deep':
-                    // Hardest zone: prefer close cells but protect core area
-                    // Filter out cells that are too close to core (distance <= 2)
                     const safePriorityCells = priorityCells.filter(cell => cell.distance > 2);
                     selectedCells = [...safePriorityCells, ...emptyCells.slice(0, Math.floor(emptyCells.length * 0.4)), ...distantCells.slice(0, 2)];
                     break;
@@ -6648,7 +6509,6 @@ function getSpriteForMode(mode) {
                     selectedCells = [...emptyCells, ...priorityCells, ...distantCells];
             }
 
-            // Shuffle the selected cells for variety
             for (let i = selectedCells.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [selectedCells[i], selectedCells[j]] = [selectedCells[j], selectedCells[i]];
@@ -6695,7 +6555,6 @@ function getSpriteForMode(mode) {
             gameState.turn++;
             gameState.countEnemies();
             
-            // Update extraction UI after enemy movements to check for threats
             if (gameState.gameMode === 'active_zone') {
                 updateExtractionUI();
             }
@@ -6730,13 +6589,11 @@ function getSpriteForMode(mode) {
         }
 
         function updateDisplay() {
-            // Update main resources
             document.getElementById('steel-count').textContent = gameState.resources.Steel;
             document.getElementById('coin-count').textContent = gameState.resources.coins;
             document.getElementById('gold-count').textContent = gameState.resources.gold;
             document.getElementById('oil-count').textContent = gameState.resources.oil;
             
-            // Update stored resources (homescreen view - vault panel)
             const vaultStoredSteel = document.getElementById('vault-stored-steel-count');
             if (vaultStoredSteel) {
                 vaultStoredSteel.textContent = gameState.storedResources.Steel;
@@ -6745,10 +6602,8 @@ function getSpriteForMode(mode) {
                 console.log('vault-stored-steel-count element not found');
             }
             
-            // Update vault total value
             const vaultTotalStorage = document.getElementById('vault-total-storage');
             if (vaultTotalStorage) {
-                // Calculate asset value: Iron=1, Coin=5, Gold=2, Oil=20
                 const steelValue = gameState.storedResources.Steel * 1;
                 const coinValue = gameState.storedResources.coins * 5;
                 const goldValue = gameState.storedResources.gold * 2;
@@ -6793,7 +6648,6 @@ function getSpriteForMode(mode) {
                 console.log('vault-stored-oil-count element not found');
             }
             
-            // Update session resources (active zone view)
             const sessionSteel = document.getElementById('session-steel-count');
             if (sessionSteel) sessionSteel.textContent = gameState.sessionResources.Steel;
             const sessionCoin = document.getElementById('session-coin-count');
@@ -6867,15 +6721,12 @@ function getSpriteForMode(mode) {
             updateButtonStates();
             updateTechTreeDisplay();
             
-            // Update tech tree resources
             updateTechTreeResources();
             
-            // Update extraction UI if in active zone
             if (gameState.gameMode === 'active_zone') {
                 updateExtractionUI();
             }
             
-            // Update module affordability if the popup is open
             if (document.getElementById('module-selection-popup').style.display === 'flex') {
                 updateModuleAffordability();
             }
@@ -6897,14 +6748,10 @@ function getSpriteForMode(mode) {
         }
 
         function updateTechTreeDisplay() {
-            // Update the visual tech tree if it's visible
             const techTreeContent = document.getElementById('tech-tree-content');
             if (techTreeContent && techTreeContent.style.display !== 'none') {
-                // Re-render the tech tree to reflect current game state
                 renderTechTree();
             }
-            // This function is called from updateDisplay() to refresh the tech tree UI
-            // when game state changes (resources, researched techs, etc.)
         }
 
         function updateButtonStates() {
@@ -7134,7 +6981,6 @@ function getSpriteForMode(mode) {
         ];
 
         function setupExtractionEventListeners() {
-            // Zone selection buttons
             document.querySelectorAll('.zone-enter-btn').forEach(button => {
                 const clone = button.cloneNode(true);
                 button.parentNode.replaceChild(clone, button);
@@ -7148,7 +6994,6 @@ function getSpriteForMode(mode) {
                 });
             });
             
-            // Extraction buttons
             const extractBtn = document.getElementById('extract-btn');
             if (extractBtn) {
                 const clone = extractBtn.cloneNode(true);
@@ -7180,7 +7025,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Homescreen controls
             const viewBaseBtn = document.getElementById('view-base-btn');
             if (viewBaseBtn) {
                 const clone = viewBaseBtn.cloneNode(true);
@@ -7188,7 +7032,6 @@ function getSpriteForMode(mode) {
                 
                 clone.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    // Show base defense view
                     gameState.gameMode = 'active_zone';
                     gameState.currentZone = 'base';
                     gameState.resources = { ...gameState.storedResources };
@@ -7197,7 +7040,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Save/Load buttons
             const saveBtn = document.getElementById('save-game-btn');
             if (saveBtn) {
                 const clone = saveBtn.cloneNode(true);
@@ -7220,7 +7062,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Research buttons
             const researchBtn = document.getElementById('research-btn');
             if (researchBtn) {
                 const clone = researchBtn.cloneNode(true);
@@ -7243,43 +7084,33 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Building selection buttons with visual feedback
             setupBuildingSelection();
         }
         
-        // Global keyboard event listener
         document.addEventListener('keydown', function(e) {
-            // ESC key to deselect placement mode
             if (e.key === 'Escape' && gameState.placementMode) {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Clear placement mode but keep folder selection if it exists
                 gameState.placementMode = null;
                 hidePlacementPreview();
                 updateDisplay();
                 
-                // Don't clear folder selection - let users keep folders open
-                // Only show notification if we actually had something selected
                 showNotification('Placement mode cleared', 12, 7, 'info');
             }
         });
 
-        // Global mouse position tracking
         let mouseX = 0;
         let mouseY = 0;
                 
-        // Selection tooltip element
         let selectionTooltip = null;
                 
-        // Mouse move event listener to track cursor position
         document.addEventListener('mousemove', function(e) {
             mouseX = e.clientX;
             mouseY = e.clientY;
             updateTooltipPosition();
         });
                 
-        // Create selection tooltip element
         function createSelectionTooltip() {
             if (selectionTooltip) {
                 document.body.removeChild(selectionTooltip);
@@ -7293,14 +7124,11 @@ function getSpriteForMode(mode) {
             return selectionTooltip;
         }
                 
-        // Update tooltip position to follow mouse
         function updateTooltipPosition() {
             if (selectionTooltip && selectionTooltip.style.display !== 'none') {
-                // Position tooltip to the right and slightly below the cursor
                 let left = mouseX + 15;
                 let top = mouseY + 15;
                         
-                // Prevent tooltip from going off screen
                 const tooltipWidth = selectionTooltip.offsetWidth || 200;
                 const tooltipHeight = selectionTooltip.offsetHeight || 80;
                         
@@ -7312,7 +7140,6 @@ function getSpriteForMode(mode) {
                     top = mouseY - tooltipHeight - 15;
                 }
                         
-                // Ensure tooltip stays within viewport bounds
                 left = Math.max(10, Math.min(left, window.innerWidth - tooltipWidth - 10));
                 top = Math.max(10, Math.min(top, window.innerHeight - tooltipHeight - 10));
                         
@@ -7321,18 +7148,14 @@ function getSpriteForMode(mode) {
             }
         }
                 
-        // Show tooltip with building/army information
         function showSelectionTooltip(mode, name) {
             const tooltip = createSelectionTooltip();
                     
-            // Get cost information for this mode
             const buttonInfo = BUTTONS.find(btn => btn.mode === mode);
             const cost = buttonInfo ? buttonInfo.cost : {};
                     
-            // Get appropriate icon
             let iconSrc = './sprites/' + getIconForMode(mode);
                     
-            // Build cost display
             let costHtml = '';
             for (const [resource, amount] of Object.entries(cost)) {
                 const resourceIcon = getResourceIcon(resource);
@@ -7358,14 +7181,12 @@ function getSpriteForMode(mode) {
             updateTooltipPosition();
         }
                 
-        // Hide selection tooltip
         function hideSelectionTooltip() {
             if (selectionTooltip) {
                 selectionTooltip.style.display = 'none';
             }
         }
                 
-        // Get icon filename for a mode
         function getIconForMode(mode) {
             const modeMap = {
                 'wall': 'wall.png',
@@ -7393,7 +7214,6 @@ function getSpriteForMode(mode) {
             return modeMap[mode] || 'research.png';
         }
                 
-        // Get resource icon
         function getResourceIcon(resource) {
             const iconMap = {
                 'Steel': './sprites/ironin.png',
@@ -7403,7 +7223,6 @@ function getSpriteForMode(mode) {
             return iconMap[resource] || './sprites/research.png';
         }
                 
-        // Get resource symbol
         function getResourceSymbol(resource) {
             const symbolMap = {
                 'Steel': 'S',
@@ -7413,45 +7232,35 @@ function getSpriteForMode(mode) {
             return symbolMap[resource] || '?';
         }
                 
-        // Enhanced building selection with tooltip support
         function setupBuildingSelection() {
-            // Handle building button clicks with selection feedback
             document.querySelectorAll('.dropdown-btn').forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.stopPropagation();
                             
-                    // Get building info
                     const buildingId = this.id.replace('place-', '');
                     const mode = this.id.replace('place-', '').replace('-', '_');
                     const name = this.querySelector('span:first-child').textContent;
                             
-                    // Clear any existing selections
                     clearAllSelections();
                             
-                    // Set placement mode
                     gameState.placementMode = mode;
                     window.keepFoldersOpen = true;
                             
-                    // Add selected class to parent folder trigger
                     const folderItem = this.closest('.folder-item');
                     const folderTrigger = folderItem.querySelector('.folder-trigger');
                     folderTrigger.classList.add('selected');
                             
-                    // Show tooltip
                     showSelectionTooltip(mode, name);
                             
-                    // Update display and show notification
                     updateDisplay();
                     showNotification(`Selected ${name}`, 12, 7, 'info');
                 });
             });
                     
-            // Handle folder trigger clicks to clear selection
             document.querySelectorAll('.folder-trigger').forEach(trigger => {
                 trigger.addEventListener('click', function(e) {
                     e.stopPropagation();
                             
-                    // If this folder is already selected, clear selection
                     if (this.classList.contains('selected')) {
                         clearAllSelections();
                         gameState.placementMode = null;
@@ -7464,20 +7273,15 @@ function getSpriteForMode(mode) {
             });
         }
                 
-        // Enhanced clearAllSelections to hide tooltip
         function clearAllSelections() {
-            // Remove selected class from all folder triggers
             document.querySelectorAll('.folder-trigger.selected').forEach(trigger => {
                 trigger.classList.remove('selected');
             });
                     
-            // Clear placement mode if it was set by building selection
-            // But preserve manual placement mode if set by user
             if (gameState.placementMode && !window.manualPlacementMode) {
                 gameState.placementMode = null;
             }
                     
-            // Hide tooltips
             hideSelectionTooltip();
             hidePlacementPreview();
         }
@@ -7488,14 +7292,12 @@ function getSpriteForMode(mode) {
                 overlay.classList.add('active');
             }
             document.body.style.overflow = 'hidden';
-            clearAllSelections(); // Clear selections when returning to homescreen
-            hideSelectionTooltip(); // Hide tooltip when returning to homescreen
+            clearAllSelections();
+            hideSelectionTooltip();
             
-            // Update vault multiple times to ensure resources display properly
             console.log('Updating vault display...');
             updateDisplay();
             
-            // Schedule additional vault updates
             setTimeout(() => {
                 console.log('Vault update 1...');
                 updateDisplay();
@@ -7533,12 +7335,10 @@ function getSpriteForMode(mode) {
         }
 
         function switchView(viewId) {
-            // Hide all views
             document.querySelectorAll('.screen-view').forEach(view => {
                 view.classList.remove('active');
             });
             
-            // Show requested view
             const targetView = document.getElementById(viewId);
             if (targetView) {
                 targetView.classList.add('active');
@@ -7546,7 +7346,6 @@ function getSpriteForMode(mode) {
         }
 
         function updateExtractionUI() {
-            // Update current zone display in navbar
             const zoneDisplay = document.getElementById('current-zone-display');
             if (zoneDisplay && gameState.currentZone) {
                 const zoneNames = {
@@ -7558,7 +7357,6 @@ function getSpriteForMode(mode) {
                 zoneDisplay.textContent = zoneNames[gameState.currentZone] || gameState.currentZone.toUpperCase();
             }
             
-            // Update threat indicator in navbar
             const threatIndicator = document.getElementById('threat-indicator');
             if (threatIndicator) {
                 const isThreatened = gameState.checkBaseThreat();
@@ -7573,7 +7371,6 @@ function getSpriteForMode(mode) {
                 }
             }
             
-            // Update extract button state
             const extractBtn = document.getElementById('extract-btn');
             if (extractBtn) {
                 const isThreatened = gameState.checkBaseThreat();
@@ -7586,10 +7383,8 @@ function getSpriteForMode(mode) {
                 }
             }
             
-            // Update total storage display
             const totalStorage = document.getElementById('total-storage');
             if (totalStorage) {
-                // Calculate asset value: Iron=1, Coin=5, Gold=2, Oil=20
                 const totalValue = (gameState.storedResources.Steel * 1) + 
                                  (gameState.storedResources.coins * 5) + 
                                  (gameState.storedResources.gold * 2) + 
@@ -7633,7 +7428,6 @@ function getSpriteForMode(mode) {
         function setupEventListeners() {
             makeFoldersDraggable();
 
-            // Extraction game event listeners
             setupExtractionEventListeners();
             
             document.querySelectorAll('[data-folder] .folder-title').forEach(function (title) {
@@ -7653,7 +7447,6 @@ function getSpriteForMode(mode) {
                             folderContent.style.top = (rect.bottom + 5) + 'px';
                         }
                     } else {
-                        // Clear positioning when folder is closed
                         const folderContent = folder.querySelector('.folder-content');
                         if (folderContent) {
                             folderContent.style.left = '';
@@ -7682,10 +7475,9 @@ function getSpriteForMode(mode) {
                     } else {
                         console.error('Tech tree popup or overlay not found');
                     }
-                }, true); // Use capture phase to ensure it fires
+                }, true);
             }
             
-            // Add event listener for the new research tree button in the Research folder
             const openResearchTreeButton = document.getElementById('open-research-tree');
             if (openResearchTreeButton) {
                 const clone = openResearchTreeButton.cloneNode(true);
@@ -7771,7 +7563,6 @@ function getSpriteForMode(mode) {
                         }
                         gameState.placementMode = gameState.placementMode === buttonData.mode ? null : buttonData.mode;
                         
-                        // Keep folder open when entering placement mode
                         if (gameState.placementMode === buttonData.mode) {
                             window.keepFoldersOpen = true;
                             console.log('Setting keepFoldersOpen = true for mode:', buttonData.mode);
@@ -7816,7 +7607,6 @@ function getSpriteForMode(mode) {
                 console.log('Clicked target:', e.target);
                 console.log('Is folder target:', !!e.target.closest('[data-folder]'));
                 
-                // Don't close folders if we're in placement mode and want to keep them open
                 if (!window.keepFoldersOpen && !e.target.closest('[data-folder]')) {
                     console.log('Closing folders');
                     document.querySelectorAll('.folder.open').forEach(folder => {
@@ -7845,7 +7635,6 @@ function getSpriteForMode(mode) {
                 document.body.appendChild(fileInput);
             }
 
-            // Building info window event listeners
             const buildingInfoClose = document.getElementById('building-info-close');
             if (buildingInfoClose) {
                 const clone = buildingInfoClose.cloneNode(true);
@@ -7866,7 +7655,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Teleport army button
             const teleportArmyBtn = document.getElementById('teleport-army-btn');
             if (teleportArmyBtn) {
                 const clone = teleportArmyBtn.cloneNode(true);
@@ -7878,7 +7666,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Send army button (War Gate army selection)
             const sendArmyBtn = document.getElementById('send-army-btn');
             if (sendArmyBtn) {
                 const clone = sendArmyBtn.cloneNode(true);
@@ -7890,9 +7677,7 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // New Homescreen Button Event Listeners
             
-            // Play button - opens zone selection
             const playGameBtn = document.getElementById('play-game-btn');
             if (playGameBtn) {
                 const clone = playGameBtn.cloneNode(true);
@@ -7900,7 +7685,6 @@ function getSpriteForMode(mode) {
                 
                 clone.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    // Open the zone selection modal
                     const popup = document.getElementById('zone-selection-popup');
                     if (popup) {
                         popup.classList.add('active');
@@ -7908,7 +7692,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Load button - opens file selection
             const loadGameBtn = document.getElementById('load-game-btn');
             if (loadGameBtn) {
                 const clone = loadGameBtn.cloneNode(true);
@@ -7921,7 +7704,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Save button - saves current game state
             const saveGameBtn = document.getElementById('save-game-btn');
             if (saveGameBtn) {
                 const clone = saveGameBtn.cloneNode(true);
@@ -7933,7 +7715,6 @@ function getSpriteForMode(mode) {
                 });
             }
             
-            // Death screen buttons
             const deathReturnBtn = document.getElementById('death-return-btn');
             if (deathReturnBtn) {
                 const clone = deathReturnBtn.cloneNode(true);
@@ -7956,7 +7737,6 @@ function getSpriteForMode(mode) {
                 clone.addEventListener('click', function(e) {
                     e.stopPropagation();
                     hideDeathScreen();
-                    // Restart the same zone with same resources
                     gameState.enterZone(gameState.currentZone);
                     showNotification(`Retrying ${gameState.currentZone.toUpperCase()} mission...`, 12, 7, 'info');
                 });
@@ -7968,7 +7748,6 @@ function getSpriteForMode(mode) {
                 
                 clone.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    // Replace with your actual Discord invite link
                     window.open('https://discord.gg/your-discord-server', '_blank');
                 });
             }
@@ -8053,7 +7832,6 @@ function getSpriteForMode(mode) {
             return 'Unknown Research';
         }
 
-        // Add this function for debugging
         function debugResearch() {
             console.log('=== DEBUG RESEARCH INFO ===');
             console.log('Researched techs:', Array.from(gameState.researchedTechs));
@@ -8061,7 +7839,6 @@ function getSpriteForMode(mode) {
             console.log('Tech tree loaded:', Object.keys(CONFIG.TECH_TREE).length > 0);
             console.log('Current resources:', gameState.resources);
             
-            // Check some specific techs
             const testTechs = ['fortress', 'module_research', 'basic_defense'];
             testTechs.forEach(techId => {
                 const canResearch = gameState.canResearchTech(techId);
@@ -8070,8 +7847,6 @@ function getSpriteForMode(mode) {
             });
         }
         
-        // Call this when needed for debugging
-        // debugResearch();
 
         function renderTechTree() {
             const techTreeContent = document.getElementById('tech-tree-content');
@@ -8083,10 +7858,8 @@ function getSpriteForMode(mode) {
                 return;
             }
 
-            // Clear only the main area, preserve the info panel
             techTreeMain.innerHTML = '';
             
-            // Check if we have tech tree data
             if (!CONFIG.TECH_TREE || Object.keys(CONFIG.TECH_TREE).length === 0) {
                 techTreeMain.innerHTML = `
                     <div style="text-align: center; padding: 50px;">
@@ -8101,7 +7874,6 @@ function getSpriteForMode(mode) {
                 return;
             }
 
-            // Create connections first (so they appear behind nodes)
             for (const techId in CONFIG.TECH_TREE) {
                 const tech = CONFIG.TECH_TREE[techId];
                 const fromPos = NODE_POSITIONS[techId];
@@ -8119,7 +7891,6 @@ function getSpriteForMode(mode) {
                 }
             }
 
-            // Create nodes
             for (const techId in CONFIG.TECH_TREE) {
                 const tech = CONFIG.TECH_TREE[techId];
                 const pos = NODE_POSITIONS[techId];
@@ -8161,7 +7932,6 @@ function getSpriteForMode(mode) {
             const infoPanel = document.getElementById('tech-info-panel');
             if (!infoPanel) return;
             
-            // Get tech state
             let state = 'locked';
             let stateText = 'LOCKED';
             if (gameState.isTechResearched(techId)) {
@@ -8172,7 +7942,6 @@ function getSpriteForMode(mode) {
                 stateText = 'AVAILABLE';
             }
             
-            // Format cost display
             let costHtml = '';
             if (tech.cost) {
                 const costs = [];
@@ -8183,7 +7952,6 @@ function getSpriteForMode(mode) {
                 costHtml = costs.join('');
             }
             
-            // Update panel content
             infoPanel.innerHTML = `
                 <div class="tech-info-title">${tech.name}</div>
                 <div class="tech-info-description">${tech.description}</div>
@@ -8193,7 +7961,6 @@ function getSpriteForMode(mode) {
                 </div>
             `;
             
-            // Remove hidden class
             infoPanel.classList.remove('hidden');
         }
         
@@ -8201,7 +7968,6 @@ function getSpriteForMode(mode) {
             const infoPanel = document.getElementById('tech-info-panel');
             if (!infoPanel) return;
             
-            // Show default message
             infoPanel.innerHTML = '<div class="tech-info-default">Hover over a technology to see details</div>';
             infoPanel.classList.add('hidden');
         }
@@ -8213,7 +7979,6 @@ function getSpriteForMode(mode) {
             nodeDiv.style.left = pos.x + 'px';
             nodeDiv.style.top = pos.y + 'px';
 
-            // Determine node state
             if (gameState.isTechResearched(techId)) {
                 nodeDiv.classList.add('researched');
             } else if (gameState.availableTechs.has(techId)) {
@@ -8235,7 +8000,6 @@ function getSpriteForMode(mode) {
             iconDiv.appendChild(img);
             nodeDiv.appendChild(iconDiv);
 
-            // Add click handler for researchable nodes
             if (!gameState.isTechResearched(techId) && gameState.availableTechs.has(techId)) {
                 nodeDiv.style.cursor = 'pointer';
                 nodeDiv.addEventListener('click', function () {
@@ -8243,8 +8007,8 @@ function getSpriteForMode(mode) {
                     if (gameState.researchTech(techId)) {
                         showNotification(`${tech.name} researched!`, CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
                         renderTechTree();
-                        updateButtonStates(); // Update building availability
-                        updateDisplay(); // Update resource display immediately
+                        updateButtonStates();
+                        updateDisplay();
                     } else {
                         showNotification(`Cannot research ${tech.name}. Check requirements.`, 
                             CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'warning');
@@ -8252,7 +8016,6 @@ function getSpriteForMode(mode) {
                 });
             }
 
-            // Add hover event listeners for info panel
             nodeDiv.addEventListener('mouseenter', function() {
                 updateTechInfoPanel(techId, tech);
             });
@@ -8261,7 +8024,6 @@ function getSpriteForMode(mode) {
                 resetTechInfoPanel();
             });
 
-            // Add hover tooltip
             nodeDiv.title = `${tech.name}\n${tech.description}`;
 
             container.appendChild(nodeDiv);
@@ -8369,7 +8131,6 @@ function getSpriteForMode(mode) {
         }
 
         function showBuildingInfo(building) {
-            // Special handling for War Gate - open army selection instead
             if (building.type === 'tech' && building.subtype === 'warpgate') {
                 openArmySelection(building);
                 return;
@@ -8378,38 +8139,29 @@ function getSpriteForMode(mode) {
             const buildingInfoPopup = document.getElementById('building-info-popup');
             const buildingInfoOverlay = document.getElementById('building-info-overlay');
             
-            // Set building title
             document.getElementById('building-info-title').textContent = getBuildingName(building);
             
-            // Set building icon
             document.getElementById('building-icon').src = building.getSprite();
             
-            // Set building description
             document.getElementById('building-description').textContent = getBuildingDescription(building);
             
-            // Set up module slots (will be hidden if no module research)
             setupModuleSlots(building);
             
-            // Show the popup
             buildingInfoPopup.style.display = 'flex';
             buildingInfoOverlay.style.display = 'block';
             
-            // Store reference to the selected building
             window.currentBuilding = building;
         }
         
         function canBuildingHaveModules(building) {
-            // Walls cannot have modules
             if (building.type === 'wall') {
                 return false;
             }
             
-            // All other building types (tech, army) can have modules
             return true;
         }
         
         function hasModuleResearch() {
-            // Player needs to research either module_research or both speed_module and defense_module
             return gameState.isTechResearched('module_research') || 
                    (gameState.isTechResearched('speed_module') && gameState.isTechResearched('defense_module'));
         }
@@ -8493,13 +8245,10 @@ function getSpriteForMode(mode) {
         function setupModuleSlots(building) {
             const moduleSlotsContainer = document.querySelector('.module-slots-container');
             
-            // Check if building can have modules and if player has researched module tech
             if (!canBuildingHaveModules(building) || !hasModuleResearch()) {
-                // Hide module slots and show locked message
                 if (moduleSlotsContainer) {
                     moduleSlotsContainer.style.display = 'none';
                     
-                    // Check if locked message already exists
                     let lockedMessage = moduleSlotsContainer.querySelector('.modules-locked-message');
                     if (!lockedMessage) {
                         lockedMessage = document.createElement('div');
@@ -8512,38 +8261,30 @@ function getSpriteForMode(mode) {
                 return;
             }
             
-            // Show module slots and hide locked message
             if (moduleSlotsContainer) {
                 moduleSlotsContainer.style.display = 'flex';
                 
-                // Hide locked message if it exists
                 const lockedMessage = moduleSlotsContainer.parentNode.querySelector('.modules-locked-message');
                 if (lockedMessage) {
                     lockedMessage.style.display = 'none';
                 }
             }
             
-            // Set up module slot 1
             const moduleSlot1 = document.getElementById('module-slot-1');
             
-            // Set up module slot 2
             const moduleSlot2 = document.getElementById('module-slot-2');
             
-            // Clear any previous event listeners by cloning elements
             const newModuleSlot1 = moduleSlot1.cloneNode(true);
             const newModuleSlot2 = moduleSlot2.cloneNode(true);
             moduleSlot1.parentNode.replaceChild(newModuleSlot1, moduleSlot1);
             moduleSlot2.parentNode.replaceChild(newModuleSlot2, moduleSlot2);
             
-            // Update module slot displays
             updateModuleSlotDisplay(building, 1);
             updateModuleSlotDisplay(building, 2);
             
-            // Set up event listeners for module slots
             newModuleSlot1.addEventListener('click', () => showModuleSelectionPopup(building, 1));
             newModuleSlot2.addEventListener('click', () => showModuleSelectionPopup(building, 2));
             
-            // Set up event listeners for module selection popup
             setupModuleSelectionPopup(building);
         }
 
@@ -8552,32 +8293,26 @@ function getSpriteForMode(mode) {
             const iconElement = slotElement.querySelector('.module-slot-icon');
             const tierElement = slotElement.querySelector('.module-slot-tier');
             
-            // Reset classes
             slotElement.classList.remove('equipped', 'empty');
             
             if (building.modules && building.modules.length >= slotNumber && building.modules[slotNumber - 1]) {
                 const module = building.modules[slotNumber - 1];
-                const moduleInfo = module.split('-'); // Format: type-tier (e.g., speed-2)
+                const moduleInfo = module.split('-');
                 const type = moduleInfo[0];
-                const tier = moduleInfo[1] || '1'; // Default to tier 1 if not specified
+                const tier = moduleInfo[1] || '1';
                 
-                // Add equipped class
                 slotElement.classList.add('equipped');
                 
-                // Set icon based on module type
                 if (type === 'speed') {
                     iconElement.innerHTML = '<img src="./sprites/speedmod.png" alt="Speed Module">';
                 } else if (type === 'defense') {
                     iconElement.innerHTML = '<img src="./sprites/defensemod.png" alt="Defense Module">';
                 }
                 
-                // Set tier indicator
                 tierElement.textContent = tier;
                 
-                // Show tier indicator
                 tierElement.style.display = 'flex';
             } else {
-                // No module equipped
                 slotElement.classList.add('empty');
                 iconElement.innerHTML = '';
                 tierElement.style.display = 'none';
@@ -8588,20 +8323,16 @@ function getSpriteForMode(mode) {
             const popup = document.getElementById('module-selection-popup');
             const overlay = document.getElementById('module-selection-overlay');
             
-            // Store the current building and slot number
             window.currentBuilding = building;
             window.currentSlot = slotNumber;
             
-            // Update affordability for each module option
             updateModuleAffordability();
             
-            // Show the popup
             popup.style.display = 'flex';
             overlay.style.display = 'block';
         }
         
         function setupModuleSelectionPopup(building) {
-            // Close button
             const closeBtn = document.getElementById('module-close-btn');
             const overlay = document.getElementById('module-selection-overlay');
             
@@ -8613,11 +8344,9 @@ function getSpriteForMode(mode) {
                 overlay.onclick = closeModuleSelectionPopup;
             }
             
-            // Check if player has researched module tech
             const hasSpeedModuleTech = gameState.isTechResearched('speed_module') || gameState.isTechResearched('module_research');
             const hasDefenseModuleTech = gameState.isTechResearched('defense_module') || gameState.isTechResearched('module_research');
             
-            // Update visibility of module options
             document.querySelectorAll('.module-option').forEach(option => {
                 const moduleType = option.dataset.module;
                 
@@ -8629,7 +8358,6 @@ function getSpriteForMode(mode) {
                 }
             });
             
-            // Module option click handlers
             document.querySelectorAll('.module-option').forEach(option => {
                 option.onclick = function() {
                     if (this.classList.contains('unaffordable')) {
@@ -8656,12 +8384,10 @@ function getSpriteForMode(mode) {
             popup.style.display = 'none';
             overlay.style.display = 'none';
             
-            // Reset all module options to visible
             document.querySelectorAll('.module-option').forEach(option => {
                 option.style.display = 'flex';
             });
             
-            // Clear references
             window.currentBuilding = null;
             window.currentSlot = null;
         }
@@ -8670,14 +8396,12 @@ function getSpriteForMode(mode) {
             const options = document.querySelectorAll('.module-option');
             
             options.forEach(option => {
-                // Check if the option is visible first
                 if (window.getComputedStyle(option).display === 'none') {
                     return;
                 }
                 
                 const cost = parseInt(option.querySelector('.module-cost').textContent);
                 
-                // Check if player has enough iron (steel)
                 if (gameState.resources.Steel >= cost) {
                     option.classList.remove('unaffordable');
                 } else {
@@ -8687,12 +8411,10 @@ function getSpriteForMode(mode) {
         }
         
         function updateModuleSelectOptions(selectElement) {
-            // Clear existing options except the first one (No Module)
             while (selectElement.children.length > 1) {
                 selectElement.removeChild(selectElement.lastChild);
             }
             
-            // Add options based on researched modules
             if (gameState.isTechResearched('speed_module')) {
                 const speedOption = document.createElement('option');
                 speedOption.value = 'speed';
@@ -8709,7 +8431,6 @@ function getSpriteForMode(mode) {
         }
 
         function equipModule(building, slotNumber, moduleType, moduleTier) {
-            // Check if player has enough resources
             let cost;
             if (moduleType === 'speed') {
                 switch(moduleTier) {
@@ -8732,56 +8453,44 @@ function getSpriteForMode(mode) {
                 return;
             }
             
-            // Create module string in format: type-tier (e.g., speed-2)
             const moduleString = `${moduleType}-${moduleTier}`;
             
-            // Check if this slot already has a module and remove its effect
             if (building.modules && building.modules.length >= slotNumber && building.modules[slotNumber - 1]) {
                 const oldModule = building.modules[slotNumber - 1];
                 const oldModuleParts = oldModule.split('-');
                 building.removeModule(oldModuleParts[0]);
             }
             
-            // Add the new module to the appropriate slot
             if (!building.modules) building.modules = [];
             
-            // Set the module in the correct slot
             building.modules[slotNumber - 1] = moduleString;
             
-            // Apply the module effect
             building.applyModuleEffect(moduleType);
             
-            // Spend the resources
             gameState.spendResources({ Steel: cost });
             
             showNotification(`${moduleType === 'speed' ? 'Speed' : 'Defense'} Module (T${moduleTier}) equipped!`, building.x, building.y, 'success');
             
-            // Update the UI
             setupModuleSlots(building);
             updateDisplay();
         }
 
         function unequipModule(building, slotNumber) {
-            // Check if this slot has a module
             if (building.modules && building.modules.length >= slotNumber && building.modules[slotNumber - 1]) {
                 const module = building.modules[slotNumber - 1];
                 const moduleParts = module.split('-');
                 const moduleType = moduleParts[0];
                 
-                // Remove the module effect
                 building.removeModuleEffect(moduleType);
                 
-                // Remove the module from the slot
                 building.modules[slotNumber - 1] = null;
                 
-                // Clean up null modules from the end
                 while (building.modules.length > 0 && building.modules[building.modules.length - 1] === null) {
                     building.modules.pop();
                 }
                 
                 showNotification(`${moduleType === 'speed' ? 'Speed' : 'Defense'} Module unequipped!`, building.x, building.y, 'success');
                 
-                // Update the UI
                 setupModuleSlots(building);
                 updateDisplay();
             } else {
@@ -8796,26 +8505,20 @@ function getSpriteForMode(mode) {
             buildingInfoPopup.style.display = 'none';
             buildingInfoOverlay.style.display = 'none';
             
-            // Also close the module selection popup if it's open
             closeModuleSelectionPopup();
             
-            // Clear the reference
             window.currentBuilding = null;
         }
         
-        // Army Selection Functions
         
         function openArmySelection(warpgate) {
             const popup = document.getElementById('army-selection-popup');
             if (!popup) return;
             
-            // Store reference to the War Gate
             window.currentWarGate = warpgate;
             
-            // Find all deployable army units
             populateArmyList();
             
-            // Show the popup
             popup.classList.add('active');
         }
         
@@ -8825,7 +8528,6 @@ function getSpriteForMode(mode) {
                 popup.classList.remove('active');
             }
             
-            // Clear references
             window.currentWarGate = null;
             window.selectedArmyUnits = [];
         }
@@ -8834,10 +8536,8 @@ function getSpriteForMode(mode) {
             const armyListContainer = document.getElementById('army-units-list');
             if (!armyListContainer) return;
             
-            // Clear existing content
             armyListContainer.innerHTML = '';
             
-            // Find all army units on the grid
             const armyUnits = [];
             for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                 for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
@@ -8854,7 +8554,6 @@ function getSpriteForMode(mode) {
                 }
             }
             
-            // Display message if no units found
             if (armyUnits.length === 0) {
                 armyListContainer.innerHTML = `
                     <div class="no-army-message">
@@ -8866,16 +8565,13 @@ function getSpriteForMode(mode) {
                 return;
             }
             
-            // Enable send button
             document.getElementById('send-army-btn').disabled = false;
             
-            // Create army unit items
             armyUnits.forEach(unitData => {
                 const unitItem = createArmyUnitItem(unitData);
                 armyListContainer.appendChild(unitItem);
             });
             
-            // Update selected units array
             window.selectedArmyUnits = [];
         }
         
@@ -8888,12 +8584,10 @@ function getSpriteForMode(mode) {
             item.dataset.gridX = unitData.gridX;
             item.dataset.gridY = unitData.gridY;
             
-            // Create checkbox
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.className = 'army-unit-checkbox';
             
-            // Create icon
             const iconDiv = document.createElement('div');
             iconDiv.className = 'army-unit-icon';
             const img = document.createElement('img');
@@ -8904,7 +8598,6 @@ function getSpriteForMode(mode) {
             };
             iconDiv.appendChild(img);
             
-            // Create info
             const infoDiv = document.createElement('div');
             infoDiv.className = 'army-unit-info';
             
@@ -8934,7 +8627,6 @@ function getSpriteForMode(mode) {
             infoDiv.appendChild(nameSpan);
             infoDiv.appendChild(statsDiv);
             
-            // Add event listener for selection
             item.addEventListener('click', function(e) {
                 if (e.target !== checkbox) {
                     checkbox.checked = !checkbox.checked;
@@ -8956,14 +8648,12 @@ function getSpriteForMode(mode) {
         function updateUnitSelection(item, isSelected) {
             if (isSelected) {
                 item.classList.add('selected');
-                // Add to selected units if not already there
                 const unitId = item.dataset.unitId;
                 if (!window.selectedArmyUnits.includes(unitId)) {
                     window.selectedArmyUnits.push(unitId);
                 }
             } else {
                 item.classList.remove('selected');
-                // Remove from selected units
                 const unitId = item.dataset.unitId;
                 window.selectedArmyUnits = window.selectedArmyUnits.filter(id => id !== unitId);
             }
@@ -8975,31 +8665,25 @@ function getSpriteForMode(mode) {
                 return;
             }
             
-            // Calculate oil cost (25 oil per unit)
             const oilCost = window.selectedArmyUnits.length * 25;
             
-            // Check if we have enough oil
             if (gameState.resources.oil < oilCost) {
                 showNotification(`Not enough oil! Need ${oilCost} oil (${window.selectedArmyUnits.length} units × 25).`, 
                                window.currentWarGate.x, window.currentWarGate.y, 'warning');
                 return;
             }
             
-            // Spend the oil
             gameState.resources.oil -= oilCost;
             
-            // Transfer selected units to homescreen army storage
             const transferredUnits = [];
             
             window.selectedArmyUnits.forEach(unitId => {
                 const unit = gameState.objects.get(unitId);
                 if (unit) {
-                    // Add to homescreen army collection
                     if (!gameState.storedArmyUnits) {
                         gameState.storedArmyUnits = [];
                     }
                     
-                    // Store unit information
                     gameState.storedArmyUnits.push({
                         type: unit.type,
                         subtype: unit.subtype,
@@ -9013,7 +8697,6 @@ function getSpriteForMode(mode) {
                     
                     transferredUnits.push(getBuildingName(unit));
                     
-                    // Remove unit from grid
                     const gridX = unit.x - gameState.cameraOffset.x;
                     const gridY = unit.y - gameState.cameraOffset.y;
                     
@@ -9027,27 +8710,22 @@ function getSpriteForMode(mode) {
                 }
             });
             
-            // Close popup and update display
             closeArmySelection();
             updateDisplay();
             
-            // Force update army box display
             setTimeout(() => {
                 updateArmyBoxDisplay();
                 console.log('Forced army box update. Stored units:', gameState.storedArmyUnits?.length || 0);
             }, 100);
             
-            // Show success message
             const unitNames = transferredUnits.slice(0, 3).join(', ');
             const extraText = transferredUnits.length > 3 ? ` and ${transferredUnits.length - 3} more` : '';
             showNotification(`Sent ${unitNames}${extraText} to base! (-${oilCost} oil)`, 
                            window.currentWarGate.x, window.currentWarGate.y, 'success');
         }
         
-        // Initialize army box display on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing army box display');
-            // Small delay to ensure elements are rendered
             setTimeout(() => {
                 updateArmyBoxDisplay();
                 console.log('Initial army box display updated');
@@ -9063,13 +8741,10 @@ function getSpriteForMode(mode) {
             
             const storedUnits = gameState.storedArmyUnits || [];
             
-            // Update unit count
             unitCount.textContent = `${storedUnits.length} units`;
             
-            // Clear container
             unitsContainer.innerHTML = '';
             
-            // Show message if no units
             if (storedUnits.length === 0) {
                 unitsContainer.innerHTML = `
                     <div class="no-army-units">
@@ -9080,7 +8755,6 @@ function getSpriteForMode(mode) {
                 return;
             }
             
-            // Display each unit
             storedUnits.forEach(unitData => {
                 const unitElement = createArmyUnitDisplay(unitData);
                 unitsContainer.appendChild(unitElement);
@@ -9091,12 +8765,10 @@ function getSpriteForMode(mode) {
             const unitDiv = document.createElement('div');
             unitDiv.className = 'army-unit-display';
             
-            // Create icon
             const iconDiv = document.createElement('div');
             iconDiv.className = 'army-unit-display-icon';
             const img = document.createElement('img');
             
-            // Get sprite for unit type
             const spritePath = getSpriteForArmyType(unitData.subtype);
             img.src = spritePath;
             img.alt = unitData.subtype;
@@ -9106,7 +8778,6 @@ function getSpriteForMode(mode) {
             
             iconDiv.appendChild(img);
             
-            // Create info
             const infoDiv = document.createElement('div');
             infoDiv.className = 'army-unit-display-info';
             
@@ -9160,13 +8831,11 @@ function getSpriteForMode(mode) {
             
         
         function teleportArmyHome() {
-            // Check if we have enough oil
             if (gameState.resources.oil < 50) {
                 showNotification('Not enough oil! Need 50 oil to teleport armies.', 12, 7, 'warning');
                 return;
             }
             
-            // Find all deployed army units
             const armyUnits = [];
             for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                 for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
@@ -9186,25 +8855,20 @@ function getSpriteForMode(mode) {
                 return;
             }
             
-            // Spend the oil cost
             gameState.resources.oil -= 50;
             
-            // Teleport all armies back to fortress/base
             const fortressPos = CONFIG.PLAYER_START;
             let teleportedCount = 0;
             
             armyUnits.forEach(({unit, x, y}) => {
-                // Remove unit from current position
                 gameState.grid[y][x] = null;
                 
-                // Place unit at fortress position (if spot is free)
                 if (gameState.grid[fortressPos.y][fortressPos.x] === null) {
                     unit.x = fortressPos.x + gameState.cameraOffset.x;
                     unit.y = fortressPos.y + gameState.cameraOffset.y;
                     gameState.grid[fortressPos.y][fortressPos.x] = unit;
                     teleportedCount++;
                 } else {
-                    // If fortress spot is occupied, try nearby spots
                     const nearbySpots = [
                         {x: fortressPos.x - 1, y: fortressPos.y},
                         {x: fortressPos.x + 1, y: fortressPos.y},
@@ -9226,14 +8890,11 @@ function getSpriteForMode(mode) {
                         }
                     }
                     
-                    // If no spot found, unit is lost
                     if (!placed) {
-                        // Unit is destroyed/lost
                     }
                 }
             });
             
-            // Close building info and update display
             closeBuildingInfo();
             updateDisplay();
             
@@ -9373,7 +9034,6 @@ function getSpriteForMode(mode) {
                 enemiesRemaining: gameState.enemiesRemaining,
                 researchedTechs: Array.from(gameState.researchedTechs),
                 grid: serializeGrid(),
-                // Extraction mode data
                 gameMode: gameState.gameMode,
                 currentZone: gameState.currentZone,
                 zoneDepth: gameState.zoneDepth,
@@ -9405,7 +9065,6 @@ function getSpriteForMode(mode) {
                         throw new Error('Invalid save file');
                     }
 
-                    // Load basic game state
                     gameState.resources = gameData.resources;
                     gameState.storedResources = gameData.storedResources || { ...CONFIG.INITIAL_RESOURCES };
                     gameState.sessionResources = gameData.sessionResources || { Steel: 0, coins: 0, gold: 0, oil: 0 };
@@ -9415,7 +9074,6 @@ function getSpriteForMode(mode) {
                     gameState.inWaveBreak = gameData.inWaveBreak || false;
                     gameState.enemiesRemaining = gameData.enemiesRemaining || 0;
 
-                    // Load extraction mode data
                     gameState.gameMode = gameData.gameMode || 'homescreen';
                     gameState.currentZone = gameData.currentZone || null;
                     gameState.zoneDepth = gameData.zoneDepth || 0;
@@ -9427,7 +9085,6 @@ function getSpriteForMode(mode) {
 
                     deserializeGrid(gameData.grid);
 
-                    // Handle extraction mode restoration
                     if (gameState.gameMode === 'active_zone' && gameState.currentZone) {
                         showActiveZoneView();
                         document.getElementById('current-zone-display').textContent = 
@@ -9506,10 +9163,8 @@ function getSpriteForMode(mode) {
                         obj.health = objData.health;
                         obj.maxHealth = objData.maxHealth;
                         
-                        // Restore modules
                         if (objData.modules && objData.modules.length > 0) {
                             obj.modules = [...objData.modules];
-                            // Re-apply module effects
                             objData.modules.forEach(module => {
                                 obj.applyModuleEffect(module);
                             });
@@ -9531,7 +9186,6 @@ function getSpriteForMode(mode) {
         }
 
         document.addEventListener('keydown', function (event) {
-            // Handle module selection popup close with Escape key
             if (event.key === 'Escape') {
                 closeModuleSelectionPopup();
                 closeBuildingInfo();
@@ -9635,13 +9289,11 @@ function getSpriteForMode(mode) {
                 cheatSequence[10] === targetSequence[10] &&
                 cheatSequence[11] === targetSequence[11]) {
 
-                // Add resources to VAULT (storedResources) instead of session resources
                 gameState.storedResources.Steel += 7000;
                 gameState.storedResources.coins += 7000;
                 gameState.storedResources.gold += 7000;
                 gameState.storedResources.oil += 7000;
 
-                // Also update current resources for immediate display
                 gameState.resources.Steel += 7000;
                 gameState.resources.coins += 7000;
                 gameState.resources.gold += 7000;
@@ -9656,7 +9308,6 @@ function getSpriteForMode(mode) {
         });
 
         function createTechTreeCompletionEffects() {
-            // Create celebration effects across the entire grid
             for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                 for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
                     setTimeout(() => {
@@ -9666,16 +9317,14 @@ function getSpriteForMode(mode) {
                             const centerX = rect.left + rect.width / 2;
                             const centerY = rect.top + rect.height / 2;
                             
-                            // Create colorful particle effects
-                            createParticleEffect(centerX, centerY, '#66d9ff', 8); // Blue
-                            setTimeout(() => createParticleEffect(centerX, centerY, '#ffcc00', 6), 100); // Gold
-                            setTimeout(() => createParticleEffect(centerX, centerY, '#ff5555', 4), 200); // Red
+                            createParticleEffect(centerX, centerY, '#66d9ff', 8);
+                            setTimeout(() => createParticleEffect(centerX, centerY, '#ffcc00', 6), 100);
+                            setTimeout(() => createParticleEffect(centerX, centerY, '#ff5555', 4), 200);
                         }
-                    }, (y * CONFIG.GRID_SIZE_X + x) * 20); // Staggered timing
+                    }, (y * CONFIG.GRID_SIZE_X + x) * 20);
                 }
             }
             
-            // Show special completion banner
             showCompletionBanner();
         }
         
@@ -9697,7 +9346,6 @@ function getSpriteForMode(mode) {
             
             document.body.appendChild(banner);
             
-            // Auto-remove after 5 seconds
             setTimeout(() => {
                 if (banner.parentNode) {
                     banner.style.animation = 'fadeOut 1s ease forwards';
@@ -9715,33 +9363,28 @@ function getSpriteForMode(mode) {
             initGame();
         });
         
-        // Resource Selection Modal Functions
         let selectedZoneType = null;
         let resourceSelection = { Steel: 0, coins: 0, gold: 0, oil: 0 };
         
         function openResourceSelection(zoneType) {
             selectedZoneType = zoneType;
             
-            // Close zone selection popup first
             closeZoneSelection();
             
             const popup = document.getElementById('resource-selection-popup');
             if (popup) {
                 popup.classList.add('active');
                 
-                // Update available resources display
                 document.getElementById('available-steel').textContent = gameState.storedResources.Steel;
                 document.getElementById('available-coins').textContent = gameState.storedResources.coins;
                 document.getElementById('available-gold').textContent = gameState.storedResources.gold;
                 document.getElementById('available-oil').textContent = gameState.storedResources.oil;
                 
-                // Update resource overview section
                 document.getElementById('overview-steel').textContent = gameState.storedResources.Steel;
                 document.getElementById('overview-coins').textContent = gameState.storedResources.coins;
                 document.getElementById('overview-gold').textContent = gameState.storedResources.gold;
                 document.getElementById('overview-oil').textContent = gameState.storedResources.oil;
                 
-                // Set slider max values and reset to 0
                 document.getElementById('steel-slider').max = gameState.storedResources.Steel;
                 document.getElementById('steel-slider').value = 0;
                 document.getElementById('coins-slider').max = gameState.storedResources.coins;
@@ -9751,7 +9394,6 @@ function getSpriteForMode(mode) {
                 document.getElementById('oil-slider').max = gameState.storedResources.oil;
                 document.getElementById('oil-slider').value = 0;
                 
-                // Update displayed values
                 updateResourceValues();
             }
         }
@@ -9777,7 +9419,6 @@ function getSpriteForMode(mode) {
             document.getElementById('gold-value').textContent = document.getElementById('gold-slider').value;
             document.getElementById('oil-value').textContent = document.getElementById('oil-slider').value;
             
-            // Store current selections
             resourceSelection = {
                 Steel: parseInt(document.getElementById('steel-slider').value) || 0,
                 coins: parseInt(document.getElementById('coins-slider').value) || 0,
@@ -9803,16 +9444,13 @@ function getSpriteForMode(mode) {
         }
         
         function confirmResourceSelection() {
-            // Deduct selected resources from stored resources
             gameState.storedResources.Steel -= resourceSelection.Steel;
             gameState.storedResources.coins -= resourceSelection.coins;
             gameState.storedResources.gold -= resourceSelection.gold;
             gameState.storedResources.oil -= resourceSelection.oil;
             
-            // Enter the zone with selected resources
             gameState.enterZone(selectedZoneType);
             
-            // Set the zone resources to what was selected
             gameState.resources = { ...resourceSelection };
             
             closeResourceSelection();
@@ -9820,14 +9458,12 @@ function getSpriteForMode(mode) {
             showNotification(`Entered ${selectedZoneType.toUpperCase()} ZONE with selected resources`, 12, 7, 'success');
         }
         
-        // Add event listeners to sliders
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.resource-slider').forEach(slider => {
                 slider.addEventListener('input', updateResourceValues);
             });
             
-            // Add tooltip functionality to folder buttons
-            setTimeout(initializeFolderTooltips, 500); // Delay to ensure folders are rendered
+            setTimeout(initializeFolderTooltips, 500);
         });
         
         function initializeFolderTooltips() {
@@ -9841,10 +9477,8 @@ function getSpriteForMode(mode) {
                 
                 if (costElement && costElement.textContent && costElement.textContent.trim()) {
                     console.log('Adding click handler to button', index);
-                    // Store original cost text
                     costElement.dataset.fullCost = costElement.textContent;
                     
-                    // Add click event
                     costElement.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Cost clicked:', e.target.dataset.fullCost);
@@ -9857,29 +9491,23 @@ function getSpriteForMode(mode) {
         function showFullCostPopup(element, fullText) {
             console.log('Showing full cost popup for:', fullText);
             
-            // Remove any existing popup
             hideFullCostPopup();
             
-            // Create popup element
             const popup = document.createElement('div');
             popup.className = 'full-cost-popup';
             popup.id = 'full-cost-popup';
             popup.textContent = fullText;
             
-            // Position popup near the clicked element
             const rect = element.getBoundingClientRect();
             popup.style.left = (rect.left + rect.width/2 - 100) + 'px';
             popup.style.top = (rect.bottom + 10) + 'px';
             
-            // Add to document
             document.body.appendChild(popup);
             
-            // Trigger show animation
             setTimeout(() => {
                 popup.classList.add('show');
             }, 10);
             
-            // Auto-hide after 3 seconds
             setTimeout(() => {
                 hideFullCostPopup();
             }, 3000);
@@ -9898,20 +9526,17 @@ function getSpriteForMode(mode) {
                 }, 200);
             }
         }
-        // Make tooltip functions globally available for debugging
         window.debugTooltips = {
             init: initializeFolderTooltips,
             show: showFullCostPopup,
             hide: hideFullCostPopup
         };
         
-        // Also attach to window for easy access
         window.initializeFolderTooltips = initializeFolderTooltips;
         window.showFullCostPopup = showFullCostPopup;
         window.hideFullCostPopup = hideFullCostPopup;
     </script>
     
-    <!-- Resource Selection Modal -->
     <div id="resource-selection-popup" class="modal-overlay">
         <div class="modal-content resource-selection-modal">
             <div class="modal-header">
