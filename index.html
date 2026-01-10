@@ -661,6 +661,12 @@
             border-color: #66d9ff;
         }
 
+        .army-unit-display-stat.damage {
+            color: #dd7e77;
+            background: rgba(221, 126, 119, 0.2);
+            border-color: #dd7e77;
+        }
+
         @keyframes unitCardAppear {
             0% {
                 opacity: 0;
@@ -730,6 +736,19 @@
             box-shadow: 0 8px 20px rgba(102, 217, 255, 0.5);
         }
 
+        .crates-btn {
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+            border-color: #66d9ff;
+            color: #e0e0e0;
+        }
+
+        .crates-btn:hover {
+            background: linear-gradient(145deg, #5a5a5a, #4a4a4a);
+            border-color: #66d9ff;
+            color: #66d9ff;
+            box-shadow: 0 8px 20px rgba(102, 217, 255, 0.5);
+        }
+
 
         .homescreen-button img {
             width: 24px;
@@ -765,20 +784,608 @@
             background: none;
             border: none;
             color: var(--text-primary);
-            font-size: 2rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            line-height: 1;
         }
 
         .close-btn:hover {
-            background: var(--danger);
-            color: white;
+            background: rgba(255, 85, 85, 0.2);
+            color: #ff5555;
+            transform: scale(1.1);
+        }
+
+        .close-btn::before {
+            content: "✕";
+            font-family: Arial, sans-serif;
         }
 
         .modal-body {
             padding: 25px;
+        }
+
+        /* Crate Result Modal Styles */
+        .crate-result-content {
+            max-width: 700px;
+            width: 95%;
+            background: #2a2a2a;
+            border: 3px solid #66d9ff;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(102, 217, 255, 0.3);
+        }
+
+        .crate-result-body {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* Enhanced Header Styling */
+        .modal-header {
+            background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+            border-bottom: 2px solid #66d9ff;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            color: #66d9ff;
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 0 0 15px rgba(102, 217, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* Enhanced Result Info Layout */
+        .crate-result-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .result-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(102, 217, 255, 0.1);
+            border: 2px solid #66d9ff;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .result-header h3 {
+            color: #66d9ff;
+            margin: 0;
+            font-size: 1.8rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(102, 217, 255, 0.3);
+        }
+
+        .result-sprite-placeholder {
+            display: flex;
+            justify-content: center;
+        }
+
+        .result-sprite-placeholder img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border: 3px solid #66d9ff;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+            padding: 10px;
+            box-shadow: 0 0 20px rgba(102, 217, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .result-sprite-placeholder img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(102, 217, 255, 0.5);
+        }
+
+        .result-details {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .reward-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background: rgba(50, 50, 50, 0.5);
+            border: 2px solid #555;
+            border-radius: 12px;
+        }
+
+        .reward-item {
+            background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+            border: 2px solid #66d9ff;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .reward-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(102, 217, 255, 0.3);
+            border-color: #76e9ff;
+        }
+
+        .reward-item.oil {
+            border-color: #7a977b;
+            background: linear-gradient(145deg, #353a35, #2a302a);
+        }
+
+        .reward-item.oil:hover {
+            border-color: #8aac8b;
+            box-shadow: 0 6px 12px rgba(122, 151, 123, 0.3);
+        }
+
+        .reward-label {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 8px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .reward-amount {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #66d9ff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 8px rgba(102, 217, 255, 0.3);
+        }
+
+        .reward-item.oil .reward-amount {
+            color: #7a977b;
+            text-shadow: 0 0 8px rgba(122, 151, 123, 0.3);
+        }
+
+        .reward-value {
+            font-size: 1rem;
+            color: #aaa;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .result-message {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px 30px;
+            border-radius: 12px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            text-shadow: 0 0 10px currentColor;
+            letter-spacing: 1px;
+            animation: pulseGlow 2s infinite;
+        }
+
+        .result-win {
+            background: linear-gradient(145deg, rgba(46, 204, 113, 0.3), rgba(39, 174, 96, 0.3));
+            border: 3px solid #2ecc71;
+            color: #2ecc71;
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.4);
+        }
+
+        .result-loss {
+            background: linear-gradient(145deg, rgba(231, 76, 60, 0.3), rgba(192, 57, 43, 0.3));
+            border: 3px solid #e74c3c;
+            color: #e74c3c;
+            box-shadow: 0 0 25px rgba(231, 76, 60, 0.4);
+        }
+
+        .result-break-even {
+            background: linear-gradient(145deg, rgba(241, 196, 15, 0.3), rgba(243, 156, 18, 0.3));
+            border: 3px solid #f1c40f;
+            color: #f1c40f;
+            box-shadow: 0 0 25px rgba(241, 196, 15, 0.4);
+        }
+
+        .result-actions {
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .result-actions .modal-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .result-actions .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 217, 255, 0.5);
+        }
+
+        /* Crates Modal Styles */
+        .crates-modal-content {
+            max-width: 1200px;
+            width: 95%;
+            height: 90vh;
+            max-height: 90vh;
+        }
+
+        .crates-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 25px;
+            overflow-y: auto;
+            max-height: calc(90vh - 120px);
+        }
+
+        .crates-intro {
+            text-align: center;
+            padding: 20px;
+            background: rgba(102, 217, 255, 0.1);
+            border: 2px solid #66d9ff;
+            border-radius: var(--border-radius);
+        }
+
+        .crates-intro p {
+            margin: 10px 0;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .risk-warning {
+            color: #ff6b6b !important;
+            font-weight: bold;
+            margin-top: 15px !important;
+        }
+
+        .crates-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .crate-type {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+        }
+
+        .crate-type h3 {
+            text-align: center;
+            color: var(--accent-primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #555;
+        }
+
+        .ore-crates h3 {
+            color: #66d9ff;
+            border-color: #66d9ff;
+        }
+
+        .oil-crates h3 {
+            color: #7a977b;
+            border-color: #7a977b;
+        }
+
+        .crate-levels {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .crate-item {
+            background: #3a3a3a;
+            border: 2px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .crate-sprite {
+            margin: -20px -20px 15px -20px;
+            padding: 15px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #555;
+        }
+
+        .crate-sprite img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            border: 2px solid #66d9ff;
+            border-radius: 8px;
+            background: rgba(102, 217, 255, 0.1);
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .ore-crates .crate-sprite img {
+            border-color: #66d9ff;
+            background: rgba(102, 217, 255, 0.1);
+        }
+
+        .oil-crates .crate-sprite img {
+            border-color: #7a977b;
+            background: rgba(122, 151, 123, 0.1);
+        }
+
+        .crate-sprite img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(102, 217, 255, 0.4);
+        }
+
+        .ore-crates .crate-sprite img:hover {
+            box-shadow: 0 0 20px rgba(102, 217, 255, 0.6);
+        }
+
+        .oil-crates .crate-sprite img:hover {
+            box-shadow: 0 0 20px rgba(122, 151, 123, 0.6);
+        }
+
+        .crate-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(102, 217, 255, 0.3);
+        }
+
+        .ore-crates .crate-item:hover {
+            border-color: #66d9ff;
+            box-shadow: 0 6px 15px rgba(102, 217, 255, 0.3);
+        }
+
+        .oil-crates .crate-item:hover {
+            border-color: #7a977b;
+            box-shadow: 0 6px 15px rgba(122, 151, 123, 0.3);
+        }
+
+        .crate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #555;
+        }
+
+        .crate-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .crate-cost {
+            font-weight: bold;
+            color: var(--accent-primary);
+            background: rgba(102, 217, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            border: 1px solid var(--accent-primary);
+        }
+
+        .ore-crates .crate-cost {
+            color: #66d9ff;
+            background: rgba(102, 217, 255, 0.2);
+            border-color: #66d9ff;
+        }
+
+        .oil-crates .crate-cost {
+            color: #7a977b;
+            background: rgba(122, 151, 123, 0.2);
+            border-color: #7a977b;
+        }
+
+        .crate-rewards {
+            margin-bottom: 20px;
+        }
+
+        .crate-rewards span {
+            display: block;
+            margin: 5px 0;
+            color: var(--text-secondary);
+        }
+
+        .crate-rewards .min-reward,
+        .crate-rewards .max-reward {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .min-reward {
+            color: #7a977b;
+        }
+
+        .max-reward {
+            color: #dd7e77;
+        }
+
+        .crate-buy-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-primary);
+            color: #111;
+            border: 2px solid var(--accent-secondary);
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .crate-buy-btn:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 217, 255, 0.4);
+        }
+
+        .ore-crates .crate-buy-btn {
+            background: #66d9ff;
+            border-color: #46b9df;
+            color: #111;
+        }
+
+        .ore-crates .crate-buy-btn:hover {
+            background: #76e9ff;
+            border-color: #56c9ef;
+            box-shadow: 0 5px 15px rgba(102, 217, 255, 0.4);
+        }
+
+        .oil-crates .crate-buy-btn {
+            background: #7a977b;
+            border-color: #5a775b;
+            color: #111;
+        }
+
+        .oil-crates .crate-buy-btn:hover {
+            background: #8aac8b;
+            border-color: #6a8c6b;
+            box-shadow: 0 5px 15px rgba(122, 151, 123, 0.4);
+        }
+
+        .crate-buy-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Crate Opening Effect */
+        /* Fallback styling for missing crate sprites */
+        .crate-sprite img[src*="default_crate.png"] {
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+            border: 2px solid #66d9ff;
+            font-size: 3rem;
+            color: #66d9ff;
+            font-weight: bold;
+        }
+
+        .crate-opening-effect {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4000;
+            pointer-events: none;
+        }
+
+        .crate-effect-content {
+            text-align: center;
+            animation: floatUp 2s ease-out;
+        }
+
+        .crate-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            margin-top: 20px;
+            animation: glowPulse 1s infinite alternate;
+        }
+
+        .crate-sparkles {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .crate-sparkles::before,
+        .crate-sparkles::after {
+            content: "✨";
+            position: absolute;
+            font-size: 2rem;
+            animation: sparkleSpin 1.5s infinite linear;
+        }
+
+        .crate-sparkles::before {
+            top: 0;
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .crate-sparkles::after {
+            bottom: 0;
+            right: 0;
+            animation-delay: 0.75s;
+        }
+
+        @keyframes crateOpenAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 30px rgba(255, 215, 0, 1);
+            }
+        }
+
+        @keyframes sparkleSpin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.3);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
         }
 
         .zone-selection-modal .zones-section {
@@ -3342,17 +3949,26 @@
             border: none;
             color: #ddd;
             cursor: pointer;
-            font-size: 24px;
-            width: 30px;
-            height: 30px;
+            font-size: 1.8rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 3px;
+            font-weight: bold;
+            line-height: 1;
         }
 
         .tech-tree-close:hover {
-            background: #ff5555;
+            background: rgba(255, 85, 85, 0.2);
+            color: #ff5555;
+            transform: scale(1.1);
+        }
+
+        .tech-tree-close::before {
+            content: "✕";
+            font-family: Arial, sans-serif;
         }
 
         .tech-tree-resources {
@@ -4022,17 +4638,26 @@
             border: none;
             color: #ddd;
             cursor: pointer;
-            font-size: 24px;
-            width: 30px;
-            height: 30px;
+            font-size: 1.8rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 3px;
+            font-weight: bold;
+            line-height: 1;
         }
 
         .building-info-close:hover {
-            background: #ff5555;
+            background: rgba(255, 85, 85, 0.2);
+            color: #ff5555;
+            transform: scale(1.1);
+        }
+
+        .building-info-close::before {
+            content: "✕";
+            font-family: Arial, sans-serif;
         }
 
         .building-info-content {
@@ -4300,17 +4925,26 @@
             border: none;
             color: #ddd;
             cursor: pointer;
-            font-size: 24px;
-            width: 30px;
-            height: 30px;
+            font-size: 1.8rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 3px;
+            font-weight: bold;
+            line-height: 1;
         }
 
         .module-close-btn:hover {
-            background: #ff5555;
+            background: rgba(255, 85, 85, 0.2);
+            color: #ff5555;
+            transform: scale(1.1);
+        }
+
+        .module-close-btn::before {
+            content: "✕";
+            font-family: Arial, sans-serif;
         }
 
         .module-options {
@@ -4658,6 +5292,636 @@
             padding: 28px 0px;
             font-size: 1.1rem;
         }
+
+        /* Combat Menu Styles */
+        .combat-modal-content {
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+        }
+
+        .combat-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .combat-resources-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: linear-gradient(145deg, #404040, #353535);
+            border: 2px solid #7a7a7a;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .resource-item img {
+            width: 24px;
+            height: 24px;
+            image-rendering: pixelated;
+        }
+
+        .resource-item span {
+            color: var(--text-primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .combat-modal-body {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .combat-setup-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .player-army-section h3 {
+            color: var(--accent-primary);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .army-units-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .combat-unit-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: #404040;
+            border: 2px solid #7a7a7a;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .combat-unit-selector:hover {
+            border-color: var(--accent-primary);
+            background: #4a4a4a;
+        }
+
+        .combat-unit-checkbox {
+            width: 20px;
+            height: 20px;
+        }
+
+        .combat-unit-icon img {
+            width: 40px;
+            height: 40px;
+            image-rendering: pixelated;
+        }
+
+        .combat-unit-info {
+            flex: 1;
+        }
+
+        .combat-unit-name {
+            color: var(--text-primary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .combat-unit-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+        }
+
+        .combat-unit-stat {
+            color: var(--text-secondary);
+        }
+
+        .combat-unit-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .unit-amount-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .amount-btn {
+            width: 28px;
+            height: 28px;
+            background: #555;
+            border: 1px solid #777;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .amount-btn:hover {
+            background: #666;
+        }
+
+        .unit-amount-input {
+            width: 50px;
+            padding: 5px;
+            background: #333;
+            border: 1px solid #555;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .combat-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding-top: 20px;
+            border-top: 2px solid #555;
+        }
+
+        /* Combat Battle Styles */
+        .combat-battle-content {
+            max-width: 1200px;
+            width: 95%;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            background: #353535;
+            border: 3px solid #7a7a7a;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .combat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+            border-bottom: 3px solid #7a7a7a;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .combat-status {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .combat-arena {
+            flex: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            overflow: hidden;
+            background: #2d2d2d;
+        }
+
+        .combat-player-side,
+        .combat-fortress-side {
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .combat-log-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .combat-log {
+            flex: 1;
+            background: #2d2d2d;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .log-entry {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .log-entry.player-action {
+            color: var(--accent-primary);
+            background: rgba(102, 217, 255, 0.1);
+        }
+
+        .log-entry.fortress-action {
+            color: var(--danger);
+            background: rgba(221, 126, 119, 0.1);
+        }
+
+        .player-units-container,
+        .fortress-units-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .combat-unit-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: linear-gradient(145deg, #404040, #353535);
+            border: 2px solid #7a7a7a;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .combat-unit-display:hover {
+            border-color: #ceab77;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .combat-unit-display-icon img {
+            width: 36px;
+            height: 36px;
+            image-rendering: pixelated;
+        }
+
+        .combat-unit-display-info {
+            flex: 1;
+        }
+
+        .combat-unit-display-name {
+            color: var(--text-primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .combat-unit-display-health {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        .combat-unit-damage-info {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .combat-unit-damage-info::before {
+            content: "⚔️";
+            font-size: 0.9rem;
+        }
+
+        .campfire-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: linear-gradient(145deg, #404040, #353535);
+            border: 2px solid #7a7a7a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .campfire-toggle:hover {
+            border-color: #ceab77;
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+            transform: translateY(-2px);
+        }
+
+        .campfire-toggle:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .campfire-toggle.active {
+            border-color: #ceab77;
+            background: rgba(206, 171, 119, 0.2);
+        }
+
+        .campfire-toggle img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+
+        .campfire-toggle span {
+            color: var(--text-primary);
+            font-weight: bold;
+        }
+
+        .fortress-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: linear-gradient(145deg, #404040, #353535);
+            border: 2px solid #7a7a7a;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .fortress-display img {
+            width: 64px;
+            height: 64px;
+            image-rendering: pixelated;
+        }
+
+        .fortress-health-bar {
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(145deg, #333, #2a2a2a);
+            border: 2px solid #7a7a7a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dd7e77, #ee8e87);
+            width: 72%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(221, 126, 119, 0.6);
+        }
+
+        .health-fill.low {
+            background: linear-gradient(90deg, #dd7e77, #ff6b6b);
+            box-shadow: 0 0 12px rgba(221, 126, 119, 0.8);
+        }
+
+        .combat-action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+            border-top: 3px solid #7a7a7a;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .combat-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #7a7a7a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: linear-gradient(145deg, #404040, #353535);
+            color: var(--text-primary);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .combat-btn:hover:not(:disabled) {
+            border-color: var(--accent-primary);
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .combat-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .combat-btn.attack-btn {
+            border-color: #dd7e77;
+        }
+
+        .combat-btn.attack-btn:hover:not(:disabled) {
+            border-color: #ee8e87;
+            background: linear-gradient(145deg, #5a3a3a, #4a3030);
+        }
+
+        .combat-btn.defend-btn {
+            border-color: #7a977b;
+        }
+
+        .combat-btn.defend-btn:hover:not(:disabled) {
+            border-color: #8ba78c;
+            background: linear-gradient(145deg, #3a4a3a, #304030);
+        }
+
+        /* Combat Instructions Overlay */
+        .combat-instructions-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .instruction-step {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            background: rgba(122, 122, 122, 0.95);
+            border: 3px solid #7a7a7a;
+            border-radius: 12px;
+            color: #f0f0f0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(122, 122, 122, 0.7);
+            animation: instructionAppear 0.5s ease-out;
+        }
+
+        .step-1 {
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .step-2 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .step-3 {
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+
+        .instruction-text {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes instructionAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Campfire Effects */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(206, 171, 119, 0.7);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(206, 171, 119, 0.3);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(206, 171, 119, 0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Selected Unit Highlight */
+        .selected-unit {
+            position: relative;
+        }
+
+        .selected-unit::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px dashed #66d9ff;
+            border-radius: 12px;
+            animation: pulseBorder 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulseBorder {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+        }
+
+        /* Button Pulse Highlight */
+        .pulse-highlight {
+            animation: pulseButton 1.5s infinite;
+        }
+
+        @keyframes pulseButton {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(221, 126, 119, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 25px rgba(221, 126, 119, 0.8);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(221, 126, 119, 0.4);
+            }
+        }
+
+        /* Target Selection Visual Feedback */
+        .fortress-display.targetable,
+        .combat-unit-display.targetable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .fortress-display.targetable:hover,
+        .combat-unit-display.targetable:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .fortress-display.target-selected,
+        .combat-unit-display.target-selected {
+            border: 3px solid #ceab77;
+            box-shadow: 0 0 20px rgba(206, 171, 119, 0.7);
+        }
+
+        /* Skip Tutorial Button */
+        .skip-tutorial-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #555;
+            color: #f0f0f0;
+            border: 2px solid #7a7a7a;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .skip-tutorial-btn:hover {
+            background: #666;
+            border-color: #ceab77;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 
@@ -4790,8 +6054,11 @@
                             <img src="./sprites/turret.png" alt="Play">
                             START
                         </button>
-                        <button class="homescreen-button attack-btn" id="attack-game-btn" onclick="alert('Soon!')">
+                        <button class="homescreen-button attack-btn" id="attack-game-btn">
                             ATTACK
+                        </button>
+                        <button class="homescreen-button" id="crates-game-btn">
+                            CRATES
                         </button>
                         <button class="homescreen-button" id="load-game-btn">
                             LOAD
@@ -4811,7 +6078,7 @@
             <div class="modal-content zone-selection-modal">
                 <div class="modal-header">
                     <h2>SELECT EXTRACTION ZONE</h2>
-                    <button class="close-btn" onclick="closeZoneSelection()">×</button>
+                    <button class="close-btn" onclick="closeZoneSelection()"></button>
                 </div>
                 <div class="modal-body">
                     <section class="zones-section">
@@ -4988,11 +6255,227 @@
             </div>
         </div>
 
+        <div id="combat-menu" class="modal-overlay">
+            <div class="modal-content combat-modal-content">
+                <div class="modal-header">
+                    <div class="combat-menu-header">
+                        <h2>COMBAT MENU</h2>
+                        <div class="combat-resources-display">
+                            <div class="resource-item">
+                                <img src="./sprites/oil.png" alt="Oil">
+                                <span id="combat-oil-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="close-btn" onclick="closeCombatMenu()"></button>
+                </div>
+                <div class="combat-modal-body">
+                    <div class="combat-setup-area">
+                        <div class="player-army-section">
+                            <h3>YOUR ARMY</h3>
+                            <div class="army-units-selector" id="combat-army-selector">
+                                <!-- Army units will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="combat-controls">
+                            <button class="modal-btn primary" id="start-combat-btn" disabled>START BATTLE</button>
+                            <button class="modal-btn secondary" onclick="closeCombatMenu()">CANCEL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crate Opening Result Modal -->
+        <div id="crate-result-modal" class="modal-overlay">
+            <div class="modal-content crate-result-content">
+                <div class="modal-header">
+                    <h2>CRATE OPENED!</h2>
+                    <button class="close-btn" onclick="closeCrateResultModal()"></button>
+                </div>
+                <div class="modal-body crate-result-body">
+                    <div class="crate-result-info">
+                        <div class="result-header">
+                            <h3 id="result-crate-name">Ore Crate L1</h3>
+                            <div class="result-sprite-placeholder" id="result-sprite">
+                                <img src="" alt="Crate Sprite">
+                            </div>
+                        </div>
+                        <div class="result-details">
+                            <div class="reward-display" id="reward-display">
+                                <!-- Rewards will be populated here -->
+                            </div>
+                            <div class="result-message" id="result-message">
+                                <!-- Win/Loss message will appear here -->
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="modal-btn primary" onclick="closeCrateResultModal()">CONTINUE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="crates-modal" class="modal-overlay">
+            <div class="modal-content crates-modal-content">
+                <div class="modal-header">
+                    <h2>CRATES</h2>
+                    <button class="close-btn" onclick="closeCratesModal()"></button>
+                </div>
+                <div class="modal-body crates-modal-body">
+                    <div class="crates-intro">
+                        <p>Purchase crates with your resources for a chance at valuable rewards!</p>
+                        <p>Higher level crates offer bigger rewards but with increased risk!</p>
+                    </div>
+                    
+                    <div class="crates-container">
+                        <div class="crate-type ore-crates">
+                            <h3>Ore Crates</h3>
+                            <div class="crate-levels">
+                                <div class="crate-item" data-crate="ore" data-level="1">
+                                    <div class="crate-sprite">
+                                        <img src="./sprites/smallcrate.png" alt="Small Ore Crate" onerror="this.src='./sprites/default_crate.png'">
+                                    </div>
+                                    <div class="crate-header">
+                                        <span class="crate-name">Ore Crate L1</span>
+                                        <span class="crate-cost">1,000 COINS</span>
+                                    </div>
+                                    <div class="crate-rewards">
+                                        <span>Steel, Coins, Gold</span>
+                                        <span class="min-reward">Min: 200</span>
+                                        <span class="max-reward">Max: 2,000</span>
+                                    </div>
+                                    <button class="crate-buy-btn" onclick="buyCrate('ore', 1)">BUY CRATE</button>
+                                </div>
+                                
+                                <div class="crate-item" data-crate="ore" data-level="2">
+                                    <div class="crate-sprite">
+                                        <img src="./sprites/bigcrate.png" alt="Big Ore Crate" onerror="this.src='./sprites/default_crate.png'">
+                                    </div>
+                                    <div class="crate-header">
+                                        <span class="crate-name">Ore Crate L2</span>
+                                        <span class="crate-cost">2,000 COINS</span>
+                                    </div>
+                                    <div class="crate-rewards">
+                                        <span>Steel, Coins, Gold</span>
+                                        <span class="min-reward">Min: 400</span>
+                                        <span class="max-reward">Max: 4,000</span>
+                                    </div>
+                                    <button class="crate-buy-btn" onclick="buyCrate('ore', 2)">BUY CRATE</button>
+                                </div>
+                                
+                                <div class="crate-item" data-crate="ore" data-level="3">
+                                    <div class="crate-sprite">
+                                        <img src="./sprites/bigcrate.png" alt="Big Ore Crate" onerror="this.src='./sprites/default_crate.png'">
+                                    </div>
+                                    <div class="crate-header">
+                                        <span class="crate-name">Ore Crate L3</span>
+                                        <span class="crate-cost">3,000 COINS</span>
+                                    </div>
+                                    <div class="crate-rewards">
+                                        <span>Steel, Coins, Gold</span>
+                                        <span class="min-reward">Min: 600</span>
+                                        <span class="max-reward">Max: 10,000</span>
+                                    </div>
+                                    <button class="crate-buy-btn" onclick="buyCrate('ore', 3)">BUY CRATE</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="crate-type oil-crates">
+                            <h3>Oil Crates</h3>
+                            <div class="crate-levels">
+                                <div class="crate-item" data-crate="oil" data-level="1">
+                                    <div class="crate-sprite">
+                                        <img src="./sprites/smallcrate.png" alt="Small Oil Crate" onerror="this.src='./sprites/default_crate.png'">
+                                    </div>
+                                    <div class="crate-header">
+                                        <span class="crate-name">Oil Crate L1</span>
+                                        <span class="crate-cost">3,000 STEEL</span>
+                                    </div>
+                                    <div class="crate-rewards">
+                                        <span>Oil Only</span>
+                                        <span class="min-reward">Min: 150</span>
+                                        <span class="max-reward">Max: 1,500</span>
+                                    </div>
+                                    <button class="crate-buy-btn" onclick="buyCrate('oil', 1)">BUY CRATE</button>
+                                </div>
+                                
+                                <div class="crate-item" data-crate="oil" data-level="2">
+                                    <div class="crate-sprite">
+                                        <img src="./sprites/bigcrate.png" alt="Big Oil Crate" onerror="this.src='./sprites/default_crate.png'">
+                                    </div>
+                                    <div class="crate-header">
+                                        <span class="crate-name">Oil Crate L2</span>
+                                        <span class="crate-cost">4,000 STEEL</span>
+                                    </div>
+                                    <div class="crate-rewards">
+                                        <span>Oil Only</span>
+                                        <span class="min-reward">Min: 200</span>
+                                        <span class="max-reward">Max: 4,000</span>
+                                    </div>
+                                    <button class="crate-buy-btn" onclick="buyCrate('oil', 2)">BUY CRATE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="combat-battle" class="modal-overlay">
+            <div class="modal-content combat-battle-content">
+                <div class="combat-header">
+                    <div class="combat-status">
+                        <span id="fortress-health">72/100</span>
+                    </div>
+                    <button class="close-btn" onclick="exitCombat()"></button>
+                </div>
+                
+                <div class="combat-arena">
+                    <div class="combat-player-side">
+                        <div class="player-units-container" id="player-units-combat">
+                            <!-- Player units displayed here -->
+                        </div>
+                        <div class="campfire-toggle" id="campfire-toggle">
+                            <img src="./sprites/campfire.gif" alt="Campfire">
+                            <span>CAMPFIRE: OFF</span>
+                        </div>
+                    </div>
+                    
+                    <div class="combat-log-container">
+                        <div class="combat-log" id="combat-log">
+                            <div class="log-entry">Battle started!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="combat-fortress-side">
+                        <div class="fortress-units-container" id="fortress-units-combat">
+                            <!-- Fortress units displayed here -->
+                        </div>
+                        <div class="fortress-display">
+                            <img src="./sprites/spawn.png" alt="Fortress">
+                            <div class="fortress-health-bar">
+                                <div class="health-fill" id="fortress-health-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="combat-action-buttons">
+                    <button class="combat-btn attack-btn" id="combat-attack-btn">ATTACK</button>
+                    <button class="combat-btn defend-btn" id="combat-defend-btn">DEFEND</button>
+                </div>
+            </div>
+        </div>
+
         <div id="wiki-modal" class="modal-overlay">
             <div class="modal-content wiki-modal-content">
                 <div class="modal-header">
                     <h2>COREGRID WIKI</h2>
-                    <button class="close-btn" onclick="closeWikiModal()">×</button>
+                    <button class="close-btn" onclick="closeWikiModal()"></button>
                 </div>
                 <div class="wiki-modal-body">
                     <div class="wiki-sidebar">
@@ -5175,7 +6658,7 @@
             <div class="modal-content wiki-search-modal-content">
                 <div class="modal-header">
                     <h2>SEARCH WIKI</h2>
-                    <button class="close-btn" onclick="closeSearchModal()">×</button>
+                    <button class="close-btn" onclick="closeSearchModal()"></button>
                 </div>
                 <div class="wiki-search-modal-body">
                     <div class="wiki-search-container">
@@ -5475,7 +6958,7 @@
         <div class="tech-tree-popup" id="tech-tree-popup">
             <div class="tech-tree-header">
                 <h2>Tech Tree</h2>
-                <button class="tech-tree-close" id="tech-tree-close">×</button>
+                <button class="tech-tree-close" id="tech-tree-close"></button>
             </div>
             <div class="tech-tree-content" id="tech-tree-content">
                 <div class="tech-tree-resources-card">
@@ -5508,7 +6991,7 @@
         <div class="building-info-popup" id="building-info-popup">
             <div class="building-info-header">
                 <div class="building-info-title" id="building-info-title">Building Name</div>
-                <button class="building-info-close" id="building-info-close">×</button>
+                <button class="building-info-close" id="building-info-close"></button>
             </div>
             <div class="building-info-content">
                 <div class="building-icon-container">
@@ -5540,7 +7023,7 @@
                 <div class="module-selection-popup" id="module-selection-popup">
                     <div class="module-selection-header">
                         <span>Select Module</span>
-                        <button class="module-close-btn" id="module-close-btn">×</button>
+                        <button class="module-close-btn" id="module-close-btn"></button>
                     </div>
                     <div class="module-options">
                         <div class="module-option" data-module="speed" data-tier="1">
@@ -5616,7 +7099,7 @@
             <div class="modal-content army-selection-modal">
                 <div class="modal-header">
                     <h2>SELECT ARMY UNITS</h2>
-                    <button class="close-btn" onclick="closeArmySelection()">×</button>
+                    <button class="close-btn" onclick="closeArmySelection()"></button>
                 </div>
                 <div class="modal-body">
                     <div class="army-selection-info">
@@ -6013,23 +7496,48 @@
                 }
 
                 giveTechTreeCompletionRewards() {
-                    const rewards = {
-                        Steel: 1000,
-                        coins: 500,
-                        gold: 250,
-                        oil: 100
+                    // Define zone-specific rewards
+                    const zoneRewards = {
+                        shallow: {
+                            Steel: 1000,
+                            coins: 250,
+                            gold: 250,
+                            oil: 100
+                        },
+                        medium: {
+                            Steel: 2000,
+                            coins: 750,
+                            gold: 750,
+                            oil: 500
+                        },
+                        deep: {
+                            Steel: 5000,
+                            coins: 3000,
+                            gold: 3000,
+                            oil: 1000
+                        }
                     };
+
+                    // Get rewards based on current zone
+                    const currentZone = this.currentZone || 'shallow';
+                    const rewards = zoneRewards[currentZone] || zoneRewards.shallow;
 
                     this.addResources(rewards);
 
+                    const zoneNames = {
+                        shallow: 'SHALLOW ZONE',
+                        medium: 'MEDIUM ZONE',
+                        deep: 'DEEP ZONE'
+                    };
+
                     showNotification(
-                        `TECH TREE COMPLETED! Bonus: +${rewards.Steel}S +${rewards.coins}C +${rewards.gold}G +${rewards.oil}O`,
+                        `${zoneNames[currentZone]} TECH TREE COMPLETED! Bonus: +${rewards.Steel}S +${rewards.coins}C +${rewards.gold}G +${rewards.oil}O`,
                         CONFIG.PLAYER_START.x,
                         CONFIG.PLAYER_START.y,
                         'success'
                     );
 
-                    createTechTreeCompletionEffects();
+                    createTechTreeCompletionEffects(rewards);
                 }
 
                 spawnInitialZoneEnemies(zoneType) {
@@ -7782,6 +9290,7 @@
             }
 
             function showNotification(message, x, y, type) {
+                // Create notification for main game screen
                 let container = document.querySelector('.notification-container');
                 if (!container) {
                     container = document.createElement('div');
@@ -7795,6 +9304,39 @@
 
                 container.insertBefore(notification, container.firstChild);
 
+                // Also show notification on combat screen if it's active
+                const combatScreen = document.getElementById('combat-battle-screen');
+                if (combatScreen && combatScreen.classList.contains('active')) {
+                    let combatContainer = combatScreen.querySelector('.combat-notification-container');
+                    if (!combatContainer) {
+                        combatContainer = document.createElement('div');
+                        combatContainer.className = 'combat-notification-container';
+                        combatContainer.style.position = 'absolute';
+                        combatContainer.style.top = '20px';
+                        combatContainer.style.right = '20px';
+                        combatContainer.style.zIndex = '1000';
+                        combatScreen.appendChild(combatContainer);
+                    }
+
+                    const combatNotification = document.createElement('div');
+                    combatNotification.className = 'notification combat-notification';
+                    combatNotification.textContent = message;
+                    combatNotification.style.marginBottom = '10px';
+                    
+                    combatContainer.insertBefore(combatNotification, combatContainer.firstChild);
+
+                    // Remove combat notification after delay
+                    setTimeout(() => {
+                        combatNotification.style.animation = 'fadeOut 0.3s ease forwards';
+                        setTimeout(() => {
+                            if (combatNotification.parentNode) {
+                                combatNotification.parentNode.removeChild(combatNotification);
+                            }
+                        }, 300);
+                    }, 3000);
+                }
+
+                // Remove main notification after delay
                 setTimeout(() => {
                     notification.style.animation = 'fadeOut 0.3s ease forwards';
                     setTimeout(() => {
@@ -8710,6 +10252,28 @@
                     clone.addEventListener('click', function (e) {
                         e.stopPropagation();
                         openWikiModal();
+                    });
+                }
+
+                const attackGameBtn = document.getElementById('attack-game-btn');
+                if (attackGameBtn) {
+                    const clone = attackGameBtn.cloneNode(true);
+                    attackGameBtn.parentNode.replaceChild(clone, attackGameBtn);
+
+                    clone.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        openCombatMenu();
+                    });
+                }
+
+                const cratesGameBtn = document.getElementById('crates-game-btn');
+                if (cratesGameBtn) {
+                    const clone = cratesGameBtn.cloneNode(true);
+                    cratesGameBtn.parentNode.replaceChild(clone, cratesGameBtn);
+
+                    clone.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        openCratesModal();
                     });
                 }
 
@@ -9755,6 +11319,10 @@
                 healthStat.className = 'army-unit-display-stat health';
                 healthStat.textContent = `HP: ${unitData.health}/${unitData.maxHealth}`;
 
+                const damageStat = document.createElement('span');
+                damageStat.className = 'army-unit-display-stat damage';
+                damageStat.textContent = `DMG: ${unitData.damage || 1}`;
+
                 const rangeStat = document.createElement('span');
                 rangeStat.className = 'army-unit-display-stat range';
                 rangeStat.textContent = `Range: ${unitData.range}`;
@@ -9764,6 +11332,7 @@
                 movementStat.textContent = `Move: ${unitData.movement}`;
 
                 statsDiv.appendChild(healthStat);
+                statsDiv.appendChild(damageStat);
                 statsDiv.appendChild(rangeStat);
                 statsDiv.appendChild(movementStat);
 
@@ -10229,48 +11798,87 @@
             }
 
             let cheatSequence = [];
-            const targetSequence = ['i', 'l', 'i', 'k', 'e', 'f', 'e', 'm', 'b', 'o', 'y', 's'];
+            const cheats = {
+                'ilikefemboys': {
+                    sequence: ['i', 'l', 'i', 'k', 'e', 'f', 'e', 'm', 'b', 'o', 'y', 's'],
+                    action: () => {
+                        gameState.storedResources.Steel += 7000;
+                        gameState.storedResources.coins += 7000;
+                        gameState.storedResources.gold += 7000;
+                        gameState.storedResources.oil += 7000;
+
+                        gameState.resources.Steel += 7000;
+                        gameState.resources.coins += 7000;
+                        gameState.resources.gold += 7000;
+                        gameState.resources.oil += 7000;
+
+                        updateDisplay();
+                        showNotification('hell yeah! +7000 Steel, Coins, Gold, and Oil added to VAULT!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
+                    }
+                },
+                'trapsarehot': {
+                    sequence: ['t', 'r', 'a', 'p', 's', 'a', 'r', 'e', 'h', 'o', 't'],
+                    action: () => {
+                        // Add 10 of each army type
+                        const armyTypes = ['scout', 'knight', 'archer', 'tank'];
+                        
+                        if (!gameState.storedArmyUnits) {
+                            gameState.storedArmyUnits = [];
+                        }
+                        
+                        armyTypes.forEach(unitType => {
+                            for (let i = 0; i < 10; i++) {
+                                const unitTemplate = {
+                                    type: 'army',
+                                    subtype: unitType,
+                                    health: getUnitMaxHealth(unitType),
+                                    maxHealth: getUnitMaxHealth(unitType),
+                                    damage: getUnitDamage(unitType),
+                                    range: getUnitRange(unitType),
+                                    movement: getUnitMovement(unitType),
+                                    id: Date.now() + Math.random()
+                                };
+                                gameState.storedArmyUnits.push(unitTemplate);
+                            }
+                        });
+                        
+                        updateDisplay();
+                        updateArmyBoxDisplay();
+                        showNotification('Cheat activated! +10 of each army unit added to your army!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
+                    }
+                }
+            };
 
             document.addEventListener('keydown', (event) => {
                 cheatSequence.push(event.key.toLowerCase());
 
-                if (cheatSequence.length > 12) {
-                    cheatSequence.shift();
-                }
+                // Check each cheat
+                Object.keys(cheats).forEach(cheatName => {
+                    const cheat = cheats[cheatName];
+                    const sequenceLength = cheat.sequence.length;
+                    
+                    if (cheatSequence.length > sequenceLength) {
+                        cheatSequence.shift();
+                    }
 
-                if (cheatSequence.length === 12 &&
-                    cheatSequence[0] === targetSequence[0] &&
-                    cheatSequence[1] === targetSequence[1] &&
-                    cheatSequence[2] === targetSequence[2] &&
-                    cheatSequence[3] === targetSequence[3] &&
-                    cheatSequence[4] === targetSequence[4] &&
-                    cheatSequence[5] === targetSequence[5] &&
-                    cheatSequence[6] === targetSequence[6] &&
-                    cheatSequence[7] === targetSequence[7] &&
-                    cheatSequence[8] === targetSequence[8] &&
-                    cheatSequence[9] === targetSequence[9] &&
-                    cheatSequence[10] === targetSequence[10] &&
-                    cheatSequence[11] === targetSequence[11]) {
-
-                    gameState.storedResources.Steel += 7000;
-                    gameState.storedResources.coins += 7000;
-                    gameState.storedResources.gold += 7000;
-                    gameState.storedResources.oil += 7000;
-
-                    gameState.resources.Steel += 7000;
-                    gameState.resources.coins += 7000;
-                    gameState.resources.gold += 7000;
-                    gameState.resources.oil += 7000;
-
-                    updateDisplay();
-
-                    showNotification('hell yeah! +7000 Steel, Coins, Gold, and Oil added to VAULT!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
-
-                    cheatSequence = [];
-                }
+                    if (cheatSequence.length === sequenceLength) {
+                        let sequenceMatch = true;
+                        for (let i = 0; i < sequenceLength; i++) {
+                            if (cheatSequence[i] !== cheat.sequence[i]) {
+                                sequenceMatch = false;
+                                break;
+                            }
+                        }
+                        
+                        if (sequenceMatch) {
+                            cheat.action();
+                            cheatSequence = [];
+                        }
+                    }
+                });
             });
 
-            function createTechTreeCompletionEffects() {
+            function createTechTreeCompletionEffects(rewards) {
                 for (let y = 0; y < CONFIG.GRID_SIZE_Y; y++) {
                     for (let x = 0; x < CONFIG.GRID_SIZE_X; x++) {
                         setTimeout(() => {
@@ -10288,10 +11896,20 @@
                     }
                 }
 
-                showCompletionBanner();
+                showCompletionBanner(rewards);
             }
 
-            function showCompletionBanner() {
+            function showCompletionBanner(rewards) {
+                // Default rewards if none provided
+                const defaultRewards = {
+                    Steel: 1000,
+                    coins: 250,
+                    gold: 250,
+                    oil: 100
+                };
+                
+                const actualRewards = rewards || defaultRewards;
+                
                 const banner = document.createElement('div');
                 banner.className = 'tech-tree-completion-banner';
                 banner.innerHTML = `
@@ -10299,10 +11917,10 @@
                     <h2>🎉 TECH TREE COMPLETED! 🎉</h2>
                     <p>You have unlocked all technologies!</p>
                     <div class="bonus-rewards">
-                        <span class="reward-item"><img src="./sprites/ironin.png"> +1000</span>
-                        <span class="reward-item"><img src="./sprites/coin.png"> +500</span>
-                        <span class="reward-item"><img src="./sprites/goldin.png"> +250</span>
-                        <span class="reward-item"><img src="./sprites/Oil.png"> +100</span>
+                        <span class="reward-item"><img src="./sprites/ironin.png"> +${actualRewards.Steel}</span>
+                        <span class="reward-item"><img src="./sprites/coin.png"> +${actualRewards.coins}</span>
+                        <span class="reward-item"><img src="./sprites/goldin.png"> +${actualRewards.gold}</span>
+                        <span class="reward-item"><img src="./sprites/Oil.png"> +${actualRewards.oil}</span>
                     </div>
                 </div>
             `;
@@ -10374,6 +11992,281 @@
                 if (popup) {
                     popup.classList.remove('active');
                 }
+            }
+
+            function openCratesModal() {
+                const cratesModal = document.getElementById('crates-modal');
+                if (cratesModal) {
+                    cratesModal.classList.add('active');
+                    updateCrateButtons();
+                }
+            }
+
+            function closeCratesModal() {
+                const cratesModal = document.getElementById('crates-modal');
+                if (cratesModal) {
+                    cratesModal.classList.remove('active');
+                }
+            }
+
+            function updateCrateButtons() {
+                // Update button states based on player's resources
+                const crateItems = document.querySelectorAll('.crate-item');
+                
+                crateItems.forEach(item => {
+                    const crateType = item.dataset.crate;
+                    const level = parseInt(item.dataset.level);
+                    const buyBtn = item.querySelector('.crate-buy-btn');
+                    
+                    const canAfford = canAffordCrate(crateType, level);
+                    buyBtn.disabled = !canAfford;
+                    
+                    if (!canAfford) {
+                        buyBtn.style.opacity = '0.5';
+                        buyBtn.style.cursor = 'not-allowed';
+                    } else {
+                        buyBtn.style.opacity = '1';
+                        buyBtn.style.cursor = 'pointer';
+                    }
+                });
+            }
+
+            function canAffordCrate(crateType, level) {
+                const crateCosts = {
+                    ore: {
+                        1: { coins: 1000 },
+                        2: { coins: 2000 },
+                        3: { coins: 3000 }
+                    },
+                    oil: {
+                        1: { Steel: 3000 },
+                        2: { Steel: 4000 }
+                    }
+                };
+                
+                const cost = crateCosts[crateType][level];
+                
+                for (const [resource, amount] of Object.entries(cost)) {
+                    if (gameState.storedResources[resource] < amount) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function buyCrate(crateType, level) {
+                const crateCosts = {
+                    ore: {
+                        1: { coins: 1000 },
+                        2: { coins: 2000 },
+                        3: { coins: 3000 }
+                    },
+                    oil: {
+                        1: { Steel: 3000 },
+                        2: { Steel: 4000 }
+                    }
+                };
+                
+                const crateNames = {
+                    ore: {
+                        1: 'Ore Crate Level 1',
+                        2: 'Ore Crate Level 2',
+                        3: 'Ore Crate Level 3'
+                    },
+                    oil: {
+                        1: 'Oil Crate Level 1',
+                        2: 'Oil Crate Level 2'
+                    }
+                };
+                
+                const cost = crateCosts[crateType][level];
+                const crateName = crateNames[crateType][level];
+                
+                // Check if player can afford
+                if (!canAffordCrate(crateType, level)) {
+                    showNotification('Not enough resources to buy this crate!', 12, 7, 'warning');
+                    return;
+                }
+                
+                // Deduct cost
+                for (const [resource, amount] of Object.entries(cost)) {
+                    gameState.storedResources[resource] -= amount;
+                }
+                
+                // Open crate and get reward
+                const reward = openCrate(crateType, level);
+                
+                // Add reward to player's resources
+                gameState.addResources(reward);
+                
+                // Show animated crate opening modal
+                showAnimatedCrateOpening(crateType, level, reward, cost);
+                
+                // Update display
+                updateDisplay();
+                updateCrateButtons();
+            }
+
+            function openCrate(crateType, level) {
+                // Define reward ranges based on crate type and level
+                const rewardRanges = {
+                    ore: {
+                        1: { min: 200, max: 2000, resources: ['Steel', 'coins', 'gold'] },
+                        2: { min: 400, max: 4000, resources: ['Steel', 'coins', 'gold'] },
+                        3: { min: 600, max: 10000, resources: ['Steel', 'coins', 'gold'] }
+                    },
+                    oil: {
+                        1: { min: 150, max: 1500, resources: ['oil'] },
+                        2: { min: 200, max: 4000, resources: ['oil'] }
+                    }
+                };
+                
+                const range = rewardRanges[crateType][level];
+                
+                // Implement weighted RNG - higher level = lower chance of good rewards
+                let rewardAmount;
+                
+                if (level === 1) {
+                    // Level 1: 70% chance of good reward, 30% chance of poor reward
+                    if (Math.random() < 0.7) {
+                        // Good reward: 70-100% of max range
+                        rewardAmount = Math.floor(range.max * (0.7 + Math.random() * 0.3));
+                    } else {
+                        // Poor reward: 10-40% of max range
+                        rewardAmount = Math.floor(range.max * (0.1 + Math.random() * 0.3));
+                    }
+                } else if (level === 2) {
+                    // Level 2: 50% chance of good reward, 50% chance of average reward
+                    const roll = Math.random();
+                    if (roll < 0.5) {
+                        // Good reward: 60-100% of max range
+                        rewardAmount = Math.floor(range.max * (0.6 + Math.random() * 0.4));
+                    } else {
+                        // Average reward: 30-70% of max range
+                        rewardAmount = Math.floor(range.max * (0.3 + Math.random() * 0.4));
+                    }
+                } else {
+                    // Level 3: 30% chance of good reward, 70% chance of poor reward
+                    if (Math.random() < 0.3) {
+                        // Good reward: 50-100% of max range
+                        rewardAmount = Math.floor(range.max * (0.5 + Math.random() * 0.5));
+                    } else {
+                        // Poor reward: 10-50% of max range
+                        rewardAmount = Math.floor(range.max * (0.1 + Math.random() * 0.4));
+                    }
+                }
+                
+                // Ensure minimum reward
+                rewardAmount = Math.max(range.min, rewardAmount);
+                
+                // Distribute reward among available resources
+                const reward = {};
+                
+                if (range.resources.length === 1) {
+                    // Single resource reward (oil crates)
+                    reward[range.resources[0]] = rewardAmount;
+                } else {
+                    // Multiple resource reward (ore crates)
+                    const resources = [...range.resources];
+                    let remainingAmount = rewardAmount;
+                    
+                    // Shuffle resources for random distribution
+                    for (let i = resources.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [resources[i], resources[j]] = [resources[j], resources[i]];
+                    }
+                    
+                    // Distribute reward randomly among resources
+                    resources.forEach((resource, index) => {
+                        if (index === resources.length - 1) {
+                            // Last resource gets remaining amount
+                            reward[resource] = remainingAmount;
+                        } else {
+                            // Random amount for this resource
+                            const amount = Math.floor(Math.random() * (remainingAmount * 0.6)) + 50;
+                            reward[resource] = Math.min(amount, remainingAmount);
+                            remainingAmount -= reward[resource];
+                        }
+                    });
+                }
+                
+                return reward;
+            }
+
+            function showAnimatedCrateOpening(crateType, level, reward, cost) {
+                // Close crates modal first
+                closeCratesModal();
+                
+                // Set up result modal content
+                document.getElementById('result-crate-name').textContent = 
+                    `${crateType.charAt(0).toUpperCase() + crateType.slice(1)} Crate L${level}`;
+                
+                // Set crate sprite
+                const spriteImg = document.querySelector('#result-sprite img');
+                const spriteSrc = level === 1 ? './sprites/smallcrate.png' : './sprites/bigcrate.png';
+                spriteImg.src = spriteSrc;
+                spriteImg.alt = `${crateType.charAt(0).toUpperCase() + crateType.slice(1)} Crate L${level}`;
+                
+                // Calculate monetary values using the game's pricing system
+                const resourcePrices = {
+                    'Steel': 1,
+                    'coins': 5,
+                    'gold': 2,
+                    'oil': 20
+                };
+                
+                // Calculate cost value
+                let costValue = 0;
+                Object.entries(cost).forEach(([resource, amount]) => {
+                    const price = resourcePrices[resource] || 0;
+                    costValue += amount * price;
+                });
+                
+                // Calculate reward value
+                let rewardValue = 0;
+                Object.entries(reward).forEach(([resource, amount]) => {
+                    const price = resourcePrices[resource] || 0;
+                    rewardValue += amount * price;
+                });
+                
+                const profit = rewardValue - costValue;
+                
+                // Display rewards with monetary values
+                const rewardDisplay = document.getElementById('reward-display');
+                rewardDisplay.innerHTML = '';
+                
+                Object.entries(reward).forEach(([resource, amount]) => {
+                    const price = resourcePrices[resource] || 0;
+                    const value = amount * price;
+                    const rewardItem = document.createElement('div');
+                    rewardItem.className = `reward-item ${resource === 'oil' ? 'oil' : ''}`;
+                    rewardItem.innerHTML = `
+                        <div class="reward-label">${resource.toUpperCase()}</div>
+                        <div class="reward-amount">+${amount.toLocaleString()}</div>
+                        <div class="reward-value">${value.toLocaleString()} VALUE</div>
+                    `;
+                    rewardDisplay.appendChild(rewardItem);
+                });
+                
+                // Show result message with monetary value
+                const resultMessage = document.getElementById('result-message');
+                if (profit > 0) {
+                    resultMessage.className = 'result-message result-win';
+                    resultMessage.textContent = `🎉 PROFIT: +${profit.toLocaleString()} VALUE!`;
+                } else if (profit < 0) {
+                    resultMessage.className = 'result-message result-loss';
+                    resultMessage.textContent = `😞 LOSS: ${Math.abs(profit).toLocaleString()} VALUE`;
+                } else {
+                    resultMessage.className = 'result-message result-break-even';
+                    resultMessage.textContent = `⚖️ BREAK EVEN`;
+                }
+                
+                // Show result modal
+                document.getElementById('crate-result-modal').style.display = 'flex';
+            }
+            
+            function closeCrateResultModal() {
+                document.getElementById('crate-result-modal').style.display = 'none';
             }
 
             function updateResourceValues() {
@@ -10900,13 +12793,1138 @@
             window.performSearch = performSearch;
             window.selectSearchResult = selectSearchResult;
 
+            // Combat System Functions
+            let combatState = {
+                playerUnits: [],
+                fortressUnits: [],
+                fortressHealth: 100,
+                maxFortressHealth: 100,
+                campfireActive: false,
+                battleLog: [],
+                playerAction: null,
+                fortressAction: null
+            };
+
+            function openCombatMenu() {
+                const combatMenu = document.getElementById('combat-menu');
+                if (combatMenu) {
+                    combatMenu.classList.add('active');
+                    populateCombatArmySelector();
+                    setupCombatMenuEventListeners();
+                    updateCombatMenuResources();
+                }
+            }
+
+            function updateCombatMenuResources() {
+                const oilCountElement = document.getElementById('combat-oil-count');
+                if (oilCountElement && gameState.resources) {
+                    oilCountElement.textContent = gameState.resources.oil || 0;
+                }
+            }
+
+            function setupCombatMenuEventListeners() {
+                // Set up start combat button event listener
+                const startCombatBtn = document.getElementById('start-combat-btn');
+                if (startCombatBtn) {
+                    // Remove any existing event listeners by cloning
+                    const newStartBtn = startCombatBtn.cloneNode(true);
+                    startCombatBtn.parentNode.replaceChild(newStartBtn, startCombatBtn);
+                    newStartBtn.addEventListener('click', startCombat);
+                }
+            }
+
+            function closeCombatMenu() {
+                const combatMenu = document.getElementById('combat-menu');
+                if (combatMenu) {
+                    combatMenu.classList.remove('active');
+                }
+                resetCombatSelection();
+            }
+
+            function populateCombatArmySelector() {
+                const selector = document.getElementById('combat-army-selector');
+                if (!selector) return;
+
+                const storedUnits = gameState.storedArmyUnits || [];
+                selector.innerHTML = '';
+
+                if (storedUnits.length === 0) {
+                    selector.innerHTML = '<p class="no-army-message">No army units available for combat.</p>';
+                    document.getElementById('start-combat-btn').disabled = true;
+                    return;
+                }
+
+                // Group units by type
+                const unitGroups = {};
+                storedUnits.forEach(unit => {
+                    if (!unitGroups[unit.subtype]) {
+                        unitGroups[unit.subtype] = [];
+                    }
+                    unitGroups[unit.subtype].push(unit);
+                });
+
+                // Create selectors for each unit type
+                Object.keys(unitGroups).forEach(unitType => {
+                    const unitGroup = unitGroups[unitType];
+                    const selectorItem = createCombatUnitSelector(unitType, unitGroup);
+                    selector.appendChild(selectorItem);
+                });
+
+                updateStartCombatButton();
+            }
+
+            function createCombatUnitSelector(unitType, units) {
+                const container = document.createElement('div');
+                container.className = 'combat-unit-selector';
+                container.dataset.unitType = unitType;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'combat-unit-checkbox';
+                checkbox.addEventListener('change', function() {
+                    const amountInput = container.querySelector('.unit-amount-input');
+                    if (this.checked) {
+                        amountInput.disabled = false;
+                        amountInput.value = Math.min(3, units.length); // Default to 3 units
+                    } else {
+                        amountInput.disabled = true;
+                        amountInput.value = 0;
+                    }
+                    updateStartCombatButton();
+                });
+
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'combat-unit-icon';
+                const img = document.createElement('img');
+                img.src = getSpriteForArmyType(unitType);
+                img.alt = unitType;
+                img.onerror = function() {
+                    this.src = './sprites/soldier.png';
+                };
+                iconDiv.appendChild(img);
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'combat-unit-info';
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'combat-unit-name';
+                nameDiv.textContent = getBuildingName({ type: 'army', subtype: unitType });
+                
+                const statsDiv = document.createElement('div');
+                statsDiv.className = 'combat-unit-stats';
+                
+                // Get average stats for this unit type
+                const avgHealth = Math.round(units.reduce((sum, u) => sum + u.health, 0) / units.length);
+                const avgMaxHealth = Math.round(units.reduce((sum, u) => sum + u.maxHealth, 0) / units.length);
+                const avgDamage = Math.round(units.reduce((sum, u) => sum + (u.damage || 1), 0) / units.length);
+                const avgRange = Math.round(units.reduce((sum, u) => sum + u.range, 0) / units.length);
+                const avgMovement = Math.round(units.reduce((sum, u) => sum + u.movement, 0) / units.length);
+                
+                statsDiv.innerHTML = `
+                    <span class="combat-unit-stat">HP: ${avgHealth}/${avgMaxHealth}</span>
+                    <span class="combat-unit-stat">DMG: ${avgDamage}</span>
+                    <span class="combat-unit-stat">Range: ${avgRange}</span>
+                    <span class="combat-unit-stat">Move: ${avgMovement}</span>
+                    <span class="combat-unit-stat">Count: ${units.length}</span>
+                `;
+                
+                infoDiv.appendChild(nameDiv);
+                infoDiv.appendChild(statsDiv);
+
+                const controlsDiv = document.createElement('div');
+                controlsDiv.className = 'combat-unit-controls';
+                
+                const amountControl = document.createElement('div');
+                amountControl.className = 'unit-amount-control';
+                
+                const minusBtn = document.createElement('button');
+                minusBtn.className = 'amount-btn';
+                minusBtn.textContent = '-';
+                minusBtn.addEventListener('click', function() {
+                    const input = amountControl.querySelector('.unit-amount-input');
+                    const currentValue = parseInt(input.value) || 0;
+                    if (currentValue > 0) {
+                        input.value = currentValue - 1;
+                        if (input.value == 0) {
+                            checkbox.checked = false;
+                            input.disabled = true;
+                        }
+                        updateStartCombatButton();
+                    }
+                });
+                
+                const amountInput = document.createElement('input');
+                amountInput.type = 'number';
+                amountInput.className = 'unit-amount-input';
+                amountInput.min = '0';
+                amountInput.max = units.length.toString();
+                amountInput.value = '0';
+                amountInput.disabled = true;
+                amountInput.addEventListener('input', function() {
+                    let value = parseInt(this.value) || 0;
+                    if (value < 0) value = 0;
+                    if (value > units.length) value = units.length;
+                    this.value = value;
+                    if (value > 0 && !checkbox.checked) {
+                        checkbox.checked = true;
+                        this.disabled = false;
+                    } else if (value === 0) {
+                        checkbox.checked = false;
+                        this.disabled = true;
+                    }
+                    updateStartCombatButton();
+                });
+                
+                const plusBtn = document.createElement('button');
+                plusBtn.className = 'amount-btn';
+                plusBtn.textContent = '+';
+                plusBtn.addEventListener('click', function() {
+                    const input = amountControl.querySelector('.unit-amount-input');
+                    const currentValue = parseInt(input.value) || 0;
+                    if (currentValue < units.length) {
+                        input.value = currentValue + 1;
+                        if (!checkbox.checked) {
+                            checkbox.checked = true;
+                            input.disabled = false;
+                        }
+                        updateStartCombatButton();
+                    }
+                });
+                
+                amountControl.appendChild(minusBtn);
+                amountControl.appendChild(amountInput);
+                amountControl.appendChild(plusBtn);
+                controlsDiv.appendChild(amountControl);
+
+                container.appendChild(checkbox);
+                container.appendChild(iconDiv);
+                container.appendChild(infoDiv);
+                container.appendChild(controlsDiv);
+
+                return container;
+            }
+
+            function updateStartCombatButton() {
+                const selectors = document.querySelectorAll('.combat-unit-selector');
+                let totalSelected = 0;
+                
+                selectors.forEach(selector => {
+                    const checkbox = selector.querySelector('.combat-unit-checkbox');
+                    const amountInput = selector.querySelector('.unit-amount-input');
+                    if (checkbox.checked) {
+                        totalSelected += parseInt(amountInput.value) || 0;
+                    }
+                });
+                
+                const startBtn = document.getElementById('start-combat-btn');
+                startBtn.disabled = totalSelected === 0;
+            }
+
+            function resetCombatSelection() {
+                const selectors = document.querySelectorAll('.combat-unit-selector');
+                selectors.forEach(selector => {
+                    const checkbox = selector.querySelector('.combat-unit-checkbox');
+                    const amountInput = selector.querySelector('.unit-amount-input');
+                    checkbox.checked = false;
+                    amountInput.disabled = true;
+                    amountInput.value = '0';
+                });
+                document.getElementById('start-combat-btn').disabled = true;
+            }
+
+            function startCombat() {
+                // Collect selected units with stacking
+                const selectedUnits = [];
+                const unitCounts = {}; // Track how many of each type selected
+                const selectors = document.querySelectorAll('.combat-unit-selector');
+                
+                selectors.forEach(selector => {
+                    const checkbox = selector.querySelector('.combat-unit-checkbox');
+                    const amountInput = selector.querySelector('.unit-amount-input');
+                    const unitType = selector.dataset.unitType;
+                    
+                    if (checkbox.checked) {
+                        const amount = parseInt(amountInput.value) || 0;
+                        if (amount > 0) {
+                            unitCounts[unitType] = amount;
+                            
+                            // Get units of this type from stored army
+                            const storedUnits = gameState.storedArmyUnits || [];
+                            const typeUnits = storedUnits.filter(u => u.subtype === unitType);
+                            
+                            // Add one representative unit with count info
+                            if (typeUnits.length > 0) {
+                                const representativeUnit = {
+                                    ...typeUnits[0],
+                                    currentHealth: typeUnits[0].health,
+                                    unitCount: amount,
+                                    originalTypeUnits: typeUnits.slice(0, amount) // Store originals for removal
+                                };
+                                selectedUnits.push(representativeUnit);
+                            }
+                        }
+                    }
+                });
+
+                if (selectedUnits.length === 0) {
+                    showNotification('Select at least one unit to start combat!', 12, 7, 'warning');
+                    return;
+                }
+
+                // Initialize combat state
+                combatState.playerUnits = selectedUnits;
+                combatState.unitCounts = unitCounts; // Store for loss calculation
+                combatState.fortressUnits = [
+                    { type: 'guard', health: 30, maxHealth: 30, damage: 8 },
+                    { type: 'guard', health: 30, maxHealth: 30, damage: 8 }
+                ];
+                combatState.fortressHealth = 100;
+                combatState.maxFortressHealth = 100;
+                combatState.campfireActive = false;
+                combatState.selectedUnitForAttack = null;
+                combatState.currentTarget = null;
+                combatState.battleLog = [{
+                    turn: 0,
+                    message: 'Battle started! Select a unit to attack with.',
+                    type: 'system'
+                }];
+
+                // Remove selected units from stored army
+                removeSelectedUnitsFromArmy(unitCounts);
+
+                // Close menu and open battle
+                closeCombatMenu();
+                openCombatBattle();
+            }
+
+            function removeSelectedUnitsFromArmy(unitCounts) {
+                const storedUnits = gameState.storedArmyUnits || [];
+                
+                Object.keys(unitCounts).forEach(unitType => {
+                    const countToRemove = unitCounts[unitType];
+                    let removed = 0;
+                    
+                    // Remove units from the end of the array
+                    for (let i = storedUnits.length - 1; i >= 0 && removed < countToRemove; i--) {
+                        if (storedUnits[i].subtype === unitType) {
+                            storedUnits.splice(i, 1);
+                            removed++;
+                        }
+                    }
+                });
+                
+                updateArmyBoxDisplay();
+            }
+
+            function openCombatBattle() {
+                const battleScreen = document.getElementById('combat-battle');
+                if (battleScreen) {
+                    battleScreen.classList.add('active');
+                    setupCombatBattle();
+                }
+            }
+
+            function exitCombat() {
+                const battleScreen = document.getElementById('combat-battle');
+                if (battleScreen) {
+                    battleScreen.classList.remove('active');
+                }
+                resetCombatState();
+            }
+
+            function resetCombatState() {
+                combatState = {
+                    playerUnits: [],
+                    fortressUnits: [],
+                    fortressHealth: 100,
+                    maxFortressHealth: 100,
+                    campfireActive: false,
+                    battleLog: [],
+                    playerAction: null,
+                    fortressAction: null
+                };
+            }
+
+            function setupCombatBattle() {
+                updateCombatDisplay();
+                setupCombatEventListeners();
+                
+                // Initially disable action buttons
+                document.getElementById('combat-attack-btn').disabled = true;
+                document.getElementById('combat-defend-btn').disabled = true;
+                
+                // Show initial visual instructions
+                showCombatVisualInstructions();
+            }
+
+            function showCombatVisualInstructions() {
+                // Add visual cues to guide the player
+                const instructions = document.createElement('div');
+                instructions.className = 'combat-instructions-overlay';
+                instructions.innerHTML = `
+                    <div class="instruction-step step-1">
+                        <div class="instruction-text">CLICK A UNIT TO SELECT IT</div>
+                    </div>
+                    <button class="skip-tutorial-btn" onclick="skipTutorial()">SKIP TUTORIAL</button>
+                `;
+                
+                const combatArena = document.querySelector('.combat-arena');
+                if (combatArena) {
+                    combatArena.appendChild(instructions);
+                    
+                    // Remove after first unit selection or timeout
+                    setTimeout(() => {
+                        if (instructions.parentNode) {
+                            instructions.parentNode.removeChild(instructions);
+                        }
+                    }, 15000);
+                }
+            }
+
+            function skipTutorial() {
+                // Remove all tutorial overlays
+                const tutorials = document.querySelectorAll('.combat-instructions-overlay');
+                tutorials.forEach(tutorial => {
+                    if (tutorial.parentNode) {
+                        tutorial.parentNode.removeChild(tutorial);
+                    }
+                });
+                
+                // Clear any pending timeouts
+                clearTimeout(window.tutorialTimeout);
+                
+                // Show confirmation
+                addToBattleLog('Tutorial skipped. Click units to select, then targets to attack.', 'system');
+            }
+
+            function setupCombatEventListeners() {
+                // Remove existing listeners first
+                const attackBtn = document.getElementById('combat-attack-btn');
+                const defendBtn = document.getElementById('combat-defend-btn');
+                const campfireToggle = document.getElementById('campfire-toggle');
+                const startCombatBtn = document.getElementById('start-combat-btn');
+                
+                // Clone and replace buttons to remove old event listeners
+                if (attackBtn) {
+                    const newAttackBtn = attackBtn.cloneNode(true);
+                    attackBtn.parentNode.replaceChild(newAttackBtn, attackBtn);
+                    newAttackBtn.addEventListener('click', function() {
+                        executePlayerAction('attack');
+                    });
+                }
+                
+                if (defendBtn) {
+                    const newDefendBtn = defendBtn.cloneNode(true);
+                    defendBtn.parentNode.replaceChild(newDefendBtn, defendBtn);
+                    newDefendBtn.addEventListener('click', function() {
+                        executePlayerAction('defend');
+                    });
+                }
+                
+                if (campfireToggle) {
+                    const newCampfireToggle = campfireToggle.cloneNode(true);
+                    campfireToggle.parentNode.replaceChild(newCampfireToggle, campfireToggle);
+                    newCampfireToggle.addEventListener('click', toggleCampfire);
+                }
+                
+                if (startCombatBtn) {
+                    const newStartBtn = startCombatBtn.cloneNode(true);
+                    startCombatBtn.parentNode.replaceChild(newStartBtn, startCombatBtn);
+                    newStartBtn.addEventListener('click', startCombat);
+                }
+                
+                // Set up fortress and guard click handlers
+                setupTargetClickHandlers();
+            }
+
+            function setupTargetClickHandlers() {
+                // Add click handlers for fortress targets
+                const fortressDisplay = document.querySelector('.fortress-display');
+                const fortressUnitsContainer = document.getElementById('fortress-units-combat');
+                
+                if (fortressDisplay) {
+                    fortressDisplay.addEventListener('click', function() {
+                        if (combatState.selectedUnitForAttack) {
+                            selectTarget('fortress');
+                        }
+                    });
+                    fortressDisplay.style.cursor = 'pointer';
+                }
+                
+                // Add click handlers for guard units
+                if (fortressUnitsContainer) {
+                    fortressUnitsContainer.addEventListener('click', function(e) {
+                        const unitElement = e.target.closest('.combat-unit-display');
+                        if (unitElement && combatState.selectedUnitForAttack) {
+                            // Find which guard was clicked
+                            const guardIndex = Array.from(fortressUnitsContainer.children).indexOf(unitElement);
+                            if (guardIndex >= 0 && combatState.fortressUnits[guardIndex] && 
+                                combatState.fortressUnits[guardIndex].health > 0) {
+                                selectTarget('guard', guardIndex);
+                            }
+                        }
+                    });
+                }
+            }
+
+            function selectUnitForAttack(unit) {
+                // Clear previous selection
+                document.querySelectorAll('.combat-unit-display').forEach(el => {
+                    el.style.border = '';
+                    el.style.boxShadow = '';
+                    el.classList.remove('selected-unit');
+                });
+                
+                // Highlight selected unit
+                event.currentTarget.style.border = '3px solid #66d9ff';
+                event.currentTarget.style.boxShadow = '0 0 15px rgba(102, 217, 255, 0.7)';
+                event.currentTarget.classList.add('selected-unit');
+                
+                combatState.selectedUnitForAttack = unit;
+                
+                // Show target selection instructions
+                showTargetInstructions();
+                
+                addToBattleLog(`Selected ${getBuildingName({ type: 'army', subtype: unit.subtype })} for attack. Now click on fortress or a guard to target.`, 'system');
+                updateCombatDisplay();
+            }
+
+            function showTargetInstructions() {
+                // Remove existing instructions
+                const existingInstructions = document.querySelector('.combat-instructions-overlay');
+                if (existingInstructions) {
+                    existingInstructions.remove();
+                }
+                
+                // Add target selection instructions
+                const instructions = document.createElement('div');
+                instructions.className = 'combat-instructions-overlay';
+                instructions.innerHTML = `
+                    <div class="instruction-step step-2">
+                        <div class="instruction-text">NOW CLICK THE FORTRESS OR A GUARD TO TARGET</div>
+                    </div>
+                `;
+                
+                const combatArena = document.querySelector('.combat-arena');
+                if (combatArena) {
+                    combatArena.appendChild(instructions);
+                }
+            }
+
+            function selectTarget(targetType, targetIndex = null) {
+                console.log('selectTarget called with:', targetType, targetIndex);
+                combatState.currentTarget = { type: targetType, index: targetIndex };
+                
+                let targetName = '';
+                if (targetType === 'fortress') {
+                    targetName = 'Fortress';
+                } else if (targetType === 'guard') {
+                    targetName = `Fortress Guard ${targetIndex + 1}`;
+                }
+                
+                // Show action button instructions
+                showActionButtonInstructions();
+                
+                addToBattleLog(`Target selected: ${targetName}. Now click ATTACK or DEFEND.`, 'system');
+                
+                // Enable action buttons with visual highlight
+                const attackBtn = document.getElementById('combat-attack-btn');
+                const defendBtn = document.getElementById('combat-defend-btn');
+                
+                console.log('Enabling buttons...');
+                console.log('Attack button before:', attackBtn.disabled);
+                console.log('Defend button before:', defendBtn.disabled);
+                
+                attackBtn.disabled = false;
+                defendBtn.disabled = false;
+                
+                console.log('Attack button after:', attackBtn.disabled);
+                console.log('Defend button after:', defendBtn.disabled);
+                
+                // Add pulsing effect to buttons
+                attackBtn.classList.add('pulse-highlight');
+                defendBtn.classList.add('pulse-highlight');
+                
+                // Remove pulse after delay
+                setTimeout(() => {
+                    attackBtn.classList.remove('pulse-highlight');
+                    defendBtn.classList.remove('pulse-highlight');
+                }, 3000);
+                
+                updateCombatDisplay();
+            }
+
+            function showActionButtonInstructions() {
+                // Remove existing instructions
+                const existingInstructions = document.querySelector('.combat-instructions-overlay');
+                if (existingInstructions) {
+                    existingInstructions.remove();
+                }
+                
+                // Add action button instructions
+                const instructions = document.createElement('div');
+                instructions.className = 'combat-instructions-overlay';
+                instructions.innerHTML = `
+                    <div class="instruction-step step-3">
+                        <div class="instruction-text">CLICK ATTACK OR DEFEND TO ACT</div>
+                    </div>
+                `;
+                
+                const combatArena = document.querySelector('.combat-arena');
+                if (combatArena) {
+                    combatArena.appendChild(instructions);
+                    
+                    // Remove instructions after action is taken
+                    setTimeout(() => {
+                        if (instructions.parentNode) {
+                            instructions.parentNode.removeChild(instructions);
+                        }
+                    }, 8000);
+                }
+            }
+
+            function updateCombatDisplay() {
+                // Update fortress health display
+                document.getElementById('fortress-health').textContent = 
+                    `${combatState.fortressHealth}/${combatState.maxFortressHealth}`;
+                
+                // Update health bar
+                const healthPercent = (combatState.fortressHealth / combatState.maxFortressHealth) * 100;
+                const fortressHealthBar = document.getElementById('fortress-health-bar');
+                fortressHealthBar.style.width = healthPercent + '%';
+                
+                // Add low health styling when below 30%
+                if (healthPercent < 30) {
+                    fortressHealthBar.classList.add('low');
+                } else {
+                    fortressHealthBar.classList.remove('low');
+                }
+                
+                // Update player units display
+                const playerUnitsContainer = document.getElementById('player-units-combat');
+                playerUnitsContainer.innerHTML = '';
+                combatState.playerUnits.forEach(unit => {
+                    const unitElement = createCombatUnitDisplay(unit, 'player');
+                    playerUnitsContainer.appendChild(unitElement);
+                });
+                
+                // Update fortress units display
+                const fortressUnitsContainer = document.getElementById('fortress-units-combat');
+                fortressUnitsContainer.innerHTML = '';
+                combatState.fortressUnits.forEach(unit => {
+                    if (unit.health > 0) {
+                        const unitElement = createCombatUnitDisplay(unit, 'fortress');
+                        fortressUnitsContainer.appendChild(unitElement);
+                    }
+                });
+                
+                // Update campfire status
+                const campfireToggle = document.getElementById('campfire-toggle');
+                const campfireSpan = campfireToggle.querySelector('span');
+                if (combatState.campfireActive) {
+                    campfireToggle.classList.add('active');
+                    campfireSpan.textContent = 'CAMPFIRE: ON';
+                } else {
+                    campfireToggle.classList.remove('active');
+                    campfireSpan.textContent = 'CAMPFIRE: OFF';
+                }
+                
+                // Update battle log
+                updateBattleLog();
+            }
+
+            function createCombatUnitDisplay(unit, side) {
+                const container = document.createElement('div');
+                container.className = 'combat-unit-display';
+                
+                // Add click handler for player units
+                if (side === 'player') {
+                    container.addEventListener('click', function() {
+                        selectUnitForAttack(unit);
+                    });
+                    container.style.cursor = 'pointer';
+                }
+                
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'combat-unit-display-icon';
+                const img = document.createElement('img');
+                
+                if (side === 'player') {
+                    img.src = getSpriteForArmyType(unit.subtype);
+                    img.alt = unit.subtype;
+                } else {
+                    img.src = './sprites/defaultbad.png';
+                    img.alt = 'Guard';
+                }
+                
+                img.onerror = function() {
+                    this.src = './sprites/soldier.png';
+                };
+                iconDiv.appendChild(img);
+                
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'combat-unit-display-info';
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'combat-unit-display-name';
+                
+                if (side === 'player') {
+                    const baseName = getBuildingName({ type: 'army', subtype: unit.subtype });
+                    nameDiv.textContent = unit.unitCount > 1 ? 
+                        `${baseName} (×${unit.unitCount})` : baseName;
+                } else {
+                    nameDiv.textContent = 'Fortress Guard';
+                }
+                
+                const healthDiv = document.createElement('div');
+                healthDiv.className = 'combat-unit-display-health';
+                
+                if (side === 'player') {
+                    healthDiv.textContent = `HP: ${unit.currentHealth || unit.health}/${unit.maxHealth}`;
+                    
+                    // Add damage information
+                    const damageDiv = document.createElement('div');
+                    damageDiv.className = 'combat-unit-damage-info';
+                    
+                    // Calculate base damage
+                    const baseDamage = (unit.damage || 1) * unit.unitCount;
+                    const displayDamage = baseDamage * 2; // Scale factor from combat calculation
+                    
+                    // Calculate boosted damage if campfire is active
+                    let finalDamage = displayDamage;
+                    let damageText = `DMG: ${displayDamage}`;
+                    
+                    if (combatState.campfireActive) {
+                        finalDamage = Math.floor(displayDamage * 1.5);
+                        damageText = `DMG: ${displayDamage} → ${finalDamage}`;
+                    }
+                    
+                    damageDiv.textContent = damageText;
+                    
+                    // Style based on campfire status
+                    if (combatState.campfireActive) {
+                        damageDiv.style.color = '#ffa500'; // Orange for boosted damage
+                        damageDiv.style.fontWeight = 'bold';
+                        damageDiv.style.textShadow = '0 0 5px rgba(255, 165, 0, 0.5)';
+                    } else {
+                        damageDiv.style.color = '#dd7e77'; // Normal damage color
+                    }
+                    
+                    damageDiv.style.fontSize = '0.85rem';
+                    damageDiv.style.marginTop = '4px';
+                    
+                    healthDiv.appendChild(damageDiv);
+                    
+                    // Add stack indicator if multiple units
+                    if (unit.unitCount > 1) {
+                        const countIndicator = document.createElement('div');
+                        countIndicator.className = 'unit-stack-indicator';
+                        countIndicator.textContent = `${unit.unitCount} units`; 
+                        countIndicator.style.fontSize = '0.8rem';
+                        countIndicator.style.color = '#ceab77';
+                        countIndicator.style.marginTop = '2px';
+                        healthDiv.appendChild(countIndicator);
+                    }
+                } else {
+                    healthDiv.textContent = `HP: ${unit.health}/${unit.maxHealth}`;
+                }
+                
+                infoDiv.appendChild(nameDiv);
+                infoDiv.appendChild(healthDiv);
+                
+                container.appendChild(iconDiv);
+                container.appendChild(infoDiv);
+                
+                return container;
+            }
+
+            function updateBattleLog() {
+                const logContainer = document.getElementById('combat-log');
+                logContainer.innerHTML = '';
+                
+                combatState.battleLog.slice(-10).forEach(entry => {
+                    const logEntry = document.createElement('div');
+                    logEntry.className = 'log-entry ' + entry.type;
+                    logEntry.textContent = entry.message;
+                    logContainer.appendChild(logEntry);
+                });
+                
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+
+            function toggleCampfire() {
+                if (gameState.resources.oil >= 100) { // Require 100 oil to activate
+                    combatState.campfireActive = !combatState.campfireActive;
+                    
+                    const campfireToggle = document.getElementById('campfire-toggle');
+                    const campfireSpan = campfireToggle.querySelector('span');
+                    
+                    if (combatState.campfireActive) {
+                        gameState.resources.oil -= 100; // Cost 100 oil to activate
+                        campfireToggle.classList.add('active');
+                        campfireSpan.textContent = 'CAMPFIRE: ON';
+                        addToBattleLog('🔥 Campfire activated! Costs 100 oil per attack. 50% damage boost.', 'system');
+                        
+                        // Add visual effect
+                        campfireToggle.style.animation = 'pulse 0.5s 3';
+                        setTimeout(() => {
+                            campfireToggle.style.animation = '';
+                        }, 1500);
+                    } else {
+                        campfireToggle.classList.remove('active');
+                        campfireSpan.textContent = 'CAMPFIRE: OFF';
+                        addToBattleLog('Campfire deactivated.', 'system');
+                    }
+                    
+                    updateCombatDisplay();
+                    updateDisplay(); // Update oil display
+                } else {
+                    showNotification('Need 100 oil to activate campfire!', 12, 7, 'warning');
+                    
+                    // Visual feedback for insufficient resources
+                    const campfireToggle = document.getElementById('campfire-toggle');
+                    campfireToggle.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        campfireToggle.style.animation = '';
+                    }, 500);
+                }
+            }
+
+            function executePlayerAction(action) {
+                console.log('executePlayerAction called with:', action);
+                console.log('Selected unit:', combatState.selectedUnitForAttack);
+                console.log('Current target:', combatState.currentTarget);
+                console.log('Campfire active:', combatState.campfireActive);
+                
+                if (!combatState.selectedUnitForAttack || !combatState.currentTarget) {
+                    showNotification('Select a unit and target first!', 12, 7, 'warning');
+                    return;
+                }
+                
+                combatState.playerAction = action;
+                
+                // Fortress makes random choice
+                combatState.fortressAction = Math.random() > 0.5 ? 'attack' : 'defend';
+                
+                // Resolve combat
+                resolveCombatTurn();
+                
+                // Reset selections
+                combatState.selectedUnitForAttack = null;
+                combatState.currentTarget = null;
+                
+                // Disable action buttons until next selection
+                const attackBtn = document.getElementById('combat-attack-btn');
+                const defendBtn = document.getElementById('combat-defend-btn');
+                
+                if (attackBtn) attackBtn.disabled = true;
+                if (defendBtn) defendBtn.disabled = true;
+                
+                // Clear highlights
+                document.querySelectorAll('.combat-unit-display').forEach(el => {
+                    el.style.border = '';
+                    el.style.boxShadow = '';
+                });
+                
+                // Check win/lose conditions
+                checkCombatEndConditions();
+            }
+
+            function resolveCombatTurn() {
+                console.log('resolveCombatTurn called');
+                console.log('Player action:', combatState.playerAction);
+                console.log('Fortress action:', combatState.fortressAction);
+                console.log('Selected unit:', combatState.selectedUnitForAttack);
+                console.log('Target:', combatState.currentTarget);
+                console.log('Campfire active:', combatState.campfireActive);
+                
+                const playerAction = combatState.playerAction;
+                const fortressAction = combatState.fortressAction;
+                const selectedUnit = combatState.selectedUnitForAttack;
+                const target = combatState.currentTarget;
+                
+                addToBattleLog(`Player chose to ${playerAction}`, 'player-action');
+                addToBattleLog(`Fortress chose to ${fortressAction}`, 'fortress-action');
+                
+                // Calculate damage from selected unit stack (increased for better balance)
+                let unitDamage = ((selectedUnit.damage || 1) * selectedUnit.unitCount) * 2; // Damage scales with unit count
+                
+                console.log('Base damage calculated:', unitDamage);
+                
+                // Campfire costs 100 oil per attack
+                if (combatState.campfireActive) {
+                    console.log('Campfire is active, checking oil...');
+                    console.log('Available oil:', gameState.resources.oil);
+                    
+                    if (gameState.resources.oil >= 100) {
+                        gameState.resources.oil -= 100;
+                        unitDamage = Math.floor(unitDamage * 1.5); // 1.5x damage boost
+                        addToBattleLog(`🔥 Campfire consumed 100 oil! Damage boosted.`, 'system');
+                        updateDisplay(); // Update oil display
+                        console.log('Campfire damage boost applied. New damage:', unitDamage);
+                    } else {
+                        // Not enough oil - campfire deactivates but attack proceeds normally
+                        combatState.campfireActive = false;
+                        const campfireToggle = document.getElementById('campfire-toggle');
+                        const campfireSpan = campfireToggle.querySelector('span');
+                        campfireToggle.classList.remove('active');
+                        campfireSpan.textContent = 'CAMPFIRE: OFF';
+                        addToBattleLog('Campfire deactivated - not enough oil! Attack proceeds without boost.', 'system');
+                        console.log('Campfire deactivated due to insufficient oil');
+                        // Attack continues with normal damage
+                    }
+                }
+                
+                // Resolve based on action combinations
+                if (playerAction === 'attack' && fortressAction === 'attack') {
+                    // Both attack - selected unit stack takes damage from fortress
+                    const fortressDamage = calculateFortressDamage();
+                    const unitsBefore = selectedUnit.unitCount;
+                    applyDamageToSelectedUnit(selectedUnit, fortressDamage);
+                    const unitsLost = unitsBefore - selectedUnit.unitCount;
+                    
+                    if (unitsLost > 0) {
+                        addToBattleLog(`${getBuildingName({ type: 'army', subtype: selectedUnit.subtype })} stack lost ${unitsLost} unit(s)! Remaining: ${selectedUnit.unitCount}`, 'fortress-action');
+                    } else {
+                        addToBattleLog(`${getBuildingName({ type: 'army', subtype: selectedUnit.subtype })} took ${fortressDamage} damage! Health: ${selectedUnit.currentHealth}/${selectedUnit.health}`, 'fortress-action');
+                    }
+                    
+                    // Check if entire stack is destroyed
+                    if (selectedUnit.unitCount <= 0) {
+                        addToBattleLog(`All ${getBuildingName({ type: 'army', subtype: selectedUnit.subtype })} units were destroyed!`, 'fortress-action');
+                        removeDeadUnit(selectedUnit);
+                    }
+                } 
+                else if (playerAction === 'attack' && fortressAction === 'defend') {
+                    // Player attacks, fortress defends - damage target
+                    if (target.type === 'fortress') {
+                        applyDamageToFortress(unitDamage);
+                        addToBattleLog(`Fortress took ${unitDamage} damage!`, 'player-action');
+                    } else if (target.type === 'guard') {
+                        const guard = combatState.fortressUnits[target.index];
+                        guard.health -= unitDamage;
+                        addToBattleLog(`Fortress Guard took ${unitDamage} damage!`, 'player-action');
+                        
+                        if (guard.health <= 0) {
+                            addToBattleLog(`Fortress Guard was destroyed!`, 'player-action');
+                        }
+                    }
+                }
+                else if (playerAction === 'defend' && fortressAction === 'attack') {
+                    // Player defends, fortress attacks - no effect
+                    addToBattleLog('Player defended successfully!', 'player-action');
+                }
+                // Both defend - no effect
+                
+                // Reset actions for next turn
+                combatState.playerAction = null;
+                combatState.fortressAction = null;
+                
+                updateCombatDisplay();
+            }
+
+            function applyDamageToSelectedUnit(unit, damage) {
+                // Apply damage to the stack of units
+                let remainingDamage = damage;
+                
+                while (remainingDamage > 0 && unit.unitCount > 0) {
+                    // Apply damage to current unit in stack
+                    const damageToCurrentUnit = Math.min(remainingDamage, unit.currentHealth);
+                    unit.currentHealth -= damageToCurrentUnit;
+                    remainingDamage -= damageToCurrentUnit;
+                    
+                    // If current unit dies
+                    if (unit.currentHealth <= 0) {
+                        unit.unitCount--;
+                        
+                        // If there are more units in stack, bring next one to front
+                        if (unit.unitCount > 0) {
+                            unit.currentHealth = unit.health;
+                        } else {
+                            // No units left
+                            unit.currentHealth = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            function removeDeadUnit(deadUnit) {
+                combatState.playerUnits = combatState.playerUnits.filter(unit => unit !== deadUnit);
+            }
+
+            function calculatePlayerDamage() {
+                let totalDamage = 0;
+                let unitCount = 0;
+                
+                combatState.playerUnits.forEach(unit => {
+                    if (unit.currentHealth > 0) {
+                        unitCount++;
+                        // Diminishing returns: each additional unit is 10% less effective
+                        const effectiveness = Math.pow(0.9, unitCount - 1);
+                        totalDamage += Math.floor(unit.damage * effectiveness);
+                    }
+                });
+                
+                // Cap at 10 units effectiveness
+                return Math.min(totalDamage, combatState.playerUnits.slice(0, 10)
+                    .reduce((sum, unit) => sum + unit.damage, 0));
+            }
+
+            function calculateFortressDamage() {
+                return combatState.fortressUnits
+                    .filter(unit => unit.health > 0)
+                    .reduce((sum, unit) => sum + unit.damage, 0);
+            }
+
+            function applyDamageToPlayer(damage) {
+                // Distribute damage among alive units
+                const aliveUnits = combatState.playerUnits.filter(u => u.currentHealth > 0);
+                if (aliveUnits.length === 0) return;
+                
+                const damagePerUnit = Math.floor(damage / aliveUnits.length);
+                const remainder = damage % aliveUnits.length;
+                
+                aliveUnits.forEach((unit, index) => {
+                    const unitDamage = damagePerUnit + (index < remainder ? 1 : 0);
+                    unit.currentHealth = Math.max(0, unit.currentHealth - unitDamage);
+                });
+            }
+
+            function applyDamageToFortress(damage) {
+                combatState.fortressHealth = Math.max(0, combatState.fortressHealth - damage);
+            }
+
+            function addToBattleLog(message, type = 'system') {
+                combatState.battleLog.push({
+                    turn: combatState.battleLog.length,
+                    message: message,
+                    type: type
+                });
+            }
+
+            function checkCombatEndConditions() {
+                // Check if player won
+                if (combatState.fortressHealth <= 0) {
+                    endCombat(true);
+                    return;
+                }
+                
+                // Check if player lost (all units dead)
+                const alivePlayerUnits = combatState.playerUnits.filter(u => u.currentHealth > 0 || u.unitCount > 0);
+                if (alivePlayerUnits.length === 0) {
+                    endCombat(false);
+                    return;
+                }
+            }
+
+            function endCombat(playerWon) {
+                if (playerWon) {
+                    addToBattleLog('Victory! Fortress conquered!', 'system');
+                    showNotification('Combat Victory! Fortress conquered! Rewards: 4000 Steel, 2000 Coins, 2000 Gold, 700 Oil', 12, 7, 'success');
+                    // Award resources
+                    gameState.addResources({
+                        Steel: 4000,
+                        coins: 2000,
+                        gold: 2000,
+                        oil: 700
+                    });
+                    
+                    // Return surviving units to army
+                    returnSurvivingUnits();
+                } else {
+                    addToBattleLog('Defeat! All units destroyed.', 'system');
+                    showNotification('Combat Defeat! All units were lost.', 12, 7, 'danger');
+                    // Units are already removed, no need to do anything
+                }
+                
+                updateBattleLog();
+                
+                // Disable action buttons
+                document.getElementById('combat-attack-btn').disabled = true;
+                document.getElementById('combat-defend-btn').disabled = true;
+                
+                // Auto-close after delay
+                setTimeout(() => {
+                    exitCombat();
+                }, 3000);
+            }
+
+            function returnSurvivingUnits() {
+                const storedUnits = gameState.storedArmyUnits || [];
+                
+                combatState.playerUnits.forEach(unit => {
+                    // Add back surviving units
+                    if (unit.currentHealth > 0 && unit.unitCount > 0) {
+                        // Add the representative unit back
+                        const survivingUnit = { ...unit };
+                        delete survivingUnit.unitCount; // Remove the count property
+                        delete survivingUnit.originalTypeUnits; // Remove original references
+                        storedUnits.push(survivingUnit);
+                        
+                        // Add additional units if there are more in the stack
+                        for (let i = 1; i < unit.unitCount; i++) {
+                            if (unit.originalTypeUnits && unit.originalTypeUnits[i]) {
+                                storedUnits.push({ ...unit.originalTypeUnits[i] });
+                            }
+                        }
+                    }
+                });
+                
+                updateArmyBoxDisplay();
+            }
+
+            // Helper functions for unit stats
+            function getUnitMaxHealth(unitType) {
+                switch (unitType) {
+                    case 'tank': return 5;
+                    case 'king': return 25;
+                    default: return 1;
+                }
+            }
+            
+            function getUnitDamage(unitType) {
+                switch (unitType) {
+                    case 'tank': return 3;
+                    case 'archer': return 2;
+                    case 'knight': return 2;
+                    case 'king': return 4;
+                    default: return 1;
+                }
+            }
+            
+            function getUnitRange(unitType) {
+                switch (unitType) {
+                    case 'archer':
+                    case 'siegetower': return 4;
+                    case 'king': return 2;
+                    default: return 1;
+                }
+            }
+            
+            function getUnitMovement(unitType) {
+                switch (unitType) {
+                    case 'knight': return 5;
+                    case 'archer': return 1;
+                    case 'tank': return 1;
+                    case 'king': return 2;
+                    default: return 1;
+                }
+            }
+
+            // Make functions globally available
+            window.openCombatMenu = openCombatMenu;
+            window.closeCombatMenu = closeCombatMenu;
+            window.startCombat = startCombat;
+            window.exitCombat = exitCombat;
+
         </script>
 
         <div id="resource-selection-popup" class="modal-overlay">
             <div class="modal-content resource-selection-modal">
                 <div class="modal-header">
                     <h2>SELECT RESOURCES TO BRING</h2>
-                    <button class="close-btn" onclick="closeResourceSelection()">×</button>
+                    <button class="close-btn" onclick="closeResourceSelection()"></button>
                 </div>
                 <div class="modal-body">
                     <div class="resource-selection-container">
