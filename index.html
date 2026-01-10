@@ -3490,14 +3490,40 @@
         }
 
         .resource-selection-modal {
-            max-width: 700px;
-            width: 90%;
+            max-width: 900px;
+            width: 95%;
             max-height: 90vh;
             overflow-y: auto;
         }
 
         .resource-selection-container {
-            padding: 30px;
+            padding: 20px;
+        }
+
+        .resource-selection-layout {
+            display: flex;
+            gap: 25px;
+            height: 100%;
+        }
+
+        .resource-controls-sidebar {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 20px;
+            background: #353535;
+            border-radius: var(--border-radius);
+            border: 2px solid #555;
+            flex-shrink: 0;
+        }
+
+        .resource-grid-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            min-width: 0;
         }
 
         .resource-selection-description {
@@ -3514,10 +3540,9 @@
 
         .resource-overview {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            padding: 15px;
             background: #353535;
             border-radius: var(--border-radius);
             border: 2px solid #555;
@@ -3527,8 +3552,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 12px;
+            gap: 6px;
+            padding: 10px;
             background: #3a3a3a;
             border-radius: var(--border-radius);
             border: 1px solid #7a7a7a;
@@ -3542,8 +3567,8 @@
         }
 
         .resource-overview-icon {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3569,15 +3594,14 @@
         }
 
         .resource-sliders {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
         }
 
         .resource-slider-group {
             background: #3a3a3a;
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             border: 2px solid #555;
             transition: all 0.3s ease;
@@ -3660,13 +3684,15 @@
 
         .resource-selection-actions {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            padding: 20px;
-            background: #353535;
-            border-radius: var(--border-radius);
-            border: 2px solid #555;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .resource-selection-actions .btn-secondary,
+        .resource-selection-actions .btn-primary {
+            width: 100%;
+            padding: 12px;
+            font-size: 0.9rem;
         }
 
         .btn-secondary,
@@ -10884,91 +10910,99 @@
                 </div>
                 <div class="modal-body">
                     <div class="resource-selection-container">
-                        <p class="resource-selection-description">
-                            Choose how much of each resource to take with you into the zone.
-                            You can only take what you have available in your vault!
-                        </p>
+                        <div class="resource-selection-layout">
+                            <!-- Left sidebar with controls -->
+                            <div class="resource-controls-sidebar">
+                                <p class="resource-selection-description">
+                                    Choose how much of each resource to take with you into the zone.
+                                    You can only take what you have available in your vault!
+                                </p>
 
-                        <div class="resource-overview">
-                            <div class="resource-overview-item">
-                                <div class="resource-overview-icon">
-                                    <img src="./sprites/ironin.png" alt="Steel">
+                                <div class="resource-selection-actions">
+                                    <button class="btn-secondary" onclick="selectAllResources()">MAX ALL</button>
+                                    <button class="btn-secondary" onclick="selectHalfResources()">HALF ALL</button>
+                                    <button class="btn-primary" onclick="confirmResourceSelection()">ENTER ZONE</button>
                                 </div>
-                                <div class="resource-overview-name">Steel</div>
-                                <div class="resource-overview-amount" id="overview-steel">0</div>
-                            </div>
-                            <div class="resource-overview-item">
-                                <div class="resource-overview-icon">
-                                    <img src="./sprites/coin.png" alt="Coins">
-                                </div>
-                                <div class="resource-overview-name">Coins</div>
-                                <div class="resource-overview-amount" id="overview-coins">0</div>
-                            </div>
-                            <div class="resource-overview-item">
-                                <div class="resource-overview-icon">
-                                    <img src="./sprites/goldin.png" alt="Gold">
-                                </div>
-                                <div class="resource-overview-name">Gold</div>
-                                <div class="resource-overview-amount" id="overview-gold">0</div>
-                            </div>
-                            <div class="resource-overview-item">
-                                <div class="resource-overview-icon">
-                                    <img src="./sprites/Oil.png" alt="Oil">
-                                </div>
-                                <div class="resource-overview-name">Oil</div>
-                                <div class="resource-overview-amount" id="overview-oil">0</div>
-                            </div>
-                        </div>
-
-                        <div class="resource-sliders">
-                            <div class="resource-slider-group">
-                                <div class="resource-label">
-                                    <img src="./sprites/ironin.png" alt="Steel">
-                                    <span>Steel</span>
-                                    <span class="available-amount">(Available: <span
-                                            id="available-steel">0</span>)</span>
-                                </div>
-                                <input type="range" id="steel-slider" min="0" max="0" value="0" class="resource-slider">
-                                <div class="slider-value">Taking: <span id="steel-value">0</span></div>
                             </div>
 
-                            <div class="resource-slider-group">
-                                <div class="resource-label">
-                                    <img src="./sprites/coin.png" alt="Coins">
-                                    <span>Coins</span>
-                                    <span class="available-amount">(Available: <span
-                                            id="available-coins">0</span>)</span>
+                            <!-- Right main content with resource grid -->
+                            <div class="resource-grid-main">
+                                <div class="resource-overview">
+                                    <div class="resource-overview-item">
+                                        <div class="resource-overview-icon">
+                                            <img src="./sprites/ironin.png" alt="Steel">
+                                        </div>
+                                        <div class="resource-overview-name">Steel</div>
+                                        <div class="resource-overview-amount" id="overview-steel">0</div>
+                                    </div>
+                                    <div class="resource-overview-item">
+                                        <div class="resource-overview-icon">
+                                            <img src="./sprites/coin.png" alt="Coins">
+                                        </div>
+                                        <div class="resource-overview-name">Coins</div>
+                                        <div class="resource-overview-amount" id="overview-coins">0</div>
+                                    </div>
+                                    <div class="resource-overview-item">
+                                        <div class="resource-overview-icon">
+                                            <img src="./sprites/goldin.png" alt="Gold">
+                                        </div>
+                                        <div class="resource-overview-name">Gold</div>
+                                        <div class="resource-overview-amount" id="overview-gold">0</div>
+                                    </div>
+                                    <div class="resource-overview-item">
+                                        <div class="resource-overview-icon">
+                                            <img src="./sprites/Oil.png" alt="Oil">
+                                        </div>
+                                        <div class="resource-overview-name">Oil</div>
+                                        <div class="resource-overview-amount" id="overview-oil">0</div>
+                                    </div>
                                 </div>
-                                <input type="range" id="coins-slider" min="0" max="0" value="0" class="resource-slider">
-                                <div class="slider-value">Taking: <span id="coins-value">0</span></div>
-                            </div>
 
-                            <div class="resource-slider-group">
-                                <div class="resource-label">
-                                    <img src="./sprites/goldin.png" alt="Gold">
-                                    <span>Gold</span>
-                                    <span class="available-amount">(Available: <span
-                                            id="available-gold">0</span>)</span>
+                                <div class="resource-sliders">
+                                    <div class="resource-slider-group">
+                                        <div class="resource-label">
+                                            <img src="./sprites/ironin.png" alt="Steel">
+                                            <span>Steel</span>
+                                            <span class="available-amount">(Available: <span
+                                                    id="available-steel">0</span>)</span>
+                                        </div>
+                                        <input type="range" id="steel-slider" min="0" max="0" value="0" class="resource-slider">
+                                        <div class="slider-value">Taking: <span id="steel-value">0</span></div>
+                                    </div>
+
+                                    <div class="resource-slider-group">
+                                        <div class="resource-label">
+                                            <img src="./sprites/coin.png" alt="Coins">
+                                            <span>Coins</span>
+                                            <span class="available-amount">(Available: <span
+                                                    id="available-coins">0</span>)</span>
+                                        </div>
+                                        <input type="range" id="coins-slider" min="0" max="0" value="0" class="resource-slider">
+                                        <div class="slider-value">Taking: <span id="coins-value">0</span></div>
+                                    </div>
+
+                                    <div class="resource-slider-group">
+                                        <div class="resource-label">
+                                            <img src="./sprites/goldin.png" alt="Gold">
+                                            <span>Gold</span>
+                                            <span class="available-amount">(Available: <span
+                                                    id="available-gold">0</span>)</span>
+                                        </div>
+                                        <input type="range" id="gold-slider" min="0" max="0" value="0" class="resource-slider">
+                                        <div class="slider-value">Taking: <span id="gold-value">0</span></div>
+                                    </div>
+
+                                    <div class="resource-slider-group">
+                                        <div class="resource-label">
+                                            <img src="./sprites/Oil.png" alt="Oil">
+                                            <span>Oil</span>
+                                            <span class="available-amount">(Available: <span id="available-oil">0</span>)</span>
+                                        </div>
+                                        <input type="range" id="oil-slider" min="0" max="0" value="0" class="resource-slider">
+                                        <div class="slider-value">Taking: <span id="oil-value">0</span></div>
+                                    </div>
                                 </div>
-                                <input type="range" id="gold-slider" min="0" max="0" value="0" class="resource-slider">
-                                <div class="slider-value">Taking: <span id="gold-value">0</span></div>
                             </div>
-
-                            <div class="resource-slider-group">
-                                <div class="resource-label">
-                                    <img src="./sprites/Oil.png" alt="Oil">
-                                    <span>Oil</span>
-                                    <span class="available-amount">(Available: <span id="available-oil">0</span>)</span>
-                                </div>
-                                <input type="range" id="oil-slider" min="0" max="0" value="0" class="resource-slider">
-                                <div class="slider-value">Taking: <span id="oil-value">0</span></div>
-                            </div>
-                        </div>
-
-                        <div class="resource-selection-actions">
-                            <button class="btn-secondary" onclick="selectAllResources()">MAX ALL</button>
-                            <button class="btn-secondary" onclick="selectHalfResources()">HALF ALL</button>
-                            <button class="btn-primary" onclick="confirmResourceSelection()">ENTER ZONE</button>
                         </div>
                     </div>
                 </div>
