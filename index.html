@@ -3912,30 +3912,29 @@
 
         .tech-tree-popup {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background: #353535;
-            border: 3px solid #7a7a7a;
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 1000px;
-            height: 80vh;
+            border: none;
+            border-radius: 0;
             z-index: 2000;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: none;
             display: none;
             flex-direction: column;
             overflow: hidden;
         }
 
         .tech-tree-header {
-            padding: 15px 20px;
+            padding: 20px 25px;
             background: #3a3a3a;
             border-bottom: 2px solid #7a7a7a;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: move;
+            flex-shrink: 0;
         }
 
         .tech-tree-header h2 {
@@ -3978,8 +3977,8 @@
         }
 
         .tech-tree-resources-card {
-            position: absolute;
-            top: 25px;
+            position: fixed;
+            top: 110px;
             right: 25px;
             background: #3a3a3a;
             border: 2px solid #7a7a7a;
@@ -3987,7 +3986,7 @@
             padding: 12px 15px;
             display: flex;
             gap: 15px;
-            z-index: 25;
+            z-index: 2025;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
@@ -4022,6 +4021,7 @@
         .tech-tree-main {
             flex-grow: 1;
             position: relative;
+            margin-bottom: 150px;
         }
 
         .tech-info-panel {
@@ -4035,9 +4035,14 @@
             align-items: center;
             text-align: center;
             transition: all 0.3s ease;
-            position: relative;
-            z-index: 30;
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2030;
             border-radius: var(--border-radius);
+            width: calc(100% - 50px);
+            max-width: 800px;
         }
 
         .tech-info-panel.hidden {
@@ -6960,29 +6965,29 @@
                 <h2>Tech Tree</h2>
                 <button class="tech-tree-close" id="tech-tree-close"></button>
             </div>
+            <div class="tech-tree-resources-card">
+                <div class="tech-tree-resource">
+                    <img src="./sprites/ironin.png" alt="Steel">
+                    <span id="tech-tree-steel">100</span>
+                </div>
+                <div class="tech-tree-resource">
+                    <img src="./sprites/coin.png" alt="Coins">
+                    <span id="tech-tree-coins">50</span>
+                </div>
+                <div class="tech-tree-resource">
+                    <img src="./sprites/goldin.png" alt="Gold">
+                    <span id="tech-tree-gold">25</span>
+                </div>
+                <div class="tech-tree-resource">
+                    <img src="./sprites/Oil.png" alt="Oil">
+                    <span id="tech-tree-oil">0</span>
+                </div>
+            </div>
             <div class="tech-tree-content" id="tech-tree-content">
-                <div class="tech-tree-resources-card">
-                    <div class="tech-tree-resource">
-                        <img src="./sprites/ironin.png" alt="Steel">
-                        <span id="tech-tree-steel">100</span>
-                    </div>
-                    <div class="tech-tree-resource">
-                        <img src="./sprites/coin.png" alt="Coins">
-                        <span id="tech-tree-coins">50</span>
-                    </div>
-                    <div class="tech-tree-resource">
-                        <img src="./sprites/goldin.png" alt="Gold">
-                        <span id="tech-tree-gold">25</span>
-                    </div>
-                    <div class="tech-tree-resource">
-                        <img src="./sprites/Oil.png" alt="Oil">
-                        <span id="tech-tree-oil">0</span>
-                    </div>
-                </div>
                 <div class="tech-tree-main" id="tech-tree-main"></div>
-                <div class="tech-info-panel" id="tech-info-panel">
-                    <div class="tech-info-default">Hover over a technology to see details</div>
-                </div>
+            </div>
+            <div class="tech-info-panel" id="tech-info-panel">
+                <div class="tech-info-default">Hover over a technology to see details</div>
             </div>
         </div>
 
