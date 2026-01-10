@@ -89,11 +89,14 @@
             width: 340px;
             background: #353535;
             border: 2px solid var(--border-color);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             padding: 15px;
             gap: 15px;
             border-radius: var(--border-radius);
+            margin-top: 14px;
+            margin-bottom: 14px;
         }
 
         .homescreen-vault-army-section {
@@ -2174,6 +2177,9 @@
             overflow: hidden;
             transition: all 0.3s ease;
             box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .zone-card:hover {
@@ -2232,12 +2238,16 @@
 
         .zone-content {
             padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .zone-description {
             color: var(--text-secondary);
             margin-bottom: 20px;
             line-height: 1.5;
+            flex: 1;
         }
 
         .zone-rewards {
@@ -2279,6 +2289,7 @@
 
         .zone-footer {
             padding: 0 20px 20px 20px;
+            margin-top: auto;
         }
 
         .zone-enter-btn {
@@ -2546,35 +2557,6 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-right: 20px;
-        }
-
-        .session-resource-display {
-            display: flex;
-            gap: 12px;
-        }
-
-        .session-resource-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(206, 171, 119, 0.3);
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 2px solid var(--warning);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        .session-resource-item img {
-            width: 24px;
-            height: 24px;
-            image-rendering: pixelated;
-        }
-
-        .session-resource-item span {
-            color: var(--warning);
-            font-weight: bold;
-            font-size: 1.1rem;
         }
 
         .threat-indicator .threat-status {
@@ -3377,6 +3359,37 @@
             background: var(--bg-tertiary);
         }
 
+        /* Gray out unresearched dropdown items */
+        .dropdown-btn.disabled {
+            opacity: 0.4;
+            filter: grayscale(100%);
+            background: #404040 !important;
+            color: #888 !important;
+            border-color: #555 !important;
+            cursor: not-allowed;
+        }
+
+        .dropdown-btn.disabled:hover {
+            opacity: 0.4;
+            filter: grayscale(100%);
+            background: #404040 !important;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .dropdown-btn.disabled img {
+            opacity: 0.3;
+            filter: grayscale(100%);
+        }
+
+        .dropdown-btn.disabled span {
+            color: #888 !important;
+        }
+
+        .dropdown-btn.disabled .cost {
+            color: #666 !important;
+        }
+
         .btn.researched {
             background-color: #7a977b;
             border-color: #5a775b;
@@ -4021,7 +4034,7 @@
         .tech-tree-main {
             flex-grow: 1;
             position: relative;
-            margin-bottom: 150px;
+            margin-bottom: 180px; /* Increased to accommodate the info panel */
         }
 
         .tech-info-panel {
@@ -4037,12 +4050,11 @@
             transition: all 0.3s ease;
             position: fixed;
             bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 25px;
             z-index: 2030;
             border-radius: var(--border-radius);
-            width: calc(100% - 50px);
-            max-width: 800px;
+            width: 350px;
+            max-width: 350px;
         }
 
         .tech-info-panel.hidden {
@@ -6479,7 +6491,7 @@
         <div id="wiki-modal" class="modal-overlay">
             <div class="modal-content wiki-modal-content">
                 <div class="modal-header">
-                    <h2>COREGRID WIKI</h2>
+                    <h2>COREGRID WIKI </h2>
                     <button class="close-btn" onclick="closeWikiModal()"></button>
                 </div>
                 <div class="wiki-modal-body">
@@ -6513,7 +6525,7 @@
                                     <div class="wiki-home-content">
                                         <h2>Welcome to the CoreGrid Wiki</h2>
                                         <p>Select a category from the sidebar to browse articles, or use the search bar
-                                            to find specific topics.</p>
+                                            to find specific topics. Btw this is not done.</p>
                                     </div>
                                 </div>
 
@@ -6852,23 +6864,6 @@
                         </div>
                     </div>
 
-                    <div class="nav-section nav-session-resources">
-                        <span class="nav-label">THIS SESSION:</span>
-                        <div class="session-resource-display">
-                            <div class="session-resource-item">
-                                <img src="./sprites/ironin.png" alt="Steel">
-                                <span id="session-steel-count">0</span>
-                            </div>
-                            <div class="session-resource-item">
-                                <img src="./sprites/coin.png" alt="Coins">
-                                <span id="session-coin-count">0</span>
-                            </div>
-                            <div class="session-resource-item oil-resource">
-                                <img src="./sprites/Oil.png" alt="Oil">
-                                <span id="session-oil-count">0</span>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="nav-section nav-controls">
                         <button class="nav-btn research-nav-btn" id="research-nav-btn">
@@ -6985,9 +6980,9 @@
             </div>
             <div class="tech-tree-content" id="tech-tree-content">
                 <div class="tech-tree-main" id="tech-tree-main"></div>
-            </div>
-            <div class="tech-info-panel" id="tech-info-panel">
-                <div class="tech-info-default">Hover over a technology to see details</div>
+                <div class="tech-info-panel" id="tech-info-panel">
+                    <div class="tech-info-default">Hover over a technology to see details</div>
+                </div>
             </div>
         </div>
 
@@ -9265,6 +9260,24 @@
                         console.warn('Error parsing cost for button:', btn, e);
                     }
                 });
+
+                // Handle dropdown buttons for research restrictions
+                document.querySelectorAll('.dropdown-btn').forEach(btn => {
+                    const mode = btn.dataset.mode;
+                    if (mode && isBuildingRestricted(mode)) {
+                        btn.classList.add('disabled');
+                        if (!btn.dataset.originalTitle) {
+                            btn.dataset.originalTitle = btn.title || '';
+                            btn.title = 'Research required: ' + getResearchRequirementName(mode);
+                        }
+                    } else {
+                        btn.classList.remove('disabled');
+                        if (btn.dataset.originalTitle !== undefined) {
+                            btn.title = btn.dataset.originalTitle;
+                            delete btn.dataset.originalTitle;
+                        }
+                    }
+                });
             }
 
             function getResearchRequirementName(mode) {
@@ -9745,6 +9758,16 @@
                 document.querySelectorAll('.dropdown-btn').forEach(button => {
                     button.addEventListener('click', function (e) {
                         e.stopPropagation();
+
+                        // Prevent clicking on disabled buttons
+                        if (this.classList.contains('disabled')) {
+                            const mode = this.dataset.mode;
+                            if (mode) {
+                                const requirement = getResearchRequirementName(mode);
+                                showNotification(`Research required: ${requirement}`, 12, 7, 'warning');
+                            }
+                            return;
+                        }
 
                         const buildingId = this.id.replace('place-', '');
                         const mode = this.id.replace('place-', '').replace('-', '_');
