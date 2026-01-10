@@ -8129,13 +8129,25 @@
                 }
 
                 getMaxHealth() {
+                    // Base health values
+                    let baseHealth;
                     switch (this.subtype) {
-                        case 'tank': return 100;
-                        case 'fast': return 30;
-                        case 'ranged': return 40;
-                        case 'healer': return 25;
-                        default: return 50;
+                        case 'tank': baseHealth = 100;
+                            break;
+                        case 'fast': baseHealth = 30;
+                            break;
+                        case 'ranged': baseHealth = 40;
+                            break;
+                        case 'healer': baseHealth = 25;
+                            break;
+                        default: baseHealth = 50;
                     }
+                    
+                    // Scale health every 5 waves by 1.5x
+                    const waveScalingFactor = Math.pow(1.5, Math.floor((gameState.wave - 1) / 5));
+                    const scaledHealth = Math.floor(baseHealth * waveScalingFactor);
+                    
+                    return scaledHealth;
                 }
 
                 onTurn() {
