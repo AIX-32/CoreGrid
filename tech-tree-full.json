@@ -14,6 +14,7 @@
     "basic_turret": { "x": 600, "y": 280 },
     "plasma_cannon_tech": { "x": 700, "y": 400 },
     "advanced_defense": { "x": 500, "y": 280 },
+    "castle_wall": { "x": 500, "y": 400 },
     "bomb_tech": { "x": 400, "y": 400 },
     "fortified_defense": { "x": 500, "y": 520 },
     
@@ -111,8 +112,17 @@
       "cost": { "Steel": 150, "coins": 75 },
       "tier": 2,
       "prerequisites": ["basic_defense"],
-      "unlocks": ["fortified_defense"],
+      "unlocks": ["castle_wall", "fortified_defense"],
       "icon": "wallsteel.png"
+    },
+    "castle_wall": {
+      "name": "Castle Wall",
+      "description": "Strong defensive wall structure",
+      "cost": { "gold": 25 },
+      "tier": 2,
+      "prerequisites": ["advanced_defense"],
+      "unlocks": [],
+      "icon": "Castle_wall.png"
     },
     "spike_traps": {
       "name": "Spike",

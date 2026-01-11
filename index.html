@@ -814,14 +814,13 @@
             padding: 25px;
         }
 
-        /* Crate Result Modal Styles */
         .crate-result-content {
             max-width: 700px;
+            max-height: 1300px;
             width: 95%;
             background: #2a2a2a;
-            border: 3px solid #66d9ff;
-            border-radius: 15px;
-            box-shadow: 0 0 40px rgba(102, 217, 255, 0.3);
+            border-color: var(--border-color);
+            border-radius: var(--border-radius);
         }
 
         .crate-result-body {
@@ -922,8 +921,8 @@
 
         .reward-item {
             background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
-            border: 2px solid #66d9ff;
-            border-radius: 10px;
+            border-color: var(--border-color);
+            border-radius: var(--border-radius);
             padding: 15px;
             text-align: center;
             transition: all 0.3s ease;
@@ -933,7 +932,7 @@
         .reward-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(102, 217, 255, 0.3);
-            border-color: #76e9ff;
+            border-color: var(--border-color);
         }
 
         .reward-item.oil {
@@ -959,12 +958,10 @@
             font-weight: bold;
             color: #66d9ff;
             margin-bottom: 5px;
-            text-shadow: 0 0 8px rgba(102, 217, 255, 0.3);
         }
 
         .reward-item.oil .reward-amount {
             color: #7a977b;
-            text-shadow: 0 0 8px rgba(122, 151, 123, 0.3);
         }
 
         .reward-value {
@@ -983,30 +980,25 @@
             text-align: center;
             width: 100%;
             max-width: 400px;
-            text-shadow: 0 0 10px currentColor;
             letter-spacing: 1px;
-            animation: pulseGlow 2s infinite;
         }
 
         .result-win {
             background: linear-gradient(145deg, rgba(46, 204, 113, 0.3), rgba(39, 174, 96, 0.3));
             border: 3px solid #2ecc71;
             color: #2ecc71;
-            box-shadow: 0 0 25px rgba(46, 204, 113, 0.4);
         }
 
         .result-loss {
             background: linear-gradient(145deg, rgba(231, 76, 60, 0.3), rgba(192, 57, 43, 0.3));
             border: 3px solid #e74c3c;
             color: #e74c3c;
-            box-shadow: 0 0 25px rgba(231, 76, 60, 0.4);
         }
 
         .result-break-even {
             background: linear-gradient(145deg, rgba(241, 196, 15, 0.3), rgba(243, 156, 18, 0.3));
             border: 3px solid #f1c40f;
             color: #f1c40f;
-            box-shadow: 0 0 25px rgba(241, 196, 15, 0.4);
         }
 
         .result-actions {
@@ -1026,7 +1018,6 @@
 
         .result-actions .modal-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 217, 255, 0.5);
         }
 
         /* Crates Modal Styles */
@@ -1049,7 +1040,7 @@
         .crates-intro {
             text-align: center;
             padding: 20px;
-            background: rgba(102, 217, 255, 0.1);
+            background: #3a3a3a;
             border: 2px solid #66d9ff;
             border-radius: var(--border-radius);
         }
@@ -1129,48 +1120,36 @@
             image-rendering: pixelated;
             border: 2px solid #66d9ff;
             border-radius: 8px;
-            background: rgba(102, 217, 255, 0.1);
+            background: #3a3a3a;
             padding: 8px;
             transition: all 0.3s ease;
         }
 
         .ore-crates .crate-sprite img {
             border-color: #66d9ff;
-            background: rgba(102, 217, 255, 0.1);
+            background: #3a3a3a;
         }
 
         .oil-crates .crate-sprite img {
             border-color: #7a977b;
-            background: rgba(122, 151, 123, 0.1);
+            background: #3a3a3a;
         }
 
-        .crate-sprite img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(102, 217, 255, 0.4);
-        }
-
-        .ore-crates .crate-sprite img:hover {
-            box-shadow: 0 0 20px rgba(102, 217, 255, 0.6);
-        }
-
-        .oil-crates .crate-sprite img:hover {
-            box-shadow: 0 0 20px rgba(122, 151, 123, 0.6);
-        }
 
         .crate-item:hover {
             border-color: var(--accent-primary);
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(102, 217, 255, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         }
 
         .ore-crates .crate-item:hover {
             border-color: #66d9ff;
-            box-shadow: 0 6px 15px rgba(102, 217, 255, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         }
 
         .oil-crates .crate-item:hover {
             border-color: #7a977b;
-            box-shadow: 0 6px 15px rgba(122, 151, 123, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         }
 
         .crate-header {
@@ -1191,7 +1170,7 @@
         .crate-cost {
             font-weight: bold;
             color: var(--accent-primary);
-            background: rgba(102, 217, 255, 0.2);
+            background: #3a3a3a;
             padding: 5px 10px;
             border-radius: 15px;
             border: 1px solid var(--accent-primary);
@@ -1199,14 +1178,79 @@
 
         .ore-crates .crate-cost {
             color: #66d9ff;
-            background: rgba(102, 217, 255, 0.2);
+            background: #3a3a3a;
             border-color: #66d9ff;
         }
 
         .oil-crates .crate-cost {
             color: #7a977b;
-            background: rgba(122, 151, 123, 0.2);
+            background: #3a3a3a;
             border-color: #7a977b;
+        }
+
+        .free-crates h3 {
+            color: #ceab77;
+            border-color: #ceab77;
+        }
+
+        .free-crates .crate-sprite img {
+            border-color: #ceab77;
+            background: #3a3a3a;
+        }
+
+        .free-crates .crate-item:hover {
+            border-color: #ceab77;
+            box-shadow: 0 6px 15px rgba(206, 171, 119, 0.3);
+        }
+
+        .free-crates .crate-cost {
+            color: #ceab77;
+            background: #3a3a3a;
+            border-color: #ceab77;
+        }
+
+        .free-crates .crate-buy-btn {
+            background: #ceab77;
+            border-color: #ae8b57;
+            color: #111;
+        }
+
+        .free-crates .crate-buy-btn:hover {
+            background: #debb87;
+            border-color: #be9b67;
+            box-shadow: 0 5px 15px rgba(206, 171, 119, 0.3);
+        }
+
+        .daily-streak {
+            background: rgba(206, 171, 119, 0.2);
+            border: 1px solid #ceab77;
+            border-radius: var(--border-radius);
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .streak-counter {
+            font-weight: bold;
+            color: #ceab77;
+            font-size: 1.2rem;
+        }
+
+        .streak-rewards {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .claimed-today {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .claimed-today .crate-buy-btn {
+            background: #555;
+            border-color: #777;
+            color: #999;
         }
 
         .crate-rewards {
@@ -1250,7 +1294,6 @@
         .crate-buy-btn:hover {
             background: var(--accent-secondary);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 217, 255, 0.4);
         }
 
         .ore-crates .crate-buy-btn {
@@ -1262,7 +1305,7 @@
         .ore-crates .crate-buy-btn:hover {
             background: #76e9ff;
             border-color: #56c9ef;
-            box-shadow: 0 5px 15px rgba(102, 217, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .oil-crates .crate-buy-btn {
@@ -1274,7 +1317,7 @@
         .oil-crates .crate-buy-btn:hover {
             background: #8aac8b;
             border-color: #6a8c6b;
-            box-shadow: 0 5px 15px rgba(122, 151, 123, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .crate-buy-btn:disabled {
@@ -1284,11 +1327,9 @@
             box-shadow: none;
         }
 
-        /* Crate Opening Effect */
-        /* Fallback styling for missing crate sprites */
         .crate-sprite img[src*="default_crate.png"] {
-            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
-            border: 2px solid #66d9ff;
+            background: #3a3a3a;
+            border: 2px solid var(--border-color);
             font-size: 3rem;
             color: #66d9ff;
             font-weight: bold;
@@ -1312,7 +1353,7 @@
             font-size: 2.5rem;
             font-weight: bold;
             color: #ffd700;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             margin-top: 20px;
             animation: glowPulse 1s infinite alternate;
         }
@@ -1372,10 +1413,10 @@
 
         @keyframes glowPulse {
             0% {
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+                text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
             }
             100% {
-                text-shadow: 0 0 30px rgba(255, 215, 0, 1);
+                text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
             }
         }
 
@@ -6437,6 +6478,31 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="crate-type free-crates">
+                            <h3>Free Crates</h3>
+                            <div class="crate-levels">
+                                <div class="crate-item" id="daily-crate-item">
+                                    <div class="crate-sprite">
+                                        <img src="./sprites/smallcrate.png" alt="Daily Crate" onerror="this.src='./sprites/default_crate.png'">
+                                    </div>
+                                    <div class="crate-header">
+                                        <span class="crate-name">Daily Crate</span>
+                                        <span class="crate-cost">FREE</span>
+                                    </div>
+                                    <div class="daily-streak">
+                                        <div class="streak-counter">Day <span id="current-streak">1</span></div>
+                                        <div class="streak-rewards">Streak: <span id="streak-rewards">500S 250C 250G 50O</span></div>
+                                    </div>
+                                    <div class="crate-rewards">
+                                        <span>Daily Resources</span>
+                                        <span class="min-reward">Guaranteed</span>
+                                        <span class="max-reward">Double Each Day</span>
+                                    </div>
+                                    <button class="crate-buy-btn" id="claim-daily-btn" onclick="claimDailyCrate()">CLAIM DAILY</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -6515,6 +6581,7 @@
                                     <li class="wiki-page-item" data-target="research-modules-article">Extraction</li>
                                     <li class="wiki-page-item" data-target="strategy-guide-article">Extras</li>
                                     <li class="wiki-page-item" data-target="unit-transfer-article">Unit Transfer</li>
+                                    <li class="wiki-page-item" data-target="combat-article">Combat System</li>
                                 </ul>
                             </div>
                         </div>
@@ -6525,8 +6592,7 @@
                                 <div id="wiki-home-content" class="wiki-article-content active">
                                     <div class="wiki-home-content">
                                         <h2>Welcome to the CoreGrid Wiki</h2>
-                                        <p>Select a category from the sidebar to browse articles, or use the search bar
-                                            to find specific topics. Btw this is not done.</p>
+                                        <p>The wiki is a work in progress but there are already some articles available. </p>
                                     </div>
                                 </div>
 
@@ -6534,6 +6600,7 @@
                                     <div class="wiki-article">
                                         <h1>General Things Welcome</h1>
                                         <p>So you wanna play CoreGrid? Here's what you need to know to get started!</p>
+                                        <p>Just saying that this game is NOT finished yet.</p>
 
                                         <h2>Essential Controls</h2>
                                         <p><strong>Navigation:</strong> Use the arrow keys to look around the
@@ -6737,6 +6804,108 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div id="combat-article" class="wiki-article-content">
+                                    <div class="wiki-article">
+                                        <h1>Combat System Guide</h1>
+                                        <p>Combat is still in work. Learn how combat works in CoreGrid and how to effectively use your army units.</p>
+
+                                        <h2>Basic Combat</h2>
+                                        <p>Combat happens when you attack the enemy fortress. You use units from your base army to fight against fortress guards and the main fortress.</p>
+
+                                        <h3>Starting Combat</h3>
+                                        <ul>
+                                            <li>Click the ATTACK button on the homescreen</li>
+                                            <li>Select which units from your army you want to use</li>
+                                            <li>Each unit type has different stats and abilities</li>
+                                            <li>You can send multiple units of the same type</li>
+                                        </ul>
+
+                                        <h2>Unit Types and Stats</h2>
+                                        
+                                        <h3>Soldier (Scout)</h3>
+                                        <ul>
+                                            <li>Health: 1 | Damage: 1 | Range: 1 | Movement: 1</li>
+                                            <li>Basic unit with balanced stats</li>
+                                            <li>Good for early game and filling gaps</li>
+                                        </ul>
+
+                                        <h3>Knight</h3>
+                                        <ul>
+                                            <li>Health: 1 | Damage: 2 | Range: 1 | Movement: 5</li>
+                                            <li>Fast-moving unit with high mobility</li>
+                                            <li>Great for getting into position quickly</li>
+                                        </ul>
+
+                                        <h3>Archer</h3>
+                                        <ul>
+                                            <li>Health: 1 | Damage: 2 | Range: 4 | Movement: 1</li>
+                                            <li>Ranged unit that attacks from distance</li>
+                                            <li>Safe attacking but slow movement</li>
+                                        </ul>
+
+                                        <h3>Tank</h3>
+                                        <ul>
+                                            <li>Health: 5 | Damage: 3 | Range: 1 | Movement: 1</li>
+                                            <li>Heavy unit with high health</li>
+                                            <li>Excellent for soaking damage</li>
+                                        </ul>
+
+                                        <h3>Siege Tower</h3>
+                                        <ul>
+                                            <li>Health: 1 | Damage: 1 | Range: 4 | Movement: 1</li>
+                                            <li>Powerful siege unit with long range</li>
+                                        </ul>
+
+                                        <h3>King</h3>
+                                        <ul>
+                                            <li>Health: 25 | Damage: 4 | Range: 2 | Movement: 2</li>
+                                            <li>Command unit that boosts nearby army</li>
+                                            <li>Very expensive but powerful</li>
+                                        </ul>
+
+                                        <h2>Combat Mechanics</h2>
+
+                                        <h3>Turn-Based Fighting</h3>
+                                        <ul>
+                                            <li>Combat works in turns alternating between you and the fortress</li>
+                                            <li>On your turn, choose Attack or Defend</li>
+                                            <li>Fortress will also choose Attack or Defend</li>
+                                            <li>Different combinations have different outcomes</li>
+                                        </ul>
+
+                                        <h3>Action Outcomes</h3>
+                                        <ul>
+                                            <li><strong>Both Attack:</strong> You deal damage to fortress or guards</li>
+                                            <li><strong>Both Defend:</strong> Nothing happens, both sides stay safe</li>
+                                            <li><strong>You Attack, Fortress Stands:</strong> You deal damage to fortress or guards</li>
+                                            <li><strong>You Defend, Fortress Attacks:</strong> Fortress deals damage to your unit</li>
+                                        </ul>
+
+                                        <h3>Stacking Units</h3>
+                                        <ul>
+                                            <li>You can send multiple units of the same type</li>
+                                            <li>Damage is multiplied by the number of units</li>
+                                            <li>Stacks share health pool but multiply damage output</li>
+                                        </ul>
+
+                                        <h2>Strategies</h2>
+
+                                        <h3>More</h3>
+                                        <ul>
+                                            <li>Activate campfire for 100 oil per attack</li>
+                                            <li>Gives 1.5x damage boost to your attacks</li>
+                                            <li>Great for breaking through tough defenses</li>
+                                            <li>Only use when you have plenty of oil</li>
+                                        </ul>
+
+
+                                        <div class="wiki-warning">
+                                            <h4>Warning</h4>
+                                            <p>Units used in combat are permanently lost. Even if you win.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -6802,10 +6971,10 @@
                                         <span>Spike</span>
                                         <span class="cost">15S</span>
                                     </button>
-                                    <button class="dropdown-btn" id="place-fortress"
-                                        data-info="Fortress,Your main base that must be protected,Health: 5,Requires: Fortress">
-                                        <img src="./sprites/spawn.png" alt="Fortress">
-                                        <span>Fortress</span>
+                                    <button class="dropdown-btn" id="place-castle-wall"
+                                        data-info="Castle Wall,Strong defensive wall structure,Health: 5,Requires: Castle Wall">
+                                        <img src="./sprites/Castle_wall.png" alt="Castle Wall">
+                                        <span>Castle Wall</span>
                                         <span class="cost">25G</span>
                                     </button>
                                 </div>
@@ -7211,7 +7380,7 @@
                         stone: './sprites/wall.png',
                         steel: './sprites/wallsteel.png',
                         spike: './sprites/spike.png',
-                        fortress: './sprites/spawn.png'
+                        castle: './sprites/Castle_wall.png'
                     },
                     tech: {
                         miner: './sprites/iron.png',
@@ -7698,7 +7867,9 @@
                 }
 
                 getSprite() {
-                    return CONFIG.SPRITES[this.type]?.[this.subtype] || 'sprites/missing.png';
+                    const spritePath = CONFIG.SPRITES[this.type]?.[this.subtype] || 'sprites/missing.png';
+                    console.log(`Getting sprite for ${this.type}-${this.subtype}: ${spritePath}`);
+                    return spritePath;
                 }
 
                 addModule(moduleType) {
@@ -7801,9 +7972,11 @@
 
             class Wall extends GameObject {
                 constructor(x, y, subtype = 'stone') {
+                    console.log(`Wall constructor called with subtype: ${subtype}`);
                     super(x, y, 'wall', subtype);
                     this.health = this.getMaxHealth();
                     this.maxHealth = this.health;
+                    console.log(`Wall health set to: ${this.health}`);
                     this.blocksMovement = true;
                 }
 
@@ -7811,7 +7984,7 @@
                     switch (this.subtype) {
                         case 'steel': return 3;
                         case 'spike': return 3;
-                        case 'fortress': return 5;
+                        case 'castle': return 15;
                         default: return 1;
                     }
                 }
@@ -8418,6 +8591,9 @@
 
                 showHomescreen();
 
+                // Initialize daily crate system
+                initializeDailyCrate();
+
                 if (window.buttonStateInterval) {
                     clearInterval(window.buttonStateInterval);
                 }
@@ -8609,7 +8785,7 @@
                         'wall-stone': './sprites/wall.png',
                         'wall-steel': './sprites/wallsteel.png',
                         'wall-spike': './sprites/spike.png',
-                        'wall-fortress': './sprites/spawn.png',
+                        'wall-castle': './sprites/Castle_wall.png',
                         'tech-miner': './sprites/iron.png',
                         'tech-goldminer': './sprites/gold.png',
                         'tech-coinmaker': './sprites/bank.png',
@@ -8766,7 +8942,9 @@
 
                 switch (type) {
                     case 'wall':
+                        console.log(`Creating wall with subtype: ${subtype || 'stone'}`);
                         obj = new Wall(worldX, worldY, subtype || 'stone');
+                        console.log(`Wall created with health: ${obj.health}/${obj.maxHealth}`);
                         cost = getWallCost(subtype);
                         break;
                     case 'tech':
@@ -8840,7 +9018,7 @@
                 switch (subtype) {
                     case 'steel': return { Steel: 20 };
                     case 'spike': return { Steel: 15 };
-                    case 'fortress': return { gold: 25 };
+                    case 'castle': return { gold: 25 };
                     default: return { Steel: 10 };
                 }
             }
@@ -9231,8 +9409,13 @@
                         const sprite = document.createElement('div');
                         sprite.className = 'object-sprite';
                         const img = document.createElement('img');
-                        img.src = obj.getSprite();
+                        const spritePath = obj.getSprite();
+                        console.log(`Setting sprite for ${obj.type}-${obj.subtype}: ${spritePath}`);
+                        img.src = spritePath;
                         img.alt = obj.subtype;
+                        img.onerror = function() {
+                            console.error(`Failed to load sprite: ${spritePath}`);
+                        };
                         sprite.appendChild(img);
 
                         if (obj.health < obj.maxHealth) {
@@ -9357,7 +9540,7 @@
                 const buildingRequirements = {
                     'wall-steel': 'Advanced Defense',
                     'wall-spike': 'Spike Traps',
-                    'wall-fortress': 'Fortress',
+                    'wall-castle': 'Castle Wall',
                     'tech-goldturret': 'Fortified Defense',
                     'tech-turret': 'Basic Turret',
                     'tech-bomb': 'Bomb Tech',
@@ -9555,7 +9738,7 @@
                 { id: 'place-wall', mode: 'wall', cost: { Steel: 10 } },
                 { id: 'place-steel-wall', mode: 'wall-steel', cost: { Steel: 20 } },
                 { id: 'place-spike', mode: 'wall-spike', cost: { Steel: 15 } },
-                { id: 'place-fortress', mode: 'wall-fortress', cost: { gold: 25 } },
+                { id: 'place-castle-wall', mode: 'wall-castle', cost: { gold: 25 } },
                 { id: 'place-tech', mode: 'tech', cost: { Steel: 20 } },
                 { id: 'place-gold-miner', mode: 'tech-goldminer', cost: { Steel: 25 } },
                 { id: 'place-coin-maker', mode: 'tech-coinmaker', cost: { Steel: 30 } },
@@ -9787,7 +9970,7 @@
                     'wall': 'wall.png',
                     'wall-steel': 'wall_steel.png',
                     'wall-spike': 'wall_spike.png',
-                    'wall-fortress': 'wall_fortress.png',
+                    'wall-castle': 'Castle_wall.png',
                     'tech': 'miner.png',
                     'tech-goldminer': 'goldminer.png',
                     'tech-coinmaker': 'bank.png',
@@ -10397,7 +10580,7 @@
                 const buildingRequirements = {
                     'wall-steel': 'advanced_defense',
                     'wall-spike': 'spike_traps',
-                    'wall-fortress': 'fortress',
+                    'wall-castle': 'castle_wall',
 
                     'tech-goldturret': 'fortified_defense',
                     'tech-turret': 'basic_turret',
@@ -10437,7 +10620,7 @@
                 const buildingRequirements = {
                     'wall-steel': 'Advanced Defense',
                     'wall-spike': 'Spike Traps',
-                    'wall-fortress': 'Fortress',
+                    'wall-castle': 'Castle Wall',
                     'tech-goldturret': 'Fortified Defense',
                     'tech-turret': 'Basic Turret',
                     'tech-bomb': 'Bomb Tech',
@@ -10778,6 +10961,8 @@
 
                 const buildingInfoPopup = document.getElementById('building-info-popup');
                 const buildingInfoOverlay = document.getElementById('building-info-overlay');
+                const buildingSpecialActions = document.getElementById('building-special-actions');
+                const teleportArmyBtn = document.getElementById('teleport-army-btn');
 
                 document.getElementById('building-info-title').textContent = getBuildingName(building);
 
@@ -10786,6 +10971,15 @@
                 document.getElementById('building-description').textContent = getBuildingDescription(building);
 
                 setupModuleSlots(building);
+
+                // Only show teleport button for warpgate
+                if (building.type === 'tech' && building.subtype === 'warpgate') {
+                    if (buildingSpecialActions) buildingSpecialActions.style.display = 'flex';
+                    if (teleportArmyBtn) teleportArmyBtn.style.display = 'block';
+                } else {
+                    if (buildingSpecialActions) buildingSpecialActions.style.display = 'none';
+                    if (teleportArmyBtn) teleportArmyBtn.style.display = 'none';
+                }
 
                 buildingInfoPopup.style.display = 'flex';
                 buildingInfoOverlay.style.display = 'block';
@@ -10889,14 +11083,15 @@
                     if (moduleSlotsContainer) {
                         moduleSlotsContainer.style.display = 'none';
 
-                        let lockedMessage = moduleSlotsContainer.querySelector('.modules-locked-message');
-                        if (!lockedMessage) {
-                            lockedMessage = document.createElement('div');
-                            lockedMessage.className = 'modules-locked-message';
-                            lockedMessage.innerHTML = '<strong>🔒 Modules Locked</strong><br>Research <em>Module Research</em> in the Tech Tree to unlock modules for this building.';
-                            moduleSlotsContainer.parentNode.insertBefore(lockedMessage, moduleSlotsContainer.nextSibling);
-                        }
-                        lockedMessage.style.display = 'block';
+                        // Remove any existing locked messages first
+                        const existingMessages = moduleSlotsContainer.parentNode.querySelectorAll('.modules-locked-message');
+                        existingMessages.forEach(msg => msg.remove());
+
+                        // Create new locked message
+                        const lockedMessage = document.createElement('div');
+                        lockedMessage.className = 'modules-locked-message';
+                        lockedMessage.innerHTML = '<strong>🔒 Modules Locked</strong><br>Research <em>Module Research</em> in the Tech Tree to unlock modules for this building.';
+                        moduleSlotsContainer.parentNode.insertBefore(lockedMessage, moduleSlotsContainer.nextSibling);
                     }
                     return;
                 }
@@ -10904,10 +11099,9 @@
                 if (moduleSlotsContainer) {
                     moduleSlotsContainer.style.display = 'flex';
 
-                    const lockedMessage = moduleSlotsContainer.parentNode.querySelector('.modules-locked-message');
-                    if (lockedMessage) {
-                        lockedMessage.style.display = 'none';
-                    }
+                    // Remove any existing locked messages when modules are unlocked
+                    const existingMessages = moduleSlotsContainer.parentNode.querySelectorAll('.modules-locked-message');
+                    existingMessages.forEach(msg => msg.remove());
                 }
 
                 const moduleSlot1 = document.getElementById('module-slot-1');
@@ -11471,9 +11665,6 @@
 
                 return spriteMap[subtype] || './sprites/soldier.png';
             }
-
-            function closeBuildingInfo() { }
-
 
             function teleportArmyHome() {
                 if (gameState.resources.oil < 50) {
@@ -12112,6 +12303,10 @@
                 if (cratesModal) {
                     cratesModal.classList.add('active');
                     updateCrateButtons();
+                    
+                    // Refresh daily crate display when modal opens
+                    checkNewDay();
+                    updateDailyCrateDisplay();
                 }
             }
 
@@ -12218,6 +12413,202 @@
                 // Update display
                 updateDisplay();
                 updateCrateButtons();
+            }
+
+            // Daily Crate System
+            let dailyCrateData = {
+                lastClaimDate: null,
+                streak: 1,
+                claimedToday: false
+            };
+
+            function initializeDailyCrate() {
+                // Load saved data from localStorage
+                const savedData = localStorage.getItem('coregrid_daily_crate');
+                if (savedData) {
+                    try {
+                        dailyCrateData = JSON.parse(savedData);
+                    } catch (e) {
+                        console.error('Failed to parse daily crate data:', e);
+                        resetDailyCrateData();
+                    }
+                }
+                
+                // Check if it's a new day
+                checkNewDay();
+                updateDailyCrateDisplay();
+            }
+
+            function resetDailyCrateData() {
+                dailyCrateData = {
+                    lastClaimDate: null,
+                    streak: 1,
+                    claimedToday: false
+                };
+                saveDailyCrateData();
+            }
+
+            function saveDailyCrateData() {
+                try {
+                    localStorage.setItem('coregrid_daily_crate', JSON.stringify(dailyCrateData));
+                } catch (e) {
+                    console.error('Failed to save daily crate data:', e);
+                }
+            }
+
+            function checkNewDay() {
+                const today = new Date().toDateString();
+                const lastClaim = dailyCrateData.lastClaimDate;
+                
+                if (lastClaim) {
+                    const lastClaimDate = new Date(lastClaim).toDateString();
+                    
+                    if (lastClaimDate !== today) {
+                        // Different day
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        const yesterdayString = yesterday.toDateString();
+                        
+                        if (lastClaimDate === yesterdayString && !dailyCrateData.claimedToday) {
+                            // Consecutive day - increase streak
+                            dailyCrateData.streak = Math.min(dailyCrateData.streak + 1, 30); // Max 30 day streak
+                        } else {
+                            // Missed a day - reset streak
+                            dailyCrateData.streak = 1;
+                        }
+                        dailyCrateData.claimedToday = false;
+                    }
+                } else {
+                    // First time playing
+                    dailyCrateData.streak = 1;
+                    dailyCrateData.claimedToday = false;
+                }
+            }
+
+            function updateDailyCrateDisplay() {
+                const streakElement = document.getElementById('current-streak');
+                const rewardsElement = document.getElementById('streak-rewards');
+                const crateItem = document.getElementById('daily-crate-item');
+                const claimButton = document.getElementById('claim-daily-btn');
+                
+                if (streakElement) {
+                    streakElement.textContent = dailyCrateData.streak;
+                }
+                
+                if (rewardsElement) {
+                    const baseRewards = {
+                        Steel: 500,
+                        coins: 250,
+                        gold: 250,
+                        oil: 50
+                    };
+                    
+                    // Double rewards for each day of streak
+                    const multiplier = Math.pow(2, dailyCrateData.streak - 1);
+                    const rewards = [];
+                    
+                    Object.entries(baseRewards).forEach(([resource, amount]) => {
+                        const finalAmount = Math.floor(amount * multiplier);
+                        const symbol = getResourceSymbol(resource);
+                        rewards.push(`${finalAmount}${symbol}`);
+                    });
+                    
+                    rewardsElement.textContent = rewards.join(' ');
+                }
+                
+                // Update UI based on claim status
+                if (crateItem && claimButton) {
+                    if (dailyCrateData.claimedToday) {
+                        crateItem.classList.add('claimed-today');
+                        claimButton.textContent = 'CLAIMED TODAY';
+                        claimButton.disabled = true;
+                    } else {
+                        crateItem.classList.remove('claimed-today');
+                        claimButton.textContent = 'CLAIM DAILY';
+                        claimButton.disabled = false;
+                    }
+                }
+            }
+
+            function claimDailyCrate() {
+                if (dailyCrateData.claimedToday) {
+                    showNotification('You\'ve already claimed today! Come back tomorrow.', 12, 7, 'warning');
+                    return;
+                }
+
+                // Calculate rewards based on streak
+                const baseRewards = {
+                    Steel: 500,
+                    coins: 250,
+                    gold: 250,
+                    oil: 50
+                };
+                
+                const multiplier = Math.pow(2, dailyCrateData.streak - 1);
+                const rewards = {};
+                
+                Object.entries(baseRewards).forEach(([resource, amount]) => {
+                    rewards[resource] = Math.floor(amount * multiplier);
+                });
+                
+                // Add rewards directly to vault (storedResources) since this is a free daily reward
+                if (rewards.Steel) gameState.storedResources.Steel += rewards.Steel;
+                if (rewards.coins) gameState.storedResources.coins += rewards.coins;
+                if (rewards.gold) gameState.storedResources.gold += rewards.gold;
+                if (rewards.oil) gameState.storedResources.oil += rewards.oil;
+                
+                // Also add to current resources for immediate availability
+                gameState.addResources(rewards);
+                
+                // Update daily crate data
+                dailyCrateData.lastClaimDate = new Date().toDateString();
+                dailyCrateData.claimedToday = true;
+                
+                // Save data
+                saveDailyCrateData();
+                
+                // Update display
+                updateDailyCrateDisplay();
+                updateDisplay(); // This will update vault displays
+                
+                // Show notification with rewards
+                const rewardList = Object.entries(rewards)
+                    .map(([resource, amount]) => `+${amount.toLocaleString()} ${resource}`)
+                    .join(', ');
+                
+                showNotification(`Daily Crate Claimed! Streak: ${dailyCrateData.streak} days! Rewards: ${rewardList}`, 12, 7, 'success');
+                
+                // Create visual effect
+                createDailyCrateEffect();
+            }
+
+            function createDailyCrateEffect() {
+                const effect = document.createElement('div');
+                effect.className = 'crate-opening-effect';
+                effect.innerHTML = `
+                    <div class="crate-effect-content">
+                        <div class="crate-sparkles"></div>
+                        <div class="crate-text">DAILY REWARD!</div>
+                    </div>
+                `;
+                
+                document.body.appendChild(effect);
+                
+                setTimeout(() => {
+                    if (effect.parentNode) {
+                        effect.parentNode.removeChild(effect);
+                    }
+                }, 2000);
+            }
+
+            function getResourceSymbol(resource) {
+                const symbols = {
+                    'Steel': 'S',
+                    'coins': 'C',
+                    'gold': 'G',
+                    'oil': 'O'
+                };
+                return symbols[resource] || resource.charAt(0).toUpperCase();
             }
 
             function openCrate(crateType, level) {
