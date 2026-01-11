@@ -6011,8 +6011,8 @@
                                     </div>
                                     <div class="vault-resource-info">
                                         <span class="vault-resource-name">STEEL</span>
-                                        <span class="vault-resource-value vault-resource-amountof id="
-                                            vault-stored-steel-count">100</span>
+                                        <span class="vault-resource-value vault-resource-amountof"
+                                            id="vault-stored-steel-count">100</span>
                                     </div>
                                 </div>
 
@@ -7545,19 +7545,32 @@
                 }
 
                 addResources(resources) {
+                    console.log('=== ADD RESOURCES CALLED ===');
+                    console.log('Resources to add:', resources);
+                    console.log('Current game mode:', this.gameMode);
+                    console.log('Resources before:', { Steel: this.resources.Steel, coins: this.resources.coins, gold: this.resources.gold, oil: this.resources.oil });
+                    console.log('Session resources before:', this.sessionResources);
+                    
                     if (resources.Steel) this.resources.Steel += resources.Steel;
                     if (resources.coins) this.resources.coins += resources.coins;
                     if (resources.gold) this.resources.gold += resources.gold;
                     if (resources.oil) this.resources.oil += resources.oil;
 
+                    console.log('Resources after:', { Steel: this.resources.Steel, coins: this.resources.coins, gold: this.resources.gold, oil: this.resources.oil });
+
                     if (this.gameMode === 'active_zone') {
+                        console.log('Adding to session resources (active zone mode)');
                         if (resources.Steel) this.sessionResources.Steel += resources.Steel;
                         if (resources.coins) this.sessionResources.coins += resources.coins;
                         if (resources.gold) this.sessionResources.gold += resources.gold;
                         if (resources.oil) this.sessionResources.oil += resources.oil;
+                        console.log('Session resources after:', this.sessionResources);
+                    } else {
+                        console.log('NOT adding to session resources - not in active zone mode');
                     }
 
                     updateDisplay();
+                    console.log('=== ADD RESOURCES END ===');
                 }
 
                 enterZone(zoneType) {
@@ -7587,6 +7600,14 @@
                     console.log('=== EXTRACT RESOURCES START ===');
                     console.log('Session resources before extraction:', this.sessionResources);
                     console.log('Stored resources before extraction:', this.storedResources);
+                    console.log('Current game mode:', this.gameMode);
+                    console.log('Current zone:', this.currentZone);
+                    console.log('Full session resources object:', JSON.stringify(this.sessionResources));
+                    
+                    // Test: Force add some steel to session resources for testing
+                    console.log('FORCING steel into session resources for testing...');
+                    this.sessionResources.Steel = (this.sessionResources.Steel || 0) + 50;
+                    console.log('Session resources after forcing steel:', this.sessionResources);
 
                     let totalExtracted = 0;
                     for (const [resource, amount] of Object.entries(this.sessionResources)) {
@@ -7601,6 +7622,22 @@
 
                     console.log('Total resources extracted:', totalExtracted);
                     console.log('Stored resources after extraction:', this.storedResources);
+                    
+                    // Log vault element values before update
+                    const vaultSteelElement = document.getElementById('vault-stored-steel-count');
+                    console.log('Vault steel element exists:', !!vaultSteelElement);
+                    if (vaultSteelElement) {
+                        console.log('Vault steel element text before update:', vaultSteelElement.textContent);
+                    }
+
+                    // Update display immediately to show extracted resources in vault
+                    console.log('Calling updateDisplay() to refresh vault');
+                    updateDisplay();
+                    
+                    // Log vault element values after update
+                    if (vaultSteelElement) {
+                        console.log('Vault steel element text after update:', vaultSteelElement.textContent);
+                    }
 
                     console.log('Calling returnToHomescreen()');
                     this.returnToHomescreen();
@@ -8574,6 +8611,17 @@
                     playerGridY >= 0 && playerGridY < CONFIG.GRID_SIZE_Y) {
                     gameState.grid[playerGridY][playerGridX] = 'player';
                 }
+
+                // Force immediate and complete grid refresh to ensure player is visible
+                setTimeout(() => {
+                    // Rebuild grid completely
+                    createGrid();
+                    // Update grid data with world objects and player
+                    updateGridFromWorldObjects();
+                    // Refresh visual display
+                    updateDisplay();
+                    console.log('Complete grid rebuild and refresh after camera setup');
+                }, 100);
 
                 if (typeof gameState.enemiesRemaining === 'undefined') {
                     gameState.enemiesRemaining = 0;
@@ -12278,8 +12326,31 @@
                     document.getElementById('gold-slider').value = 0;
                     document.getElementById('oil-slider').max = gameState.storedResources.oil;
                     document.getElementById('oil-slider').value = 0;
-
+                    
+                    // Force immediate update of displayed values
                     updateResourceValues();
+                                    
+                    // Ensure all values are properly displayed
+                    requestAnimationFrame(() => {
+                        updateResourceValues();
+                        // Force reflow to ensure DOM updates are visible
+                        popup.offsetHeight;
+                    });
+                    
+                    // Set up periodic updates every 1 second while modal is open
+                    if (window.resourceUpdateInterval) {
+                        clearInterval(window.resourceUpdateInterval);
+                    }
+                    window.resourceUpdateInterval = setInterval(() => {
+                        const modal = document.getElementById('resource-selection-popup');
+                        if (modal && modal.classList.contains('active')) {
+                            updateResourceValues();
+                        } else {
+                            // Clean up interval when modal is closed
+                            clearInterval(window.resourceUpdateInterval);
+                            window.resourceUpdateInterval = null;
+                        }
+                    }, 1000);
                 }
             }
 
@@ -12289,7 +12360,33 @@
                     popup.classList.remove('active');
                 }
                 selectedZoneType = null;
+                
+                // Clear the periodic update interval
+                if (window.resourceUpdateInterval) {
+                    clearInterval(window.resourceUpdateInterval);
+                    window.resourceUpdateInterval = null;
+                }
             }
+
+            // Set up periodic display updates every 1 second
+            function initializePeriodicUpdates() {
+                if (window.mainDisplayUpdateInterval) {
+                    clearInterval(window.mainDisplayUpdateInterval);
+                }
+                
+                window.mainDisplayUpdateInterval = setInterval(() => {
+                    // Update main resource display
+                    updateDisplay();
+                    
+                    // Also update tech tree resources if it's open
+                    updateTechTreeResources();
+                }, 1000);
+            }
+
+            // Initialize periodic updates when page loads
+            document.addEventListener('DOMContentLoaded', function() {
+                initializePeriodicUpdates();
+            });
 
             function closeZoneSelection() {
                 const popup = document.getElementById('zone-selection-popup');
@@ -12774,16 +12871,28 @@
             }
 
             function updateResourceValues() {
-                document.getElementById('steel-value').textContent = document.getElementById('steel-slider').value;
-                document.getElementById('coins-value').textContent = document.getElementById('coins-slider').value;
-                document.getElementById('gold-value').textContent = document.getElementById('gold-slider').value;
-                document.getElementById('oil-value').textContent = document.getElementById('oil-slider').value;
+                // Update displayed values
+                const steelValue = document.getElementById('steel-slider').value;
+                const coinsValue = document.getElementById('coins-slider').value;
+                const goldValue = document.getElementById('gold-slider').value;
+                const oilValue = document.getElementById('oil-slider').value;
+                
+                document.getElementById('steel-value').textContent = steelValue;
+                document.getElementById('coins-value').textContent = coinsValue;
+                document.getElementById('gold-value').textContent = goldValue;
+                document.getElementById('oil-value').textContent = oilValue;
+
+                // Force DOM update
+                document.getElementById('steel-value').offsetHeight;
+                document.getElementById('coins-value').offsetHeight;
+                document.getElementById('gold-value').offsetHeight;
+                document.getElementById('oil-value').offsetHeight;
 
                 resourceSelection = {
-                    Steel: parseInt(document.getElementById('steel-slider').value) || 0,
-                    coins: parseInt(document.getElementById('coins-slider').value) || 0,
-                    gold: parseInt(document.getElementById('gold-slider').value) || 0,
-                    oil: parseInt(document.getElementById('oil-slider').value) || 0
+                    Steel: parseInt(steelValue) || 0,
+                    coins: parseInt(coinsValue) || 0,
+                    gold: parseInt(goldValue) || 0,
+                    oil: parseInt(oilValue) || 0
                 };
             }
 
