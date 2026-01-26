@@ -2010,10 +2010,13 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
-            border: 2px solid #7a7a7a;
-            border-radius: var(--border-radius);
-            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+            border: 1px solid #666;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            min-width: 100px;
+            justify-content: center;
         }
 
         .research-nav-btn img {
@@ -2404,8 +2407,8 @@
             display: flex;
             box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
             width: 1300px !important;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: flex-start;
+            align-items: stretch;
             flex-wrap: wrap;
             gap: 20px;
         }
@@ -2415,15 +2418,27 @@
             align-items: center;
             gap: 25px;
         }
+        
+        .nav-current-zone {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            padding: 10px 16px;
+        }
 
         .folder-bar {
             display: flex;
-            gap: 12px;
-            background: #404040;
-            padding: 8px 12px;
-            border-radius: var(--border-radius);
+            justify-content: center;
+            gap: 15px;
+            background: rgba(58, 58, 58, 0.9);
+            padding: 12px;
+            border-radius: 7px;
             border: 1px solid #555;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            margin: 10px 0;
+            position: relative;
+            z-index: 100;
+            width: 100%;
         }
 
         .folder-item {
@@ -2434,14 +2449,26 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 12px;
-            background: #353535;
-            border: 1px solid #7a7a7a;
-            border-radius: var(--border-radius);
+            padding: 10px 16px;
+            background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+            border: 1px solid #666;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.9rem;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            min-width: 100px;
+            justify-content: center;
+        }
+
+        .folder-trigger:hover {
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+            border-color: #7a7a7a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
 
         .folder-trigger.selected {
@@ -2465,8 +2492,8 @@
         }
 
         .folder-trigger img {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             image-rendering: pixelated;
         }
 
@@ -2474,13 +2501,14 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background: #353535;
-            border: 2px solid #7a7a7a;
-            border-radius: var(--border-radius);
-            min-width: 200px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 7px;
+            min-width: 280px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
             z-index: 1000;
             display: none;
+            padding: 10px;
         }
 
         .folder-item:hover .folder-dropdown {
@@ -2488,33 +2516,123 @@
         }
 
         .dropdown-content {
-            padding: 8px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         .dropdown-btn {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
             width: 100%;
-            padding: 8px 12px;
-            background: none;
-            border: none;
+            padding: 10px;
+            background: #3a3a3a;
+            border: 1px solid #555;
             color: var(--text-primary);
             cursor: pointer;
-            border-radius: var(--border-radius);
+            border-radius: 7px;
             transition: all 0.2s ease;
             text-align: left;
+            gap: 6px;
+            position: relative;
         }
 
         .dropdown-btn:hover {
-            background: var(--accent-primary);
-            color: #111;
+            background: #4a4a4a;
+            border-color: #666;
+        }
+
+        .dropdown-btn-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 5px;
         }
 
         .dropdown-btn img {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             image-rendering: pixelated;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 7px;
+            padding: 4px;
+        }
+
+        .dropdown-btn-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .dropdown-btn-cost {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(102, 217, 255, 0.15);
+            padding: 6px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .cost-resource {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cost-resource img {
+            width: 18px;
+            height: 18px;
+            image-rendering: pixelated;
+            padding: 0;
+            background: none;
+            border-radius: 0;
+        }
+
+        .dropdown-btn-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .dropdown-btn-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .stat-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #666;
+            color: var(--text-secondary);
+        }
+
+        .stat-badge.health {
+            background: rgba(122, 151, 123, 0.2);
+            border-color: #7a977b;
+            color: #7a977b;
+        }
+
+        .stat-badge.range {
+            background: rgba(206, 171, 119, 0.2);
+            border-color: #ceab77;
+            color: #ceab77;
+        }
+
+        .stat-badge.movement {
+            background: rgba(102, 217, 255, 0.2);
+            border-color: #66d9ff;
+            color: #66d9ff;
         }
 
         .dropdown-btn span:last-child {
@@ -2570,10 +2688,11 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 8px 15px;
-            background: rgba(64, 64, 64, 0.5);
-            border-radius: var(--border-radius);
+            padding: 12px;
+            background: rgba(58, 58, 58, 0.9);
+            border-radius: 7px;
             border: 1px solid #555;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .nav-label {
@@ -2597,7 +2716,6 @@
         .zone-name {
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-right: 20px;
         }
 
         .threat-indicator .threat-status {
@@ -3288,32 +3406,35 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #333;
-            border: 2px solid #7a7a7a;
-            border-radius: var(--border-radius);
-            padding: 15px;
+            background: linear-gradient(145deg, #2d2d2d, #252525);
+            border: 3px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 20px;
             width: auto;
-            min-width: 250px;
-            max-width: 350px;
-            z-index: 2000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            min-width: 300px;
+            max-width: 400px;
+            z-index: 3000;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(102, 217, 255, 0.3);
             display: none;
-            font-size: 12px;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
         }
 
         .info-popup-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #555;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-primary);
         }
 
         .info-popup-title {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
             text-transform: uppercase;
+            color: var(--accent-primary);
+            letter-spacing: 1px;
         }
 
         .info-popup-close {
@@ -3335,23 +3456,26 @@
         }
 
         .info-popup-content {
-            font-size: 12px;
-            line-height: 1.5;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-primary);
         }
 
         .info-popup-stats {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin: 10px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
 
         .info-popup-stat {
-            background: #444;
-            padding: 5px 8px;
-            border-radius: 3px;
-            font-size: 11px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
             white-space: nowrap;
+            border: 1px solid #666;
+            color: var(--text-secondary);
         }
 
         .info-popup-overlay {
@@ -6103,7 +6227,7 @@
                         </div>
                         <div class="wiki-content">
                             <p class="wiki-description">Access the complete game guide, strategies, and documentation to
-                                master CoreGrid Extraction Protocol.</p>
+                                master CoreGrid.</p>
                         </div>
                         <button class="wiki-open-btn" id="open-wiki-btn">
                             OPEN WIKI
@@ -6987,27 +7111,74 @@
                                 <div class="dropdown-content">
                                     <button class="dropdown-btn" id="place-wall"
                                         data-info="Wall,Basic defensive structure to block enemy movement,Health: 1">
-                                        <img src="./sprites/wall.png" alt="Wall">
-                                        <span>Wall</span>
-                                        <span class="cost">10S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/wall.png" alt="Wall">
+                                            <span class="dropdown-btn-title">Wall</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>10</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Basic defensive structure to block enemy movement</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-steel-wall"
                                         data-info="Steel Wall,Stronger wall with increased durability,Health: 3,Requires: Advanced Defense">
-                                        <img src="./sprites/wallsteel.png" alt="Steel Wall">
-                                        <span>Steel</span>
-                                        <span class="cost">20S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/wallsteel.png" alt="Steel Wall">
+                                            <span class="dropdown-btn-title">Steel Wall</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>20</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Stronger wall with increased durability</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 3</span>
+                                            <span class="stat-badge">Requires: Advanced Defense</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-spike"
                                         data-info="Spike,Damages enemies that walk over it,Health: 3,Requires: Spike Traps">
-                                        <img src="./sprites/spike.png" alt="Spike">
-                                        <span>Spike</span>
-                                        <span class="cost">15S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/spike.png" alt="Spike">
+                                            <span class="dropdown-btn-title">Spike</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>15</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Damages enemies that walk over it</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 3</span>
+                                            <span class="stat-badge">Requires: Spike Traps</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-castle-wall"
-                                        data-info="Castle Wall,Strong defensive wall structure,Health: 5,Requires: Castle Wall">
-                                        <img src="./sprites/Castle_wall.png" alt="Castle Wall">
-                                        <span>Castle Wall</span>
-                                        <span class="cost">25G</span>
+                                        data-info="Castle Wall,Strong defensive wall structure,Health: 25,Requires: Castle Wall">
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/Castle_wall.png" alt="Castle Wall">
+                                            <span class="dropdown-btn-title">Castle Wall</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/goldin.png" alt="Gold">
+                                                    <span>25</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Strong defensive wall structure</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 25</span>
+                                            <span class="stat-badge">Requires: Castle Wall</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -7022,69 +7193,219 @@
                                 <div class="dropdown-content">
                                     <button class="dropdown-btn" id="place-tech"
                                         data-info="Steel Mine,Generates 5 steel per turn,Health: 2,Requires: Fortress">
-                                        <img src="./sprites/iron.png" alt="Steel Mine">
-                                        <span>Steel Mine</span>
-                                        <span class="cost">20S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/iron.png" alt="Steel Mine">
+                                            <span class="dropdown-btn-title">Steel Mine</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>20</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Generates 5 steel per turn</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge">Requires: Fortress</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-gold-miner"
                                         data-info="Gold Mine,Generates 1 gold per turn,Health: 2,Requires: Advanced Mining">
-                                        <img src="./sprites/gold.png" alt="Gold Mine">
-                                        <span>Gold Mine</span>
-                                        <span class="cost">25S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/gold.png" alt="Gold Mine">
+                                            <span class="dropdown-btn-title">Gold Mine</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>25</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Generates 1 gold per turn</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge">Requires: Advanced Mining</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-coin-maker"
                                         data-info="Bank,Generates 5 coins per turn,Health: 2,Requires: Advanced Mining">
-                                        <img src="./sprites/bank.png" alt="Bank">
-                                        <span>Bank</span>
-                                        <span class="cost">30S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/bank.png" alt="Bank">
+                                            <span class="dropdown-btn-title">Bank</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>30</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Generates 5 coins per turn</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge">Requires: Advanced Mining</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-turret"
                                         data-info="Turret,Attacks enemies within range 3,Health: 2,Shots: 8,Requires: Fortress">
-                                        <img src="./sprites/turret.png" alt="Turret">
-                                        <span>Turret</span>
-                                        <span class="cost">40S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/turret.png" alt="Turret">
+                                            <span class="dropdown-btn-title">Turret</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>40</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Attacks enemies within range 3</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge range">Range: 3</span>
+                                            <span class="stat-badge">Shots: 8</span>
+                                            <span class="stat-badge">Requires: Fortress</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-gold-turret"
                                         data-info="Gold Turret,Powerful turret with range 3,Health: 2,Shots: 10,Requires: Fortified Defense">
-                                        <img src="./sprites/goldturret.png" alt="Gold Turret">
-                                        <span>Gold Turret</span>
-                                        <span class="cost">200G</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/goldturret.png" alt="Gold Turret">
+                                            <span class="dropdown-btn-title">Gold Turret</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/goldin.png" alt="Gold">
+                                                    <span>200</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Powerful turret with range 3</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge range">Range: 3</span>
+                                            <span class="stat-badge">Shots: 10</span>
+                                            <span class="stat-badge">Requires: Fortified Defense</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-bomb"
                                         data-info="Bomb,Explodes when enemy approaches damaging area,Health: 1,Requires: Spike Traps">
-                                        <img src="./sprites/bomb.png" alt="Bomb">
-                                        <span>Bomb</span>
-                                        <span class="cost">10G</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/bomb.png" alt="Bomb">
+                                            <span class="dropdown-btn-title">Bomb</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/goldin.png" alt="Gold">
+                                                    <span>10</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Explodes when enemy approaches damaging area</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                            <span class="stat-badge">Requires: Spike Traps</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-supply"
                                         data-info="Supply Drop,Randomly generates resources,Health: 1,Requires: Supply Systems">
-                                        <img src="./sprites/supply.gif" alt="Supply Drop">
-                                        <span>Supply Drop</span>
-                                        <span class="cost">35G</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/supply.gif" alt="Supply Drop">
+                                            <span class="dropdown-btn-title">Supply Drop</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/goldin.png" alt="Gold">
+                                                    <span>35</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Randomly generates resources</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                            <span class="stat-badge">Requires: Supply Systems</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-oil-rig"
                                         data-info="Oil Rig,Generates 1 oil per turn,Health: 2,Requires: Oil Rig Tech">
-                                        <img src="./sprites/oilrig.png" alt="Oil Rig">
-                                        <span>Oil Rig</span>
-                                        <span class="cost">35S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/oilrig.png" alt="Oil Rig">
+                                            <span class="dropdown-btn-title">Oil Rig</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>35</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Generates 1 oil per turn</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge">Requires: Oil Rig Tech</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-campfire"
                                         data-info="Campfire,Boosts nearby resource buildings by 50%,Health: 1,Requires: Resource Management">
-                                        <img src="./sprites/campfire.gif" alt="Campfire">
-                                        <span>Campfire</span>
-                                        <span class="cost">30S</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/campfire.gif" alt="Campfire">
+                                            <span class="dropdown-btn-title">Campfire</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>30</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Boosts nearby resource buildings by 50%</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                            <span class="stat-badge">Requires: Resource Management</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-warpgate"
                                         data-info="Warpgate,Teleports deployed armies back to base,Health: 3,Requires: Advanced Army,Uses: 50 oil per teleport">
-                                        <img src="./sprites/wargate.png" alt="Warpgate">
-                                        <span>Warpgate</span>
-                                        <span class="cost">150S 100G 75O</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/wargate.png" alt="Warpgate">
+                                            <span class="dropdown-btn-title">Warpgate</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>150</span>
+                                                </div>
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/goldin.png" alt="Gold">
+                                                    <span>100</span>
+                                                </div>
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/Oil.png" alt="Oil">
+                                                    <span>75</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Teleports deployed armies back to base</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 3</span>
+                                            <span class="stat-badge">Requires: Advanced Army</span>
+                                            <span class="stat-badge">Uses: 50 oil per teleport</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-camp-tower"
                                         data-info="Camp Tower,Turret-like building that shoots enemies in 3x3 area,Health: 2,Range: 3,Cost: 70 Iron 80 Coins,Requires: Siege Weapons">
-                                        <img src="./sprites/camptower.png" alt="Camp Tower">
-                                        <span>Camp Tower</span>
-                                        <span class="cost">70I 80C</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/camptower.png" alt="Camp Tower">
+                                            <span class="dropdown-btn-title">Camp Tower</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/ironin.png" alt="Steel">
+                                                    <span>70</span>
+                                                </div>
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/coin.png" alt="Coins">
+                                                    <span>80</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Turret-like building that takes coins for each enemy killed</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge range">Range: 3</span>
+                                            <span class="stat-badge">Requires: Siege Weapons</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -7099,45 +7420,141 @@
                                 <div class="dropdown-content">
                                     <button class="dropdown-btn" id="place-scout"
                                         data-info="Soldier,Basic unit with balanced stats,Health: 1,Range: 1,Movement: 1,Requires: Fortress">
-                                        <img src="./sprites/soldier.png" alt="Soldier">
-                                        <span>Soldier</span>
-                                        <span class="cost">15C</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/soldier.png" alt="Soldier">
+                                            <span class="dropdown-btn-title">Soldier</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/coin.png" alt="Coins">
+                                                    <span>15</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Basic unit with balanced stats</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                            <span class="stat-badge range">Range: 1</span>
+                                            <span class="stat-badge movement">Movement: 1</span>
+                                            <span class="stat-badge">Requires: Fortress</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-knight"
                                         data-info="Knight,Fast-moving unit with high mobility,Health: 1,Range: 1,Movement: 5,Requires: Basic Army">
-                                        <img src="./sprites/knight.png" alt="Knight">
-                                        <span>Knight</span>
-                                        <span class="cost">25C</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/knight.png" alt="Knight">
+                                            <span class="dropdown-btn-title">Knight</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/coin.png" alt="Coins">
+                                                    <span>25</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Fast-moving unit with high mobility</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                            <span class="stat-badge range">Range: 1</span>
+                                            <span class="stat-badge movement">Movement: 5</span>
+                                            <span class="stat-badge">Requires: Basic Army</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-archer"
                                         data-info="Archer,Ranged unit that can attack from a distance,Health: 1,Range: 4,Movement: 1,Requires: Basic Army">
-                                        <img src="./sprites/Archer.png" alt="Archer">
-                                        <span>Archer</span>
-                                        <span class="cost">20C</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/Archer.png" alt="Archer">
+                                            <span class="dropdown-btn-title">Archer</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/coin.png" alt="Coins">
+                                                    <span>20</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Ranged unit that can attack from a distance</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                            <span class="stat-badge range">Range: 4</span>
+                                            <span class="stat-badge movement">Movement: 1</span>
+                                            <span class="stat-badge">Requires: Basic Army</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-tank"
                                         data-info="Tank,Heavy unit with high health,Health: 5,Range: 1,Movement: 1,Requires: Elite Units">
-                                        <img src="./sprites/Tank.png" alt="Tank">
-                                        <span>Tank</span>
-                                        <span class="cost">50C</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/Tank.png" alt="Tank">
+                                            <span class="dropdown-btn-title">Tank</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/coin.png" alt="Coins">
+                                                    <span>50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Heavy unit with high health</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 5</span>
+                                            <span class="stat-badge range">Range: 1</span>
+                                            <span class="stat-badge movement">Movement: 1</span>
+                                            <span class="stat-badge">Requires: Elite Units</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-siege-tower"
                                         data-info="Siege Tower,Powerful siege unit with long range,Health: 1,Range: 4,Movement: 1,Requires: Siege Weapons">
-                                        <img src="./sprites/siegetower.png" alt="Siege Tower">
-                                        <span>Siege Tower</span>
-                                        <span class="cost">275C</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/siegetower.png" alt="Siege Tower">
+                                            <span class="dropdown-btn-title">Siege Tower</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/coin.png" alt="Coins">
+                                                    <span>275</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Powerful siege unit with long range</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 1</span>
+                                            <span class="stat-badge range">Range: 4</span>
+                                            <span class="stat-badge movement">Movement: 1</span>
+                                            <span class="stat-badge">Requires: Siege Weapons</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-king"
                                         data-info="King,Command unit that boosts nearby army,Health: 25,Range: 2,Movement: 2,Requires: Elite Units">
-                                        <img src="./sprites/king.png" alt="King">
-                                        <span>King</span>
-                                        <span class="cost">500G</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/king.png" alt="King">
+                                            <span class="dropdown-btn-title">King</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/goldin.png" alt="Gold">
+                                                    <span>500</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Command unit that boosts nearby army</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 25</span>
+                                            <span class="stat-badge range">Range: 2</span>
+                                            <span class="stat-badge movement">Movement: 2</span>
+                                            <span class="stat-badge">Requires: Elite Units</span>
+                                        </div>
                                     </button>
                                     <button class="dropdown-btn" id="place-barrack"
                                         data-info="Barrack,Automatically spawns soldier units,Health: 2,Requires: Advanced Army">
-                                        <img src="./sprites/barrack.png" alt="Barrack">
-                                        <span>Barrack</span>
-                                        <span class="cost">50G</span>
+                                        <div class="dropdown-btn-header">
+                                            <img src="./sprites/barrack.png" alt="Barrack">
+                                            <span class="dropdown-btn-title">Barrack</span>
+                                            <div class="dropdown-btn-cost">
+                                                <div class="cost-resource">
+                                                    <img src="./sprites/goldin.png" alt="Gold">
+                                                    <span>50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-btn-description">Automatically spawns soldier units</div>
+                                        <div class="dropdown-btn-stats">
+                                            <span class="stat-badge health">Health: 2</span>
+                                            <span class="stat-badge">Requires: Advanced Army</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
