@@ -2418,7 +2418,7 @@
             align-items: center;
             gap: 25px;
         }
-        
+
         .nav-current-zone {
             display: flex;
             align-items: center;
@@ -3612,34 +3612,34 @@
             border-radius: var(--border-radius);
             aspect-ratio: 1 / 1;
         }
-        
+
         /* Zone-specific grid cell colors */
         .grid-cell.zone-shallow {
             background: #2f811b;
             border: 3px solid #398d24;
         }
-        
+
         .grid-cell.zone-medium {
             background: #636E4C;
             border: 3px solid #7a865f;
         }
-        
+
         .grid-cell.zone-deep {
             background: #140201;
             border: 3px solid #2a0402;
         }
-        
+
         /* Hover effects for zone-specific cells */
         .grid-cell.zone-shallow:hover {
             background: #3ea326;
             border: 3px solid #4cb72f;
         }
-        
+
         .grid-cell.zone-medium:hover {
             background: #7a865f;
             border: 3px solid #8d996c;
         }
-        
+
         .grid-cell.zone-deep:hover {
             background: #2a0402;
             border: 3px solid #3d0603;
@@ -5798,7 +5798,7 @@
             color: var(--text-secondary);
             font-size: 0.8rem;
         }
-        
+
         .combat-unit-damage-info {
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
@@ -5807,7 +5807,7 @@
             align-items: center;
             gap: 4px;
         }
-        
+
         .combat-unit-damage-info::before {
             content: "⚔️";
             font-size: 0.9rem;
@@ -6136,6 +6136,135 @@
             border-color: #ceab77;
             transform: translateY(-2px);
         }
+
+
+        /* === UI polish: consistent spacing, depth, and controls === */
+        :root {
+            --surface-1: #323232;
+            --surface-2: #3a3a3a;
+            --surface-3: #434343;
+            --border-strong: #808080;
+            --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.26);
+            --shadow-hard: 0 6px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .homescreen-sidebar,
+        .vault-panel,
+        .homescreen-stats-panel,
+        .recent-activity-panel,
+        .ui-panel,
+        .resources-panel,
+        .extraction-controls-panel,
+        .game-info-panel,
+        .instructions-panel {
+            background: linear-gradient(165deg, var(--surface-2), var(--surface-1));
+            border: 2px solid var(--border-strong);
+            box-shadow: var(--shadow-hard), var(--shadow-soft);
+            border-radius: 8px;
+        }
+
+        .panel-header,
+        .vault-header,
+        .stats-header,
+        .activity-header,
+        .army-box-header {
+            border-bottom: 2px solid #5e5e5e;
+        }
+
+        .homescreen-button,
+        .modal-btn,
+        .folder-title,
+        .dropdown-toggle,
+        .crate-buy-btn,
+        .zone-enter-btn {
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+
+        .homescreen-button,
+        .modal-btn,
+        .folder-title {
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+        }
+
+        .homescreen-button:hover,
+        .modal-btn:hover,
+        .folder-title:hover {
+            transform: translateY(-2px);
+        }
+
+        .resource,
+        .resource-card,
+        .vault-resource-item,
+        .activity-item,
+        .resource-item {
+            border-radius: 6px;
+            border-color: #7e7e7e;
+            background: linear-gradient(160deg, #464646, #3c3c3c);
+        }
+
+        .game-title,
+        .panel-header h2,
+        .vault-header h2 {
+            letter-spacing: 1.5px;
+            text-wrap: balance;
+        }
+
+        .homescreen-main-content {
+            gap: 14px;
+        }
+
+        /* Restore usable scrollbars for long modals/panels */
+        *::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            display: block;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background: #6f6f6f;
+            border-radius: 999px;
+            border: 2px solid #3a3a3a;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: #2d2d2d;
+        }
+
+        @media (max-width: 1200px) {
+            body {
+                padding: 16px;
+            }
+
+            .homescreen-main-content {
+                padding: 12px;
+            }
+
+            .homescreen-sidebar {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 10px;
+            }
+
+            .homescreen-fullscreen {
+                flex-direction: column;
+            }
+
+            .homescreen-sidebar {
+                width: 100%;
+                margin: 0;
+            }
+
+            .homescreen-vault-army-section {
+                flex-direction: column;
+            }
+        }
+
     </style>
 </head>
 
@@ -6491,7 +6620,7 @@
                                 <!-- Army units will be populated here -->
                             </div>
                         </div>
-                        
+
                         <div class="combat-controls">
                             <button class="modal-btn primary" id="start-combat-btn" disabled>START BATTLE</button>
                             <button class="modal-btn secondary" onclick="closeCombatMenu()">CANCEL</button>
@@ -6543,7 +6672,7 @@
                         <p>Purchase crates with your resources for a chance at valuable rewards!</p>
                         <p>Higher level crates offer bigger rewards but with increased risk!</p>
                     </div>
-                    
+
                     <div class="crates-container">
                         <div class="crate-type ore-crates">
                             <h3>Ore Crates</h3>
@@ -6563,7 +6692,7 @@
                                     </div>
                                     <button class="crate-buy-btn" onclick="buyCrate('ore', 1)">BUY CRATE</button>
                                 </div>
-                                
+
                                 <div class="crate-item" data-crate="ore" data-level="2">
                                     <div class="crate-sprite">
                                         <img src="./sprites/bigcrate.png" alt="Big Ore Crate" onerror="this.src='./sprites/default_crate.png'">
@@ -6579,7 +6708,7 @@
                                     </div>
                                     <button class="crate-buy-btn" onclick="buyCrate('ore', 2)">BUY CRATE</button>
                                 </div>
-                                
+
                                 <div class="crate-item" data-crate="ore" data-level="3">
                                     <div class="crate-sprite">
                                         <img src="./sprites/bigcrate.png" alt="Big Ore Crate" onerror="this.src='./sprites/default_crate.png'">
@@ -6597,7 +6726,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="crate-type oil-crates">
                             <h3>Oil Crates</h3>
                             <div class="crate-levels">
@@ -6616,7 +6745,7 @@
                                     </div>
                                     <button class="crate-buy-btn" onclick="buyCrate('oil', 1)">BUY CRATE</button>
                                 </div>
-                                
+
                                 <div class="crate-item" data-crate="oil" data-level="2">
                                     <div class="crate-sprite">
                                         <img src="./sprites/bigcrate.png" alt="Big Oil Crate" onerror="this.src='./sprites/default_crate.png'">
@@ -6634,7 +6763,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="crate-type free-crates">
                             <h3>Free Crates</h3>
                             <div class="crate-levels">
@@ -6672,7 +6801,7 @@
                     </div>
                     <button class="close-btn" onclick="exitCombat()"></button>
                 </div>
-                
+
                 <div class="combat-arena">
                     <div class="combat-player-side">
                         <div class="player-units-container" id="player-units-combat">
@@ -6683,13 +6812,13 @@
                             <span>CAMPFIRE: OFF</span>
                         </div>
                     </div>
-                    
+
                     <div class="combat-log-container">
                         <div class="combat-log" id="combat-log">
                             <div class="log-entry">Battle started!</div>
                         </div>
                     </div>
-                    
+
                     <div class="combat-fortress-side">
                         <div class="fortress-units-container" id="fortress-units-combat">
                             <!-- Fortress units displayed here -->
@@ -6702,7 +6831,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="combat-action-buttons">
                     <button class="combat-btn attack-btn" id="combat-attack-btn">ATTACK</button>
                     <button class="combat-btn defend-btn" id="combat-defend-btn">DEFEND</button>
@@ -6895,7 +7024,7 @@
                                         <p>Learn how to move your units between dive missions and your home base.</p>
 
                                         <h2>Basic Steps</h2>
-                                        
+
                                         <h3>1. Buy and Place Units</h3>
                                         <ul>
                                             <li>Buy units during your dive using collected resources</li>
@@ -6934,7 +7063,7 @@
                                         </ul>
 
                                         <h2>Smart Tips</h2>
-                                        
+
                                         <h3>When to Send Units</h3>
                                         <ul>
                                             <li>Send during easy waves when you don't need all units</li>
@@ -6978,7 +7107,7 @@
                                         </ul>
 
                                         <h2>Unit Types and Stats</h2>
-                                        
+
                                         <h3>Soldier (Scout)</h3>
                                         <ul>
                                             <li>Health: 1 | Damage: 1 | Range: 1 | Movement: 1</li>
@@ -8005,7 +8134,7 @@
                     console.log('Current game mode:', this.gameMode);
                     console.log('Resources before:', { Steel: this.resources.Steel, coins: this.resources.coins, gold: this.resources.gold, oil: this.resources.oil });
                     console.log('Session resources before:', this.sessionResources);
-                    
+
                     if (resources.Steel) this.resources.Steel += resources.Steel;
                     if (resources.coins) this.resources.coins += resources.coins;
                     if (resources.gold) this.resources.gold += resources.gold;
@@ -8058,7 +8187,7 @@
                     console.log('Current game mode:', this.gameMode);
                     console.log('Current zone:', this.currentZone);
                     console.log('Full session resources object:', JSON.stringify(this.sessionResources));
-                    
+
                     // Test: Force add some steel to session resources for testing
                     console.log('FORCING steel into session resources for testing...');
                     this.sessionResources.Steel = (this.sessionResources.Steel || 0) + 50;
@@ -8077,7 +8206,7 @@
 
                     console.log('Total resources extracted:', totalExtracted);
                     console.log('Stored resources after extraction:', this.storedResources);
-                    
+
                     // Log vault element values before update
                     const vaultSteelElement = document.getElementById('vault-stored-steel-count');
                     console.log('Vault steel element exists:', !!vaultSteelElement);
@@ -8088,7 +8217,7 @@
                     // Update display immediately to show extracted resources in vault
                     console.log('Calling updateDisplay() to refresh vault');
                     updateDisplay();
-                    
+
                     // Log vault element values after update
                     if (vaultSteelElement) {
                         console.log('Vault steel element text after update:', vaultSteelElement.textContent);
@@ -8623,7 +8752,7 @@
 
                                     gameState.objects.delete(target.id);
                                     gameState.worldObjects.delete(target.id);
-                                                                        
+
                                     // Handle Camp Tower coin collection
                                     if (this.subtype === 'camptower' && this.coinsPerKill) {
                                         gameState.addResources({ coins: this.coinsPerKill });
@@ -8637,7 +8766,7 @@
                                                 selfGridX >= 0 && selfGridX < CONFIG.GRID_SIZE_X) {
                                                 gameState.grid[selfGridY][selfGridX] = null;
                                             }
-                                                                                
+
                                             gameState.objects.delete(this.id);
                                             gameState.worldObjects.delete(this.id);
                                         }
@@ -8888,11 +9017,11 @@
                             break;
                         default: baseHealth = 50;
                     }
-                    
+
                     // Scale health every 5 waves by 1.5x
                     const waveScalingFactor = Math.pow(1.5, Math.floor((gameState.wave - 1) / 5));
                     const scaledHealth = Math.floor(baseHealth * waveScalingFactor);
-                    
+
                     return scaledHealth;
                 }
 
@@ -9938,7 +10067,7 @@
                     const obj = gameState.grid[y][x];
 
                     cell.className = 'grid-cell';
-                    
+
                     // Add zone-specific class if in active zone
                     if (gameState.gameMode === 'active_zone' && gameState.currentZone) {
                         cell.classList.add(`zone-${gameState.currentZone}`);
@@ -10157,7 +10286,7 @@
                     combatNotification.className = 'notification combat-notification';
                     combatNotification.textContent = message;
                     combatNotification.style.marginBottom = '10px';
-                    
+
                     combatContainer.insertBefore(combatNotification, combatContainer.firstChild);
 
                     // Remove combat notification after delay
@@ -10415,7 +10544,18 @@
                 setupBuildingSelection();
             }
 
+
+            function isTypingContext(target) {
+                if (!target) return false;
+                const tag = target.tagName;
+                return target.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+            }
+
             document.addEventListener('keydown', function (e) {
+                if (isTypingContext(e.target)) {
+                    return;
+                }
+
                 if (e.key === 'Escape' && gameState.placementMode) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -11238,7 +11378,7 @@
                     <div style="text-align: center; padding: 50px;">
                         <h3>Tech Tree Not Loaded</h3>
                         <p>Unable to load tech tree data. Please check the console for errors.</p>
-                        <button onclick="loadTechTree().then(() => renderTechTree())" 
+                        <button onclick="loadTechTree().then(() => renderTechTree())"
                                 style="padding: 10px 20px; margin-top: 20px;">
                             Reload Tech Tree
                         </button>
@@ -12575,6 +12715,10 @@
             }
 
             document.addEventListener('keydown', function (event) {
+                if (isTypingContext(event.target)) {
+                    return;
+                }
+
                 if (event.key === 'Escape') {
                     closeModuleSelectionPopup();
                     closeBuildingInfo();
@@ -12678,11 +12822,11 @@
                     action: () => {
                         // Add 10 of each army type
                         const armyTypes = ['scout', 'knight', 'archer', 'tank'];
-                        
+
                         if (!gameState.storedArmyUnits) {
                             gameState.storedArmyUnits = [];
                         }
-                        
+
                         armyTypes.forEach(unitType => {
                             for (let i = 0; i < 10; i++) {
                                 const unitTemplate = {
@@ -12698,7 +12842,7 @@
                                 gameState.storedArmyUnits.push(unitTemplate);
                             }
                         });
-                        
+
                         updateDisplay();
                         updateArmyBoxDisplay();
                         showNotification('Cheat activated! +10 of each army unit added to your army!', CONFIG.PLAYER_START.x, CONFIG.PLAYER_START.y, 'success');
@@ -12707,13 +12851,17 @@
             };
 
             document.addEventListener('keydown', (event) => {
+                if (isTypingContext(event.target)) {
+                    return;
+                }
+
                 cheatSequence.push(event.key.toLowerCase());
 
                 // Check each cheat
                 Object.keys(cheats).forEach(cheatName => {
                     const cheat = cheats[cheatName];
                     const sequenceLength = cheat.sequence.length;
-                    
+
                     if (cheatSequence.length > sequenceLength) {
                         cheatSequence.shift();
                     }
@@ -12726,7 +12874,7 @@
                                 break;
                             }
                         }
-                        
+
                         if (sequenceMatch) {
                             cheat.action();
                             cheatSequence = [];
@@ -12764,9 +12912,9 @@
                     gold: 250,
                     oil: 100
                 };
-                
+
                 const actualRewards = rewards || defaultRewards;
-                
+
                 const banner = document.createElement('div');
                 banner.className = 'tech-tree-completion-banner';
                 banner.innerHTML = `
@@ -12831,17 +12979,17 @@
                     document.getElementById('gold-slider').value = 0;
                     document.getElementById('oil-slider').max = gameState.storedResources.oil;
                     document.getElementById('oil-slider').value = 0;
-                    
+
                     // Force immediate update of displayed values
                     updateResourceValues();
-                                    
+
                     // Ensure all values are properly displayed
                     requestAnimationFrame(() => {
                         updateResourceValues();
                         // Force reflow to ensure DOM updates are visible
                         popup.offsetHeight;
                     });
-                    
+
                     // Set up periodic updates every 1 second while modal is open
                     if (window.resourceUpdateInterval) {
                         clearInterval(window.resourceUpdateInterval);
@@ -12865,7 +13013,7 @@
                     popup.classList.remove('active');
                 }
                 selectedZoneType = null;
-                
+
                 // Clear the periodic update interval
                 if (window.resourceUpdateInterval) {
                     clearInterval(window.resourceUpdateInterval);
@@ -12878,11 +13026,11 @@
                 if (window.mainDisplayUpdateInterval) {
                     clearInterval(window.mainDisplayUpdateInterval);
                 }
-                
+
                 window.mainDisplayUpdateInterval = setInterval(() => {
                     // Update main resource display
                     updateDisplay();
-                    
+
                     // Also update tech tree resources if it's open
                     updateTechTreeResources();
                 }, 1000);
@@ -12905,7 +13053,7 @@
                 if (cratesModal) {
                     cratesModal.classList.add('active');
                     updateCrateButtons();
-                    
+
                     // Refresh daily crate display when modal opens
                     checkNewDay();
                     updateDailyCrateDisplay();
@@ -12922,15 +13070,15 @@
             function updateCrateButtons() {
                 // Update button states based on player's resources
                 const crateItems = document.querySelectorAll('.crate-item');
-                
+
                 crateItems.forEach(item => {
                     const crateType = item.dataset.crate;
                     const level = parseInt(item.dataset.level);
                     const buyBtn = item.querySelector('.crate-buy-btn');
-                    
+
                     const canAfford = canAffordCrate(crateType, level);
                     buyBtn.disabled = !canAfford;
-                    
+
                     if (!canAfford) {
                         buyBtn.style.opacity = '0.5';
                         buyBtn.style.cursor = 'not-allowed';
@@ -12953,9 +13101,9 @@
                         2: { Steel: 4000 }
                     }
                 };
-                
+
                 const cost = crateCosts[crateType][level];
-                
+
                 for (const [resource, amount] of Object.entries(cost)) {
                     if (gameState.storedResources[resource] < amount) {
                         return false;
@@ -12976,7 +13124,7 @@
                         2: { Steel: 4000 }
                     }
                 };
-                
+
                 const crateNames = {
                     ore: {
                         1: 'Ore Crate Level 1',
@@ -12988,30 +13136,30 @@
                         2: 'Oil Crate Level 2'
                     }
                 };
-                
+
                 const cost = crateCosts[crateType][level];
                 const crateName = crateNames[crateType][level];
-                
+
                 // Check if player can afford
                 if (!canAffordCrate(crateType, level)) {
                     showNotification('Not enough resources to buy this crate!', 12, 7, 'warning');
                     return;
                 }
-                
+
                 // Deduct cost
                 for (const [resource, amount] of Object.entries(cost)) {
                     gameState.storedResources[resource] -= amount;
                 }
-                
+
                 // Open crate and get reward
                 const reward = openCrate(crateType, level);
-                
+
                 // Add reward to player's resources
                 gameState.addResources(reward);
-                
+
                 // Show animated crate opening modal
                 showAnimatedCrateOpening(crateType, level, reward, cost);
-                
+
                 // Update display
                 updateDisplay();
                 updateCrateButtons();
@@ -13035,7 +13183,7 @@
                         resetDailyCrateData();
                     }
                 }
-                
+
                 // Check if it's a new day
                 checkNewDay();
                 updateDailyCrateDisplay();
@@ -13061,16 +13209,16 @@
             function checkNewDay() {
                 const today = new Date().toDateString();
                 const lastClaim = dailyCrateData.lastClaimDate;
-                
+
                 if (lastClaim) {
                     const lastClaimDate = new Date(lastClaim).toDateString();
-                    
+
                     if (lastClaimDate !== today) {
                         // Different day
                         const yesterday = new Date();
                         yesterday.setDate(yesterday.getDate() - 1);
                         const yesterdayString = yesterday.toDateString();
-                        
+
                         if (lastClaimDate === yesterdayString && !dailyCrateData.claimedToday) {
                             // Consecutive day - increase streak
                             dailyCrateData.streak = Math.min(dailyCrateData.streak + 1, 30); // Max 30 day streak
@@ -13092,11 +13240,11 @@
                 const rewardsElement = document.getElementById('streak-rewards');
                 const crateItem = document.getElementById('daily-crate-item');
                 const claimButton = document.getElementById('claim-daily-btn');
-                
+
                 if (streakElement) {
                     streakElement.textContent = dailyCrateData.streak;
                 }
-                
+
                 if (rewardsElement) {
                     const baseRewards = {
                         Steel: 500,
@@ -13104,20 +13252,20 @@
                         gold: 250,
                         oil: 50
                     };
-                    
+
                     // Double rewards for each day of streak
                     const multiplier = Math.pow(2, dailyCrateData.streak - 1);
                     const rewards = [];
-                    
+
                     Object.entries(baseRewards).forEach(([resource, amount]) => {
                         const finalAmount = Math.floor(amount * multiplier);
                         const symbol = getResourceSymbol(resource);
                         rewards.push(`${finalAmount}${symbol}`);
                     });
-                    
+
                     rewardsElement.textContent = rewards.join(' ');
                 }
-                
+
                 // Update UI based on claim status
                 if (crateItem && claimButton) {
                     if (dailyCrateData.claimedToday) {
@@ -13145,41 +13293,41 @@
                     gold: 250,
                     oil: 50
                 };
-                
+
                 const multiplier = Math.pow(2, dailyCrateData.streak - 1);
                 const rewards = {};
-                
+
                 Object.entries(baseRewards).forEach(([resource, amount]) => {
                     rewards[resource] = Math.floor(amount * multiplier);
                 });
-                
+
                 // Add rewards directly to vault (storedResources) since this is a free daily reward
                 if (rewards.Steel) gameState.storedResources.Steel += rewards.Steel;
                 if (rewards.coins) gameState.storedResources.coins += rewards.coins;
                 if (rewards.gold) gameState.storedResources.gold += rewards.gold;
                 if (rewards.oil) gameState.storedResources.oil += rewards.oil;
-                
+
                 // Also add to current resources for immediate availability
                 gameState.addResources(rewards);
-                
+
                 // Update daily crate data
                 dailyCrateData.lastClaimDate = new Date().toDateString();
                 dailyCrateData.claimedToday = true;
-                
+
                 // Save data
                 saveDailyCrateData();
-                
+
                 // Update display
                 updateDailyCrateDisplay();
                 updateDisplay(); // This will update vault displays
-                
+
                 // Show notification with rewards
                 const rewardList = Object.entries(rewards)
                     .map(([resource, amount]) => `+${amount.toLocaleString()} ${resource}`)
                     .join(', ');
-                
+
                 showNotification(`Daily Crate Claimed! Streak: ${dailyCrateData.streak} days! Rewards: ${rewardList}`, 12, 7, 'success');
-                
+
                 // Create visual effect
                 createDailyCrateEffect();
             }
@@ -13193,9 +13341,9 @@
                         <div class="crate-text">DAILY REWARD!</div>
                     </div>
                 `;
-                
+
                 document.body.appendChild(effect);
-                
+
                 setTimeout(() => {
                     if (effect.parentNode) {
                         effect.parentNode.removeChild(effect);
@@ -13226,12 +13374,12 @@
                         2: { min: 200, max: 4000, resources: ['oil'] }
                     }
                 };
-                
+
                 const range = rewardRanges[crateType][level];
-                
+
                 // Implement weighted RNG - higher level = lower chance of good rewards
                 let rewardAmount;
-                
+
                 if (level === 1) {
                     // Level 1: 70% chance of good reward, 30% chance of poor reward
                     if (Math.random() < 0.7) {
@@ -13261,13 +13409,13 @@
                         rewardAmount = Math.floor(range.max * (0.1 + Math.random() * 0.4));
                     }
                 }
-                
+
                 // Ensure minimum reward
                 rewardAmount = Math.max(range.min, rewardAmount);
-                
+
                 // Distribute reward among available resources
                 const reward = {};
-                
+
                 if (range.resources.length === 1) {
                     // Single resource reward (oil crates)
                     reward[range.resources[0]] = rewardAmount;
@@ -13275,13 +13423,13 @@
                     // Multiple resource reward (ore crates)
                     const resources = [...range.resources];
                     let remainingAmount = rewardAmount;
-                    
+
                     // Shuffle resources for random distribution
                     for (let i = resources.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [resources[i], resources[j]] = [resources[j], resources[i]];
                     }
-                    
+
                     // Distribute reward randomly among resources
                     resources.forEach((resource, index) => {
                         if (index === resources.length - 1) {
@@ -13295,24 +13443,24 @@
                         }
                     });
                 }
-                
+
                 return reward;
             }
 
             function showAnimatedCrateOpening(crateType, level, reward, cost) {
                 // Close crates modal first
                 closeCratesModal();
-                
+
                 // Set up result modal content
-                document.getElementById('result-crate-name').textContent = 
+                document.getElementById('result-crate-name').textContent =
                     `${crateType.charAt(0).toUpperCase() + crateType.slice(1)} Crate L${level}`;
-                
+
                 // Set crate sprite
                 const spriteImg = document.querySelector('#result-sprite img');
                 const spriteSrc = level === 1 ? './sprites/smallcrate.png' : './sprites/bigcrate.png';
                 spriteImg.src = spriteSrc;
                 spriteImg.alt = `${crateType.charAt(0).toUpperCase() + crateType.slice(1)} Crate L${level}`;
-                
+
                 // Calculate monetary values using the game's pricing system
                 const resourcePrices = {
                     'Steel': 1,
@@ -13320,27 +13468,27 @@
                     'gold': 2,
                     'oil': 20
                 };
-                
+
                 // Calculate cost value
                 let costValue = 0;
                 Object.entries(cost).forEach(([resource, amount]) => {
                     const price = resourcePrices[resource] || 0;
                     costValue += amount * price;
                 });
-                
+
                 // Calculate reward value
                 let rewardValue = 0;
                 Object.entries(reward).forEach(([resource, amount]) => {
                     const price = resourcePrices[resource] || 0;
                     rewardValue += amount * price;
                 });
-                
+
                 const profit = rewardValue - costValue;
-                
+
                 // Display rewards with monetary values
                 const rewardDisplay = document.getElementById('reward-display');
                 rewardDisplay.innerHTML = '';
-                
+
                 Object.entries(reward).forEach(([resource, amount]) => {
                     const price = resourcePrices[resource] || 0;
                     const value = amount * price;
@@ -13353,7 +13501,7 @@
                     `;
                     rewardDisplay.appendChild(rewardItem);
                 });
-                
+
                 // Show result message with monetary value
                 const resultMessage = document.getElementById('result-message');
                 if (profit > 0) {
@@ -13366,11 +13514,11 @@
                     resultMessage.className = 'result-message result-break-even';
                     resultMessage.textContent = `⚖️ BREAK EVEN`;
                 }
-                
+
                 // Show result modal
                 document.getElementById('crate-result-modal').style.display = 'flex';
             }
-            
+
             function closeCrateResultModal() {
                 document.getElementById('crate-result-modal').style.display = 'none';
             }
@@ -13381,7 +13529,7 @@
                 const coinsValue = document.getElementById('coins-slider').value;
                 const goldValue = document.getElementById('gold-slider').value;
                 const oilValue = document.getElementById('oil-slider').value;
-                
+
                 document.getElementById('steel-value').textContent = steelValue;
                 document.getElementById('coins-value').textContent = coinsValue;
                 document.getElementById('gold-value').textContent = goldValue;
@@ -14023,21 +14171,21 @@
 
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'combat-unit-info';
-                
+
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'combat-unit-name';
                 nameDiv.textContent = getBuildingName({ type: 'army', subtype: unitType });
-                
+
                 const statsDiv = document.createElement('div');
                 statsDiv.className = 'combat-unit-stats';
-                
+
                 // Get average stats for this unit type
                 const avgHealth = Math.round(units.reduce((sum, u) => sum + u.health, 0) / units.length);
                 const avgMaxHealth = Math.round(units.reduce((sum, u) => sum + u.maxHealth, 0) / units.length);
                 const avgDamage = Math.round(units.reduce((sum, u) => sum + (u.damage || 1), 0) / units.length);
                 const avgRange = Math.round(units.reduce((sum, u) => sum + u.range, 0) / units.length);
                 const avgMovement = Math.round(units.reduce((sum, u) => sum + u.movement, 0) / units.length);
-                
+
                 statsDiv.innerHTML = `
                     <span class="combat-unit-stat">HP: ${avgHealth}/${avgMaxHealth}</span>
                     <span class="combat-unit-stat">DMG: ${avgDamage}</span>
@@ -14045,16 +14193,16 @@
                     <span class="combat-unit-stat">Move: ${avgMovement}</span>
                     <span class="combat-unit-stat">Count: ${units.length}</span>
                 `;
-                
+
                 infoDiv.appendChild(nameDiv);
                 infoDiv.appendChild(statsDiv);
 
                 const controlsDiv = document.createElement('div');
                 controlsDiv.className = 'combat-unit-controls';
-                
+
                 const amountControl = document.createElement('div');
                 amountControl.className = 'unit-amount-control';
-                
+
                 const minusBtn = document.createElement('button');
                 minusBtn.className = 'amount-btn';
                 minusBtn.textContent = '-';
@@ -14070,7 +14218,7 @@
                         updateStartCombatButton();
                     }
                 });
-                
+
                 const amountInput = document.createElement('input');
                 amountInput.type = 'number';
                 amountInput.className = 'unit-amount-input';
@@ -14092,7 +14240,7 @@
                     }
                     updateStartCombatButton();
                 });
-                
+
                 const plusBtn = document.createElement('button');
                 plusBtn.className = 'amount-btn';
                 plusBtn.textContent = '+';
@@ -14108,7 +14256,7 @@
                         updateStartCombatButton();
                     }
                 });
-                
+
                 amountControl.appendChild(minusBtn);
                 amountControl.appendChild(amountInput);
                 amountControl.appendChild(plusBtn);
@@ -14125,7 +14273,7 @@
             function updateStartCombatButton() {
                 const selectors = document.querySelectorAll('.combat-unit-selector');
                 let totalSelected = 0;
-                
+
                 selectors.forEach(selector => {
                     const checkbox = selector.querySelector('.combat-unit-checkbox');
                     const amountInput = selector.querySelector('.unit-amount-input');
@@ -14133,7 +14281,7 @@
                         totalSelected += parseInt(amountInput.value) || 0;
                     }
                 });
-                
+
                 const startBtn = document.getElementById('start-combat-btn');
                 startBtn.disabled = totalSelected === 0;
             }
@@ -14155,21 +14303,21 @@
                 const selectedUnits = [];
                 const unitCounts = {}; // Track how many of each type selected
                 const selectors = document.querySelectorAll('.combat-unit-selector');
-                
+
                 selectors.forEach(selector => {
                     const checkbox = selector.querySelector('.combat-unit-checkbox');
                     const amountInput = selector.querySelector('.unit-amount-input');
                     const unitType = selector.dataset.unitType;
-                    
+
                     if (checkbox.checked) {
                         const amount = parseInt(amountInput.value) || 0;
                         if (amount > 0) {
                             unitCounts[unitType] = amount;
-                            
+
                             // Get units of this type from stored army
                             const storedUnits = gameState.storedArmyUnits || [];
                             const typeUnits = storedUnits.filter(u => u.subtype === unitType);
-                            
+
                             // Add one representative unit with count info
                             if (typeUnits.length > 0) {
                                 const representativeUnit = {
@@ -14217,11 +14365,11 @@
 
             function removeSelectedUnitsFromArmy(unitCounts) {
                 const storedUnits = gameState.storedArmyUnits || [];
-                
+
                 Object.keys(unitCounts).forEach(unitType => {
                     const countToRemove = unitCounts[unitType];
                     let removed = 0;
-                    
+
                     // Remove units from the end of the array
                     for (let i = storedUnits.length - 1; i >= 0 && removed < countToRemove; i--) {
                         if (storedUnits[i].subtype === unitType) {
@@ -14230,7 +14378,7 @@
                         }
                     }
                 });
-                
+
                 updateArmyBoxDisplay();
             }
 
@@ -14266,11 +14414,11 @@
             function setupCombatBattle() {
                 updateCombatDisplay();
                 setupCombatEventListeners();
-                
+
                 // Initially disable action buttons
                 document.getElementById('combat-attack-btn').disabled = true;
                 document.getElementById('combat-defend-btn').disabled = true;
-                
+
                 // Show initial visual instructions
                 showCombatVisualInstructions();
             }
@@ -14285,11 +14433,11 @@
                     </div>
                     <button class="skip-tutorial-btn" onclick="skipTutorial()">SKIP TUTORIAL</button>
                 `;
-                
+
                 const combatArena = document.querySelector('.combat-arena');
                 if (combatArena) {
                     combatArena.appendChild(instructions);
-                    
+
                     // Remove after first unit selection or timeout
                     setTimeout(() => {
                         if (instructions.parentNode) {
@@ -14307,10 +14455,10 @@
                         tutorial.parentNode.removeChild(tutorial);
                     }
                 });
-                
+
                 // Clear any pending timeouts
                 clearTimeout(window.tutorialTimeout);
-                
+
                 // Show confirmation
                 addToBattleLog('Tutorial skipped. Click units to select, then targets to attack.', 'system');
             }
@@ -14321,7 +14469,7 @@
                 const defendBtn = document.getElementById('combat-defend-btn');
                 const campfireToggle = document.getElementById('campfire-toggle');
                 const startCombatBtn = document.getElementById('start-combat-btn');
-                
+
                 // Clone and replace buttons to remove old event listeners
                 if (attackBtn) {
                     const newAttackBtn = attackBtn.cloneNode(true);
@@ -14330,7 +14478,7 @@
                         executePlayerAction('attack');
                     });
                 }
-                
+
                 if (defendBtn) {
                     const newDefendBtn = defendBtn.cloneNode(true);
                     defendBtn.parentNode.replaceChild(newDefendBtn, defendBtn);
@@ -14338,19 +14486,19 @@
                         executePlayerAction('defend');
                     });
                 }
-                
+
                 if (campfireToggle) {
                     const newCampfireToggle = campfireToggle.cloneNode(true);
                     campfireToggle.parentNode.replaceChild(newCampfireToggle, campfireToggle);
                     newCampfireToggle.addEventListener('click', toggleCampfire);
                 }
-                
+
                 if (startCombatBtn) {
                     const newStartBtn = startCombatBtn.cloneNode(true);
                     startCombatBtn.parentNode.replaceChild(newStartBtn, startCombatBtn);
                     newStartBtn.addEventListener('click', startCombat);
                 }
-                
+
                 // Set up fortress and guard click handlers
                 setupTargetClickHandlers();
             }
@@ -14359,7 +14507,7 @@
                 // Add click handlers for fortress targets
                 const fortressDisplay = document.querySelector('.fortress-display');
                 const fortressUnitsContainer = document.getElementById('fortress-units-combat');
-                
+
                 if (fortressDisplay) {
                     fortressDisplay.addEventListener('click', function() {
                         if (combatState.selectedUnitForAttack) {
@@ -14368,7 +14516,7 @@
                     });
                     fortressDisplay.style.cursor = 'pointer';
                 }
-                
+
                 // Add click handlers for guard units
                 if (fortressUnitsContainer) {
                     fortressUnitsContainer.addEventListener('click', function(e) {
@@ -14376,7 +14524,7 @@
                         if (unitElement && combatState.selectedUnitForAttack) {
                             // Find which guard was clicked
                             const guardIndex = Array.from(fortressUnitsContainer.children).indexOf(unitElement);
-                            if (guardIndex >= 0 && combatState.fortressUnits[guardIndex] && 
+                            if (guardIndex >= 0 && combatState.fortressUnits[guardIndex] &&
                                 combatState.fortressUnits[guardIndex].health > 0) {
                                 selectTarget('guard', guardIndex);
                             }
@@ -14392,17 +14540,17 @@
                     el.style.boxShadow = '';
                     el.classList.remove('selected-unit');
                 });
-                
+
                 // Highlight selected unit
                 event.currentTarget.style.border = '3px solid #66d9ff';
                 event.currentTarget.style.boxShadow = '0 0 15px rgba(102, 217, 255, 0.7)';
                 event.currentTarget.classList.add('selected-unit');
-                
+
                 combatState.selectedUnitForAttack = unit;
-                
+
                 // Show target selection instructions
                 showTargetInstructions();
-                
+
                 addToBattleLog(`Selected ${getBuildingName({ type: 'army', subtype: unit.subtype })} for attack. Now click on fortress or a guard to target.`, 'system');
                 updateCombatDisplay();
             }
@@ -14413,7 +14561,7 @@
                 if (existingInstructions) {
                     existingInstructions.remove();
                 }
-                
+
                 // Add target selection instructions
                 const instructions = document.createElement('div');
                 instructions.className = 'combat-instructions-overlay';
@@ -14422,7 +14570,7 @@
                         <div class="instruction-text">NOW CLICK THE FORTRESS OR A GUARD TO TARGET</div>
                     </div>
                 `;
-                
+
                 const combatArena = document.querySelector('.combat-arena');
                 if (combatArena) {
                     combatArena.appendChild(instructions);
@@ -14432,43 +14580,43 @@
             function selectTarget(targetType, targetIndex = null) {
                 console.log('selectTarget called with:', targetType, targetIndex);
                 combatState.currentTarget = { type: targetType, index: targetIndex };
-                
+
                 let targetName = '';
                 if (targetType === 'fortress') {
                     targetName = 'Fortress';
                 } else if (targetType === 'guard') {
                     targetName = `Fortress Guard ${targetIndex + 1}`;
                 }
-                
+
                 // Show action button instructions
                 showActionButtonInstructions();
-                
+
                 addToBattleLog(`Target selected: ${targetName}. Now click ATTACK or DEFEND.`, 'system');
-                
+
                 // Enable action buttons with visual highlight
                 const attackBtn = document.getElementById('combat-attack-btn');
                 const defendBtn = document.getElementById('combat-defend-btn');
-                
+
                 console.log('Enabling buttons...');
                 console.log('Attack button before:', attackBtn.disabled);
                 console.log('Defend button before:', defendBtn.disabled);
-                
+
                 attackBtn.disabled = false;
                 defendBtn.disabled = false;
-                
+
                 console.log('Attack button after:', attackBtn.disabled);
                 console.log('Defend button after:', defendBtn.disabled);
-                
+
                 // Add pulsing effect to buttons
                 attackBtn.classList.add('pulse-highlight');
                 defendBtn.classList.add('pulse-highlight');
-                
+
                 // Remove pulse after delay
                 setTimeout(() => {
                     attackBtn.classList.remove('pulse-highlight');
                     defendBtn.classList.remove('pulse-highlight');
                 }, 3000);
-                
+
                 updateCombatDisplay();
             }
 
@@ -14478,7 +14626,7 @@
                 if (existingInstructions) {
                     existingInstructions.remove();
                 }
-                
+
                 // Add action button instructions
                 const instructions = document.createElement('div');
                 instructions.className = 'combat-instructions-overlay';
@@ -14487,11 +14635,11 @@
                         <div class="instruction-text">CLICK ATTACK OR DEFEND TO ACT</div>
                     </div>
                 `;
-                
+
                 const combatArena = document.querySelector('.combat-arena');
                 if (combatArena) {
                     combatArena.appendChild(instructions);
-                    
+
                     // Remove instructions after action is taken
                     setTimeout(() => {
                         if (instructions.parentNode) {
@@ -14503,21 +14651,21 @@
 
             function updateCombatDisplay() {
                 // Update fortress health display
-                document.getElementById('fortress-health').textContent = 
+                document.getElementById('fortress-health').textContent =
                     `${combatState.fortressHealth}/${combatState.maxFortressHealth}`;
-                
+
                 // Update health bar
                 const healthPercent = (combatState.fortressHealth / combatState.maxFortressHealth) * 100;
                 const fortressHealthBar = document.getElementById('fortress-health-bar');
                 fortressHealthBar.style.width = healthPercent + '%';
-                
+
                 // Add low health styling when below 30%
                 if (healthPercent < 30) {
                     fortressHealthBar.classList.add('low');
                 } else {
                     fortressHealthBar.classList.remove('low');
                 }
-                
+
                 // Update player units display
                 const playerUnitsContainer = document.getElementById('player-units-combat');
                 playerUnitsContainer.innerHTML = '';
@@ -14525,7 +14673,7 @@
                     const unitElement = createCombatUnitDisplay(unit, 'player');
                     playerUnitsContainer.appendChild(unitElement);
                 });
-                
+
                 // Update fortress units display
                 const fortressUnitsContainer = document.getElementById('fortress-units-combat');
                 fortressUnitsContainer.innerHTML = '';
@@ -14535,7 +14683,7 @@
                         fortressUnitsContainer.appendChild(unitElement);
                     }
                 });
-                
+
                 // Update campfire status
                 const campfireToggle = document.getElementById('campfire-toggle');
                 const campfireSpan = campfireToggle.querySelector('span');
@@ -14546,7 +14694,7 @@
                     campfireToggle.classList.remove('active');
                     campfireSpan.textContent = 'CAMPFIRE: OFF';
                 }
-                
+
                 // Update battle log
                 updateBattleLog();
             }
@@ -14554,7 +14702,7 @@
             function createCombatUnitDisplay(unit, side) {
                 const container = document.createElement('div');
                 container.className = 'combat-unit-display';
-                
+
                 // Add click handler for player units
                 if (side === 'player') {
                     container.addEventListener('click', function() {
@@ -14562,11 +14710,11 @@
                     });
                     container.style.cursor = 'pointer';
                 }
-                
+
                 const iconDiv = document.createElement('div');
                 iconDiv.className = 'combat-unit-display-icon';
                 const img = document.createElement('img');
-                
+
                 if (side === 'player') {
                     img.src = getSpriteForArmyType(unit.subtype);
                     img.alt = unit.subtype;
@@ -14574,51 +14722,51 @@
                     img.src = './sprites/defaultbad.png';
                     img.alt = 'Guard';
                 }
-                
+
                 img.onerror = function() {
                     this.src = './sprites/soldier.png';
                 };
                 iconDiv.appendChild(img);
-                
+
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'combat-unit-display-info';
-                
+
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'combat-unit-display-name';
-                
+
                 if (side === 'player') {
                     const baseName = getBuildingName({ type: 'army', subtype: unit.subtype });
-                    nameDiv.textContent = unit.unitCount > 1 ? 
+                    nameDiv.textContent = unit.unitCount > 1 ?
                         `${baseName} (×${unit.unitCount})` : baseName;
                 } else {
                     nameDiv.textContent = 'Fortress Guard';
                 }
-                
+
                 const healthDiv = document.createElement('div');
                 healthDiv.className = 'combat-unit-display-health';
-                
+
                 if (side === 'player') {
                     healthDiv.textContent = `HP: ${unit.currentHealth || unit.health}/${unit.maxHealth}`;
-                    
+
                     // Add damage information
                     const damageDiv = document.createElement('div');
                     damageDiv.className = 'combat-unit-damage-info';
-                    
+
                     // Calculate base damage
                     const baseDamage = (unit.damage || 1) * unit.unitCount;
                     const displayDamage = baseDamage * 2; // Scale factor from combat calculation
-                    
+
                     // Calculate boosted damage if campfire is active
                     let finalDamage = displayDamage;
                     let damageText = `DMG: ${displayDamage}`;
-                    
+
                     if (combatState.campfireActive) {
                         finalDamage = Math.floor(displayDamage * 1.5);
                         damageText = `DMG: ${displayDamage} → ${finalDamage}`;
                     }
-                    
+
                     damageDiv.textContent = damageText;
-                    
+
                     // Style based on campfire status
                     if (combatState.campfireActive) {
                         damageDiv.style.color = '#ffa500'; // Orange for boosted damage
@@ -14627,17 +14775,17 @@
                     } else {
                         damageDiv.style.color = '#dd7e77'; // Normal damage color
                     }
-                    
+
                     damageDiv.style.fontSize = '0.85rem';
                     damageDiv.style.marginTop = '4px';
-                    
+
                     healthDiv.appendChild(damageDiv);
-                    
+
                     // Add stack indicator if multiple units
                     if (unit.unitCount > 1) {
                         const countIndicator = document.createElement('div');
                         countIndicator.className = 'unit-stack-indicator';
-                        countIndicator.textContent = `${unit.unitCount} units`; 
+                        countIndicator.textContent = `${unit.unitCount} units`;
                         countIndicator.style.fontSize = '0.8rem';
                         countIndicator.style.color = '#ceab77';
                         countIndicator.style.marginTop = '2px';
@@ -14646,43 +14794,43 @@
                 } else {
                     healthDiv.textContent = `HP: ${unit.health}/${unit.maxHealth}`;
                 }
-                
+
                 infoDiv.appendChild(nameDiv);
                 infoDiv.appendChild(healthDiv);
-                
+
                 container.appendChild(iconDiv);
                 container.appendChild(infoDiv);
-                
+
                 return container;
             }
 
             function updateBattleLog() {
                 const logContainer = document.getElementById('combat-log');
                 logContainer.innerHTML = '';
-                
+
                 combatState.battleLog.slice(-10).forEach(entry => {
                     const logEntry = document.createElement('div');
                     logEntry.className = 'log-entry ' + entry.type;
                     logEntry.textContent = entry.message;
                     logContainer.appendChild(logEntry);
                 });
-                
+
                 logContainer.scrollTop = logContainer.scrollHeight;
             }
 
             function toggleCampfire() {
                 if (gameState.resources.oil >= 100) { // Require 100 oil to activate
                     combatState.campfireActive = !combatState.campfireActive;
-                    
+
                     const campfireToggle = document.getElementById('campfire-toggle');
                     const campfireSpan = campfireToggle.querySelector('span');
-                    
+
                     if (combatState.campfireActive) {
                         gameState.resources.oil -= 100; // Cost 100 oil to activate
                         campfireToggle.classList.add('active');
                         campfireSpan.textContent = 'CAMPFIRE: ON';
                         addToBattleLog('🔥 Campfire activated! Costs 100 oil per attack. 50% damage boost.', 'system');
-                        
+
                         // Add visual effect
                         campfireToggle.style.animation = 'pulse 0.5s 3';
                         setTimeout(() => {
@@ -14693,12 +14841,12 @@
                         campfireSpan.textContent = 'CAMPFIRE: OFF';
                         addToBattleLog('Campfire deactivated.', 'system');
                     }
-                    
+
                     updateCombatDisplay();
                     updateDisplay(); // Update oil display
                 } else {
                     showNotification('Need 100 oil to activate campfire!', 12, 7, 'warning');
-                    
+
                     // Visual feedback for insufficient resources
                     const campfireToggle = document.getElementById('campfire-toggle');
                     campfireToggle.style.animation = 'shake 0.5s';
@@ -14713,37 +14861,37 @@
                 console.log('Selected unit:', combatState.selectedUnitForAttack);
                 console.log('Current target:', combatState.currentTarget);
                 console.log('Campfire active:', combatState.campfireActive);
-                
+
                 if (!combatState.selectedUnitForAttack || !combatState.currentTarget) {
                     showNotification('Select a unit and target first!', 12, 7, 'warning');
                     return;
                 }
-                
+
                 combatState.playerAction = action;
-                
+
                 // Fortress makes random choice
                 combatState.fortressAction = Math.random() > 0.5 ? 'attack' : 'defend';
-                
+
                 // Resolve combat
                 resolveCombatTurn();
-                
+
                 // Reset selections
                 combatState.selectedUnitForAttack = null;
                 combatState.currentTarget = null;
-                
+
                 // Disable action buttons until next selection
                 const attackBtn = document.getElementById('combat-attack-btn');
                 const defendBtn = document.getElementById('combat-defend-btn');
-                
+
                 if (attackBtn) attackBtn.disabled = true;
                 if (defendBtn) defendBtn.disabled = true;
-                
+
                 // Clear highlights
                 document.querySelectorAll('.combat-unit-display').forEach(el => {
                     el.style.border = '';
                     el.style.boxShadow = '';
                 });
-                
+
                 // Check win/lose conditions
                 checkCombatEndConditions();
             }
@@ -14755,25 +14903,25 @@
                 console.log('Selected unit:', combatState.selectedUnitForAttack);
                 console.log('Target:', combatState.currentTarget);
                 console.log('Campfire active:', combatState.campfireActive);
-                
+
                 const playerAction = combatState.playerAction;
                 const fortressAction = combatState.fortressAction;
                 const selectedUnit = combatState.selectedUnitForAttack;
                 const target = combatState.currentTarget;
-                
+
                 addToBattleLog(`Player chose to ${playerAction}`, 'player-action');
                 addToBattleLog(`Fortress chose to ${fortressAction}`, 'fortress-action');
-                
+
                 // Calculate damage from selected unit stack (increased for better balance)
                 let unitDamage = ((selectedUnit.damage || 1) * selectedUnit.unitCount) * 2; // Damage scales with unit count
-                
+
                 console.log('Base damage calculated:', unitDamage);
-                
+
                 // Campfire costs 100 oil per attack
                 if (combatState.campfireActive) {
                     console.log('Campfire is active, checking oil...');
                     console.log('Available oil:', gameState.resources.oil);
-                    
+
                     if (gameState.resources.oil >= 100) {
                         gameState.resources.oil -= 100;
                         unitDamage = Math.floor(unitDamage * 1.5); // 1.5x damage boost
@@ -14792,7 +14940,7 @@
                         // Attack continues with normal damage
                     }
                 }
-                
+
                 // Resolve based on action combinations
                 if (playerAction === 'attack' && fortressAction === 'attack') {
                     // Both attack - selected unit stack takes damage from fortress
@@ -14800,19 +14948,19 @@
                     const unitsBefore = selectedUnit.unitCount;
                     applyDamageToSelectedUnit(selectedUnit, fortressDamage);
                     const unitsLost = unitsBefore - selectedUnit.unitCount;
-                    
+
                     if (unitsLost > 0) {
                         addToBattleLog(`${getBuildingName({ type: 'army', subtype: selectedUnit.subtype })} stack lost ${unitsLost} unit(s)! Remaining: ${selectedUnit.unitCount}`, 'fortress-action');
                     } else {
                         addToBattleLog(`${getBuildingName({ type: 'army', subtype: selectedUnit.subtype })} took ${fortressDamage} damage! Health: ${selectedUnit.currentHealth}/${selectedUnit.health}`, 'fortress-action');
                     }
-                    
+
                     // Check if entire stack is destroyed
                     if (selectedUnit.unitCount <= 0) {
                         addToBattleLog(`All ${getBuildingName({ type: 'army', subtype: selectedUnit.subtype })} units were destroyed!`, 'fortress-action');
                         removeDeadUnit(selectedUnit);
                     }
-                } 
+                }
                 else if (playerAction === 'attack' && fortressAction === 'defend') {
                     // Player attacks, fortress defends - damage target
                     if (target.type === 'fortress') {
@@ -14822,7 +14970,7 @@
                         const guard = combatState.fortressUnits[target.index];
                         guard.health -= unitDamage;
                         addToBattleLog(`Fortress Guard took ${unitDamage} damage!`, 'player-action');
-                        
+
                         if (guard.health <= 0) {
                             addToBattleLog(`Fortress Guard was destroyed!`, 'player-action');
                         }
@@ -14833,28 +14981,28 @@
                     addToBattleLog('Player defended successfully!', 'player-action');
                 }
                 // Both defend - no effect
-                
+
                 // Reset actions for next turn
                 combatState.playerAction = null;
                 combatState.fortressAction = null;
-                
+
                 updateCombatDisplay();
             }
 
             function applyDamageToSelectedUnit(unit, damage) {
                 // Apply damage to the stack of units
                 let remainingDamage = damage;
-                
+
                 while (remainingDamage > 0 && unit.unitCount > 0) {
                     // Apply damage to current unit in stack
                     const damageToCurrentUnit = Math.min(remainingDamage, unit.currentHealth);
                     unit.currentHealth -= damageToCurrentUnit;
                     remainingDamage -= damageToCurrentUnit;
-                    
+
                     // If current unit dies
                     if (unit.currentHealth <= 0) {
                         unit.unitCount--;
-                        
+
                         // If there are more units in stack, bring next one to front
                         if (unit.unitCount > 0) {
                             unit.currentHealth = unit.health;
@@ -14874,7 +15022,7 @@
             function calculatePlayerDamage() {
                 let totalDamage = 0;
                 let unitCount = 0;
-                
+
                 combatState.playerUnits.forEach(unit => {
                     if (unit.currentHealth > 0) {
                         unitCount++;
@@ -14883,7 +15031,7 @@
                         totalDamage += Math.floor(unit.damage * effectiveness);
                     }
                 });
-                
+
                 // Cap at 10 units effectiveness
                 return Math.min(totalDamage, combatState.playerUnits.slice(0, 10)
                     .reduce((sum, unit) => sum + unit.damage, 0));
@@ -14899,10 +15047,10 @@
                 // Distribute damage among alive units
                 const aliveUnits = combatState.playerUnits.filter(u => u.currentHealth > 0);
                 if (aliveUnits.length === 0) return;
-                
+
                 const damagePerUnit = Math.floor(damage / aliveUnits.length);
                 const remainder = damage % aliveUnits.length;
-                
+
                 aliveUnits.forEach((unit, index) => {
                     const unitDamage = damagePerUnit + (index < remainder ? 1 : 0);
                     unit.currentHealth = Math.max(0, unit.currentHealth - unitDamage);
@@ -14927,7 +15075,7 @@
                     endCombat(true);
                     return;
                 }
-                
+
                 // Check if player lost (all units dead)
                 const alivePlayerUnits = combatState.playerUnits.filter(u => u.currentHealth > 0 || u.unitCount > 0);
                 if (alivePlayerUnits.length === 0) {
@@ -14947,7 +15095,7 @@
                         gold: 2000,
                         oil: 700
                     });
-                    
+
                     // Return surviving units to army
                     returnSurvivingUnits();
                 } else {
@@ -14955,13 +15103,13 @@
                     showNotification('Combat Defeat! All units were lost.', 12, 7, 'danger');
                     // Units are already removed, no need to do anything
                 }
-                
+
                 updateBattleLog();
-                
+
                 // Disable action buttons
                 document.getElementById('combat-attack-btn').disabled = true;
                 document.getElementById('combat-defend-btn').disabled = true;
-                
+
                 // Auto-close after delay
                 setTimeout(() => {
                     exitCombat();
@@ -14970,7 +15118,7 @@
 
             function returnSurvivingUnits() {
                 const storedUnits = gameState.storedArmyUnits || [];
-                
+
                 combatState.playerUnits.forEach(unit => {
                     // Add back surviving units
                     if (unit.currentHealth > 0 && unit.unitCount > 0) {
@@ -14979,7 +15127,7 @@
                         delete survivingUnit.unitCount; // Remove the count property
                         delete survivingUnit.originalTypeUnits; // Remove original references
                         storedUnits.push(survivingUnit);
-                        
+
                         // Add additional units if there are more in the stack
                         for (let i = 1; i < unit.unitCount; i++) {
                             if (unit.originalTypeUnits && unit.originalTypeUnits[i]) {
@@ -14988,7 +15136,7 @@
                         }
                     }
                 });
-                
+
                 updateArmyBoxDisplay();
             }
 
@@ -15000,7 +15148,7 @@
                     default: return 1;
                 }
             }
-            
+
             function getUnitDamage(unitType) {
                 switch (unitType) {
                     case 'tank': return 3;
@@ -15010,7 +15158,7 @@
                     default: return 1;
                 }
             }
-            
+
             function getUnitRange(unitType) {
                 switch (unitType) {
                     case 'archer':
@@ -15019,7 +15167,7 @@
                     default: return 1;
                 }
             }
-            
+
             function getUnitMovement(unitType) {
                 switch (unitType) {
                     case 'knight': return 5;
