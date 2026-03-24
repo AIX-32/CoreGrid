@@ -312,6 +312,336 @@
             border-radius: var(--border-radius);
         }
 
+        .extract-results-modal {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            max-width: none;
+            max-height: none;
+            border-radius: 0;
+            overflow: hidden;
+            align-items: stretch;
+        }
+
+        .extract-results-left {
+            width: 340px;
+            background: var(--bg-secondary);
+            border-right: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .extract-results-logo {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .extract-results-logo h1 {
+            color: var(--accent-primary);
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin: 0 0 4px 0;
+        }
+
+        .extract-results-logo p {
+            color: var(--text-secondary);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .extract-value-card {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--accent-primary);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 0 1px rgba(102,217,255,0.15);
+        }
+
+        .extract-value-card .label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .extract-value-card .value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--warning);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .extract-value-card .sub {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        .extract-resources-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .extract-resources-card .card-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .extract-res-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .extract-res-row img {
+            width: 20px;
+            height: 20px;
+            image-rendering: pixelated;
+        }
+
+        .extract-res-row .name {
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            flex: 1;
+        }
+
+        .extract-res-row .amount {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .extract-res-row .mult {
+            font-size: 10px;
+            color: var(--text-secondary);
+            min-width: 24px;
+            text-align: right;
+        }
+
+        .extract-time-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 14px 16px;
+        }
+
+        .extract-time-card i {
+            color: var(--accent-primary);
+            font-size: 18px;
+        }
+
+        .extract-time-card .time-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .extract-time-card .time-val {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .extract-results-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 30px;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .extract-zone-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .extract-zone-badge .zone-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .extract-zone-badge .zone-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .extract-objects-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .extract-objects-header h2 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .extract-objects-header .count {
+            font-size: 11px;
+            color: var(--accent-primary);
+            background: rgba(102,217,255,0.1);
+            border: 1px solid rgba(102,217,255,0.3);
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        .extract-objects-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-right: 8px;
+        }
+
+        .extract-objects-list::-webkit-scrollbar { width: 4px; }
+        .extract-objects-list::-webkit-scrollbar-track { background: transparent; }
+        .extract-objects-list::-webkit-scrollbar-thumb { background: #555; border-radius: 2px; }
+
+        .extract-object-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            transition: all 0.15s ease;
+        }
+
+        .extract-object-item:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .extract-object-item .num {
+            font-size: 11px;
+            color: var(--text-secondary);
+            min-width: 24px;
+        }
+
+        .extract-object-item img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+            background: rgba(0,0,0,0.3);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        .extract-object-item .name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+        }
+
+        .extract-object-item .time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+        }
+
+        .extract-object-item .type {
+            font-size: 10px;
+            color: var(--accent-primary);
+            background: rgba(102,217,255,0.1);
+            border: 1px solid rgba(102,217,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .extract-empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: var(--text-secondary);
+        }
+
+        .extract-empty-state i {
+            font-size: 48px;
+            opacity: 0.3;
+        }
+
+        .extract-empty-state p {
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .extract-results-footer {
+            padding-top: 16px;
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .extract-continue-btn {
+            padding: 12px 36px;
+            background: var(--accent-primary);
+            color: #111;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .extract-continue-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        .extract-results-close {
+            display: none;
+        }
+
         .death-screen-content {
             background: linear-gradient(145deg, #2b1a1a, #3a2525);
             border: 3px solid #8b0000;
@@ -7193,6 +7523,74 @@
             </div>
         </div>
 
+        <div id="extract-results-popup" class="modal-overlay">
+            <div class="modal-content extract-results-modal">
+                <div class="extract-results-left">
+                    <div class="extract-results-logo">
+                        <h1>COREGRID</h1>
+                        <p>Extraction Complete</p>
+                    </div>
+                    <div class="extract-value-card">
+                        <div class="label">Total Value</div>
+                        <div class="value" id="extract-total-value">0</div>
+                        <div class="sub">steel x1 + coins x5 + gold x2 + oil x20</div>
+                    </div>
+                    <div class="extract-resources-card">
+                        <div class="card-label">Resources Extracted</div>
+                        <div class="extract-res-row">
+                            <img src="./sprites/ironin.png" alt="Steel">
+                            <span class="name">Steel</span>
+                            <span class="amount" id="extract-steel-amount">0</span>
+                            <span class="mult">x1</span>
+                        </div>
+                        <div class="extract-res-row">
+                            <img src="./sprites/coin.png" alt="Coins">
+                            <span class="name">Coins</span>
+                            <span class="amount" id="extract-coins-amount">0</span>
+                            <span class="mult">x5</span>
+                        </div>
+                        <div class="extract-res-row">
+                            <img src="./sprites/goldin.png" alt="Gold">
+                            <span class="name">Gold</span>
+                            <span class="amount" id="extract-gold-amount">0</span>
+                            <span class="mult">x2</span>
+                        </div>
+                        <div class="extract-res-row">
+                            <img src="./sprites/Oil.png" alt="Oil">
+                            <span class="name">Oil</span>
+                            <span class="amount" id="extract-oil-amount">0</span>
+                            <span class="mult">x20</span>
+                        </div>
+                    </div>
+                    <div class="extract-time-card">
+                        <i class="fas fa-stopwatch"></i>
+                        <div>
+                            <div class="time-label">Dive Time</div>
+                            <div class="time-val" id="extract-dive-time">0:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="extract-results-right">
+                    <div class="extract-zone-badge">
+                        <span class="zone-label">Zone</span>
+                        <span class="zone-name" id="extract-zone-name">SHALLOW</span>
+                    </div>
+                    <div class="extract-objects-header">
+                        <h2>Built This Dive</h2>
+                        <span class="count" id="extract-objects-count">0</span>
+                    </div>
+                    <div class="extract-objects-list" id="extract-objects-list"></div>
+                    <div class="extract-empty-state" id="extract-empty-state" style="display:none">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Nothing built this dive</p>
+                    </div>
+                    <div class="extract-results-footer">
+                        <button class="extract-continue-btn" id="extract-continue-btn">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="death-screen" class="modal-overlay">
             <div class="modal-content death-screen-content">
                 <div class="death-screen-header">
@@ -8407,6 +8805,8 @@
                     this.buildSteps = 7;
                     this.inWaveBreak = false;
                     this.enemiesRemaining = 0;
+                    this.sessionObjects = [];
+                    this.diveStartTime = null;
                     this.researchedTechs = new Set();
                     this.availableTechs = new Set();
                     this.techTreeCompletedRewardGiven = false;
@@ -8472,6 +8872,8 @@
                     this.zoneDepth = 0;
                     this.threatLevel = 0;
                     this.sessionResources = { Steel: 0, coins: 0, gold: 0, oil: 0 };
+                    this.sessionObjects = [];
+                    this.diveStartTime = Date.now();
 
                     if (!this.resources || Object.keys(this.resources).length === 0) {
                         const zoneBaseResources = {
@@ -8540,7 +8942,7 @@
                     }
 
                     console.log('Calling returnToHomescreen()');
-                    this.returnToHomescreen();
+                    showExtractResults(this.sessionResources, this.sessionObjects, this.diveStartTime);
 
                     const extractedList = Object.entries(this.sessionResources)
                         .filter(([_, amount]) => amount > 0)
@@ -8565,6 +8967,8 @@
                     this.zoneDepth = 0;
                     this.threatLevel = 0;
                     this.sessionResources = { Steel: 0, coins: 0, gold: 0, oil: 0 };
+                    this.sessionObjects = [];
+                    this.diveStartTime = null;
                     this.resources = { ...this.storedResources };
 
                     this.worldObjects.clear();
@@ -9928,6 +10332,13 @@
                 gameState.spendResources(cost);
                 addObjectToWorld(obj);
 
+                gameState.sessionObjects.push({
+                    name: (subtype ? subtype.replace(/_/g, ' ') : type),
+                    type: type,
+                    subtype: subtype,
+                    timestamp: Date.now()
+                });
+
                 if (type === 'tech') {
                     obj.onTurn();
                 }
@@ -10080,6 +10491,68 @@
                         : 0;
                     successRate.textContent = rate + '%';
                 }
+            }
+
+            function showExtractResults(session, objects, startTime) {
+                const popup = document.getElementById('extract-results-popup');
+                if (!popup) return;
+
+                const steel = session.Steel || 0;
+                const coins = session.coins || 0;
+                const gold = session.gold || 0;
+                const oil = session.oil || 0;
+                const totalValue = steel * 1 + coins * 5 + gold * 2 + oil * 20;
+
+                document.getElementById('extract-total-value').textContent = totalValue;
+                document.getElementById('extract-steel-amount').textContent = steel;
+                document.getElementById('extract-coins-amount').textContent = coins;
+                document.getElementById('extract-gold-amount').textContent = gold;
+                document.getElementById('extract-oil-amount').textContent = oil;
+
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const mins = Math.floor(elapsed / 60);
+                const secs = elapsed % 60;
+                document.getElementById('extract-dive-time').textContent =
+                    mins + ':' + String(secs).padStart(2, '0');
+
+                const zoneNames = { shallow: 'SHALLOW ZONE', medium: 'MEDIUM ZONE', deep: 'DEEP ZONE', base: 'BASE DEFENSE' };
+                const zoneEl = document.getElementById('extract-zone-name');
+                if (zoneEl) zoneEl.textContent = zoneNames[gameState.currentZone] || (gameState.currentZone || 'ZONE').toUpperCase();
+
+                const list = document.getElementById('extract-objects-list');
+                const empty = document.getElementById('extract-empty-state');
+                const count = document.getElementById('extract-objects-count');
+                list.innerHTML = '';
+
+                if (count) count.textContent = objects.length;
+
+                if (objects.length === 0) {
+                    list.style.display = 'none';
+                    empty.style.display = 'flex';
+                } else {
+                    list.style.display = 'flex';
+                    empty.style.display = 'none';
+                    const diveStart = startTime;
+                    objects.forEach(function(obj, i) {
+                        const placedAt = Math.floor((obj.timestamp - diveStart) / 1000);
+                        const m = Math.floor(placedAt / 60);
+                        const s = String(placedAt % 60).padStart(2, '0');
+                        const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1);
+                        const sprite = getSpriteForMode(obj.type + '-' + obj.subtype);
+                        const typeLabel = obj.type === 'wall' ? 'Wall' : obj.type === 'tech' ? 'Tech' : 'Army';
+                        const item = document.createElement('div');
+                        item.className = 'extract-object-item';
+                        item.innerHTML = '<span class="num">#' + (i + 1) + '</span><img src="' + sprite + '" alt="' + name + '" onerror="this.src=\'./sprites/research.png\'"><span class="name">' + name + '</span><span class="type">' + typeLabel + '</span><span class="time">' + m + ':' + s + '</span>';
+                        list.appendChild(item);
+                    });
+                }
+
+                popup.classList.add('active');
+            }
+
+            function closeExtractResults() {
+                const popup = document.getElementById('extract-results-popup');
+                if (popup) popup.classList.remove('active');
             }
 
             function showDeathScreen() {
@@ -11524,6 +11997,14 @@
                 }
 
                 initializeWiki();
+
+                const extractContinueBtn = document.getElementById('extract-continue-btn');
+                if (extractContinueBtn) {
+                    extractContinueBtn.addEventListener('click', function() {
+                        closeExtractResults();
+                        gameState.returnToHomescreen();
+                    });
+                }
 
                 const techCloseBtn = document.getElementById('tech-close-btn');
                 if (techCloseBtn) {
