@@ -8410,6 +8410,9 @@
                     this.researchedTechs = new Set();
                     this.availableTechs = new Set();
                     this.techTreeCompletedRewardGiven = false;
+                    this.totalMissions = 0;
+                    this.successfulMissions = 0;
+                    this.totalResourcesCollected = 0;
 
                     if (CONFIG.TECH_TREE.fortress) {
                         this.researchedTechs.add('fortress');
@@ -8513,6 +8516,13 @@
                     console.log('Total resources extracted:', totalExtracted);
                     console.log('Stored resources after extraction:', this.storedResources);
 
+                    if (totalExtracted > 0) {
+                        this.totalMissions++;
+                        this.successfulMissions++;
+                        this.totalResourcesCollected += totalExtracted;
+                        updateStatsPanel();
+                    }
+
                     // Log vault element values before update
                     const vaultSteelElement = document.getElementById('vault-stored-steel-count');
                     console.log('Vault steel element exists:', !!vaultSteelElement);
@@ -8564,6 +8574,7 @@
 
                     console.log('Calling updateDisplay...');
                     updateDisplay();
+                    updateStatsPanel();
                     console.log('Showing homescreen overlay...');
                     showHomescreen();
                     console.log('Return to homescreen complete');
@@ -10057,12 +10068,29 @@
                 showDeathScreen();
             }
 
+            function updateStatsPanel() {
+                const totalMissions = document.getElementById('total-missions');
+                const successRate = document.getElementById('success-rate');
+                const resourcesCollected = document.getElementById('resources-collected');
+                if (totalMissions) totalMissions.textContent = gameState.totalMissions || 0;
+                if (resourcesCollected) resourcesCollected.textContent = gameState.totalResourcesCollected || 0;
+                if (successRate) {
+                    const rate = gameState.totalMissions > 0
+                        ? Math.round((gameState.successfulMissions / gameState.totalMissions) * 100)
+                        : 0;
+                    successRate.textContent = rate + '%';
+                }
+            }
+
             function showDeathScreen() {
                 const deathScreen = document.getElementById('death-screen');
                 if (!deathScreen) {
                     console.error('Death screen element not found!');
                     return;
                 }
+
+                gameState.totalMissions++;
+                updateStatsPanel();
 
                 document.getElementById('death-turns').textContent = gameState.turn;
                 document.getElementById('death-waves').textContent = gameState.wave;
@@ -12919,6 +12947,9 @@
                     resources: gameState.resources,
                     storedResources: gameState.storedResources,
                     sessionResources: gameState.sessionResources,
+                    totalMissions: gameState.totalMissions,
+                    successfulMissions: gameState.successfulMissions,
+                    totalResourcesCollected: gameState.totalResourcesCollected,
                     turn: gameState.turn,
                     wave: gameState.wave,
                     waveBreakTurns: gameState.waveBreakTurns,
@@ -12961,6 +12992,9 @@
                         gameState.resources = gameData.resources;
                         gameState.storedResources = gameData.storedResources || { ...CONFIG.INITIAL_RESOURCES };
                         gameState.sessionResources = gameData.sessionResources || { Steel: 0, coins: 0, gold: 0, oil: 0 };
+                        gameState.totalMissions = gameData.totalMissions || 0;
+                        gameState.successfulMissions = gameData.successfulMissions || 0;
+                        gameState.totalResourcesCollected = gameData.totalResourcesCollected || 0;
                         gameState.turn = gameData.turn;
                         gameState.wave = gameData.wave;
                         gameState.waveBreakTurns = gameData.waveBreakTurns || 0;
