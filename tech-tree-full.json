@@ -190,7 +190,7 @@
     "basic_turret": {
       "name": "Basic Turret",
       "description": "Automatically attacks enemies in range. ",
-      "cost": { "Steel": 200 },
+      "cost": { "Steel": 100 },
       "tier": 2,
       "prerequisites": ["basic_defense"],
       "unlocks": ["fortified_defense"],
