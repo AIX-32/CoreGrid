@@ -1558,6 +1558,80 @@
 
         /* Crates Modal Styles */
 
+        .confirm-modal-overlay {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-modal-content {
+            max-width: 360px;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .confirm-icon {
+            font-size: 48px;
+            color: var(--warning);
+        }
+
+        .confirm-modal-content h3 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+
+        .confirm-modal-content p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .confirm-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .confirm-btn.cancel {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        .confirm-btn.cancel:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .confirm-btn.confirm {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: #fff;
+        }
+
+        .confirm-btn.confirm:hover {
+            filter: brightness(1.1);
+        }
 
         .crates-sidebar {
             width: 220px;
@@ -8295,6 +8369,19 @@
                             <button class="modal-btn primary" onclick="closeCrateResultModal()">CONTINUE</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm Modal -->
+        <div id="confirm-modal" class="modal-overlay confirm-modal-overlay">
+            <div class="modal-content confirm-modal-content">
+                <div class="confirm-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <h3 id="confirm-title">Confirm</h3>
+                <p id="confirm-message">Are you sure?</p>
+                <div class="confirm-buttons">
+                    <button class="confirm-btn cancel" id="confirm-cancel">Cancel</button>
+                    <button class="confirm-btn confirm" id="confirm-ok">OK</button>
                 </div>
             </div>
         </div>
@@ -17280,9 +17367,45 @@
   }
 
   const extractBtnNew = document.getElementById('extract-btn-new');
+  // Custom confirm modal
+  let confirmCallback = null;
+
+  function showConfirm(title, message, onConfirm) {
+    const modal = document.getElementById('confirm-modal');
+    const titleEl = document.getElementById('confirm-title');
+    const messageEl = document.getElementById('confirm-message');
+    const cancelBtn = document.getElementById('confirm-cancel');
+    const okBtn = document.getElementById('confirm-ok');
+
+    if (!modal) return;
+
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    confirmCallback = onConfirm;
+
+    modal.classList.add('active');
+
+    const closeHandler = () => {
+      modal.classList.remove('active');
+      confirmCallback = null;
+    };
+
+    cancelBtn.onclick = closeHandler;
+    okBtn.onclick = () => {
+      const cb = confirmCallback;
+      modal.classList.remove('active');
+      confirmCallback = null;
+      if (cb) cb();
+    };
+  }
+
   if (extractBtnNew) {
     extractBtnNew.addEventListener('click', function() {
-      if (!this.disabled) gameState.extractResources();
+      if (!this.disabled) {
+        showConfirm('Extract Resources', 'You will leave the dive and keep your resources. Continue?', () => {
+          gameState.extractResources();
+        });
+      }
     });
   }
 
