@@ -54,6 +54,22 @@
             display: flex;
         }
 
+        #crates-modal.modal-overlay {
+            padding: 0;
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+        #crates-modal .modal-content {
+            max-width: none;
+            border: none;
+            border-radius: 0;
+            height: 100vh;
+            min-height: 100vh;
+            display: flex !important;
+            align-items: stretch;
+            flex-direction: row;
+        }
+
         .modal-content {
             background: #2b2b2b;
             border: 3px solid #7a7a7a;
@@ -642,122 +658,308 @@
             display: none;
         }
 
-        .death-screen-content {
-            background: linear-gradient(145deg, #2b1a1a, #3a2525);
-            border: 3px solid #8b0000;
-            max-width: 500px;
+        .death-screen-modal {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            max-width: none;
+            max-height: none;
+            border-radius: 0;
+            overflow: hidden;
+            align-items: stretch;
+        }
+
+        .death-left {
+            width: 340px;
+            background: #2b1a1a;
+            border-right: 2px solid #5a0000;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .death-logo {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #5a0000;
+        }
+
+        .death-logo h1 {
+            color: #ff6b6b;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin: 0 0 4px 0;
+        }
+
+        .death-logo p {
+            color: #aa6666;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .death-icon {
             text-align: center;
         }
 
-        .death-screen-header {
-            padding: 30px 20px;
-            background: linear-gradient(145deg, #8b0000, #6b0000);
-            border-bottom: 3px solid #5a0000;
-            position: relative;
+        .death-icon i {
+            font-size: 64px;
+            color: #8b0000;
+            opacity: 0.7;
         }
 
-        .death-screen-header h2 {
-            color: #ff6b6b;
-            font-size: 2.5rem;
+        .death-stats-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #5a0000;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .death-stats-card .card-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #aa6666;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin: 0;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            margin-bottom: 4px;
         }
 
-        .skull-icon {
-            font-size: 3rem;
-            margin-top: 15px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-        }
-
-        .death-screen-body {
-            padding: 30px;
-        }
-
-        .death-message {
-            margin-bottom: 25px;
-        }
-
-        .death-message p {
-            color: #e0e0e0;
-            font-size: 1.1rem;
-            margin: 10px 0;
-            line-height: 1.6;
-        }
-
-        .death-stats {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .death-stat {
+        .death-stat-row {
             display: flex;
             justify-content: space-between;
-            margin: 12px 0;
-            padding: 8px 0;
-            border-bottom: 1px solid #444;
+            align-items: center;
         }
 
-        .death-stat:last-child {
-            border-bottom: none;
+        .death-stat-row .label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .death-stat .stat-label {
-            color: #c0c0c0;
-            font-size: 1rem;
-        }
-
-        .death-stat .stat-value {
-            color: #ff6b6b;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .death-screen-actions {
-            padding: 20px 30px;
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        #death-return-btn {
-            background: #555;
-            border-color: #777;
+        .death-stat-row .value {
+            font-size: 16px;
+            font-weight: 700;
             color: #ddd;
         }
 
+        .death-stat-row.lost .label { color: #aa6666; }
+        .death-stat-row.lost .value { color: #ff6b6b; }
+
+        .death-time {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .death-time i { color: #8b0000; font-size: 18px; }
+
+        .death-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 30px;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .death-zone-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .death-zone-badge .zone-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .death-zone-badge .zone-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff6b6b;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .death-message {
+            flex-shrink: 0;
+        }
+
+        .death-message h2 {
+            color: #ff6b6b;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+        }
+
+        .death-message p {
+            color: #888;
+            font-size: 13px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .death-objects-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .death-objects-header h3 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #888;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .death-objects-header .count {
+            font-size: 11px;
+            color: #ff6b6b;
+            background: rgba(139,0,0,0.2);
+            border: 1px solid rgba(139,0,0,0.4);
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        .death-objects-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-right: 8px;
+        }
+
+        .death-objects-list::-webkit-scrollbar { width: 4px; }
+        .death-objects-list::-webkit-scrollbar-track { background: transparent; }
+        .death-objects-list::-webkit-scrollbar-thumb { background: #5a0000; border-radius: 2px; }
+
+        .death-object-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid #3a2a2a;
+            border-radius: var(--border-radius);
+        }
+
+        .death-object-item .num {
+            font-size: 11px;
+            color: #666;
+            min-width: 24px;
+        }
+
+        .death-object-item img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+            background: rgba(0,0,0,0.3);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        .death-object-item .name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ddd;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+        }
+
+        .death-object-item .time {
+            font-size: 12px;
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        .death-object-item .type {
+            font-size: 10px;
+            color: #aa6666;
+            background: rgba(139,0,0,0.15);
+            border: 1px solid rgba(139,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .death-empty {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #555;
+        }
+
+        .death-empty i { font-size: 48px; opacity: 0.3; }
+        .death-empty p { font-size: 14px; font-style: italic; }
+
+        .death-actions {
+            padding-top: 16px;
+            border-top: 2px solid #3a2a2a;
+            display: flex;
+            gap: 12px;
+        }
+
+        #death-return-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
         #death-return-btn:hover {
-            background: #666;
-            border-color: #888;
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
         }
 
         #death-retry-btn {
+            flex: 1;
+            padding: 12px;
             background: #8b0000;
-            border-color: #aa0000;
+            border: 1.5px solid #aa0000;
+            border-radius: var(--border-radius);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         #death-retry-btn:hover {
             background: #aa0000;
             border-color: #cc0000;
-            box-shadow: 0 0 15px rgba(170, 0, 0, 0.4);
+            box-shadow: 0 0 12px rgba(170,0,0,0.4);
         }
 
         .army-box {
@@ -1355,12 +1557,394 @@
         }
 
         /* Crates Modal Styles */
-        .crates-modal-content {
-            max-width: 1200px;
-            width: 95%;
-            height: 90vh;
-            max-height: 90vh;
+
+
+        .crates-sidebar {
+            width: 220px;
+            background: var(--bg-secondary);
+            border-right: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+            gap: 20px;
+            flex-shrink: 0;
+            height: 100%;
+            min-height: 100%;
+            align-self: stretch;
         }
+
+        .crates-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            padding: 24px 30px;
+            height: 100%;
+            min-height: 100%;
+            align-self: stretch;
+        }
+
+        .crates-logo {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .crates-logo h1 {
+            color: var(--accent-primary);
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            margin: 0 0 4px 0;
+        }
+
+        .crates-logo p {
+            color: var(--text-secondary);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .crates-resources {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .crates-res-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+        }
+
+        .crates-res-row img {
+            width: 16px;
+            height: 16px;
+            image-rendering: pixelated;
+            opacity: 0.9;
+        }
+
+        .crates-res-row .res-name {
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            flex: 1;
+        }
+
+        .crates-res-row .res-val {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .crates-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .crates-tab {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            background: var(--bg-tertiary);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        .crates-tab i {
+            font-size: 13px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .crates-tab:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .crates-tab.active {
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            background: rgba(102,217,255,0.08);
+        }
+
+        .crates-sidebar-footer {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .crates-close-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-tertiary);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .crates-close-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .crates-grid {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .crate-category {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            align-content: start;
+            overflow: visible;
+        }
+
+        .crate-category.active {
+            display: grid;
+            overflow: visible;
+        }
+
+        .crate-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            overflow: visible !important;
+            transform: translateY(0) !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+        }
+
+        .crate-card * {
+            overflow: visible !important;
+            transform: none !important;
+            transition: none !important;
+        }
+ 
+
+        .crate-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .crate-card.ore:hover {
+            border-color: #66d9ff;
+            box-shadow: 0 8px 20px rgba(102,217,255,0.15);
+        }
+
+        .crate-card.oil:hover {
+            border-color: rgba(122,151,123,1);
+            box-shadow: 0 8px 20px rgba(122,151,123,0.15);
+        }
+
+        .crate-card.free:hover {
+            border-color: #ceab77;
+            box-shadow: 0 8px 20px rgba(206,171,119,0.15);
+        }
+
+        .crate-card.steel:hover {
+            border-color: #c0c0c0;
+            box-shadow: 0 8px 20px rgba(192,192,192,0.15);
+        }
+
+        .crate-card.gold:hover {
+            border-color: #d4af37;
+            box-shadow: 0 8px 20px rgba(212,175,55,0.15);
+        }
+
+        .crate-card.army:hover {
+            border-color: #dd7e77;
+            box-shadow: 0 8px 20px rgba(221,126,119,0.15);
+        }
+
+        .crate-card.mystery:hover {
+            border-color: #c678dd;
+            box-shadow: 0 8px 20px rgba(198,120,221,0.15);
+        }
+
+        .crate-card.coins:hover {
+            border-color: #e5c07b;
+            box-shadow: 0 8px 20px rgba(229,192,123,0.15);
+        }
+
+        .crate-card-tier {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            background: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .crate-card-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            border-radius: var(--border-radius);
+            border: 1.5px solid var(--border-color);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .crate-card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .crate-card.ore .crate-card-icon { border-color: rgba(102,217,255,0.3); }
+        .crate-card.oil .crate-card-icon { border-color: rgba(122,151,123,0.3); }
+        .crate-card.free .crate-card-icon { border-color: rgba(206,171,119,0.3); }
+        .crate-card.steel .crate-card-icon { border-color: rgba(192,192,192,0.3); }
+        .crate-card.gold .crate-card-icon { border-color: rgba(212,175,55,0.3); }
+        .crate-card.army .crate-card-icon { border-color: rgba(221,126,119,0.3); }
+        .crate-card.mystery .crate-card-icon { border-color: rgba(198,120,221,0.3); }
+        .crate-card.coins .crate-card-icon { border-color: rgba(229,192,123,0.3); }
+
+        .crate-card-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .crate-card-streak {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--text-primary);
+            background: rgba(206,171,119,0.1);
+            border: 1px solid rgba(206,171,119,0.3);
+            border-radius: var(--border-radius);
+            padding: 6px 12px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .crate-card-streak .streak-rewards {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .crate-card-rewards {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .reward-resources {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .reward-range {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .reward-range .min { color: #7a977b; }
+        .reward-range .max { color: #dd7e77; }
+
+        .crate-card-cost {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #d4af37;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .crate-card-cost img {
+            width: 16px;
+            height: 16px;
+            image-rendering: pixelated;
+        }
+
+        .crate-card-cost .cost-steel { color: #c0c0c0; }
+        .crate-card-cost .cost-coins { color: #e5c07b; }
+        .crate-card-cost .cost-gold { color: #d4af37; }
+        .crate-card-cost .cost-oil { color: #7a977b; }
+
+        .free-cost {
+            color: #7a977b;
+            font-size: 18px;
+        }
+
+        .crate-card-btn {
+            width: 100%;
+            padding: 10px;
+            background: #66d9ff;
+            color: #111;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .crate-card.ore .crate-card-btn { background: #66d9ff; }
+        .crate-card.oil .crate-card-btn { background: #7a977b; color: #111; }
+        .crate-card.steel .crate-card-btn { background: #888; color: #111; }
+        .crate-card.gold .crate-card-btn { background: #d4af37; color: #111; }
+        .crate-card.army .crate-card-btn { background: #dd7e77; color: #111; }
+        .crate-card.mystery .crate-card-btn { background: #c678dd; color: #111; }
+        .crate-card.coins .crate-card-btn { background: #e5c07b; color: #111; }
+        .crate-card:hover .crate-card-btn { filter: brightness(1.1); }
+
+        .free-btn { background: #ceab77; color: #111; }
 
         .crates-modal-body {
             display: flex;
@@ -6868,6 +7452,8 @@
   position: fixed;
   top: 0; left: 0;
   z-index: 100;
+  flex-direction: row;
+  align-items: stretch;
 }
 #active-zone-view.active { display: flex; }
 
@@ -7115,7 +7701,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   overflow: hidden;
   min-width: 0;
 }
@@ -7592,34 +8177,61 @@
         </div>
 
         <div id="death-screen" class="modal-overlay">
-            <div class="modal-content death-screen-content">
-                <div class="death-screen-header">
-                    <h2>MISSION FAILED</h2>
-                    <div class="skull-icon"><i class="fas fa-skull"></i></div>
+            <div class="modal-content death-screen-modal">
+                <div class="death-left">
+                    <div class="death-logo">
+                        <h1>COREGRID</h1>
+                        <p>Mission Failed</p>
+                    </div>
+                    <div class="death-icon">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                    <div class="death-stats-card">
+                        <div class="card-label">Dive Summary</div>
+                        <div class="death-stat-row">
+                            <span class="label">Turns</span>
+                            <span class="value" id="death-turns">0</span>
+                        </div>
+                        <div class="death-stat-row">
+                            <span class="label">Waves</span>
+                            <span class="value" id="death-waves">0</span>
+                        </div>
+                        <div class="death-stat-row">
+                            <span class="label">Built</span>
+                            <span class="value" id="death-built">0</span>
+                        </div>
+                        <div class="death-stat-row lost">
+                            <span class="label">Lost</span>
+                            <span class="value" id="death-resources">0</span>
+                        </div>
+                    </div>
+                    <div class="death-time">
+                        <i class="fas fa-stopwatch"></i>
+                        <span id="death-time">0:00</span>
+                    </div>
                 </div>
-                <div class="death-screen-body">
+                <div class="death-right">
+                    <div class="death-zone-badge">
+                        <span class="zone-label">Zone</span>
+                        <span class="zone-name" id="death-zone">SHALLOW</span>
+                    </div>
                     <div class="death-message">
-                        <p>Your forces have been overwhelmed...</p>
-                        <p>The enemies have breached your defenses.</p>
+                        <h2>BASE BREACHED</h2>
+                        <p>Your defenses have fallen. The enemy has overrun your position.</p>
                     </div>
-                    <div class="death-stats">
-                        <div class="death-stat">
-                            <span class="stat-label">Turns Survived:</span>
-                            <span class="stat-value" id="death-turns">0</span>
-                        </div>
-                        <div class="death-stat">
-                            <span class="stat-label">Waves Completed:</span>
-                            <span class="stat-value" id="death-waves">0</span>
-                        </div>
-                        <div class="death-stat">
-                            <span class="stat-label">Resources Lost:</span>
-                            <span class="stat-value" id="death-resources">0</span>
-                        </div>
+                    <div class="death-objects-header">
+                        <h3>Built This Dive</h3>
+                        <span class="count" id="death-objects-count">0</span>
                     </div>
-                </div>
-                <div class="death-screen-actions">
-                    <button class="modal-btn secondary" id="death-return-btn">Return to Base</button>
-                    <button class="modal-btn primary" id="death-retry-btn">Retry Mission</button>
+                    <div class="death-objects-list" id="death-objects-list"></div>
+                    <div class="death-empty" id="death-empty" style="display:none">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Nothing built this dive</p>
+                    </div>
+                    <div class="death-actions">
+                        <button class="modal-btn secondary" id="death-return-btn">Return to Base</button>
+                        <button class="modal-btn primary" id="death-retry-btn">Retry Mission</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -7689,137 +8301,302 @@
 
         <div id="crates-modal" class="modal-overlay">
             <div class="modal-content crates-modal-content">
-                <div class="modal-header">
-                    <h2>CRATES</h2>
-                    <button class="close-btn" onclick="closeCratesModal()"></button>
-                </div>
-                <div class="modal-body crates-modal-body">
-                    <div class="crates-intro">
-                        <p>Purchase crates with your resources for a chance at valuable rewards!</p>
-                        <p>Higher level crates offer bigger rewards but with increased risk!</p>
+                <div class="crates-sidebar">
+                    <div class="crates-logo">
+                        <h1>COREGRID</h1>
+                        <p>Supply Crates</p>
                     </div>
-
-                    <div class="crates-container">
-                        <div class="crate-type ore-crates">
-                            <h3>Ore Crates</h3>
-                            <div class="crate-levels">
-                                <div class="crate-item" data-crate="ore" data-level="1">
-                                    <div class="crate-sprite">
-                                        <img src="./sprites/smallcrate.png" alt="Small Ore Crate"
-                                            onerror="this.src='./sprites/default_crate.png'">
-                                    </div>
-                                    <div class="crate-header">
-                                        <span class="crate-name">Ore Crate L1</span>
-                                        <span class="crate-cost">1,000 COINS</span>
-                                    </div>
-                                    <div class="crate-rewards">
-                                        <span>Steel, Coins, Gold</span>
-                                        <span class="min-reward">Min: 200</span>
-                                        <span class="max-reward">Max: 2,000</span>
-                                    </div>
-                                    <button class="crate-buy-btn" onclick="buyCrate('ore', 1)">BUY CRATE</button>
+                    <div class="crates-resources">
+                        <div class="crates-res-row">
+                            <img src="./sprites/ironin.png" alt="Steel">
+                            <span class="res-name">Steel</span>
+                            <span class="res-val" id="crates-steel-val">0</span>
+                        </div>
+                        <div class="crates-res-row">
+                            <img src="./sprites/coin.png" alt="Coins">
+                            <span class="res-name">Coins</span>
+                            <span class="res-val" id="crates-coins-val">0</span>
+                        </div>
+                        <div class="crates-res-row">
+                            <img src="./sprites/goldin.png" alt="Gold">
+                            <span class="res-name">Gold</span>
+                            <span class="res-val" id="crates-gold-val">0</span>
+                        </div>
+                        <div class="crates-res-row">
+                            <img src="./sprites/Oil.png" alt="Oil">
+                            <span class="res-name">Oil</span>
+                            <span class="res-val" id="crates-oil-val">0</span>
+                        </div>
+                    </div>
+                    <div class="crates-tabs">
+                        <button class="crates-tab active" data-cat="coins"><i class="fas fa-coins"></i> Coins</button>
+                        <button class="crates-tab" data-cat="steel"><i class="fas fa-cubes"></i> Steel</button>
+                        <button class="crates-tab" data-cat="gold"><i class="fas fa-gem"></i> Gold</button>
+                        <button class="crates-tab" data-cat="oil"><i class="fas fa-fire-alt"></i> Oil</button>
+                        <button class="crates-tab" data-cat="army"><i class="fas fa-shield-halved"></i> Army</button>
+                        <button class="crates-tab" data-cat="mystery"><i class="fas fa-hat-wizard"></i> Mystery</button>
+                        <button class="crates-tab" data-cat="free"><i class="fas fa-gift"></i> Free</button>
+                    </div>
+                    <div class="crates-sidebar-footer">
+                        <button class="crates-close-btn" onclick="closeCratesModal()">Close</button>
+                    </div>
+                </div>
+                <div class="crates-main">
+                    <div class="crates-grid" id="crates-grid">
+                        <!-- Coins crates -->
+                        <div class="crate-category active" id="cat-coins">
+                            <div class="crate-card coins" data-crate="coins" data-level="1" onclick="buyCrate('coins', 1)">
+                                <div class="crate-card-tier">TIER 1</div>
+                                <div class="crate-card-icon"><img src="./sprites/smallcrate.png" alt="L1" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Coin Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Steel, Coins, Gold</span>
+                                    <span class="reward-range"><span class="min">100</span> — <span class="max">600</span></span>
                                 </div>
-
-                                <div class="crate-item" data-crate="ore" data-level="2">
-                                    <div class="crate-sprite">
-                                        <img src="./sprites/bigcrate.png" alt="Big Ore Crate"
-                                            onerror="this.src='./sprites/default_crate.png'">
-                                    </div>
-                                    <div class="crate-header">
-                                        <span class="crate-name">Ore Crate L2</span>
-                                        <span class="crate-cost">2,000 COINS</span>
-                                    </div>
-                                    <div class="crate-rewards">
-                                        <span>Steel, Coins, Gold</span>
-                                        <span class="min-reward">Min: 400</span>
-                                        <span class="max-reward">Max: 4,000</span>
-                                    </div>
-                                    <button class="crate-buy-btn" onclick="buyCrate('ore', 2)">BUY CRATE</button>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">500</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card coins" data-crate="coins" data-level="2" onclick="buyCrate('coins', 2)">
+                                <div class="crate-card-tier">TIER 2</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L2" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Coin Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Steel, Coins, Gold</span>
+                                    <span class="reward-range"><span class="min">300</span> — <span class="max">1,500</span></span>
                                 </div>
-
-                                <div class="crate-item" data-crate="ore" data-level="3">
-                                    <div class="crate-sprite">
-                                        <img src="./sprites/bigcrate.png" alt="Big Ore Crate"
-                                            onerror="this.src='./sprites/default_crate.png'">
-                                    </div>
-                                    <div class="crate-header">
-                                        <span class="crate-name">Ore Crate L3</span>
-                                        <span class="crate-cost">3,000 COINS</span>
-                                    </div>
-                                    <div class="crate-rewards">
-                                        <span>Steel, Coins, Gold</span>
-                                        <span class="min-reward">Min: 600</span>
-                                        <span class="max-reward">Max: 10,000</span>
-                                    </div>
-                                    <button class="crate-buy-btn" onclick="buyCrate('ore', 3)">BUY CRATE</button>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">1,000</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card coins" data-crate="coins" data-level="3" onclick="buyCrate('coins', 3)">
+                                <div class="crate-card-tier">TIER 3</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L3" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Coin Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Steel, Coins, Gold</span>
+                                    <span class="reward-range"><span class="min">600</span> — <span class="max">4,000</span></span>
                                 </div>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">2,000</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
                             </div>
                         </div>
-
-                        <div class="crate-type oil-crates">
-                            <h3>Oil Crates</h3>
-                            <div class="crate-levels">
-                                <div class="crate-item" data-crate="oil" data-level="1">
-                                    <div class="crate-sprite">
-                                        <img src="./sprites/smallcrate.png" alt="Small Oil Crate"
-                                            onerror="this.src='./sprites/default_crate.png'">
-                                    </div>
-                                    <div class="crate-header">
-                                        <span class="crate-name">Oil Crate L1</span>
-                                        <span class="crate-cost">3,000 STEEL</span>
-                                    </div>
-                                    <div class="crate-rewards">
-                                        <span>Oil Only</span>
-                                        <span class="min-reward">Min: 150</span>
-                                        <span class="max-reward">Max: 1,500</span>
-                                    </div>
-                                    <button class="crate-buy-btn" onclick="buyCrate('oil', 1)">BUY CRATE</button>
+                        <!-- Steel crates -->
+                        <div class="crate-category" id="cat-steel">
+                            <div class="crate-card steel" data-crate="steel" data-level="1" onclick="buyCrate('steel', 1)">
+                                <div class="crate-card-tier">TIER 1</div>
+                                <div class="crate-card-icon"><img src="./sprites/smallcrate.png" alt="L1" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Steel Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Steel + Coins</span>
+                                    <span class="reward-range"><span class="min">100</span> — <span class="max">600</span></span>
                                 </div>
-
-                                <div class="crate-item" data-crate="oil" data-level="2">
-                                    <div class="crate-sprite">
-                                        <img src="./sprites/bigcrate.png" alt="Big Oil Crate"
-                                            onerror="this.src='./sprites/default_crate.png'">
-                                    </div>
-                                    <div class="crate-header">
-                                        <span class="crate-name">Oil Crate L2</span>
-                                        <span class="crate-cost">4,000 STEEL</span>
-                                    </div>
-                                    <div class="crate-rewards">
-                                        <span>Oil Only</span>
-                                        <span class="min-reward">Min: 200</span>
-                                        <span class="max-reward">Max: 4,000</span>
-                                    </div>
-                                    <button class="crate-buy-btn" onclick="buyCrate('oil', 2)">BUY CRATE</button>
+                                <div class="crate-card-cost"><img src="./sprites/ironin.png" alt=""><span class="cost-steel">300</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card steel" data-crate="steel" data-level="2" onclick="buyCrate('steel', 2)">
+                                <div class="crate-card-tier">TIER 2</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L2" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Steel Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Steel + Coins</span>
+                                    <span class="reward-range"><span class="min">300</span> — <span class="max">1,500</span></span>
                                 </div>
+                                <div class="crate-card-cost"><img src="./sprites/ironin.png" alt=""><span class="cost-steel">700</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card steel" data-crate="steel" data-level="3" onclick="buyCrate('steel', 3)">
+                                <div class="crate-card-tier">TIER 3</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L3" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Steel Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Steel + Coins</span>
+                                    <span class="reward-range"><span class="min">600</span> — <span class="max">3,000</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/ironin.png" alt=""><span class="cost-steel">1,500</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
                             </div>
                         </div>
-
-                        <div class="crate-type free-crates">
-                            <h3>Free Crates</h3>
-                            <div class="crate-levels">
-                                <div class="crate-item" id="daily-crate-item">
-                                    <div class="crate-sprite">
-                                        <img src="./sprites/smallcrate.png" alt="Daily Crate"
-                                            onerror="this.src='./sprites/default_crate.png'">
-                                    </div>
-                                    <div class="crate-header">
-                                        <span class="crate-name">Daily Crate</span>
-                                        <span class="crate-cost">FREE</span>
-                                    </div>
-                                    <div class="daily-streak">
-                                        <div class="streak-counter">Day <span id="current-streak">1</span></div>
-                                        <div class="streak-rewards">Streak: <span id="streak-rewards">500S 250C 250G
-                                                50O</span></div>
-                                    </div>
-                                    <div class="crate-rewards">
-                                        <span>Daily Resources</span>
-                                        <span class="min-reward">Guaranteed</span>
-                                        <span class="max-reward">Double Each Day</span>
-                                    </div>
-                                    <button class="crate-buy-btn" id="claim-daily-btn" onclick="claimDailyCrate()">CLAIM
-                                        DAILY</button>
+                        <!-- Gold crates -->
+                        <div class="crate-category" id="cat-gold">
+                            <div class="crate-card gold" data-crate="gold" data-level="1" onclick="buyCrate('gold', 1)">
+                                <div class="crate-card-tier">TIER 1</div>
+                                <div class="crate-card-icon"><img src="./sprites/smallcrate.png" alt="L1" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Gold Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Gold + Coins</span>
+                                    <span class="reward-range"><span class="min">10</span> — <span class="max">50</span></span>
                                 </div>
+                                <div class="crate-card-cost"><img src="./sprites/goldin.png" alt=""><span class="cost-gold">30</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card gold" data-crate="gold" data-level="2" onclick="buyCrate('gold', 2)">
+                                <div class="crate-card-tier">TIER 2</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L2" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Gold Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Gold + Coins</span>
+                                    <span class="reward-range"><span class="min">25</span> — <span class="max">120</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/goldin.png" alt=""><span class="cost-gold">60</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card gold" data-crate="gold" data-level="3" onclick="buyCrate('gold', 3)">
+                                <div class="crate-card-tier">TIER 3</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L3" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Gold Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Gold + Coins</span>
+                                    <span class="reward-range"><span class="min">50</span> — <span class="max">300</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/goldin.png" alt=""><span class="cost-gold">120</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                        </div>
+                        <!-- Oil crates -->
+                        <div class="crate-category" id="cat-oil">
+                            <div class="crate-card oil" data-crate="oil" data-level="1" onclick="buyCrate('oil', 1)">
+                                <div class="crate-card-tier">TIER 1</div>
+                                <div class="crate-card-icon"><img src="./sprites/smallcrate.png" alt="L1" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Oil Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Oil Only</span>
+                                    <span class="reward-range"><span class="min">50</span> — <span class="max">300</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/ironin.png" alt=""><span class="cost-steel">500</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card oil" data-crate="oil" data-level="2" onclick="buyCrate('oil', 2)">
+                                <div class="crate-card-tier">TIER 2</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L2" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Oil Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Oil Only</span>
+                                    <span class="reward-range"><span class="min">100</span> — <span class="max">600</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/ironin.png" alt=""><span class="cost-steel">1,000</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card oil" data-crate="oil" data-level="3" onclick="buyCrate('oil', 3)">
+                                <div class="crate-card-tier">TIER 3</div>
+                                <div class="crate-card-icon"><img src="./sprites/bigcrate.png" alt="L3" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Oil Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Oil Only</span>
+                                    <span class="reward-range"><span class="min">200</span> — <span class="max">1,500</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/ironin.png" alt=""><span class="cost-steel">2,000</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                        </div>
+                        <!-- Army crates -->
+                        <div class="crate-category" id="cat-army">
+                            <div class="crate-card army" data-crate="army" data-level="1" onclick="buyCrate('army', 1)">
+                                <div class="crate-card-tier">TIER 1</div>
+                                <div class="crate-card-icon"><img src="./sprites/soldier.png" alt="L1" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Army Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">2-5 Soldiers</span>
+                                    <span class="reward-range"><span class="min">2 units</span> — <span class="max">5 units</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">800</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card army" data-crate="army" data-level="2" onclick="buyCrate('army', 2)">
+                                <div class="crate-card-tier">TIER 2</div>
+                                <div class="crate-card-icon"><img src="./sprites/knight.png" alt="L2" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Army Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">1-2 Knights or Archers</span>
+                                    <span class="reward-range"><span class="min">1 unit</span> — <span class="max">2 units</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">2,000</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card army" data-crate="army" data-level="3" onclick="buyCrate('army', 3)">
+                                <div class="crate-card-tier">TIER 3</div>
+                                <div class="crate-card-icon"><img src="./sprites/Tank.png" alt="L3" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Army Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Tank, Siege Tower, or Barracks</span>
+                                    <span class="reward-range"><span class="min">1 rare</span> — <span class="max">2 units</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">5,000</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                        </div>
+                        <!-- Mystery crates -->
+                        <div class="crate-category" id="cat-mystery">
+                            <div class="crate-card mystery" data-crate="mystery" data-level="1" onclick="buyCrate('mystery', 1)">
+                                <div class="crate-card-tier">TIER 1</div>
+                                <div class="crate-card-icon"><img src="./sprites/research.png" alt="L1" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Mystery Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Mix of All Resources</span>
+                                    <span class="reward-range"><span class="min">200</span> — <span class="max">1,000</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">400</span><img src="./sprites/goldin.png" alt=""><span class="cost-gold">15</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card mystery" data-crate="mystery" data-level="2" onclick="buyCrate('mystery', 2)">
+                                <div class="crate-card-tier">TIER 2</div>
+                                <div class="crate-card-icon"><img src="./sprites/research.png" alt="L2" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Mystery Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Mix of All Resources</span>
+                                    <span class="reward-range"><span class="min">400</span> — <span class="max">2,500</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">800</span><img src="./sprites/goldin.png" alt=""><span class="cost-gold">30</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                            <div class="crate-card mystery" data-crate="mystery" data-level="3" onclick="buyCrate('mystery', 3)">
+                                <div class="crate-card-tier">TIER 3</div>
+                                <div class="crate-card-icon"><img src="./sprites/research.png" alt="L3" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Mystery Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Mix of All Resources</span>
+                                    <span class="reward-range"><span class="min">1,000</span> — <span class="max">6,000</span></span>
+                                </div>
+                                <div class="crate-card-cost"><img src="./sprites/coin.png" alt=""><span class="cost-coins">1,500</span><img src="./sprites/goldin.png" alt=""><span class="cost-gold">60</span></div>
+                                <div class="crate-card-btn">Buy Crate</div>
+                            </div>
+                        </div>
+                        <!-- Free crates -->
+                        <div class="crate-category" id="cat-free">
+                            <div class="crate-card free" id="daily-crate-card" onclick="claimDailyCrate()">
+                                <div class="crate-card-tier" id="daily-tier-badge">DAILY</div>
+                                <div class="crate-card-icon"><img src="./sprites/smallcrate.png" alt="Daily" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Daily Crate</div>
+                                <div class="crate-card-streak">
+                                    <span>Day <span id="current-streak">1</span></span>
+                                    <span class="streak-rewards" id="streak-rewards">500S 250C 250G 50O</span>
+                                </div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">All Resources</span>
+                                    <span class="reward-range"><span class="min">Guaranteed</span> — <span class="max">Doubles Each Day</span></span>
+                                </div>
+                                <div class="crate-card-cost free-cost"><span id="daily-cost-status">FREE</span></div>
+                                <div class="crate-card-btn free-btn" id="claim-daily-btn">Claim Daily</div>
+                            </div>
+                            <div class="crate-card free army" id="army-crate-card" onclick="claimArmyCrate()">
+                                <div class="crate-card-tier" id="army-tier-badge">3 DAY</div>
+                                <div class="crate-card-icon"><img src="./sprites/soldier.png" alt="Army" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Army Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">1-7 Soldiers</span>
+                                    <span class="reward-range"><span class="min">1 Soldier</span> — <span class="max">7 Soldiers</span></span>
+                                </div>
+                                <div class="crate-card-cost free-cost"><span id="army-crate-timer">FREE</span></div>
+                                <div class="crate-card-btn free-btn" id="claim-army-btn">Claim</div>
+                            </div>
+                            <div class="crate-card free" id="crubs-crate-card" onclick="handleCrubsCrate()">
+                                <div class="crate-card-tier" id="crubs-tier-badge">CROSS</div>
+                                <div class="crate-card-icon"><img src="./sprites/research.png" alt="Crubs" onerror="this.src='./sprites/research.png'"></div>
+                                <div class="crate-card-name">Crubs Crate</div>
+                                <div class="crate-card-rewards">
+                                    <span class="reward-resources">Play CRUBS for 5 min</span>
+                                    <span class="reward-range"><span class="min">100S 100C</span> — <span class="max">500S 500C</span></span>
+                                </div>
+                                <div class="crate-card-cost free-cost"><span id="crubs-timer-display">PLAY</span></div>
+                                <div class="crate-card-btn free-btn" id="crubs-action-btn">Open CRUBS</div>
                             </div>
                         </div>
                     </div>
@@ -9446,8 +10223,6 @@
                         const resource = resources[Math.floor(Math.random() * resources.length)];
                         const amount = 5 + Math.floor(Math.random() * 6);
                         gameState.addResources({ [resource]: amount });
-                        showNotification(`+${amount} ${resource} from Supply Drop!`, this.x, this.y);
-                        createResourceCollectionEffect(this.x, this.y, resource);
                     }
                 }
 
@@ -9959,6 +10734,8 @@
 
                 // Initialize daily crate system
                 initializeDailyCrate();
+                initializeArmyCrate();
+                initializeCrubsCrate();
 
                 if (window.buttonStateInterval) {
                     clearInterval(window.buttonStateInterval);
@@ -10567,14 +11344,50 @@
 
                 document.getElementById('death-turns').textContent = gameState.turn;
                 document.getElementById('death-waves').textContent = gameState.wave;
+                document.getElementById('death-built').textContent = gameState.sessionObjects.length;
 
                 const resourcesLost = Object.values(gameState.sessionResources).reduce((sum, val) => sum + val, 0);
                 document.getElementById('death-resources').textContent = resourcesLost;
 
-                deathScreen.classList.add('active');
+                const zoneNames = { shallow: 'SHALLOW ZONE', medium: 'MEDIUM ZONE', deep: 'DEEP ZONE', base: 'BASE DEFENSE' };
+                const zoneEl = document.getElementById('death-zone');
+                if (zoneEl) zoneEl.textContent = zoneNames[gameState.currentZone] || (gameState.currentZone || 'ZONE').toUpperCase();
 
-                gameState.totalMissions++;
-                updateStatsPanel();
+                const elapsed = Math.floor((Date.now() - (gameState.diveStartTime || Date.now())) / 1000);
+                const mins = Math.floor(elapsed / 60);
+                const secs = String(elapsed % 60).padStart(2, '0');
+                const timeEl = document.getElementById('death-time');
+                if (timeEl) timeEl.textContent = mins + ':' + secs;
+
+                const list = document.getElementById('death-objects-list');
+                const countEl = document.getElementById('death-objects-count');
+                const emptyEl = document.getElementById('death-empty');
+                list.innerHTML = '';
+
+                if (countEl) countEl.textContent = gameState.sessionObjects.length;
+
+                if (gameState.sessionObjects.length === 0) {
+                    list.style.display = 'none';
+                    emptyEl.style.display = 'flex';
+                } else {
+                    list.style.display = 'flex';
+                    emptyEl.style.display = 'none';
+                    const diveStart = gameState.diveStartTime || Date.now();
+                    gameState.sessionObjects.forEach(function(obj, i) {
+                        const placedAt = Math.floor((obj.timestamp - diveStart) / 1000);
+                        const m = Math.floor(placedAt / 60);
+                        const s = String(placedAt % 60).padStart(2, '0');
+                        const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1);
+                        const sprite = getSpriteForMode(obj.type + '-' + obj.subtype);
+                        const typeLabel = obj.type === 'wall' ? 'Wall' : obj.type === 'tech' ? 'Tech' : 'Army';
+                        const item = document.createElement('div');
+                        item.className = 'death-object-item';
+                        item.innerHTML = '<span class="num">#' + (i + 1) + '</span><img src="' + sprite + '" alt="' + name + '" onerror="this.src=\'./sprites/research.png\'"><span class="name">' + name + '</span><span class="type">' + typeLabel + '</span><span class="time">' + m + ':' + s + '</span>';
+                        list.appendChild(item);
+                    });
+                }
+
+                deathScreen.classList.add('active');
             }
 
             function hideDeathScreen() {
@@ -11038,6 +11851,10 @@
             }
 
             function showNotification(message, x, y, type) {
+                const now = Date.now();
+                if (now - lastNotificationTime < NOTIFICATION_COOLDOWN) return;
+                lastNotificationTime = now;
+
                 // Create notification for main game screen
                 let container = document.querySelector('.notification-container');
                 if (!container) {
@@ -11051,6 +11868,11 @@
                 notification.textContent = message;
 
                 container.insertBefore(notification, container.firstChild);
+
+                const maxNotifications = 5;
+                while (container.children.length > maxNotifications) {
+                    container.removeChild(container.lastChild);
+                }
 
                 // Also show notification on combat screen if it's active
                 const combatScreen = document.getElementById('combat-battle-screen');
@@ -11170,6 +11992,8 @@
 
             let lastResourceEffectTime = 0;
             const RESOURCE_EFFECT_COOLDOWN = 2000;
+            let lastNotificationTime = 0;
+            const NOTIFICATION_COOLDOWN = 500;
 
             function createResourceCollectionEffect(x, y, resourceType) {
                 const now = Date.now();
@@ -13923,11 +14747,27 @@
                 const cratesModal = document.getElementById('crates-modal');
                 if (cratesModal) {
                     cratesModal.classList.add('active');
+                    const sr = gameState.storedResources;
+                    const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = (val || 0).toLocaleString(); };
+                    setVal('crates-steel-val', sr.Steel || 0);
+                    setVal('crates-coins-val', sr.coins || 0);
+                    setVal('crates-gold-val', sr.gold || 0);
+                    setVal('crates-oil-val', sr.oil || 0);
                     updateCrateButtons();
-
-                    // Refresh daily crate display when modal opens
                     checkNewDay();
                     updateDailyCrateDisplay();
+                    updateArmyCrateDisplay();
+                    updateCrubsCrateDisplay();
+
+                    document.querySelectorAll('.crates-tab').forEach(tab => {
+                        tab.onclick = function() {
+                            document.querySelectorAll('.crates-tab').forEach(t => t.classList.remove('active'));
+                            document.querySelectorAll('.crate-category').forEach(c => c.classList.remove('active'));
+                            this.classList.add('active');
+                            const cat = document.getElementById('cat-' + this.dataset.cat);
+                            if (cat) cat.classList.add('active');
+                        };
+                    });
                 }
             }
 
@@ -13939,44 +14779,41 @@
             }
 
             function updateCrateButtons() {
-                // Update button states based on player's resources
-                const crateItems = document.querySelectorAll('.crate-item');
+                const crateCards = document.querySelectorAll('.crate-card[data-crate]');
 
-                crateItems.forEach(item => {
+                crateCards.forEach(item => {
                     const crateType = item.dataset.crate;
                     const level = parseInt(item.dataset.level);
-                    const buyBtn = item.querySelector('.crate-buy-btn');
+                    const buyBtn = item.querySelector('.crate-card-btn');
 
                     const canAfford = canAffordCrate(crateType, level);
-                    buyBtn.disabled = !canAfford;
 
                     if (!canAfford) {
-                        buyBtn.style.opacity = '0.5';
-                        buyBtn.style.cursor = 'not-allowed';
+                        buyBtn.style.opacity = '0.4';
+                        item.style.cursor = 'not-allowed';
                     } else {
                         buyBtn.style.opacity = '1';
-                        buyBtn.style.cursor = 'pointer';
+                        item.style.cursor = 'pointer';
                     }
                 });
             }
 
             function canAffordCrate(crateType, level) {
                 const crateCosts = {
-                    ore: {
-                        1: { coins: 1000 },
-                        2: { coins: 2000 },
-                        3: { coins: 3000 }
-                    },
-                    oil: {
-                        1: { Steel: 3000 },
-                        2: { Steel: 4000 }
-                    }
+                    coins: { 1: { coins: 500 }, 2: { coins: 1000 }, 3: { coins: 2000 } },
+                    steel: { 1: { Steel: 300 }, 2: { Steel: 700 }, 3: { Steel: 1500 } },
+                    gold: { 1: { gold: 30 }, 2: { gold: 60 }, 3: { gold: 120 } },
+                    oil: { 1: { Steel: 500 }, 2: { Steel: 1000 }, 3: { Steel: 2000 } },
+                    army: { 1: { coins: 800 }, 2: { coins: 2000 }, 3: { coins: 5000 } },
+                    mystery: { 1: { coins: 400, gold: 15 }, 2: { coins: 800, gold: 30 }, 3: { coins: 1500, gold: 60 } }
                 };
 
-                const cost = crateCosts[crateType][level];
+                const costs = crateCosts[crateType];
+                if (!costs || !costs[level]) return false;
+                const cost = costs[level];
 
                 for (const [resource, amount] of Object.entries(cost)) {
-                    if (gameState.storedResources[resource] < amount) {
+                    if ((gameState.storedResources[resource] || 0) < amount) {
                         return false;
                     }
                 }
@@ -13985,27 +14822,21 @@
 
             function buyCrate(crateType, level) {
                 const crateCosts = {
-                    ore: {
-                        1: { coins: 1000 },
-                        2: { coins: 2000 },
-                        3: { coins: 3000 }
-                    },
-                    oil: {
-                        1: { Steel: 3000 },
-                        2: { Steel: 4000 }
-                    }
+                    coins: { 1: { coins: 500 }, 2: { coins: 1000 }, 3: { coins: 2000 } },
+                    steel: { 1: { Steel: 300 }, 2: { Steel: 700 }, 3: { Steel: 1500 } },
+                    gold: { 1: { gold: 30 }, 2: { gold: 60 }, 3: { gold: 120 } },
+                    oil: { 1: { Steel: 500 }, 2: { Steel: 1000 }, 3: { Steel: 2000 } },
+                    army: { 1: { coins: 800 }, 2: { coins: 2000 }, 3: { coins: 5000 } },
+                    mystery: { 1: { coins: 400, gold: 15 }, 2: { coins: 800, gold: 30 }, 3: { coins: 1500, gold: 60 } }
                 };
 
                 const crateNames = {
-                    ore: {
-                        1: 'Ore Crate Level 1',
-                        2: 'Ore Crate Level 2',
-                        3: 'Ore Crate Level 3'
-                    },
-                    oil: {
-                        1: 'Oil Crate Level 1',
-                        2: 'Oil Crate Level 2'
-                    }
+                    coins: { 1: 'Coin Crate L1', 2: 'Coin Crate L2', 3: 'Coin Crate L3' },
+                    steel: { 1: 'Steel Crate L1', 2: 'Steel Crate L2', 3: 'Steel Crate L3' },
+                    gold: { 1: 'Gold Crate L1', 2: 'Gold Crate L2', 3: 'Gold Crate L3' },
+                    oil: { 1: 'Oil Crate L1', 2: 'Oil Crate L2', 3: 'Oil Crate L3' },
+                    army: { 1: 'Army Crate L1', 2: 'Army Crate L2', 3: 'Army Crate L3' },
+                    mystery: { 1: 'Mystery Crate L1', 2: 'Mystery Crate L2', 3: 'Mystery Crate L3' }
                 };
 
                 const cost = crateCosts[crateType][level];
@@ -14025,8 +14856,29 @@
                 // Open crate and get reward
                 const reward = openCrate(crateType, level);
 
-                // Add reward to player's resources
-                gameState.addResources(reward);
+                // Handle army units separately
+                if (reward._armyUnits) {
+                    if (!gameState.storedArmyUnits) gameState.storedArmyUnits = [];
+                    const unitStats = {
+                        soldier: { hp: 1, range: 1, move: 1, attack: 1, name: 'Soldier' },
+                        knight: { hp: 1, range: 1, move: 5, attack: 1, name: 'Knight' },
+                        archer: { hp: 1, range: 4, move: 1, attack: 1, name: 'Archer' },
+                        tank: { hp: 5, range: 1, move: 1, attack: 5, name: 'Tank' },
+                        siegetower: { hp: 1, range: 4, move: 1, attack: 1, name: 'Siege Tower' },
+                        barrack: { hp: 5, range: 0, move: 0, attack: 0, name: 'Barracks' }
+                    };
+                    reward._armyUnits.forEach(unitType => {
+                        const stats = unitStats[unitType] || { hp: 1, range: 1, move: 1, attack: 1, name: unitType };
+                        gameState.storedArmyUnits.push({
+                            type: 'army-' + unitType,
+                            subtype: unitType,
+                            ...stats,
+                            id: Date.now() + Math.random()
+                        });
+                    });
+                } else {
+                    gameState.addResources(reward);
+                }
 
                 // Show animated crate opening modal
                 showAnimatedCrateOpening(crateType, level, reward, cost);
@@ -14034,6 +14886,14 @@
                 // Update display
                 updateDisplay();
                 updateCrateButtons();
+
+                // Update crates modal resources if still visible
+                const sr = gameState.storedResources;
+                const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = (val || 0).toLocaleString(); };
+                setVal('crates-steel-val', sr.Steel || 0);
+                setVal('crates-coins-val', sr.coins || 0);
+                setVal('crates-gold-val', sr.gold || 0);
+                setVal('crates-oil-val', sr.oil || 0);
             }
 
             // Daily Crate System
@@ -14042,6 +14902,266 @@
                 streak: 1,
                 claimedToday: false
             };
+
+            // Army Crate System (3 day cooldown)
+            let armyCrateData = {
+                lastClaimDate: null
+            };
+
+            function initializeArmyCrate() {
+                const savedData = localStorage.getItem('coregrid_army_crate');
+                if (savedData) {
+                    try {
+                        armyCrateData = JSON.parse(savedData);
+                    } catch (e) {
+                        console.error('Failed to parse army crate data:', e);
+                        armyCrateData = { lastClaimDate: null };
+                    }
+                }
+                updateArmyCrateDisplay();
+            }
+
+            function saveArmyCrateData() {
+                try {
+                    localStorage.setItem('coregrid_army_crate', JSON.stringify(armyCrateData));
+                } catch (e) {
+                    console.error('Failed to save army crate data:', e);
+                }
+            }
+
+            function getDaysSinceClaim() {
+                if (!armyCrateData.lastClaimDate) return 999;
+                const lastClaim = new Date(armyCrateData.lastClaimDate);
+                const today = new Date();
+                const diffTime = today - lastClaim;
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays;
+            }
+
+            function updateArmyCrateDisplay() {
+                const timerEl = document.getElementById('army-crate-timer');
+                const btnEl = document.getElementById('claim-army-btn');
+                const cardEl = document.getElementById('army-crate-card');
+                const tierBadge = document.getElementById('army-tier-badge');
+                if (!timerEl || !btnEl) return;
+
+                const daysSince = getDaysSinceClaim();
+                const canClaim = daysSince >= 3;
+
+                if (canClaim) {
+                    timerEl.textContent = 'FREE';
+                    btnEl.textContent = 'CLAIM';
+                    btnEl.style.opacity = '1';
+                    btnEl.style.cursor = 'pointer';
+                    if (cardEl) {
+                        cardEl.style.opacity = '1';
+                        cardEl.style.cursor = 'pointer';
+                    }
+                    if (tierBadge) {
+                        tierBadge.textContent = '3 DAY';
+                        tierBadge.style.background = '';
+                        tierBadge.style.color = '';
+                    }
+                } else {
+                    const daysLeft = 3 - daysSince;
+                    timerEl.textContent = `${daysLeft}D LEFT`;
+                    btnEl.textContent = `${daysLeft} DAYS`;
+                    btnEl.style.opacity = '0.4';
+                    btnEl.style.cursor = 'not-allowed';
+                    if (cardEl) {
+                        cardEl.style.opacity = '0.7';
+                        cardEl.style.cursor = 'not-allowed';
+                    }
+                    if (tierBadge) {
+                        tierBadge.textContent = 'WAIT';
+                        tierBadge.style.background = 'rgba(206,171,119,0.3)';
+                        tierBadge.style.color = 'var(--warning)';
+                    }
+                }
+            }
+
+            function claimArmyCrate() {
+                const daysSince = getDaysSinceClaim();
+                if (daysSince < 3) {
+                    const daysLeft = 3 - daysSince;
+                    showNotification(`Army Crate available in ${daysLeft} day${daysLeft > 1 ? 's' : ''}!`, 12, 7, 'warning');
+                    return;
+                }
+
+                // Random soldiers 1-7
+                const numSoldiers = Math.floor(Math.random() * 7) + 1;
+
+                if (!gameState.storedArmyUnits) gameState.storedArmyUnits = [];
+                for (let i = 0; i < numSoldiers; i++) {
+                    gameState.storedArmyUnits.push({
+                        type: 'army-scout',
+                        subtype: 'soldier',
+                        hp: 1,
+                        range: 1,
+                        move: 1,
+                        attack: 1,
+                        name: 'Soldier',
+                        id: Date.now() + Math.random()
+                    });
+                }
+
+                // Update data
+                armyCrateData.lastClaimDate = new Date().toDateString();
+                saveArmyCrateData();
+
+                // Update display
+                updateArmyCrateDisplay();
+                updateArmyBox();
+
+                showNotification(`Army Crate Claimed! +${numSoldiers} Soldier${numSoldiers > 1 ? 's' : ''}!`, 12, 7, 'success');
+            }
+
+            function updateArmyBox() {
+                const unitCountEl = document.getElementById('army-unit-count');
+                if (unitCountEl) {
+                    const count = gameState.storedArmyUnits ? gameState.storedArmyUnits.length : 0;
+                    unitCountEl.textContent = `${count} unit${count !== 1 ? 's' : ''}`;
+                }
+            }
+
+            // Crubs Timer System (5 min cooldown, only counts when tab is hidden)
+            let crubsCrateData = {
+                startedAt: null,
+                hiddenTime: 0,
+                lastHiddenAt: null
+            };
+
+            function initializeCrubsCrate() {
+                const savedData = localStorage.getItem('coregrid_crubs_crate');
+                if (savedData) {
+                    try {
+                        crubsCrateData = JSON.parse(savedData);
+                    } catch (e) {
+                        crubsCrateData = { startedAt: null, hiddenTime: 0, lastHiddenAt: null };
+                    }
+                }
+                updateCrubsCrateDisplay();
+
+                // Track when tab becomes hidden/visible
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        crubsCrateData.lastHiddenAt = Date.now();
+                    } else {
+                        if (crubsCrateData.lastHiddenAt) {
+                            crubsCrateData.hiddenTime += Date.now() - crubsCrateData.lastHiddenAt;
+                            crubsCrateData.lastHiddenAt = null;
+                            saveCrubsCrateData();
+                        }
+                        updateCrubsCrateDisplay();
+                    }
+                });
+            }
+
+            function saveCrubsCrateData() {
+                try {
+                    localStorage.setItem('coregrid_crubs_crate', JSON.stringify(crubsCrateData));
+                } catch (e) {}
+            }
+
+            function getCrubsTimeLeft() {
+                if (!crubsCrateData.startedAt) return 0;
+                const totalElapsed = Date.now() - crubsCrateData.startedAt;
+                const effectiveHiddenTime = crubsCrateData.hiddenTime;
+                const actualTimeOnCrubs = totalElapsed - effectiveHiddenTime;
+                const FIVE_MINS = 5 * 60 * 1000;
+                return Math.max(0, FIVE_MINS - actualTimeOnCrubs);
+            }
+
+            function isCrubsClaimable() {
+                return crubsCrateData.startedAt && getCrubsTimeLeft() === 0;
+            }
+
+            function updateCrubsCrateDisplay() {
+                const cardEl = document.getElementById('crubs-crate-card');
+                const timerEl = document.getElementById('crubs-timer-display');
+                const actionBtn = document.getElementById('crubs-action-btn');
+                const tierBadge = document.getElementById('crubs-tier-badge');
+                if (!timerEl || !actionBtn) return;
+
+                const timeLeft = getCrubsTimeLeft();
+
+                if (isCrubsClaimable()) {
+                    if (cardEl) cardEl.style.cursor = 'pointer';
+                    if (tierBadge) {
+                        tierBadge.textContent = 'READY';
+                        tierBadge.style.background = 'rgba(122,151,123,0.3)';
+                        tierBadge.style.color = 'var(--success)';
+                    }
+                    timerEl.textContent = 'CLAIM!';
+                    actionBtn.textContent = 'CLAIM REWARD';
+                    actionBtn.style.background = 'var(--success)';
+                    actionBtn.style.opacity = '1';
+                } else if (timeLeft > 0) {
+                    if (cardEl) cardEl.style.cursor = 'not-allowed';
+                    if (tierBadge) {
+                        tierBadge.textContent = 'PLAYING';
+                        tierBadge.style.background = 'rgba(206,171,119,0.3)';
+                        tierBadge.style.color = 'var(--warning)';
+                    }
+                    const mins = Math.floor(timeLeft / (60 * 1000));
+                    const secs = Math.floor((timeLeft % (60 * 1000)) / 1000);
+                    if (mins > 0) {
+                        timerEl.textContent = `${mins}m ${secs}s`;
+                    } else {
+                        timerEl.textContent = `${secs}s`;
+                    }
+                    actionBtn.textContent = 'WAIT';
+                    actionBtn.style.background = 'var(--bg-tertiary)';
+                    actionBtn.style.opacity = '0.4';
+                } else {
+                    if (cardEl) cardEl.style.cursor = 'pointer';
+                    if (tierBadge) {
+                        tierBadge.textContent = 'CROSS';
+                        tierBadge.style.background = '';
+                        tierBadge.style.color = '';
+                    }
+                    timerEl.textContent = 'PLAY';
+                    actionBtn.textContent = 'PLAY CRUBS';
+                    actionBtn.style.background = 'var(--success)';
+                    actionBtn.style.opacity = '1';
+                }
+            }
+
+            function handleCrubsCrate() {
+                if (isCrubsClaimable()) {
+                    claimCrubsCrate();
+                } else if (!crubsCrateData.startedAt) {
+                    startCrubsTimer();
+                }
+            }
+
+            function startCrubsTimer() {
+                crubsCrateData.startedAt = Date.now();
+                crubsCrateData.hiddenTime = 0;
+                crubsCrateData.lastHiddenAt = null;
+                saveCrubsCrateData();
+                updateCrubsCrateDisplay();
+                window.open('https://aix-32.github.io/crubs/', '_blank');
+                showNotification('Timer started! Stay on Crubs for 5 min to unlock reward.', 12, 7, 'success');
+            }
+
+            function claimCrubsCrate() {
+                const steel = Math.floor(Math.random() * 401) + 100;
+                const coins = Math.floor(Math.random() * 401) + 100;
+
+                gameState.storedResources.Steel = (gameState.storedResources.Steel || 0) + steel;
+                gameState.storedResources.coins = (gameState.storedResources.coins || 0) + coins;
+
+                crubsCrateData.startedAt = null;
+                crubsCrateData.hiddenTime = 0;
+                crubsCrateData.lastHiddenAt = null;
+                saveCrubsCrateData();
+
+                updateDisplay();
+                updateCrubsCrateDisplay();
+
+                showNotification(`Crubs Crate Claimed! +${steel} Steel, +${coins} Coins!`, 12, 7, 'success');
+            }
 
             function initializeDailyCrate() {
                 // Load saved data from localStorage
@@ -14109,7 +15229,9 @@
             function updateDailyCrateDisplay() {
                 const streakElement = document.getElementById('current-streak');
                 const rewardsElement = document.getElementById('streak-rewards');
-                const crateItem = document.getElementById('daily-crate-item');
+                const crateCard = document.getElementById('daily-crate-card');
+                const tierBadge = document.getElementById('daily-tier-badge');
+                const costStatus = document.getElementById('daily-cost-status');
                 const claimButton = document.getElementById('claim-daily-btn');
 
                 if (streakElement) {
@@ -14124,7 +15246,6 @@
                         oil: 50
                     };
 
-                    // Double rewards for each day of streak
                     const multiplier = Math.pow(2, dailyCrateData.streak - 1);
                     const rewards = [];
 
@@ -14138,15 +15259,39 @@
                 }
 
                 // Update UI based on claim status
-                if (crateItem && claimButton) {
-                    if (dailyCrateData.claimedToday) {
-                        crateItem.classList.add('claimed-today');
-                        claimButton.textContent = 'CLAIMED TODAY';
-                        claimButton.disabled = true;
-                    } else {
-                        crateItem.classList.remove('claimed-today');
-                        claimButton.textContent = 'CLAIM DAILY';
-                        claimButton.disabled = false;
+                if (dailyCrateData.claimedToday) {
+                    if (crateCard) {
+                        crateCard.classList.add('claimed-today');
+                        crateCard.style.opacity = '0.6';
+                        crateCard.style.cursor = 'not-allowed';
+                    }
+                    if (tierBadge) {
+                        tierBadge.textContent = 'CLAIMED';
+                        tierBadge.style.background = 'rgba(122,151,123,0.3)';
+                        tierBadge.style.color = 'var(--success)';
+                    }
+                    if (costStatus) costStatus.textContent = 'CLAIMED';
+                    if (claimButton) {
+                        claimButton.textContent = 'CLAIMED';
+                        claimButton.style.opacity = '0.4';
+                        claimButton.style.cursor = 'not-allowed';
+                    }
+                } else {
+                    if (crateCard) {
+                        crateCard.classList.remove('claimed-today');
+                        crateCard.style.opacity = '1';
+                        crateCard.style.cursor = 'pointer';
+                    }
+                    if (tierBadge) {
+                        tierBadge.textContent = 'DAILY';
+                        tierBadge.style.background = '';
+                        tierBadge.style.color = '';
+                    }
+                    if (costStatus) costStatus.textContent = 'FREE';
+                    if (claimButton) {
+                        claimButton.textContent = 'CLAIM';
+                        claimButton.style.opacity = '1';
+                        claimButton.style.cursor = 'pointer';
                     }
                 }
             }
@@ -14233,81 +15378,95 @@
             }
 
             function openCrate(crateType, level) {
-                // Define reward ranges based on crate type and level
                 const rewardRanges = {
-                    ore: {
-                        1: { min: 200, max: 2000, resources: ['Steel', 'coins', 'gold'] },
-                        2: { min: 400, max: 4000, resources: ['Steel', 'coins', 'gold'] },
-                        3: { min: 600, max: 10000, resources: ['Steel', 'coins', 'gold'] }
+                    coins: {
+                        1: { min: 100, max: 600, resources: ['Steel', 'coins', 'gold'] },
+                        2: { min: 300, max: 1500, resources: ['Steel', 'coins', 'gold'] },
+                        3: { min: 600, max: 4000, resources: ['Steel', 'coins', 'gold'] }
+                    },
+                    steel: {
+                        1: { min: 100, max: 600, resources: ['Steel', 'coins'] },
+                        2: { min: 300, max: 1500, resources: ['Steel', 'coins'] },
+                        3: { min: 600, max: 3000, resources: ['Steel', 'coins'] }
+                    },
+                    gold: {
+                        1: { min: 10, max: 50, resources: ['gold', 'coins'] },
+                        2: { min: 25, max: 120, resources: ['gold', 'coins'] },
+                        3: { min: 50, max: 300, resources: ['gold', 'coins'] }
                     },
                     oil: {
-                        1: { min: 150, max: 1500, resources: ['oil'] },
-                        2: { min: 200, max: 4000, resources: ['oil'] }
+                        1: { min: 50, max: 300, resources: ['oil'] },
+                        2: { min: 100, max: 600, resources: ['oil'] },
+                        3: { min: 200, max: 1500, resources: ['oil'] }
+                    },
+                    army: {
+                        1: { units: ['soldier'], minUnits: 2, maxUnits: 5 },
+                        2: { units: ['knight', 'archer'], minUnits: 1, maxUnits: 2 },
+                        3: { units: ['tank', 'siegetower', 'barrack'], minUnits: 1, maxUnits: 2 }
+                    },
+                    mystery: {
+                        1: { min: 200, max: 1000, resources: ['Steel', 'coins', 'gold', 'oil'] },
+                        2: { min: 400, max: 2500, resources: ['Steel', 'coins', 'gold', 'oil'] },
+                        3: { min: 1000, max: 6000, resources: ['Steel', 'coins', 'gold', 'oil'] }
                     }
                 };
 
                 const range = rewardRanges[crateType][level];
 
+                // Handle army crates separately
+                if (range.units) {
+                    const numUnits = range.minUnits + Math.floor(Math.random() * (range.maxUnits - range.minUnits + 1));
+                    const reward = { _armyUnits: [] };
+                    for (let i = 0; i < numUnits; i++) {
+                        reward._armyUnits.push(range.units[Math.floor(Math.random() * range.units.length)]);
+                    }
+                    return reward;
+                }
+
                 // Implement weighted RNG - higher level = lower chance of good rewards
                 let rewardAmount;
 
                 if (level === 1) {
-                    // Level 1: 70% chance of good reward, 30% chance of poor reward
                     if (Math.random() < 0.7) {
-                        // Good reward: 70-100% of max range
                         rewardAmount = Math.floor(range.max * (0.7 + Math.random() * 0.3));
                     } else {
-                        // Poor reward: 10-40% of max range
                         rewardAmount = Math.floor(range.max * (0.1 + Math.random() * 0.3));
                     }
                 } else if (level === 2) {
-                    // Level 2: 50% chance of good reward, 50% chance of average reward
                     const roll = Math.random();
                     if (roll < 0.5) {
-                        // Good reward: 60-100% of max range
                         rewardAmount = Math.floor(range.max * (0.6 + Math.random() * 0.4));
                     } else {
-                        // Average reward: 30-70% of max range
                         rewardAmount = Math.floor(range.max * (0.3 + Math.random() * 0.4));
                     }
                 } else {
-                    // Level 3: 30% chance of good reward, 70% chance of poor reward
                     if (Math.random() < 0.3) {
-                        // Good reward: 50-100% of max range
                         rewardAmount = Math.floor(range.max * (0.5 + Math.random() * 0.5));
                     } else {
-                        // Poor reward: 10-50% of max range
                         rewardAmount = Math.floor(range.max * (0.1 + Math.random() * 0.4));
                     }
                 }
 
-                // Ensure minimum reward
                 rewardAmount = Math.max(range.min, rewardAmount);
 
-                // Distribute reward among available resources
                 const reward = {};
 
-                if (range.resources.length === 1) {
-                    // Single resource reward (oil crates)
-                    reward[range.resources[0]] = rewardAmount;
+                if (!range.resources || range.resources.length === 1) {
+                    const resKey = (range.resources && range.resources[0]) || 'oil';
+                    reward[resKey] = rewardAmount;
                 } else {
-                    // Multiple resource reward (ore crates)
                     const resources = [...range.resources];
                     let remainingAmount = rewardAmount;
 
-                    // Shuffle resources for random distribution
                     for (let i = resources.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [resources[i], resources[j]] = [resources[j], resources[i]];
                     }
 
-                    // Distribute reward randomly among resources
                     resources.forEach((resource, index) => {
                         if (index === resources.length - 1) {
-                            // Last resource gets remaining amount
                             reward[resource] = remainingAmount;
                         } else {
-                            // Random amount for this resource
                             const amount = Math.floor(Math.random() * (remainingAmount * 0.6)) + 50;
                             reward[resource] = Math.min(amount, remainingAmount);
                             remainingAmount -= reward[resource];
@@ -14319,74 +15478,77 @@
             }
 
             function showAnimatedCrateOpening(crateType, level, reward, cost) {
-                // Close crates modal first
                 closeCratesModal();
 
-                // Set up result modal content
                 document.getElementById('result-crate-name').textContent =
                     `${crateType.charAt(0).toUpperCase() + crateType.slice(1)} Crate L${level}`;
 
-                // Set crate sprite
                 const spriteImg = document.querySelector('#result-sprite img');
-                const spriteSrc = level === 1 ? './sprites/smallcrate.png' : './sprites/bigcrate.png';
-                spriteImg.src = spriteSrc;
-                spriteImg.alt = `${crateType.charAt(0).toUpperCase() + crateType.slice(1)} Crate L${level}`;
+                if (crateType === 'army') {
+                    const unitSpriteMap = { soldier: './sprites/soldier.png', knight: './sprites/knight.png', archer: './sprites/Archer.png', tank: './sprites/Tank.png', siegetower: './sprites/siegetower.png', barrack: './sprites/barrack.png' };
+                    const firstUnit = reward._armyUnits && reward._armyUnits[0];
+                    spriteImg.src = unitSpriteMap[firstUnit] || './sprites/smallcrate.png';
+                } else {
+                    spriteImg.src = level === 1 ? './sprites/smallcrate.png' : './sprites/bigcrate.png';
+                }
+                spriteImg.alt = `${crateType} Crate L${level}`;
 
-                // Calculate monetary values using the game's pricing system
                 const resourcePrices = {
-                    'Steel': 1,
-                    'coins': 5,
-                    'gold': 2,
-                    'oil': 20
+                    'Steel': 1, 'coins': 5, 'gold': 2, 'oil': 20
                 };
 
-                // Calculate cost value
                 let costValue = 0;
                 Object.entries(cost).forEach(([resource, amount]) => {
-                    const price = resourcePrices[resource] || 0;
-                    costValue += amount * price;
+                    costValue += (resourcePrices[resource] || 0) * amount;
                 });
 
-                // Calculate reward value
-                let rewardValue = 0;
-                Object.entries(reward).forEach(([resource, amount]) => {
-                    const price = resourcePrices[resource] || 0;
-                    rewardValue += amount * price;
-                });
-
-                const profit = rewardValue - costValue;
-
-                // Display rewards with monetary values
                 const rewardDisplay = document.getElementById('reward-display');
                 rewardDisplay.innerHTML = '';
 
-                Object.entries(reward).forEach(([resource, amount]) => {
-                    const price = resourcePrices[resource] || 0;
-                    const value = amount * price;
-                    const rewardItem = document.createElement('div');
-                    rewardItem.className = `reward-item ${resource === 'oil' ? 'oil' : ''}`;
-                    rewardItem.innerHTML = `
-                        <div class="reward-label">${resource.toUpperCase()}</div>
-                        <div class="reward-amount">+${amount.toLocaleString()}</div>
-                        <div class="reward-value">${value.toLocaleString()} VALUE</div>
-                    `;
-                    rewardDisplay.appendChild(rewardItem);
-                });
-
-                // Show result message with monetary value
-                const resultMessage = document.getElementById('result-message');
-                if (profit > 0) {
-                    resultMessage.className = 'result-message result-win';
-                    resultMessage.textContent = `🎉 PROFIT: +${profit.toLocaleString()} VALUE!`;
-                } else if (profit < 0) {
-                    resultMessage.className = 'result-message result-loss';
-                    resultMessage.textContent = `😞 LOSS: ${Math.abs(profit).toLocaleString()} VALUE`;
+                if (reward._armyUnits) {
+                    const unitNames = { soldier: 'Soldier', knight: 'Knight', archer: 'Archer', tank: 'Tank', siegetower: 'Siege Tower', barrack: 'Barracks' };
+                    const unitPrices = { soldier: 15, knight: 25, archer: 20, tank: 50, siegetower: 275, barrack: 50 };
+                    const counts = {};
+                    reward._armyUnits.forEach(u => { counts[u] = (counts[u] || 0) + 1; });
+                    let totalVal = 0;
+                    Object.entries(counts).forEach(([unit, count]) => {
+                        const price = unitPrices[unit] || 0;
+                        totalVal += price * count;
+                        const rewardItem = document.createElement('div');
+                        rewardItem.className = 'reward-item';
+                        rewardItem.innerHTML = `
+                            <div class="reward-label">${unitNames[unit] || unit}</div>
+                            <div class="reward-amount">x${count}</div>
+                            <div class="reward-value">${(price * count).toLocaleString()} VALUE</div>
+                        `;
+                        rewardDisplay.appendChild(rewardItem);
+                    });
+                    const profit = totalVal - costValue;
+                    const resultMessage = document.getElementById('result-message');
+                    resultMessage.className = 'result-message ' + (profit > 0 ? 'result-win' : profit < 0 ? 'result-loss' : 'result-break-even');
+                    resultMessage.textContent = profit >= 0 ? `+${profit.toLocaleString()} VALUE` : `${Math.abs(profit).toLocaleString()} VALUE LOSS`;
                 } else {
-                    resultMessage.className = 'result-message result-break-even';
-                    resultMessage.textContent = `⚖️ BREAK EVEN`;
+                    let rewardValue = 0;
+                    Object.entries(reward).forEach(([resource, amount]) => {
+                        const price = resourcePrices[resource] || 0;
+                        const value = amount * price;
+                        rewardValue += value;
+                        const rewardItem = document.createElement('div');
+                        rewardItem.className = `reward-item ${resource === 'oil' ? 'oil' : ''}`;
+                        rewardItem.innerHTML = `
+                            <div class="reward-label">${resource.toUpperCase()}</div>
+                            <div class="reward-amount">+${amount.toLocaleString()}</div>
+                            <div class="reward-value">${value.toLocaleString()} VALUE</div>
+                        `;
+                        rewardDisplay.appendChild(rewardItem);
+                    });
+
+                    const profit = rewardValue - costValue;
+                    const resultMessage = document.getElementById('result-message');
+                    resultMessage.className = 'result-message ' + (profit > 0 ? 'result-win' : profit < 0 ? 'result-loss' : 'result-break-even');
+                    resultMessage.textContent = profit >= 0 ? `+${profit.toLocaleString()} VALUE` : `${Math.abs(profit).toLocaleString()} VALUE LOSS`;
                 }
 
-                // Show result modal
                 document.getElementById('crate-result-modal').style.display = 'flex';
             }
 
